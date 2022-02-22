@@ -82,10 +82,7 @@
 <script src="{{ asset('themes/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js')}}"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('themes/dist/js/adminlte.js')}}"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="{{ asset('themes/dist/js/demo.js')}}"></script>
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="{{ asset('themes/dist/js/pages/dashboard.js')}}"></script>
+
 @yield('script')
 </body>
 </html>
