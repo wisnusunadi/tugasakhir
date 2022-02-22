@@ -44,7 +44,7 @@
                             <div class="col-md-6 colcol-form-label">
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" id="laki" value="l" name="jenis_kelamin" >
-                                    <label class="form-check-label" for="inlineCheckbox1">Laki laki</label>
+                                    <label class="form-check-label" for="inlineCheckbox1">Laki - laki</label>
                                 </div>
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" id="perempuan"  value="p" name="jenis_kelamin" >

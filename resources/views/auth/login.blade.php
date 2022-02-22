@@ -3,7 +3,7 @@
 @section('content')
 <div class="login-box">
   <div class="login-logo">
-    <a href="/"><b>Laravel 5</b> Login</a>
+    <a href="/"> Login</a>
   </div>
   <!-- /.login-logo -->
   <div class="card">
