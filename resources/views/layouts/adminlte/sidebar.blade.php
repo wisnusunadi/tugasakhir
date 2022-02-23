@@ -1,4 +1,3 @@
-<!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="/" class="brand-link">
@@ -51,10 +50,28 @@
               </p>
             </a>
           </li>
+          <li class="nav-item">
+            <a title="logout" class="nav-link" href="{{ route('logout') }}"
+                onclick="event.preventDefault();
+                              document.getElementById('logout-form').submit();">
+                <i class="fa fa-sign-out"></i>
+                <p>Log Out</p>
+            </a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+              @csrf
+            </form>
+          </li>
           @endif
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
     </div>
-    <!-- /.sidebar -->
-  </aside>
+
+    <!-- SidebarSearch Form -->
+    <div class="form-inline">
+      
+    </div>
+
+    <!-- /.sidebar-menu -->
+  <!-- /.sidebar -->
+</aside>

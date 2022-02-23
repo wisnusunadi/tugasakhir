@@ -29,6 +29,7 @@
   }
   body{
     font-family: 'Poppins';
+    background-color: #E8E8E8;
   }
   footer{
     bottom: 0;
@@ -51,7 +52,8 @@
   @yield('content')
  
   <footer class="main-footer">
-    <div>Dibuat untuk Tugas Akhir 2022</div>
+    <span>Dibuat untuk Tugas Akhir 2022</span>
+    <span class="float-right"><strong>Copyright &copy; 2022.</strong></span>
   </footer>
  
   <!-- Control Sidebar -->
@@ -63,9 +65,9 @@
 <!-- ./wrapper -->
  
 <!-- jQuery -->
-<script src="{{ asset('themes/plugins/jquery/jquery.min.js') }}"></script>
+<script src="{{ asset('themes/plugins/jquery/jquery.min.js')}}"></script>
 <!-- jQuery UI 1.11.4 -->
-<!-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script> -->
+<script src="{{ asset('themes/plugins/jquery-ui/jquery-ui.min.js')}}"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <script>
   $.widget.bridge('uibutton', $.ui.button)
