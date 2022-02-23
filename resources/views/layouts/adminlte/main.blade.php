@@ -1,47 +1,59 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Dashboard</title>
-  
-    <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="{{ asset('themes/plugins/fontawesome-free/css/all.min.css')}}">
-    <!-- Ionicons -->
-    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-    <!-- Tempusdominus Bootstrap 4 -->
-    <link rel="stylesheet" href="{{ asset('themes/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css')}}">
-    <!-- iCheck -->
-    <link rel="stylesheet" href="{{ asset('themes/plugins/icheck-bootstrap/icheck-bootstrap.min.css')}}">
-    <!-- JQVMap -->
-    <link rel="stylesheet" href="{{ asset('themes/plugins/jqvmap/jqvmap.min.css')}}">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="{{ asset('themes/dist/css/adminlte.min.css')}}">
-    <!-- overlayScrollbars -->
-    <link rel="stylesheet" href="{{ asset('themes/plugins/overlayScrollbars/css/OverlayScrollbars.min.css')}}">
-    <!-- Daterange picker -->
-    <link rel="stylesheet" href="{{ asset('themes/plugins/daterangepicker/daterangepicker.css')}}">
-    <!-- summernote -->
-    <link rel="stylesheet" href="{{ asset('themes/plugins/summernote/summernote-bs4.min.css')}}">
-  </head>
-<body class="hold-transition sidebar-mini layout-fixed">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>@yield('title', 'Laravel 5 Blog')</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{{ asset('themes/plugins/fontawesome-free/css/all.min.css') }}">
+  <!-- DataTable-->
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/jq-3.6.0/dt-1.11.4/rg-1.1.4/datatables.min.css"/>
+  <!-- <link rel="stylesheet" href="{{ asset('themes/plugins/datatables/datatables.min.css') }}"> -->
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{{ asset('themes/dist/css/adminlte.min.css') }}">
+  <!-- Daterange picker -->
+  <link rel="stylesheet" href="{{ asset('themes/plugins/daterangepicker/daterangepicker.css') }}">
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+</head>
+@yield('custom_css')
+<style>
+  @font-face
+  {
+    font-family: 'Poppins';
+    src: url('assets/font/Poppins/Poppins-Regular.ttf');
+  }
+  body{
+    font-family: 'Poppins';
+    background-color: #E8E8E8;
+  }
+  footer{
+    bottom: 0;
+    position: fixed;
+    width: 100%;
+  }
+  @media screen and (min-width:992px){
+    body{font-size: 14px;}
+  }
+
+  @media screen and (max-width:991px){
+    body{font-size: 12px;}
+  }
+</style>
+<body class="hold-transition sidebar-mini">
 <div class="wrapper">
  
- 
- 
   @include('layouts.adminlte.sidebar')
- 
+  
   @yield('content')
  
- 
   <footer class="main-footer">
-    <strong>Copyright &copy; 2022.</strong>
-    All rights reserved.
-    <div class="float-right d-none d-sm-inline-block">
-      <b>Version</b> 1.0
-    </div>
+    <span>Dibuat untuk Tugas Akhir 2022</span>
+    <span class="float-right"><strong>Copyright &copy; 2022.</strong></span>
   </footer>
  
   <!-- Control Sidebar -->
@@ -61,28 +73,25 @@
   $.widget.bridge('uibutton', $.ui.button)
 </script>
 <!-- Bootstrap 4 -->
-<script src="{{ asset('themes/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-<!-- ChartJS -->
-<script src="{{ asset('themes/plugins/chart.js/Chart.min.js')}}"></script>
-<!-- Sparkline -->
-<script src="{{ asset('themes/plugins/sparklines/sparkline.js')}}"></script>
-<!-- JQVMap -->
-<script src="{{ asset('themes/plugins/jqvmap/jquery.vmap.min.js')}}"></script>
-<script src="{{ asset('themes/plugins/jqvmap/maps/jquery.vmap.usa.js')}}"></script>
-<!-- jQuery Knob Chart -->
-<script src="{{ asset('themes/plugins/jquery-knob/jquery.knob.min.js')}}"></script>
+<script src="{{ asset('themes/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<!-- DataTable-->
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jq-3.6.0/dt-1.11.4/rg-1.1.4/datatables.min.js"></script>
+<!-- <link rel="stylesheet" href="{{ asset('themes/plugins/datatables/datatables.min.js') }}" type="text/javascript"> -->
 <!-- daterangepicker -->
-<script src="{{ asset('themes/plugins/moment/moment.min.js')}}"></script>
-<script src="{{ asset('themes/plugins/daterangepicker/daterangepicker.js')}}"></script>
-<!-- Tempusdominus Bootstrap 4 -->
-<script src="{{ asset('themes/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script>
-<!-- Summernote -->
-<script src="{{ asset('themes/plugins/summernote/summernote-bs4.min.js')}}"></script>
-<!-- overlayScrollbars -->
-<script src="{{ asset('themes/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
+<script src="{{ asset('themes/plugins/daterangepicker/daterangepicker.js') }}"></script>
+<!-- Bootstrap WYSIHTML5 -->
+<script src="{{ asset('themes/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js') }}"></script>
+<!-- Slimscroll -->
+<script src="{{ asset('themes/plugins/slimScroll/jquery.slimscroll.min.js') }}"></script>
+<!-- FastClick -->
+<script src="{{ asset('themes/plugins/fastclick/fastclick.js') }}"></script>
 <!-- AdminLTE App -->
-<script src="{{ asset('themes/dist/js/adminlte.js')}}"></script>
-
+<script src="{{ asset('themes/dist/js/adminlte.js') }}"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="{{ asset('themes/dist/js/pages/dashboard.js') }}"></script>
+ <!-- Font Awesome -->
+ <link rel="stylesheet" href="{{ asset('themes/plugins/fontawesome-free/js/all.min.js') }}">
 @yield('script')
 </body>
 </html>
