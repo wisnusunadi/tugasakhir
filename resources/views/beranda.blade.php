@@ -10,6 +10,8 @@ section{
     justify-content:center;
     align-items:center;
     margin-left: 250px;
+    background: rgb(70,130,180);
+    background: radial-gradient(circle, rgba(70,130,180,1) 0%, rgba(129,161,187,1) 35%, rgba(243,243,243,1) 100%);
 }
 
 .row{
