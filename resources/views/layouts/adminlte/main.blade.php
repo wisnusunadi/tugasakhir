@@ -6,6 +6,8 @@
   <title>@yield('title', 'Laravel 5 Blog')</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="{{ asset('themes/plugins/bootstrap/css/bootstrap.min.css') }}">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="{{ asset('themes/plugins/fontawesome-free/css/all.min.css') }}">
   <!-- DataTable-->
@@ -27,9 +29,12 @@
     font-family: 'Poppins';
     src: url('assets/font/Poppins/Poppins-Regular.ttf');
   }
+  aside{
+    background: #8199AE;
+  }
   body{
     font-family: 'Poppins';
-    background-color: #E8E8E8;
+    background-color: #F0F0F0;
   }
   footer{
     bottom: 0;
@@ -43,6 +48,7 @@
   @media screen and (max-width:991px){
     body{font-size: 12px;}
   }
+
 </style>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
