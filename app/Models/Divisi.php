@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Divisi extends Model
 {
     use HasFactory;
+    public $timestamps = false;
     protected $table = 'divisi';
     protected $fillable = [
         'nama',

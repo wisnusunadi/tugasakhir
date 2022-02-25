@@ -17,3 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/jabatan', [App\Http\Controllers\HomeController::class, 'jabatan_data']);
+Route::get('/divisi', [App\Http\Controllers\HomeController::class, 'divisi_data']);
+// Route::get('/jadwal/table', [App\Http\Controllers\HomeController::class, 'jadwal_table']);
