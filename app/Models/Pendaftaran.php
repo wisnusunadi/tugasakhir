@@ -22,4 +22,7 @@ class Pendaftaran extends Model
     public function Jadwal(){
         return $this->belongsTo(Jadwal::class,'jadwal_id');
     }
+    public function User(){
+        return $this->hasMany(User::class);
+    }
 }

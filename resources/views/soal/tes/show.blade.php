@@ -422,6 +422,12 @@ td{
         var x = document.getElementsByClassName("tab");
         // Exit the function if any field in the current tab is invalid:
         if (n == 1 && !validateForm()) return false;
+        if(n == -1){
+            $('#page'+currentTab).removeClass("active");
+            if($("input[name='jawaban_id["+currentTab+"]']:checked").val() !== undefined){
+                $('#page'+currentTab).addClass("answer");
+            }
+        }
         // Hide the current tab:
         x[currentTab].style.display = "none";
         // Increase or decrease the current tab by 1:

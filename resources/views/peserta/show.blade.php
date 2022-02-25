@@ -46,16 +46,16 @@ section{
                             <thead class="aligncenter">
                                 <tr>
                                     <th>No</th>
+                                    <th>Jabatan</th>
                                     <th>Tanggal Daftar</th>
                                     <th>Nama</th>
-                                    <th>Jabatan</th>
                                     <th>Email</th>
                                     <th>Status</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
+                                <!-- <tr>
                                     <td>1</td>
                                     <td>13 Feb 2021</td>
                                     <td>Mahlagha Kaylana</td>
@@ -108,7 +108,7 @@ section{
                                     <td>isamuariyya@gmail.com</td>
                                     <td><span class="badge badge-success">Diterima</span></td>
                                     <td><i class="fas fa-eye"></i></td>
-                                </tr>
+                                </tr> -->
                             </tbody>
                         </table>
                     </div>
@@ -122,8 +122,20 @@ section{
 @section('script')
 <script>
     $(function(){
-        var groupColumn = 3;
+        var groupColumn = 1;
         $('#showtable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: {
+                'url': '/api/peserta/table',
+                'method': 'GET',
+                'headers': {
+                    'X-CSRF-TOKEN': '{{csrf_token()}}'
+                }
+            },
+            language: {
+                processing: '<i class="fa fa-spinner fa-spin"></i> Tunggu Sebentar'
+            },
             "columnDefs": [
                 { "visible": false, "targets": groupColumn }
             ],
@@ -143,7 +155,25 @@ section{
                         last = group;
                     }
                 });
-            }
+            },
+            columns: [{
+                data: 'DT_RowIndex',
+                className: 'nowrap-text align-center',
+                orderable: false,
+                searchable: false
+            }, {
+                data: 'pendaftaran',
+            }, {
+                data: 'tanggal_daftar',
+            }, {
+                data: 'nama',
+            }, {
+                data: 'email',
+            }, {
+                data: 'jenis_kelamin',
+            }, {
+                data: 'aksi',
+            }],
         });
     })
 </script>

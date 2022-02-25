@@ -111,15 +111,11 @@ section{
                                     <tbody>
                                         <tr>
                                             <td>1</td>
-                                            <td><select class="form-control jabatan" name="jabatan[]" id="jabatan">
-                                                @foreach($j as $i)
-                                                    <option value="{{$i->id}}">{{$i->nama}}</option>
-                                                @endforeach
+                                            <td><select class="form-control jabatan" name="jabatan[]" id="jabatan" style="width: 100%">
+
                                             </select></td>
-                                            <td><select class="form-control divisi" name="divisi[]" id="divisi">
-                                                @foreach($d as $i)
-                                                    <option value="{{$i->id}}">{{$i->nama}}</option>
-                                                @endforeach
+                                            <td><select class="form-control divisi" name="divisi[]" id="divisi" style="width: 100%">
+
                                             </select></td>
                                             <td><input type="number" class="form-control kuota" name="kuota[]" id="kuota"></td>
                                             <td><a id="removerow"><i class="fas fa-minus" style="color:red;"></i></a></td>
@@ -144,7 +140,7 @@ section{
 @section('script')
 <script>
     $(function(){
-        // select();
+        select();
         // $('.jabatan').select2();
         var today = new Date();
         var dd = String(today.getDate()).padStart(2, '0');
@@ -180,22 +176,17 @@ section{
                 $(el).find('.divisi').attr('id', 'divisi' + j);
                 $(el).find('.kuota').attr('name', 'kuota[' + j + ']');
                 $(el).find('.kuota').attr('id', 'kuota' + j);
-                // select();
+                select();
             });
         }
 
         $('#showtable').on('click', '#tambahrow', function(){
             $('#showtable tr:last').after(`<tr>
                                             <td></td>
-                                            <td><select class="form-control jabatan" name="jabatan[]" id="jabatan">
-                                                @foreach($j as $i)
-                                                    <option value="{{$i->id}}">{{$i->nama}}</option>
-                                                @endforeach
+                                            <td><select class="form-control jabatan" name="jabatan[]" id="jabatan" style="width: 100%">
                                                 </select></td>
-                                            <td><select class="form-control divisi" name="divisi[]" id="divisi">
-                                                @foreach($d as $i)
-                                                    <option value="{{$i->id}}">{{$i->nama}}</option>
-                                                @endforeach</select></td>
+                                            <td><select class="form-control divisi" name="divisi[]" id="divisi" style="width: 100%">
+                                                </select></td>
                                             <td><input type="number" class="form-control kuota" name="kuota[]" id="kuota"></td>
                                             <td><a id="removerow"><i class="fas fa-minus" style="color:red;"></i></a></td>
                                         </tr>`);
@@ -207,63 +198,63 @@ section{
             numberRows($("#showtable"));
         });
 
-        // function select(){
-        //     $('.jabatan').select2({
-        //         ajax: {
-        //             minimumResultsForSearch: 20,
-        //             placeholder: "Pilih Jabatan",
-        //             dataType: 'json',
-        //             theme: "bootstrap",
-        //             delay: 250,
-        //             type: 'GET',
-        //             url: '/api/jabatan',
-        //             data: function(params) {
-        //                 return {
-        //                     term: params.term
-        //                 }
-        //             },
-        //             processResults: function(data) {
-        //                 console.log(data);
-        //                 return {
-        //                     results: $.map(data, function(obj) {
-        //                         return {
-        //                             id: obj.id,
-        //                             text: obj.nama
-        //                         };
-        //                     })
-        //                 };
-        //             },
-        //         }
-        //     })
+        function select(){
+            $('.jabatan').select2({
+                placeholder: "Pilih Jabatan",
+                ajax: {
+                    minimumResultsForSearch: 20,
+                    dataType: 'json',
+                    theme: "bootstrap",
+                    delay: 250,
+                    type: 'GET',
+                    url: '/api/jabatan/select',
+                    data: function(params) {
+                        return {
+                            term: params.term
+                        }
+                    },
+                    processResults: function(data) {
+                        console.log(data);
+                        return {
+                            results: $.map(data, function(obj) {
+                                return {
+                                    id: obj.id,
+                                    text: obj.nama
+                                };
+                            })
+                        };
+                    },
+                }
+            })
 
-        //     $('.divisi').select2({
-        //         ajax: {
-        //             minimumResultsForSearch: 20,
-        //             placeholder: "Pilih Divisi",
-        //             dataType: 'json',
-        //             theme: "bootstrap",
-        //             delay: 250,
-        //             type: 'GET',
-        //             url: '/api/divisi',
-        //             data: function(params) {
-        //                 return {
-        //                     term: params.term
-        //                 }
-        //             },
-        //             processResults: function(data) {
-        //                 console.log(data);
-        //                 return {
-        //                     results: $.map(data, function(obj) {
-        //                         return {
-        //                             id: obj.id,
-        //                             text: obj.nama
-        //                         };
-        //                     })
-        //                 };
-        //             },
-        //         }
-        //     });
-        // }
+            $('.divisi').select2({
+                placeholder: "Pilih Divisi",
+                ajax: {
+                    minimumResultsForSearch: 20,
+                    dataType: 'json',
+                    theme: "bootstrap",
+                    delay: 250,
+                    type: 'GET',
+                    url: '/api/divisi/select',
+                    data: function(params) {
+                        return {
+                            term: params.term
+                        }
+                    },
+                    processResults: function(data) {
+                        console.log(data);
+                        return {
+                            results: $.map(data, function(obj) {
+                                return {
+                                    id: obj.id,
+                                    text: obj.nama
+                                };
+                            })
+                        };
+                    },
+                }
+            });
+        }
     })
 </script>
 @endsection

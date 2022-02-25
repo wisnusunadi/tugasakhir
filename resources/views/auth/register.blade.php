@@ -64,7 +64,7 @@
                                             </td>
                                             <td>{{$i->kuota}}</td>
                                             <td><div class="form-check">
-                                                <input class=" form-check-input yet nosericheck" type="radio" name="pendaftaran_id" value="{{$i->id}}"/>
+                                                <input class="form-check-input" type="radio" name="pendaftaran_id" id="pendaftaran_id{{$loop->iteration}}" value="{{$i->id}}"/>
                                                 </div></td>
                                         </tr>
                                         @endforeach
