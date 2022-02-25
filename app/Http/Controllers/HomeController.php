@@ -42,10 +42,7 @@ class HomeController extends Controller
         return view('beranda');
     }
 
-    public function jadwal_show()
-    {
-        return view('jadwal.show');
-    }
+  
 
     public function jadwal_table()
     {

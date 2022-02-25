@@ -16,6 +16,9 @@
    <!-- Select2 -->
    <link rel="stylesheet" href="{{ asset('themes/plugins/select2/css/select2.min.css') }}">
   <!-- Ionicons -->
+   <!-- Datatable -->
+  <link href="{{ asset('themes/plugins/datatables/DataTables-1.11.4/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+    <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('themes/dist/css/adminlte.min.css') }}">
@@ -85,17 +88,22 @@
 <!-- Select2 -->
 <script src="{{ asset('themes/plugins/select2/js/select2.min.js') }}"></script>
 <!-- DataTable-->
-<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jq-3.6.0/dt-1.11.4/rg-1.1.4/datatables.min.js"></script>
-<!-- <link rel="stylesheet" href="{{ asset('themes/plugins/datatables/datatables.min.js') }}" type="text/javascript"> -->
+
+
+
+
 <!-- daterangepicker -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
 <script src="{{ asset('themes/plugins/daterangepicker/daterangepicker.js') }}"></script>
-<!-- Bootstrap WYSIHTML5 -->
-<script src="{{ asset('themes/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js') }}"></script>
+
+<script src="{{ asset('themes/plugins/datatables/DataTables-1.11.4/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('themes/plugins/datatables/DataTables-1.11.4/js/dataTables.bootstrap4.min.js') }}"></script>
+
+
 <!-- Slimscroll -->
-<script src="{{ asset('themes/plugins/slimScroll/jquery.slimscroll.min.js') }}"></script>
+{{-- <script src="{{ asset('themes/plugins/slimScroll/jquery.slimscroll.min.js') }}"></script> --}}
 <!-- FastClick -->
-<script src="{{ asset('themes/plugins/fastclick/fastclick.js') }}"></script>
+{{-- <script src="{{ asset('themes/plugins/fastclick/fastclick.js') }}"></script> --}}
 <!-- AdminLTE App -->
 <script src="{{ asset('themes/dist/js/adminlte.js') }}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
