@@ -22,7 +22,8 @@ class User extends Authenticatable
         'email',
         'password',
         'jenis_kelamin',
-        'role'
+        'role',
+        'pendaftaran_id'
     ];
 
     /**
@@ -43,4 +44,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function Pendaftaran(){
+        return $this->belongsTo(Pendaftaran::class,'pendaftaran_id');
+    }
 }

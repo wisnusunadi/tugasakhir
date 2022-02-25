@@ -9,6 +9,7 @@ use App\Models\Pendaftaran;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Carbon;
 
 class RegisterController extends Controller
 {
@@ -60,7 +61,10 @@ class RegisterController extends Controller
 
     public function showRegistrationForm()
     {
-        $p = Pendaftaran::all();
+        $today = Carbon::now();
+        $p = Pendaftaran::whereHas('Jadwal', function($q) use($today){
+            $q->where([['waktu_selesai', '>=', $today],['waktu_mulai', '<=', $today]]);
+        })->get();
         return view('auth.register', compact('p'));
     }
     /**
