@@ -7,10 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Jadwal extends Model
 {
-    protected $table = "jadwal";
-    protected $fillable = ['waktu_mulai','waktu_selesai','ket'];
-
+    use HasFactory;
+    public $timestamps = false;
+    protected $table = 'jadwal';
+    
+    protected $fillable = [
+        'waktu_mulai',
+        'waktu_selesai',
+        'ket',
+    ];
+    
     public function Pendaftaran(){
-        return $this->hasMany (Pendaftaran::class);
+        return $this->hasMany(Pendaftaran::class);
     }
 }

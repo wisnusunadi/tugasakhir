@@ -42,16 +42,26 @@ section{
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <table class="table table-hover" id="showtable">
-                            <thead class="aligncenter">
+                        <table class="table table-hover aligncenter" id="showtable">
+                            <thead>
+                                @if(Auth::user())
+                                    @if(Auth::user()->role == "admin")
+                                    <tr>
+                                        <th colspan="5">
+                                        <a href="{{route('jadwal.create')}}" type="button" class="btn btn-info btn-sm float-right"><i class="fa-solid fa-plus"></i> Tambah</a>
+                                        </th>
+                                    </tr>
+                                    @endif
+                                @endif
                                 <tr>
+                                    <th>No</th>
                                     <th>Tanggal</th>
                                     <th>Jabatan</th>
+                                    <th>Divisi</th>
                                     <th>Kuota</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {{--   --}}
                             </tbody>
                         </table>
                     </div>
@@ -65,49 +75,56 @@ section{
 @section('script')
 <script>
     $(function(){
-      var groupColumn = 0;
+        var groupColumn = 1;
         $('#showtable').DataTable({
-                "destroy": true,
-                "processing": true,
-                "serverSide": true,
-                "ajax": {
-                    'url': '/api/jadwal/data',
-                    "dataType": "json",
-                  
-                    'headers': {
-                        'X-CSRF-TOKEN': '{{csrf_token()}}'
+            "columnDefs": [
+                { "visible": false, "targets": groupColumn }
+            ],
+            "order": [[ groupColumn, 'asc' ]],
+            "displayLength": 25,
+            "drawCallback": function ( settings ) {
+                var api = this.api();
+                var rows = api.rows( {page:'current'} ).nodes();
+                var last=null;
+    
+                api.column(groupColumn, {page:'current'} ).data().each( function ( group, i ) {
+                    if ( last !== group ) {
+                        $(rows).eq( i ).before(
+                            '<tr class="aligncenter group"><td colspan="4">'+group+'</td></tr>'
+                        );
+    
+                        last = group;
                     }
-                },
-                "columns": [{
-                        data: 'tanggal',
-                    },
-                    {
-                        data: 'jabatan',
-                    },
-                    {
-                        data: 'kuota',
-                    }
-                ],
-                "columnDefs": [
-            { "visible": false, "targets": groupColumn }
-        ],
-                "drawCallback": function ( settings ) {
-    var api = this.api();
-    var rows = api.rows( {page:'current'} ).nodes();
-    var last=null;
-
-    api.column(groupColumn, {page:'current'} ).data().each( function ( group, i ) {
-        if ( last !== group ) {
-            $(rows).eq( i ).before(
-                '<tr class="aligncenter group"><td colspan="3">'+group+'</td></tr>'
-            );
-
-            last = group;
-        }
-    });
-}
-                
-                
+                });
+            },
+            processing: true,
+            serverSide: true,
+            ajax: {
+                'url': '{{route("jadwal.table")}}',
+                'method': 'GET',
+                'headers': {
+                    'X-CSRF-TOKEN': '{{csrf_token()}}'
+                }
+            },
+            language: {
+                processing: '<i class="fa fa-spinner fa-spin"></i> Tunggu Sebentar'
+            },
+            columns: [{
+                data: 'DT_RowIndex',
+                className: 'nowrap-text align-center',
+                orderable: false,
+                searchable: false
+            }, {
+                data: 'jadwal',
+                orderable: false,
+                searchable: false
+            }, {
+                data: 'jabatan',
+            }, {
+                data: 'divisi',
+            }, {
+                data: 'kuota',
+            },]
         });
     })
 </script>

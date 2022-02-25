@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>@yield('title', 'Laravel 5 Blog')</title>
+  <title>@yield('title', 'Sistem Penerimaan Karyawan')</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Bootstrap -->
@@ -12,7 +12,10 @@
   <link rel="stylesheet" href="{{ asset('themes/plugins/fontawesome-free/css/all.min.css') }}">
    <!-- Datatable -->
   <link href="{{ asset('themes/plugins/datatables/DataTables-1.11.4/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
-    <!-- Ionicons -->
+
+   <!-- Select2 -->
+   <link rel="stylesheet" href="{{ asset('themes/plugins/select2/css/select2.min.css') }}">
+  <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('themes/dist/css/adminlte.min.css') }}">
@@ -79,6 +82,8 @@
 </script>
 <!-- Bootstrap 4 -->
 <script src="{{ asset('themes/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<!-- Select2 -->
+<script src="{{ asset('themes/plugins/select2/js/select2.min.js') }}"></script>
 <!-- DataTable-->
 
 
@@ -101,7 +106,7 @@
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{ asset('themes/dist/js/pages/dashboard.js') }}"></script>
  <!-- Font Awesome -->
- <link rel="stylesheet" href="{{ asset('themes/plugins/fontawesome-free/js/all.min.js') }}">
+ <script type="text/javascript" src="{{ asset('themes/plugins/fontawesome-free/js/all.min.js') }}"></script>
 @yield('script')
 </body>
 </html>

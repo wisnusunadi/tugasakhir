@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use App\Models\Pendaftaran;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -53,9 +54,15 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'pendaftaran_id' => ['required'],
         ]);
     }
 
+    public function showRegistrationForm()
+    {
+        $p = Pendaftaran::all();
+        return view('auth.register', compact('p'));
+    }
     /**
      * Create a new user instance after a valid registration.
      *
@@ -66,8 +73,9 @@ class RegisterController extends Controller
     {
         return User::create([
             'nama' => $data['name'],
+            'pendaftaran_id' => $data['pendaftaran_id'],
             'jenis_kelamin' => $data['jenis_kelamin'],
-            'role' => 'admin',
+            'role' => 'user',
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);

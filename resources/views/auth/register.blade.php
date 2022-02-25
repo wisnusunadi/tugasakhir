@@ -1,93 +1,74 @@
 @extends('layouts.app')
 
+@section('custom_css')
+<style>
+    .container{
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        height: 100vh;
+        width: 100%;
+    }
+
+    body{
+        background: rgb(70,130,180);
+        background: radial-gradient(circle, rgba(70,130,180,1) 0%, rgba(129,161,187,1) 35%, rgba(243,243,243,1) 100%);
+    }
+
+    .aligncenter{
+        text-align: center;
+    }
+
+    #thecontent{
+        width:60%;
+    }
+</style>
+@stop
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
+    <div class="row" id="thecontent">
+        <div class="col-md-12">
             <div class="card">
-                <div class="card-header">
-                    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" id="pills-proses_kirim-tab" data-toggle="pill" href="#pills-proses_kirim" role="tab" aria-controls="pills-proses_kirim" aria-selected="true">Pilih Jadwal</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="pills-selesai_kirim-tab" data-toggle="pill" href="#pills-selesai_kirim" role="tab" aria-controls="pills-selesai_kirim" aria-selected="false">Register</a>
-                        </li>
-                    </ul>
-                </div>
+
                 <div class="card-body">
-                    <div class="tab-content" id="pills-tabContent">
-                        <div class="tab-pane fade show active" id="pills-proses_kirim" role="tabpanel" aria-labelledby="pills-proses_kirim-tab">
-                            
-                           
-                                    <div class="table-responsive">
-                                        <table class="table" style="text-align:center;" id="showtable">
-                                            <thead>
-                                                <th>No</th>
-                                                <th>Mulai</th>
-                                                <th>Selesai</th>
-                                                <th>Keterangan</th>
-                                                <th>Kuota</th>
-                                                <th>Aksi</th>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>12 Juni 2022</td>
-                                                    <td>13 Juni 2022</td>
-                                                    <td>Open Recruitmen IT programmer
-                                                        <small class="invalid-feedback d-block"> Junior Staff</small>
-                                                    </td>
-                                                    <td>2</td>
-                                                    <td><div class="form-check">
-                                                        <input class=" form-check-input yet nosericheck" type="checkbox"  />
-                                                        </div></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>2</td>
-                                                    <td>10 Juni 2022</td>
-                                                    <td>15 Juni 2022</td>
-                                                    <td>Open Recruitment Accounting 
-                                                        <small class="invalid-feedback d-block"> Staff</small>
-                                                    </td>
-                                                    <td>1</td>
-                                                    <td><div class="form-check">
-                                                        <input class=" form-check-input yet nosericheck" type="checkbox"  />
-                                                        </div></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3</td>
-                                                    <td>15 Juni 2022</td>
-                                                    <td>18 Juni 2022</td>
-                                                    <td>Open Recruitment HRD
-                                                        <small class="invalid-feedback d-block"> Manager</small>
-                                                    </td>
-                                                    <td>3</td>
-                                                    <td><div class="form-check">
-                                                        <input class=" form-check-input yet nosericheck" type="checkbox"  />
-                                                        </div></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                             
+                    <h4>Register</h4>
+                    <form method="POST" action="{{ route('register') }}">
+                        @csrf
+
+                        <div class="row mb-3">
+                            <label for="name" class="col-lg-4 col-md-12 col-form-label text-lg-end">Nama</label>
+
+                            <div class="col-lg-7 col-md-12">
+                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+
+                                @error('name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
                         </div>
-                        <div class="tab-pane fade show" id="pills-selesai_kirim" role="tabpanel" aria-labelledby="pills-selesai_kirim-tab">
-                            <form method="POST" action="{{ route('register') }}">
-                                @csrf
-        
-                                <div class="row mb-3">
-                                    <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
-        
-                                    <div class="col-md-6">
-                                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-        
-                                        @error('name')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
+
+                        <div class="row mb-3">
+                            <label for="email" class="col-lg-4 col-md-12 col-form-label text-lg-end">Alamat Email</label>
+
+                            <div class="col-lg-7 col-md-12">
+                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+
+                                @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-3">
+                            <label for="password" class="col-lg-4 col-md-12 col-form-label text-lg-end">Jenis Kelamin</label>
+                            <div class="col-lg-7 col-md-12 col-form-label">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" id="laki" value="l" name="jenis_kelamin" >
+                                    <label class="form-check-label" for="inlineCheckbox1">Laki - laki</label>
                                 </div>
         
                                 <div class="row mb-3">
@@ -155,11 +136,66 @@
                                 </div>
                             </form>
                         </div>
-                    </div>
+                        <div class="row mb-3">
+                            <label for="password" class="col-lg-4 col-md-12 col-form-label text-lg-end">{{ __('Password') }}</label>
 
+                            <div class="col-lg-7 col-md-12">
+                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+
+                                @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="password-confirm" class="col-lg-4 col-md-12 col-form-label text-lg-end">Konfirmasi Password</label>
+
+                            <div class="col-lg-7 col-md-12">
+                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="password" class="col-lg-4 col-md-12 col-form-label text-lg-end">Pendaftaran</label>
+
+                            <div class="col-lg-7 col-md-12">
+                                <select class="form-control select2" name="pendaftaran_id" id="pendaftaran_id">
+                                    @foreach($p as $i)
+                                    <option value="{{$i->id}}">{{$i->Jabatan->nama}} {{$i->Divisi->nama}}</option>
+                                    @endforeach
+                                </select>
+
+                                @error('pendaftaraan')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-0">
+                            <div class="col-lg-12 col-md-12">
+                                <a type="button" class="btn btn-danger" href="{{route('login')}}">Batal</a>
+                                <button type="submit" class="btn btn-primary float-right">
+                                    {{ __('Register') }}
+                                </button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
+@endsection
+
+@section('script')
+<script>
+    $(function(){
+        $('#pendaftaran_id').select2();
+    })
+</script>
 @endsection
