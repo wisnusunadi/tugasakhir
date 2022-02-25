@@ -73,6 +73,23 @@ section{
 td{
     border-color: white !important;
 }
+
+#navigation li a {
+    width:60px;
+    max-width:60px;
+    text-align: center;
+}
+
+#navigation li.answer a {
+    background: rgb(104, 145, 38);
+  color: #fff;
+}
+
+#navigation li.active a {
+    background: rgba(23, 23, 24, 0.844);
+  color: #fff;
+}
+
 </style>
 @stop
 
@@ -84,6 +101,13 @@ td{
     </div>
     <div class="container-fluid">
         <div class="row">
+            <div class="col-lg-1">
+                <div class="card">
+                    <div class="card-body">
+                        <span class="countdown"></span>
+                    </div>
+                </div>
+            </div>
             <div class="col-lg-8 col-md-12">
                 <form action="" id="soalform">
                 @csrf
@@ -254,6 +278,31 @@ td{
                     </div>
                 </div>
                 </form>
+                <div class="card">
+                    <div class="card-body"> 
+                        <h4 class="content-title">Navigasi</h4>
+                        <nav aria-label="...">
+                            <ul class="pagination flex-wrap" id="navigation">
+                                <?php for($i=0;$i<40;$i++) {?>
+                                    @if ($i == 0)
+                                        <li class="page-item active" id="page{{ $i }}"><a class="page-link" href="#">{{ $i+1 }}</a></li>
+                                    @else
+                                        <li class="page-item " id="page{{ $i }}"><a class="page-link" href="#">{{ $i+1 }}</a></li>
+                                    @endif
+                         
+                              <?php }?>
+                              {{-- <li class="page-item active">
+                                <span class="page-link">
+                                  2
+                                  <span class="sr-only">(current)</span>
+                                </span>
+                              </li> --}}
+                              
+                            </ul>
+                          </nav>
+
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -261,6 +310,53 @@ td{
 @endsection
 
 @section('script')
+{{-- <script>
+ window.onbeforeunload = function(event) {
+            return confirm("Confirm refresh");
+        };
+</script> --}}
+
+<script>
+    $(document).ready(function() {
+        $('li').click(function() {
+            $('li.page-item.active').removeClass("active");
+            $(this).addClass("active");
+        });
+        $('#nextBtn').click(function() {
+          alert('ok');
+        });
+    });
+</script>
+
+
+
+
+<script>
+   var timer2 = "60:01";
+var interval = setInterval(function() {
+
+
+  var timer = timer2.split(':');
+  //by parsing integer, I avoid all extra string processing
+  var minutes = parseInt(timer[0], 10);
+  var seconds = parseInt(timer[1], 10);
+  --seconds;
+  minutes = (seconds < 0) ? --minutes : minutes;
+  seconds = (seconds < 0) ? 59 : seconds;
+  seconds = (seconds < 10) ? '0' + seconds : seconds;
+  //minutes = (minutes < 10) ?  minutes : minutes;
+  $('.countdown').html(minutes + ':' + seconds);
+  if (minutes < 0) clearInterval(interval);
+  //check if both minutes and seconds are 0
+  if ((seconds <= 0) && (minutes <= 0)) clearInterval(interval);
+  timer2 = minutes + ':' + seconds;
+}, 1000);
+    </script>
+
+
+
+
+
 <script>
     var currentTab = 0; // Current tab is set to be the first tab (0)
         showTab(currentTab); // Display the current tab
@@ -340,8 +436,6 @@ td{
             // Otherwise, display the correct tab:
             showTab(currentTab);
         }
-    $(function(){
-        
-    });
+
 </script>
 @endsection
