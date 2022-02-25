@@ -49,8 +49,25 @@ section{
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-                <form action="">
+                <form method="POST" action="{{route('jadwal.store')}}">
                 @csrf
+                @if(Session::has('error') || count($errors) > 0 )
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>{{Session::get('error')}}</strong> Periksa
+                    kembali data yang diinput
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                @elseif(Session::has('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>{{Session::get('success')}}</strong>,
+                    Terima kasih
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                @endif
                 <div class="card">
                     <div class="card-header bg-success">
                         <h6 class="card-title">Tambah Jadwal</h6>
@@ -79,13 +96,14 @@ section{
                                 <table class="table table-hover aligncenter" id="showtable">
                                     <thead>
                                         <tr>
-                                            <th colspan="4">
+                                            <th colspan="5">
                                                 <span class="float-right"><button type="button" class="btn btn-sm btn-primary" id="tambahrow"><i class="fas fa-plus"></i> Tambah Jabatan</button></span>
                                             </th>
                                         </tr>
                                         <tr>
                                             <th>No</th>
                                             <th>Jabatan</th>
+                                            <th>Divisi</th>
                                             <th>Kuota</th>
                                             <th>Aksi</th>
                                         </tr>
@@ -93,7 +111,16 @@ section{
                                     <tbody>
                                         <tr>
                                             <td>1</td>
-                                            <td><input type="text" class="form-control jabatan" name="jabatan[]" id="jabatan"></td>
+                                            <td><select class="form-control jabatan" name="jabatan[]" id="jabatan">
+                                                @foreach($j as $i)
+                                                    <option value="{{$i->id}}">{{$i->nama}}</option>
+                                                @endforeach
+                                            </select></td>
+                                            <td><select class="form-control divisi" name="divisi[]" id="divisi">
+                                                @foreach($d as $i)
+                                                    <option value="{{$i->id}}">{{$i->nama}}</option>
+                                                @endforeach
+                                            </select></td>
                                             <td><input type="number" class="form-control kuota" name="kuota[]" id="kuota"></td>
                                             <td><a id="removerow"><i class="fas fa-minus" style="color:red;"></i></a></td>
                                         </tr>
@@ -117,7 +144,8 @@ section{
 @section('script')
 <script>
     $(function(){
-        $('#showtable').DataTable();
+        // select();
+        // $('.jabatan').select2();
         var today = new Date();
         var dd = String(today.getDate()).padStart(2, '0');
         var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
@@ -148,17 +176,28 @@ section{
                 var j = c - 1;
                 $(el).find('.jabatan').attr('name', 'jabatan[' + j + ']');
                 $(el).find('.jabatan').attr('id', 'jabatan' + j);
+                $(el).find('.divisi').attr('name', 'divisi[' + j + ']');
+                $(el).find('.divisi').attr('id', 'divisi' + j);
                 $(el).find('.kuota').attr('name', 'kuota[' + j + ']');
                 $(el).find('.kuota').attr('id', 'kuota' + j);
+                // select();
             });
         }
 
         $('#showtable').on('click', '#tambahrow', function(){
             $('#showtable tr:last').after(`<tr>
                                             <td></td>
-                                            <td><input type="text" class="form-control jabatan" name="jabatan[]" id="jabatan"></td>
+                                            <td><select class="form-control jabatan" name="jabatan[]" id="jabatan">
+                                                @foreach($j as $i)
+                                                    <option value="{{$i->id}}">{{$i->nama}}</option>
+                                                @endforeach
+                                                </select></td>
+                                            <td><select class="form-control divisi" name="divisi[]" id="divisi">
+                                                @foreach($d as $i)
+                                                    <option value="{{$i->id}}">{{$i->nama}}</option>
+                                                @endforeach</select></td>
                                             <td><input type="number" class="form-control kuota" name="kuota[]" id="kuota"></td>
-                                            <td><a id="removerow" style="color:red;"><i class="fas fa-minus"></i></a></td>
+                                            <td><a id="removerow"><i class="fas fa-minus" style="color:red;"></i></a></td>
                                         </tr>`);
             numberRows($("#showtable"));
         });
@@ -167,6 +206,64 @@ section{
             $(this).closest('tr').remove();
             numberRows($("#showtable"));
         });
+
+        // function select(){
+        //     $('.jabatan').select2({
+        //         ajax: {
+        //             minimumResultsForSearch: 20,
+        //             placeholder: "Pilih Jabatan",
+        //             dataType: 'json',
+        //             theme: "bootstrap",
+        //             delay: 250,
+        //             type: 'GET',
+        //             url: '/api/jabatan',
+        //             data: function(params) {
+        //                 return {
+        //                     term: params.term
+        //                 }
+        //             },
+        //             processResults: function(data) {
+        //                 console.log(data);
+        //                 return {
+        //                     results: $.map(data, function(obj) {
+        //                         return {
+        //                             id: obj.id,
+        //                             text: obj.nama
+        //                         };
+        //                     })
+        //                 };
+        //             },
+        //         }
+        //     })
+
+        //     $('.divisi').select2({
+        //         ajax: {
+        //             minimumResultsForSearch: 20,
+        //             placeholder: "Pilih Divisi",
+        //             dataType: 'json',
+        //             theme: "bootstrap",
+        //             delay: 250,
+        //             type: 'GET',
+        //             url: '/api/divisi',
+        //             data: function(params) {
+        //                 return {
+        //                     term: params.term
+        //                 }
+        //             },
+        //             processResults: function(data) {
+        //                 console.log(data);
+        //                 return {
+        //                     results: $.map(data, function(obj) {
+        //                         return {
+        //                             id: obj.id,
+        //                             text: obj.nama
+        //                         };
+        //                     })
+        //                 };
+        //             },
+        //         }
+        //     });
+        // }
     })
 </script>
 @endsection

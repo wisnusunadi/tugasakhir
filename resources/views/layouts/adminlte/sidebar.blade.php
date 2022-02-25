@@ -11,10 +11,10 @@
       @if(Auth::user())
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="" class="img-circle elevation-2" alt="{{ $currentUser->nama }}">
+          <img src="{{ asset('/assets/image/unknown.jpg')}}" class="img-circle elevation-2" alt="{{Auth::user()->nama}}">
         </div>
         <div class="info">
-          <a href="#" class="d-block">{{ $currentUser->nama }}</a>
+          <a href="#" class="d-block">{{Auth::user()->nama}}</a>
         </div>
       </div>
       @endif
@@ -25,6 +25,26 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
 
+          
+          @if(Auth::user())
+          @if(Auth::user()->role == "admin")
+          <li class="nav-item">
+            <a href="/jadwal" class="nav-link">
+              <i class="nav-icon fa-solid fa-calendar"></i>
+              <p>
+                Jadwal
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/peserta" class="nav-link">
+              <i class="nav-icon fa-solid fa-users"></i>
+              <p>
+                Daftar Peserta
+              </p>
+            </a>
+          </li>
+          @else
           <li class="nav-item">
             <a href="/soal_tes" class="nav-link">
               <i class="nav-icon fas fa-edit"></i>
@@ -41,25 +61,36 @@
               </p>
             </a>
           </li>
-          @if(Auth::user())
+          @endif
+
           <li class="nav-item">
-            <a href="pages/widgets.html" class="nav-link">
-              <i class="nav-icon fas fa-edit"></i>
-              <p>
-                Daftar Peserta
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a title="logout" class="nav-link" href="{{ route('logout') }}"
+            <a class="nav-link" href="{{ route('logout') }}"
                 onclick="event.preventDefault();
                               document.getElementById('logout-form').submit();">
-                <i class="fa fa-sign-out"></i>
+                <i class="nav-icon fa-solid fa-right-from-bracket"></i>
                 <p>Log Out</p>
             </a>
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
               @csrf
             </form>
+          </li>
+          
+          @else
+          <li class="nav-item">
+            <a href="/soal_tes" class="nav-link">
+              <i class="nav-icon fas fa-edit"></i>
+              <p>
+                Mulai Tes
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/jadwal" class="nav-link">
+              <i class="nav-icon fas fa-calendar"></i>
+              <p>
+                Jadwal Recruitment
+              </p>
+            </a>
           </li>
           @endif
         </ul>
