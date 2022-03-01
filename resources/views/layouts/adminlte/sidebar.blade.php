@@ -37,6 +37,14 @@
             </a>
           </li>
           <li class="nav-item">
+            <a href="/draft_soal_show" class="nav-link">
+              <i class=" nav-icon fa-regular fa-file-lines"></i>
+              <p>
+                Soal
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
             <a href="/peserta" class="nav-link">
               <i class="nav-icon fa-solid fa-users"></i>
               <p>

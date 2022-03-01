@@ -17,6 +17,7 @@ Route::get('/', function () {
     return view('beranda');
 });
 Route::view('/jadwal', 'jadwal.show')->name('jadwal');
+Route::view('/soal', 'jadwal.show')->name('jadwal');
 Route::get('/jadwal/table', [App\Http\Controllers\HomeController::class, 'jadwal_table'])->name('jadwal.table');
 
 // Route::view('/soal_tes', 'soal.tes.show')->name('soal.tes');
