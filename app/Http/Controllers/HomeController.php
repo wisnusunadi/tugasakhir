@@ -8,6 +8,8 @@ use App\Models\Divisi;
 use App\Models\Jabatan;
 use App\Models\Jadwal;
 use App\Models\Pendaftaran;
+use App\Models\Soal;
+use App\Models\SoalDetail;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Carbon;
 
@@ -42,7 +44,35 @@ class HomeController extends Controller
         return view('beranda');
     }
 
-  
+    public function draft_soal_preview_data($id){
+        $data = SoalDetail::where('soal_id',$id);
+        return DataTables()->of($data)
+        ->addIndexColumn()
+        ->addColumn('jawaban', function ($data) {
+           $g =array();
+           $return = "";
+           $return .= ' <div class="form-group">';
+            foreach ($data->Jawaban as $s) {
+           if ($s->status == 1){
+            $g[] =   '<div class="form-check">
+            <input class="form-check-input" type="radio" name="'.$s->id.'" checked>
+            <label class="form-check-label"> '.$s->jawaban.'</label>
+          </div>';
+           }else{
+            $g[] =   '<div class="form-check">
+            <input class="form-check-input" type="radio" disabled>
+            <label class="form-check-label"> '.$s->jawaban.'</label>
+          </div>';
+           }
+            }
+            $return .= implode('', $g);
+            $return .= '</div>';
+            return $return;
+        
+        })
+        ->rawColumns(['jawaban'])
+        ->make(true);
+    }
 
     public function jadwal_table()
     {
@@ -119,9 +149,22 @@ class HomeController extends Controller
         return view('peserta.hasil.show');
     }
 
-    public function draft_soal_show(){
-        return view('soal.draft.show');
+    
+    public function draft_soal_preview($id){
+        $soal = Soal::find($id);
+        return view('soal.draft.preview',['soal'=>$soal]);
     }
+    public function draft_soal_show(){
+        $soal = Soal::all();
+        return view('soal.draft.show',['soal'=> $soal]);
+    }
+    public function draft_soal_create()
+    {
+        $divisi = Divisi::all();
+        $jabatan = Jabatan::all();
+        return view('soal.draft.create');
+    }
+
 
     public function jabatan_data(Request $request){
         $data = Jabatan::where('nama', 'LIKE', '%' . $request->input('term', '') . '%')

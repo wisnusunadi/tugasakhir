@@ -105,8 +105,8 @@ td{
           <div class="row">
 
             <div class="col-12">
-                <span class="float-right filter">
-                    <a href=""><button class="btn btn-outline-info">
+                <span class="float-left filter">
+                    <a href="{{route('draft_soal.create')}}"><button class="btn btn-outline-info">
                             <i class="fas fa-plus"></i> Tambah
                         </button>
                     </a>
@@ -142,46 +142,33 @@ td{
                     </form>
                 </span>
             </div>
-
-            <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
-                <div class="card bg-light d-flex flex-fill">
-                  <div class="card-header text-muted border-bottom-0">
-                    Soal Tes Psikologi 
-                  </div>
-                  <div class="card-body pt-0">
-                    <div class="row">
-                      <div class="col-7">
-                        <h2 class="lead"><b>Soal 1</b></h2>
-                        <p class="text-muted text-sm"><b>Jumlah: </b> 50 Soal </p>
-                        <p class="text-muted text-sm"><b>Jabatan: </b> Staff , Manager </p>
-                        <p class="text-muted text-sm"><b>Divisi: </b> Logistik , Gudang </p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="card-footer">
-                    <div class="text-right">
-                      <a href="#" class="btn btn-sm bg-teal">
-                      Edit
-                      </a>
-                      <a href="#" class="btn btn-sm btn-primary">
-                     Lihat Soal
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            @foreach ($soal as $s )
             <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
               <div class="card bg-light d-flex flex-fill">
                 <div class="card-header text-muted border-bottom-0">
-                  Soal Tes Potensi Akademik
+                  {{ $s->nama }}
                 </div>
                 <div class="card-body pt-0">
                   <div class="row">
                     <div class="col-7">
-                      <h2 class="lead"><b>Soal 2</b></h2>
-                      <p class="text-muted text-sm"><b>Jumlah: </b> 50 Soal </p>
-                      <p class="text-muted text-sm"><b>Jabatan: </b> Staff </p>
-                      <p class="text-muted text-sm"><b>Divisi: </b> IT , Akutansi </p>
+                      <h2 class="lead"><b>{{ $s->kode_soal }}</b></h2>
+                      <p class="text-muted text-sm"><b>Jumlah: </b> {{ $s->getJumlahSoal() }} Soal </p>
+                      <p class="text-muted text-sm"><b>Jabatan: </b> 
+                        @foreach($s->Jabatan as $j)
+                        {{$j->nama}}
+                        @if(!$loop->last)
+                        ,
+                        @endif
+                        @endforeach
+                      </p>
+                      <p class="text-muted text-sm"><b>Divisi: </b> 
+                        @foreach($s->Divisi as $d)
+                        {{$d->nama}}
+                        @if(!$loop->last)
+                        ,
+                        @endif
+                        @endforeach
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -190,17 +177,14 @@ td{
                     <a href="#" class="btn btn-sm bg-teal">
                     Edit
                     </a>
-                    <a href="#" class="btn btn-sm btn-primary">
+                    <a href="{{ route('draft_soal.preview',['id' => $s->id]) }}" class="btn btn-sm btn-primary">
                    Lihat Soal
                     </a>
                   </div>
                 </div>
               </div>
             </div>
-           
-           
-            
-            
+            @endforeach            
           </div>
         </div>
         <!-- /.card-body -->

@@ -17,4 +17,7 @@ class Divisi extends Model
     public function Pendaftaran(){
         return $this->hasMany(Pendaftaran::class);
     }
+    public function Soal(){
+        return $this->belongsToMany(Soal::class,'soal_divisi');
+    }
 }

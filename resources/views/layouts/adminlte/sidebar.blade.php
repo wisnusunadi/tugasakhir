@@ -6,7 +6,7 @@
       <span class="brand-text font-weight-light">Recruitment</span>
     </a>
     <!-- Sidebar -->
-    <div class="sidebar">
+    <div class="sidebar" >
       <!-- Sidebar user panel (optional) -->
       @if(Auth::user())
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
