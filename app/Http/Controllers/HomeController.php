@@ -10,6 +10,7 @@ use App\Models\Jadwal;
 use App\Models\Pendaftaran;
 use App\Models\Soal;
 use App\Models\SoalDetail;
+use App\Models\User;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Carbon;
 
@@ -166,15 +167,5 @@ class HomeController extends Controller
     }
 
 
-    public function jabatan_data(Request $request){
-        $data = Jabatan::where('nama', 'LIKE', '%' . $request->input('term', '') . '%')
-            ->orderby('nama', 'ASC')->get();
-        echo json_encode($data);
-    }
-
-    public function divisi_data(Request $request){
-        $data = Divisi::where('nama', 'LIKE', '%' . $request->input('term', '') . '%')
-            ->orderby('nama', 'ASC')->get();
-        echo json_encode($data);
-    }
+    
 }

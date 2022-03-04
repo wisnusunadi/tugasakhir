@@ -101,9 +101,9 @@ td{
     </div>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-1">
+            <div class="col-lg-2">
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-body aligncenter">
                         <span class="countdown"></span>
                     </div>
                 </div>
@@ -285,18 +285,12 @@ td{
                             <ul class="pagination flex-wrap" id="navigation">
                                 <?php for($i=0;$i<40;$i++) {?>
                                     @if ($i == 0)
-                                        <li class="page-item active" id="page{{ $i }}"><a class="page-link" href="#">{{ $i+1 }}</a></li>
+                                        <li class="page-item active" id="page{{ $i }}"><a class="page-link" onclick="navigate({{ $i }})">{{ $i+1 }}</a></li>
                                     @else
-                                        <li class="page-item " id="page{{ $i }}"><a class="page-link" href="#">{{ $i+1 }}</a></li>
+                                        <li class="page-item " id="page{{ $i }}"><a class="page-link" onclick="navigate({{ $i }})">{{ $i+1 }}</a></li>
                                     @endif
                          
                               <?php }?>
-                              {{-- <li class="page-item active">
-                                <span class="page-link">
-                                  2
-                                  <span class="sr-only">(current)</span>
-                                </span>
-                              </li> --}}
                               
                             </ul>
                           </nav>
@@ -310,11 +304,11 @@ td{
 @endsection
 
 @section('script')
-{{-- <script>
+<!-- <script>
  window.onbeforeunload = function(event) {
             return confirm("Confirm refresh");
         };
-</script> --}}
+</script>
 
 <script>
     $(document).ready(function() {
@@ -326,14 +320,11 @@ td{
           alert('ok');
         });
     });
-</script>
-
-
-
+</script> -->
 
 <script>
-   var timer2 = "60:01";
-var interval = setInterval(function() {
+  var timer2 = "60:01";
+  var interval = setInterval(function() {
 
 
   var timer = timer2.split(':');
@@ -351,7 +342,7 @@ var interval = setInterval(function() {
   if ((seconds <= 0) && (minutes <= 0)) clearInterval(interval);
   timer2 = minutes + ':' + seconds;
 }, 1000);
-    </script>
+</script>
 
 
 
@@ -390,12 +381,15 @@ var interval = setInterval(function() {
         var x, y, i, valid = true;
         x = document.getElementsByClassName("tab");
         y = $("input[name='jawaban_id["+currentTab+"]']:checked").val();
+        
         // A loop that checks every input field in the current tab:
         if($("input[name='jawaban_id["+currentTab+"]']:checked").val() === "" || $("input[name='jawaban_id["+currentTab+"]']:checked").val() === undefined){
             $("input[name='jawaban_id["+currentTab+"]']").addClass('is-invalid');
             valid = false;
         }else{
             $("input[name='jawaban_id["+currentTab+"]']").removeClass('is-invalid');
+            $('#page'+currentTab).removeClass("active");
+            $('#page'+currentTab).addClass("answer");
         }
         // for (i = 0; i < y.length; i++) {
         //     // If a field is empty...
@@ -428,10 +422,41 @@ var interval = setInterval(function() {
         var x = document.getElementsByClassName("tab");
         // Exit the function if any field in the current tab is invalid:
         if (n == 1 && !validateForm()) return false;
+        if(n == -1){
+            $('#page'+currentTab).removeClass("active");
+            if($("input[name='jawaban_id["+currentTab+"]']:checked").val() !== undefined){
+                $('#page'+currentTab).addClass("answer");
+            }
+        }
         // Hide the current tab:
         x[currentTab].style.display = "none";
         // Increase or decrease the current tab by 1:
         currentTab = currentTab + n;
+        $('#page'+currentTab).removeClass("answer");
+        $('#page'+currentTab).addClass("active");
+        // if you have reached the end of the form...
+        if (currentTab >= x.length) {
+            // ... the form gets submitted:
+            document.getElementById("soalform").submit();
+            return false;
+        }
+        // Otherwise, display the correct tab:
+        showTab(currentTab);
+    }
+
+    function navigate(n) {
+        // This function will figure out which tab to display
+        var x = document.getElementsByClassName("tab");
+        // Exit the function if any field in the current tab is invalid:
+        if (!validateForm()) return false;
+        // Hide the current tab:
+        x[currentTab].style.display = "none";
+        // Increase or decrease the current tab by 1:
+        
+
+        currentTab = n;
+        $('#page'+currentTab).removeClass("answer");
+        $('#page'+currentTab).addClass("active");
         // if you have reached the end of the form...
         if (currentTab >= x.length) {
             // ... the form gets submitted:

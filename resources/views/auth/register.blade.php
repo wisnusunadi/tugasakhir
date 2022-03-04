@@ -151,7 +151,7 @@
                                     </div>
                                 </div>
                         </div>
-<<<<<<< HEAD
+
                         <div class="row mb-3">
                             <label for="password" class="col-lg-4 col-md-12 col-form-label text-lg-end">{{ __('Password') }}</label>
 
@@ -200,9 +200,11 @@
                                 </button>
                             </div>
                         </div>
-=======
+
                     </div>
->>>>>>> 424ba3e12919f50cab10a7e49e7b90a4774852bc
+
+                    </div>
+
                     </form>
                 </div>
                 

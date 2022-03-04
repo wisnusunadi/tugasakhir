@@ -100,7 +100,7 @@ section{
             processing: true,
             serverSide: true,
             ajax: {
-                'url': '{{route("jadwal.table")}}',
+                'url': '/api/jadwal/table',
                 'method': 'GET',
                 'headers': {
                     'X-CSRF-TOKEN': '{{csrf_token()}}'

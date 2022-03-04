@@ -11,7 +11,7 @@ class Jabatan extends Model
     public $timestamps = false;
     protected $table = 'jabatan';
     protected $fillable = [
-        'nama',
+        'nama','pass_grade'
     ];
 
     public function Pendaftaran(){
