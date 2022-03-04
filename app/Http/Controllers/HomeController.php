@@ -156,14 +156,14 @@ class HomeController extends Controller
         return view('soal.draft.preview',['soal'=>$soal]);
     }
     public function draft_soal_show(){
-        $soal = Soal::all();
+        $soal = Soal::paginate(6);
         return view('soal.draft.show',['soal'=> $soal]);
     }
     public function draft_soal_create()
     {
         $divisi = Divisi::all();
         $jabatan = Jabatan::all();
-        return view('soal.draft.create');
+        return view('soal.draft.create',['divisi' => $divisi, 'jabatan' => $jabatan ]);
     }
 
 

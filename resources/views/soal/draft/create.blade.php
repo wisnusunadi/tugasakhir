@@ -89,13 +89,9 @@ section{
                             <label for="tanggal_akhir" class="col-lg-4 col-md-12 col-form-label labelket">Jabatan</label>
                             <div class="col-lg-8 col-md-12">
                                     <select class="select2" multiple="multiple" data-placeholder="Pilih Jabatan" style="width: 100%;">
-                                        <option>Alabama</option>
-                                        <option>Alaska</option>
-                                        <option>California</option>
-                                        <option>Delaware</option>
-                                        <option>Tennessee</option>
-                                        <option>Texas</option>
-                                        <option>Washington</option>
+                                      @foreach ($jabatan as $j)
+                                          <option value="{{ $j->id }}">{{ $j->nama }}</option>
+                                      @endforeach
                                     </select>
                             </div>
                         </div>
@@ -103,13 +99,9 @@ section{
                             <label for="tanggal_akhir" class="col-lg-4 col-md-12 col-form-label labelket">Divisi</label>
                             <div class="col-lg-8 col-md-12">
                                     <select class="select2" multiple="multiple" data-placeholder="Pilih Divisi" style="width: 100%;">
-                                        <option>Alabama</option>
-                                        <option>Alaska</option>
-                                        <option>California</option>
-                                        <option>Delaware</option>
-                                        <option>Tennessee</option>
-                                        <option>Texas</option>
-                                        <option>Washington</option>
+                                        @foreach ($divisi as $d)
+                                          <option value="{{ $d->id }}">{{ $d->nama }}</option>
+                                      @endforeach
                                     </select>
                             </div>
                         </div>

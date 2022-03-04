@@ -57,48 +57,6 @@ section{
     </div>
     <div class="container-fluid">
         <div class="row">
-            {{-- <div class="col-lg-12">
-                <div class="card card-primary">
-              <div class="card-header">
-                <h3 class="card-title">Soal 1</h3>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-                <strong>Nama</strong>
-
-                <p class="text-muted">
-                 Tes Potensi Akademik
-                </p>
-
-                <hr>
-
-                <strong>Jumlah</strong>
-
-                <p class="text-muted">50 Soal</p>
-
-                <hr>
-
-                <strong>Jabatan</strong>
-
-                <p class="text-muted">Staff, Manager</p>
-
-                <hr>
-
-                <strong>Divisi</strong>
-
-                <p class="text-muted">IT, Gudang</p>
-
-                <hr>
-
-                <strong>Waktu</strong>
-
-                <p class="text-muted">120 Menit</p>
-
-                <hr>
-               
-              </div>
-              <!-- /.card-body -->
-            </div> --}}
             </div>
 
 

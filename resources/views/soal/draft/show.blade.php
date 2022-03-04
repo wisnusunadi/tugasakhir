@@ -99,12 +99,12 @@ td{
     <div class="content-header">
         <h1 class="content-title">Soal Tes</h1>
     </div>
-    
-    <div class="card card-solid">
-        <div class="card-body pb-0">
-          <div class="row">
-
-            <div class="col-12">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+           <div class="col-12">
                 <span class="float-left filter">
                     <a href="{{route('draft_soal.create')}}"><button class="btn btn-outline-info">
                             <i class="fas fa-plus"></i> Tambah
@@ -142,6 +142,9 @@ td{
                     </form>
                 </span>
             </div>
+          </div>
+          <div class="card-body">
+          <div class="row">
             @foreach ($soal as $s )
             <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
               <div class="card bg-light d-flex flex-fill">
@@ -187,20 +190,13 @@ td{
             @endforeach            
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
         <!-- /.card-body -->
         <div class="card-footer">
-          <nav aria-label="Contacts Page Navigation">
-            <ul class="pagination justify-content-center m-0">
-              <li class="page-item active"><a class="page-link" href="#">1</a></li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item"><a class="page-link" href="#">4</a></li>
-              <li class="page-item"><a class="page-link" href="#">5</a></li>
-              <li class="page-item"><a class="page-link" href="#">6</a></li>
-              <li class="page-item"><a class="page-link" href="#">7</a></li>
-              <li class="page-item"><a class="page-link" href="#">8</a></li>
-            </ul>
-          </nav>
+          {{ $soal->links() }}
         </div>
         <!-- /.card-footer -->
       </div>
