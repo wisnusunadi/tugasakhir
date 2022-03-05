@@ -18,6 +18,6 @@ class Divisi extends Model
         return $this->hasMany(Pendaftaran::class);
     }
     public function Soal(){
-        return $this->belongsToMany(Soal::class,'soal_divisi');
+        return $this->belongsToMany(Soal::class, 'soal_divisi', 'divisi_id', 'soal_id');
     }
 }

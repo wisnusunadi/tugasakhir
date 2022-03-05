@@ -9,6 +9,7 @@ class Soal extends Model
 {
     use HasFactory;
     protected $table = 'soal';
+    public $timestamps = false;
     protected $fillable = [
         'kode_soal',
         'nama',
@@ -19,10 +20,10 @@ class Soal extends Model
         return $this->hasMany(SoalDetail::class);
     }
     public function Divisi(){
-        return $this->belongsToMany(Divisi::class,'soal_divisi');
+        return $this->belongsToMany(Divisi::class, 'soal_divisi', 'soal_id', 'divisi_id');
     }
     public function Jabatan(){
-        return $this->belongsToMany(Jabatan::class,'soal_jabatan');
+        return $this->belongsToMany(Jabatan::class, 'soal_jabatan', 'soal_id', 'jabatan_id');
     }
 
     public function getJumlahSoal()

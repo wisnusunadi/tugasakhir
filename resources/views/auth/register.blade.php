@@ -103,7 +103,7 @@
         
                                 <div class="form-group row mb-3">
                                     <label for="password" class="col-md-4 col-form-label text-md-end">Jenis Kelamin</label>
-                                    <div class="col-md-6 colcol-form-label">
+                                    <div class="col-md-6 col-form-label">
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="radio" id="laki" value="l" name="jenis_kelamin" >
                                             <label class="form-check-label" for="inlineCheckbox1">Laki - laki</label>
@@ -136,7 +136,7 @@
                                 </div>
         
                                 <div class="row mb-3">
-                                    <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
+                                    <label for="password-confirm" class="col-md-4 col-form-label text-md-end">Konfirmasi Password</label>
         
                                     <div class="col-md-6">
                                         <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
@@ -144,63 +144,14 @@
                                 </div>
         
                                 <div class="row mb-0">
-                                    <div class="col-md-6 offset-md-4">
+                                    <div class="col-md-9 offset-md-2">
+                                        <a type="button" class="btn btn-danger" href="{{route('login')}}">Batal</a>
                                         <button type="submit" class="btn btn-primary float-right">
                                             {{ __('Register') }}
                                         </button>
                                     </div>
                                 </div>
                         </div>
-
-                        <div class="row mb-3">
-                            <label for="password" class="col-lg-4 col-md-12 col-form-label text-lg-end">{{ __('Password') }}</label>
-
-                            <div class="col-lg-7 col-md-12">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="password-confirm" class="col-lg-4 col-md-12 col-form-label text-lg-end">Konfirmasi Password</label>
-
-                            <div class="col-lg-7 col-md-12">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="password" class="col-lg-4 col-md-12 col-form-label text-lg-end">Pendaftaran</label>
-
-                            <div class="col-lg-7 col-md-12">
-                                <select class="form-control select2" name="pendaftaran_id" id="pendaftaran_id">
-                                    @foreach($p as $i)
-                                    <option value="{{$i->id}}">{{$i->Jabatan->nama}} {{$i->Divisi->nama}}</option>
-                                    @endforeach
-                                </select>
-
-                                @error('pendaftaraan')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-0">
-                            <div class="col-lg-12 col-md-12">
-                                <a type="button" class="btn btn-danger" href="{{route('login')}}">Batal</a>
-                                <button type="submit" class="btn btn-primary float-right">
-                                    {{ __('Register') }}
-                                </button>
-                            </div>
-                        </div>
-
                     </div>
 
                     </div>

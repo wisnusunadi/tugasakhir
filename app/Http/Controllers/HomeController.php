@@ -10,6 +10,7 @@ use App\Models\Jadwal;
 use App\Models\Pendaftaran;
 use App\Models\Soal;
 use App\Models\SoalDetail;
+use App\Models\Jawaban;
 use App\Models\User;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Carbon;
@@ -164,6 +165,60 @@ class HomeController extends Controller
         $divisi = Divisi::all();
         $jabatan = Jabatan::all();
         return view('soal.draft.create',['divisi' => $divisi, 'jabatan' => $jabatan ]);
+    }
+
+    public function draft_soal_store(Request $request){
+
+        $bool = true;
+        $c = Soal::create([
+            'nama' => $request->nama,
+            'kode_soal' => $request->kode_soal,
+            'waktu' => $request->waktu
+        ]);
+
+        if($c){
+            $soal = Soal::find($c->id);
+            $soal->Divisi()->attach($request->divisi);
+            $soal->Jabatan()->attach($request->jabatan);
+
+            for($i = 0; $i < count($request->soal); $i++){
+                $sdc = SoalDetail::create([
+                    'soal_id' => $c->id,
+                    'deskripsi' => $request->soal[$i],
+                    'bobot' => $request->poin[$i]    
+                ]);
+
+                if($sdc){
+                    for($j = 0; $j < count($request->jawaban[$i]); $j++){
+                        $status = NULL;
+                        if(isset($request->get('kunci_jawaban')[$i][$j])){
+                            $status = '1';
+                        }else{
+                            $status = NULL;
+                        }
+                        $jc = Jawaban::create([
+                            'soal_detail_id' => $sdc->id,
+                            'jawaban' => $request->jawaban[$i][$j],
+                            'status' => $status
+                        ]);
+                        if(!$jc){
+                            $bool = false;
+                        }
+                    }
+                }
+                else if(!$sdc){
+                    $bool = false;
+                }
+            }
+        }else{
+            $bool = false;
+        }
+
+        if ($bool == true) {
+            return redirect()->back()->with('success', 'Berhasil menambahkan Soal');
+        } else if ($bool == false) {
+            return redirect()->back()->with('error', 'Gagal menambahkan Soal');
+        }
     }
 
 

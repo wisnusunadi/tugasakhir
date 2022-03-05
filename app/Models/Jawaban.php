@@ -9,6 +9,7 @@ class Jawaban extends Model
 {
     use HasFactory;
     protected $table = 'jawaban';
+    public $timestamps = false;
     protected $fillable = [
         'soal_detail_id',
         'jawaban',

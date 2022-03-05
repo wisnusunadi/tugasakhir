@@ -55,7 +55,7 @@ section{
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-                <form method="POST" action="{{route('jadwal.store')}}">
+                <form method="POST" action="{{route('draft_soal.store')}}">
                 @csrf
                 @if(Session::has('error') || count($errors) > 0 )
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -80,15 +80,32 @@ section{
                     </div>
                     <div class="card-body">
                         <div class="form-group row">
-                            <label for="tanggal_mulai" class="col-lg-4 col-md-12 col-form-label labelket">Nama</label>
+                            <label for="nama" class="col-lg-4 col-md-12 col-form-label labelket">Nama</label>
                             <div class="col-lg-8 col-md-12">
-                                <input type="text" class="form-control" id="tanggal_mulai" name="tanggal_mulai" placeholder="Tes Potensi Akademik , Tes Logika">
+                                <input type="text" class="form-control" id="nama" name="nama" placeholder="Tes Potensi Akademik , Tes Logika">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="kode_soal" class="col-lg-4 col-md-12 col-form-label labelket">Kode Soal</label>
+                            <div class="col-lg-4 col-md-6">
+                                <input type="text" class="form-control" id="kode_soal" name="kode_soal" placeholder="Mohon Isi Kode Soal">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="kode_soal" class="col-lg-4 col-md-12 col-form-label labelket">Waktu Pengerjaan</label>
+                            <div class="col-lg-3 col-md-4">
+                            <div class="input-group mb-3">
+                                <input type="number" class="form-control" placeholder="Isi Waktu Pengerjaan" min="1" name="waktu" id="waktu" aria-label="waktu pengerjaan" aria-describedby="waktus">
+                                <div class="input-group-append">
+                                    <span class="input-group-text" id="waktus">menit</span>
+                                </div>
+                            </div>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="tanggal_akhir" class="col-lg-4 col-md-12 col-form-label labelket">Jabatan</label>
                             <div class="col-lg-8 col-md-12">
-                                    <select class="select2" multiple="multiple" data-placeholder="Pilih Jabatan" style="width: 100%;">
+                                    <select class="select2" multiple="multiple" data-placeholder="Pilih Jabatan" style="width: 100%;" name="jabatan[]" id="jabatan">
                                       @foreach ($jabatan as $j)
                                           <option value="{{ $j->id }}">{{ $j->nama }}</option>
                                       @endforeach
@@ -98,7 +115,7 @@ section{
                         <div class="form-group row">
                             <label for="tanggal_akhir" class="col-lg-4 col-md-12 col-form-label labelket">Divisi</label>
                             <div class="col-lg-8 col-md-12">
-                                    <select class="select2" multiple="multiple" data-placeholder="Pilih Divisi" style="width: 100%;">
+                                    <select class="select2" multiple="multiple" data-placeholder="Pilih Divisi" style="width: 100%;" name="divisi[]" id="divisi">
                                         @foreach ($divisi as $d)
                                           <option value="{{ $d->id }}">{{ $d->nama }}</option>
                                       @endforeach
@@ -125,21 +142,21 @@ section{
                                     <tbody>
                                         <tr class="kolom" id="kolom0">
                                             <td rowspan="1" class="nomor">1</td>
-                                            <td rowspan="1" class="soal"><textarea class="form-control soal" name="soal[]" id="soal"></textarea></td>
+                                            <td rowspan="1" class="soal"><textarea class="form-control soal" name="soal[0]" id="soal0"></textarea></td>
                                             <td>
                                                 <div class="form-group">
                                                 <div class="input-group">
                                                 <div class="input-group-prepend">
-                                                  <span class="input-group-text benar"><input type="radio" id="0" class="kunci_jawaban" name="kunci_jawaban[0][]"></span>
+                                                  <span class="input-group-text benar"><input type="radio" id="0" class="kunci_jawaban" name="kunci_jawaban[0][]" value="1"></span>
                                                 </div>
-                                                <textarea type="text jawaban" name="jawaban[][]" id="jawaban" class="form-control "></textarea>
+                                                <textarea name="jawaban[0][]" id="jawaban0" class="form-control jawaban"></textarea>
                                               </div> 
                                             </div> 
                                             </td>
                                             <td>
                                                 <a type ="button" id="tambahopsi"><i class="fas fa-plus" style="color:green;"></i></a>
                                             </td>
-                                            <td  rowspan="1" class="poin"><input  type ="number" class="form-control poin" name="poin[]" id="poin"></td>
+                                            <td  rowspan="1" class="poin"><input  type ="number" class="form-control poin" name="poin[0]" id="poin0"></td>
                                             <td  rowspan="1" class="hapus_baris"><a id="removerow"><i class="fas fa-minus" style="color:red;"></i></a></td>
                                         </tr>
                                     </tbody>
@@ -201,22 +218,50 @@ section{
             }
         });
 
+        function numberJawaban(id){
+            // var id = $('tr[id="kolom' + id + '"]').closest('tr').attr('id');
+            var count_jawaban = 0;
+            $('tr[id="kolom' + id + '"]').find('.jawaban').each(function(ind1, el1){
+                $(el1).attr('name', 'jawaban[' + id + ']['+ count_jawaban +']');
+                count_jawaban++;
+            });
+            var count_kunci = 0;
+            $('tr[id="kolom' + id + '"]').find('.kunci_jawaban').each(function(ind1, el1){
+                $(el1).attr('name', 'kunci_jawaban[' + id + ']['+ count_kunci +']');
+                count_kunci++;
+            });
+            console.log(id);
+        }
+
         function numberRows($t) {
             var c = 0;
             $t.find("tr.kolom").each(function(ind, el) {
                 $(el).find("td:eq(0)").html(++c);
                 var j = c - 1;
                 var id = $(el).attr('id');
-                $('tr[id="' + id + '"]').find('input[id="soal"]').attr('name', 'soal[' + j + '][]');
-                $('tr[id="' + id + '"]').find('.kunci_jawaban').attr('name', 'kunci_jawaban[' + j + '][]');
+                $('tr[id="' + id + '"]').find('input[id="soal"]').attr('name', 'soal[' + j + ']');
+                // $('tr[id="' + id + '"]').find('.kunci_jawaban').attr('name', 'kunci_jawaban[' + j + '][]');
+                // $('tr[id="' + id + '"]').find('.jawaban').attr('name', 'jawaban[' + j + '][]');
+                var count_jawaban = 0;
+                $('tr[id="' + id + '"]').find('.jawaban').each(function(ind1, el1){
+                    $(el1).attr('name', 'jawaban[' + j + ']['+ count_jawaban +']');
+                    count_jawaban++;
+                });
+                var count_kunci = 0;
+                $('tr[id="' + id + '"]').find('.kunci_jawaban').each(function(ind1, el1){
+                    $(el1).attr('name', 'kunci_jawaban[' + j + ']['+ count_kunci +']');
+                    count_kunci++;
+                });
+                $('tr[id="' + id + '"]').find('.jawaban').attr('id', 'jawaban'+j);
                 $('tr[id="' + id + '"]').attr('id', 'kolom' + j);
                 $(el).attr('id', 'kolom' + j);
                 $(el).find('.soal').attr('name', 'soal[' + j + ']');
                 $(el).find('.soal').attr('id', 'soal' + j);
-                $(el).find('.jawaban').attr('name', 'jawaban[' + j + '][]');
+                // $(el).find('.jawaban').attr('name', 'jawaban[' + j + '][]');
+                
                 $(el).find('.jawaban').attr('id', 'jawaban' + j);
               
-                $(el).find('.kunci_jawaban').attr('name', 'kunci_jawaban[' + j + '][]' );
+                // $(el).find('.kunci_jawaban').attr('name', 'kunci_jawaban[' + j + '][]' );
                 $(el).find('.poin').attr('name', 'poin[' + j + ']');
                 $(el).find('.poin').attr('id', 'poin' + j);
 
@@ -225,25 +270,26 @@ section{
             });
         }
 
+        
         $('#showtable').on('click', '#tambahrow', function(){
             rowCount++;
             $('#showtable tr:last').after(`<tr class="kolom" id="kolom`+ rowCount +`">
                 <td rowspan="1" class="nomor">1</td>
-                                            <td rowspan="1" class="soal"><textarea class="form-control soal" name="soal[]" id="soal"></textarea></td>
+                                            <td rowspan="1" class="soal"><textarea class="form-control soal" name="soal[0]" id="soal0"></textarea></td>
                                             <td>
                                                 <div class="form-group">
                                                 <div class="input-group">
                                                 <div class="input-group-prepend">
-                                                  <span class="input-group-text"><input type="radio" class="kunci_jawaban" id="0" name="kunci_jawaban[][]"></span>
+                                                  <span class="input-group-text"><input type="radio" class="kunci_jawaban" id="0" name="kunci_jawaban[0][]" value="1"></span>
                                                 </div>
-                                                <textarea type="text jawaban" name="jawaban[][]" id="jawaban" class="form-control"></textarea>
+                                                <textarea name="jawaban[0][]" id="jawaban" class="form-control jawaban"></textarea>
                                               </div> 
                                             </div> 
                                             </td>
                                             <td>
                                                 <a type ="button" id="tambahopsi"><i class="fas fa-plus" style="color:green;"></i></a>
                                             </td>
-                                            <td  rowspan="1" class="poin"><input  type ="number" class="form-control poin" name="poin[]" id="poin"></td>
+                                            <td  rowspan="1" class="poin"><input  type ="number" class="form-control poin" name="poin[0]" id="poin"></td>
                                             <td  rowspan="1" class="hapus_baris"><a id="removerow"><i class="fas fa-minus" style="color:red;"></i></a></td>
                                            </tr>`);
             numberRows($("#showtable"));
@@ -256,13 +302,8 @@ section{
         });
 
         $('#showtable').on('click', '.kolom #tambahopsi', function() {
-
-
-          
             var id = $(this).closest('tr').attr('id');
             var x = $('tr[id="' + id + '"]').find('.nomor').attr('rowspan');
-
-
              arry = [];
             //     $.each($(".nosericheck:checked"), function() {
             //         checkedAry.push($(this).closest('tr').find('.nosericheck').attr('data-id'));
@@ -271,8 +312,8 @@ section{
             $('.kunci_jawaban').each(function() {
                 arry.push($(this).closest('tr[id="' + id + '"]').find('.kunci_jawaban').attr('id'));
             });
-           console.log(arry)
-          columnCount = (arry.length - 1) + 1;
+            console.log(arry)
+            columnCount = (arry.length - 1) + 1;
 
             $(this).closest('tr[id="' + id + '"]').find('.nomor').attr('rowspan', (parseInt(x) + 1));
             $(this).closest('tr[id="' + id + '"]').find('.soal').attr('rowspan', (parseInt(x) + 1));
@@ -285,9 +326,9 @@ section{
                 <div class="form-group">
                                                 <div class="input-group">
                                                 <div class="input-group-prepend">
-                                                  <span class="input-group-text"><input type="radio" class="kunci_jawaban" id="`+columnCount+`" name="kunci_jawaban[` + id.substring(5) + `][]"></span>
+                                                  <span class="input-group-text"><input type="radio" class="kunci_jawaban" id="`+columnCount+`" name="kunci_jawaban[` + id.substring(5) + `][]" value="1"></span>
                                                 </div>
-                                                <textarea type="text jawaban" name="jawaban[]" id="jawaban" class="form-control"></textarea>
+                                                <textarea name="jawaban[` + id.substring(5) + `][]" id="jawaban` + id.substring(5) + `" class="form-control jawaban"></textarea>
                                               </div> 
                                             </div> 
             </td>
@@ -295,6 +336,7 @@ section{
                 <a type="button" id="hapusopsi"><i class="fas fa-times" style="color:red;"></i></button>
             </td>
             </tr>`);
+            numberJawaban(id.substring(5));
         });
 
         $('#showtable').on('click', '#hapusopsi', function() {     
@@ -311,6 +353,7 @@ section{
             $(this).closest('tr').remove();
             console.log(x);
             console.log(parseInt(x)-1)
+            numberJawaban(id.substring(5));
         });
 
         // function select(){

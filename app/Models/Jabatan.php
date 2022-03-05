@@ -18,6 +18,6 @@ class Jabatan extends Model
         return $this->hasMany(Pendaftaran::class);
     }
     public function Soal(){
-        return $this->belongsToMany(Soal::class,'soal_jabatan');
+        return $this->belongsToMany(Soal::class, 'soal_jabatan', 'jawaban_id', 'soal_id');
     }
 }
