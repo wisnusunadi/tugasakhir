@@ -113,7 +113,37 @@ td{
                 @csrf
                 <div class="card">
                     <div class="card-body">
+                    <?php $soal = 0; ?>
+                    @foreach($soals as $s)
                     <div class="tab">
+                        <table class="table" border="0" cellspacing="0" cellpadding="0">
+                            <tbody>
+                                <tr>
+                                    <td>{{$loop->iteration}}. {{$s->deskripsi}}</td>
+                                </tr>
+                                <tr hidden>
+                                    <td><input type="hidden" name="soal[{{$soal}}]" value="{{$s->id}}"></td>
+                                </tr>
+                                <?php $jawaban = 0; ?>
+                                @foreach($s->Jawaban as $j)
+                                <tr>
+                                <td><div class="form-check">
+                                            <input class="form-check-input jawaban_id" type="radio" name="jawaban_id[{{$soal}}]" id="jawaban_id{{$soal}}{{$jawaban}}" value="{{$j->id}}">
+                                            <label class="form-check-label" for="jawaban_id{{$soal}}{{$jawaban}}">
+                                                {{$j->jawaban}}
+                                            </label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <?php $jawaban++; ?>
+                                @endforeach
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                    <?php $soal++; ?>
+                    @endforeach
+                    <!-- <div class="tab">
                         <table class="table" border="0" cellspacing="0" cellpadding="0">
                             <tbody>
                                 <tr>
@@ -162,8 +192,8 @@ td{
                                 </tr>
                             </tbody>
                         </table>
-                    </div>
-                    <div class="tab">
+                    </div> -->
+                    <!-- <div class="tab">
                         <table class="table" border="0" cellspacing="0" cellpadding="0">
                             <tbody>
                                 <tr>
@@ -212,57 +242,7 @@ td{
                                 </tr>
                             </tbody>
                         </table>
-                    </div>
-                    <div class="tab">
-                        <table class="table" border="0" cellspacing="0" cellpadding="0">
-                            <tbody>
-                                <tr>
-                                    <td>3. Gunung Tertinggi Di dunia Bernama</td>
-                                </tr>
-                                <tr hidden>
-                                    <td><input type="hidden" name="soal[2]" value=""></td>
-                                </tr>
-                                <tr>
-                                <td><div class="form-check">
-                                            <input class="form-check-input jawaban_id" type="radio" name="jawaban_id[2]" id="jawaban_id20" value="baik">
-                                            <label class="form-check-label" for="jawaban_id20">
-                                                Gunung Fuji
-                                            </label>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><div class="form-check">
-                                            <input class="form-check-input jawaban_id" type="radio" name="jawaban_id[2]" id="jawaban_id21" value="penolong">
-                                            <label class="form-check-label" for="jawaban_id21">
-                                                Gunung Himalaya
-                                            </label>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                    <div class="form-check">
-                                        <input class="form-check-input jawaban_id" type="radio" name="jawaban_id[2]" id="jawaban_id22" value="kikir">
-                                        <label class="form-check-label" for="jawaban_id22">
-                                            Gunung Everest
-                                        </label>
-                                    </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                    <div class="form-check">
-                                        <input class="form-check-input jawaban_id" type="radio" name="jawaban_id[2]" id="jawaban_id23" value="serakah">
-                                        <label class="form-check-label" for="jawaban_id23">
-                                            Gunung Jaya Wijaya
-                                        </label>
-                                    </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                    </div> -->
                     <div style="overflow:auto;">
                         <div>
                         <button type="button" style="float:left;" class="btn btn-warning" id="prevBtn" onclick="nextPrev(-1)">Kembali</button>
@@ -270,11 +250,11 @@ td{
                         </div>
                     </div>
                     <!-- Circles which indicates the steps of the form: -->
-                    <div style="text-align:center;margin-top:40px;">
+                    <!-- <div style="text-align:center;margin-top:40px;">
                         <span class="step"></span>
                         <span class="step"></span>
                         <span class="step"></span>
-                    </div>
+                    </div> -->
                     </div>
                 </div>
                 </form>
@@ -283,7 +263,7 @@ td{
                         <h4 class="content-title">Navigasi</h4>
                         <nav aria-label="...">
                             <ul class="pagination flex-wrap" id="navigation">
-                                <?php for($i=0;$i<40;$i++) {?>
+                                <?php for($i=0;$i<count($soals);$i++) {?>
                                     @if ($i == 0)
                                         <li class="page-item active" id="page{{ $i }}"><a class="page-link" onclick="navigate({{ $i }})">{{ $i+1 }}</a></li>
                                     @else
@@ -370,7 +350,7 @@ td{
             document.getElementById("nextBtn").innerHTML = "Berikutnya";
         }
         //... and run a function that will display the correct step indicator:
-        fixStepIndicator(n)
+        // fixStepIndicator(n)
     }
 
         
@@ -402,20 +382,20 @@ td{
         // }
         // If the valid status is true, mark the step as finished and valid:
         if (valid) {
-            document.getElementsByClassName("step")[currentTab].className += "finish";
+            // document.getElementsByClassName("step")[currentTab].className += "finish";
         }
         return valid; // return the valid status
     }
 
-    function fixStepIndicator(n) {
-        // This function removes the "active" class of all steps...
-        var i, x = document.getElementsByClassName("step");
-        for (i = 0; i < x.length; i++) {
-            x[i].className = x[i].className.replace("active", "");
-        }
-        //... and adds the "active" class on the current step:
-        x[n].className += " active";
-    }
+    // function fixStepIndicator(n) {
+    //     // This function removes the "active" class of all steps...
+    //     var i, x = document.getElementsByClassName("step");
+    //     for (i = 0; i < x.length; i++) {
+    //         x[i].className = x[i].className.replace("active", "");
+    //     }
+    //     //... and adds the "active" class on the current step:
+    //     x[n].className += " active";
+    // }
 
     function nextPrev(n) {
         // This function will figure out which tab to display

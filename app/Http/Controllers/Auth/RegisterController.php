@@ -63,7 +63,7 @@ class RegisterController extends Controller
     {
         $today = Carbon::now();
         $p = Pendaftaran::whereHas('Jadwal', function($q) use($today){
-            $q->where([['waktu_selesai', '>=', $today],['waktu_mulai', '<=', $today]]);
+            $q->where([['waktu_selesai', '>=', $today], ['waktu_mulai', '<=', $today]]);
         })->get();
         return view('auth.register', compact('p'));
     }

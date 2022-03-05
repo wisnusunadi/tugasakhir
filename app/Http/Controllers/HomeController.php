@@ -135,11 +135,23 @@ class HomeController extends Controller
         }
     }
 
-    public function soal_tes_show(){
+    public function soal_tes_preview(){
+        $divisi_id = Auth::user()->Pendaftaran->Divisi->id;
+        $jabatan_id = Auth::user()->Pendaftaran->Jabatan->id;
+        $soal = Soal::whereHas('Divisi', function($q) use($divisi_id){
+            $q->where('id', $divisi_id);
+        })->whereHas('Jabatan', function($q) use($jabatan_id){
+            $q->where('id', $jabatan_id);
+        })->get();
+        return view('soal.tes.preview', ['soal' => $soal]);
+    }
+
+    public function soal_tes_show($id){
         if(!Auth::user()){
 
         }else{
-            return view('soal.tes.show');
+            $soal = SoalDetail::where('soal_id', $id)->get();
+            return view('soal.tes.show', ['id' => $id, 'soals' => $soal]);
         }
     }
 
@@ -220,7 +232,4 @@ class HomeController extends Controller
             return redirect()->back()->with('error', 'Gagal menambahkan Soal');
         }
     }
-
-
-    
 }

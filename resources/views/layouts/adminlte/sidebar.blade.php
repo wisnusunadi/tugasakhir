@@ -54,7 +54,7 @@
           </li>
           @else
           <li class="nav-item">
-            <a href="/soal_tes" class="nav-link">
+            <a href="/soal_tes/preview" class="nav-link">
               <i class="nav-icon fas fa-edit"></i>
               <p>
                 Mulai Tes
@@ -85,7 +85,7 @@
           
           @else
           <li class="nav-item">
-            <a href="/soal_tes" class="nav-link">
+            <a href="/soal_tes/preview" class="nav-link">
               <i class="nav-icon fas fa-edit"></i>
               <p>
                 Mulai Tes
