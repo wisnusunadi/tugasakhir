@@ -6,7 +6,7 @@
       <span class="brand-text font-weight-light">Recruitment</span>
     </a>
     <!-- Sidebar -->
-    <div class="sidebar">
+    <div class="sidebar" >
       <!-- Sidebar user panel (optional) -->
       @if(Auth::user())
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
@@ -33,6 +33,14 @@
               <i class="nav-icon fa-solid fa-calendar"></i>
               <p>
                 Jadwal
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/draft_soal_show" class="nav-link">
+              <i class=" nav-icon fa-regular fa-file-lines"></i>
+              <p>
+                Soal
               </p>
             </a>
           </li>

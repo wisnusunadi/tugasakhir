@@ -18,6 +18,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('/jabatan', [App\Http\Controllers\HomeController::class, 'jabatan_data']);
+Route::get('/divisi', [App\Http\Controllers\HomeController::class, 'divisi_data']);
+// Route::get('/jadwal/table', [App\Http\Controllers\HomeController::class, 'jadwal_table']);
 Route::prefix('/jadwal')->group(function () {
     Route::get('/data', [App\Http\Controllers\JadwalController::class, 'get_data_jadwal']);
     Route::get('/table', [App\Http\Controllers\JadwalController::class, 'jadwal_table']);

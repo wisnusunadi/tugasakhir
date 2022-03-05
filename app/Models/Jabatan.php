@@ -9,10 +9,15 @@ class Jabatan extends Model
 {
     use HasFactory;
     public $timestamps = false;
-    protected $table = "jabatan";
-    protected $fillable = ['nama', 'pass_grade'];
+    protected $table = 'jabatan';
+    protected $fillable = [
+        'nama','pass_grade'
+    ];
 
     public function Pendaftaran(){
-    return $this->hasMany(Pendaftaran::class);
+        return $this->hasMany(Pendaftaran::class);
+    }
+    public function Soal(){
+        return $this->belongsToMany(Soal::class,'soal_jabatan');
     }
 }

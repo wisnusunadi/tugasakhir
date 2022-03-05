@@ -10,15 +10,14 @@
   <link rel="stylesheet" href="{{ asset('themes/plugins/bootstrap/css/bootstrap.min.css') }}">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="{{ asset('themes/plugins/fontawesome-free/css/all.min.css') }}">
-  <!-- DataTable-->
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/jq-3.6.0/dt-1.11.4/rg-1.1.4/datatables.min.css"/>
-  <!-- <link rel="stylesheet" href="{{ asset('themes/plugins/datatables/datatables.min.css') }}"> -->
-   <!-- Select2 -->
-   <link rel="stylesheet" href="{{ asset('themes/plugins/select2/css/select2.min.css') }}">
-  <!-- Ionicons -->
    <!-- Datatable -->
   <link href="{{ asset('themes/plugins/datatables/DataTables-1.11.4/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
-    <!-- Ionicons -->
+
+   <!-- Select2 -->
+   <link rel="stylesheet" href="{{ asset('themes/plugins/select2/css/select2.min.css') }}">
+   <link rel="stylesheet" href="{{ asset('themes/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+ 
+   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('themes/dist/css/adminlte.min.css') }}">
@@ -32,7 +31,7 @@
   @font-face
   {
     font-family: 'Poppins';
-    src: url('assets/font/Poppins/Poppins-Regular.ttf');
+    src: url('{{asset('themes/font/Poppins/Poppins-Regular.ttf')}}); 
   }
   aside{
     background: #8199AE;
@@ -55,18 +54,18 @@
   }
 
 </style>
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
  
   @include('layouts.adminlte.sidebar')
   
   @yield('content')
  
-  <footer class="main-footer">
+  {{-- <footer class="main-footer">
     <span>Dibuat untuk Tugas Akhir 2022</span>
     <span class="float-right"><strong>Copyright &copy; 2022.</strong></span>
   </footer>
- 
+  --}}
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
     <!-- Control sidebar content goes here -->

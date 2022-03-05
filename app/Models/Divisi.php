@@ -9,10 +9,15 @@ class Divisi extends Model
 {
     use HasFactory;
     public $timestamps = false;
-    protected $table = "divisi";
-    protected $fillable = ['id','nama'];
+    protected $table = 'divisi';
+    protected $fillable = [
+        'nama',
+    ];
 
     public function Pendaftaran(){
         return $this->hasMany(Pendaftaran::class);
+    }
+    public function Soal(){
+        return $this->belongsToMany(Soal::class,'soal_divisi');
     }
 }
