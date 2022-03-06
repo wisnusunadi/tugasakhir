@@ -150,7 +150,7 @@ class HomeController extends Controller
         if(!Auth::user()){
 
         }else{
-            $soal = SoalDetail::where('soal_id', $id)->get();
+            $soal = SoalDetail::where('soal_id', $id)->inRandomOrder()->get();
             return view('soal.tes.show', ['id' => $id, 'soals' => $soal]);
         }
     }

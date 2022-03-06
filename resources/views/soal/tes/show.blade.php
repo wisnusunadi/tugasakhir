@@ -125,7 +125,7 @@ td{
                                     <td><input type="hidden" name="soal[{{$soal}}]" value="{{$s->id}}"></td>
                                 </tr>
                                 <?php $jawaban = 0; ?>
-                                @foreach($s->Jawaban as $j)
+                                @foreach($s->Jawaban->shuffle() as $j)
                                 <tr>
                                 <td><div class="form-check">
                                             <input class="form-check-input jawaban_id" type="radio" name="jawaban_id[{{$soal}}]" id="jawaban_id{{$soal}}{{$jawaban}}" value="{{$j->id}}">
