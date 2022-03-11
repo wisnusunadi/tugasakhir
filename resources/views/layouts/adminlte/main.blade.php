@@ -16,7 +16,7 @@
    <!-- Select2 -->
    <link rel="stylesheet" href="{{ asset('themes/plugins/select2/css/select2.min.css') }}">
    <link rel="stylesheet" href="{{ asset('themes/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
- 
+
    <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Theme style -->
@@ -31,7 +31,7 @@
   @font-face
   {
     font-family: 'Poppins';
-    src: url('{{asset('themes/font/Poppins/Poppins-Regular.ttf')}}); 
+    src: url('{{asset('themes/font/Poppins/Poppins-Regular.ttf')}});
   }
   aside{
     background: #8199AE;
@@ -56,11 +56,11 @@
 </style>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
- 
+
   @include('layouts.adminlte.sidebar')
-  
+
   @yield('content')
- 
+
   {{-- <footer class="main-footer">
     <span>Dibuat untuk Tugas Akhir 2022</span>
     <span class="float-right"><strong>Copyright &copy; 2022.</strong></span>
@@ -73,7 +73,7 @@
   <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
- 
+
 <!-- jQuery -->
 <script src="{{ asset('themes/plugins/jquery/jquery.min.js')}}"></script>
 <!-- jQuery UI 1.11.4 -->
@@ -105,8 +105,7 @@
 {{-- <script src="{{ asset('themes/plugins/fastclick/fastclick.js') }}"></script> --}}
 <!-- AdminLTE App -->
 <script src="{{ asset('themes/dist/js/adminlte.js') }}"></script>
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="{{ asset('themes/dist/js/pages/dashboard.js') }}"></script>
+
  <!-- Font Awesome -->
  <script type="text/javascript" src="{{ asset('themes/plugins/fontawesome-free/js/all.min.js') }}"></script>
 @yield('script')

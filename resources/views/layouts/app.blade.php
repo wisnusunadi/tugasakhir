@@ -52,9 +52,9 @@
   }
 </style>
 <body class="hold-transition login-page">
- 
+
     @yield('content')
- 
+
 <!-- jQuery -->
 <script src="{{ asset('themes/plugins/jquery/jquery.min.js')}}"></script>
 <!-- jQuery UI 1.11.4 -->
@@ -81,8 +81,7 @@
 <script src="{{ asset('themes/plugins/fastclick/fastclick.js') }}"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('themes/dist/js/adminlte.js') }}"></script>
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="{{ asset('themes/dist/js/pages/dashboard.js') }}"></script>
+
  <!-- Font Awesome -->
  <script type="text/javascript" src="{{ asset('themes/plugins/fontawesome-free/js/all.min.js') }}"></script>
 @yield('script')

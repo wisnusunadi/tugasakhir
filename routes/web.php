@@ -29,6 +29,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/peserta', [App\Http\Controllers\HomeController::class, 'peserta_show'])->name('peserta');
     Route::get('/hasil', [App\Http\Controllers\HomeController::class, 'hasil_show'])->name('hasil');
     Route::get('/draft_soal_show', [App\Http\Controllers\HomeController::class, 'draft_soal_show'])->name('draft_soal');
+    Route::get('/draft_soal_data', [App\Http\Controllers\HomeController::class, 'draft_soal_data'])->name('draft_soal.data');
     Route::get('/draft_soal_create', [App\Http\Controllers\HomeController::class, 'draft_soal_create'])->name('draft_soal.create');
     Route::post('/draft_soal_store', [App\Http\Controllers\HomeController::class, 'draft_soal_store'])->name('draft_soal.store');
     Route::get('/draft_soal_preview/{id}', [App\Http\Controllers\HomeController::class, 'draft_soal_preview'])->name('draft_soal.preview');
