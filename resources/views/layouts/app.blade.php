@@ -73,10 +73,9 @@
 <!-- daterangepicker -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
 <script src="{{ asset('themes/plugins/daterangepicker/daterangepicker.js') }}"></script>
-<!-- Bootstrap WYSIHTML5 -->
-<script src="{{ asset('themes/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js') }}"></script>
+
 <!-- Slimscroll -->
-<script src="{{ asset('themes/plugins/slimScroll/jquery.slimscroll.min.js') }}"></script>
+{{-- <script src="{{ asset('themes/plugins/slimScroll/jquery.slimscroll.min.js') }}"></script> --}}
 <!-- FastClick -->
 <script src="{{ asset('themes/plugins/fastclick/fastclick.js') }}"></script>
 <!-- AdminLTE App -->

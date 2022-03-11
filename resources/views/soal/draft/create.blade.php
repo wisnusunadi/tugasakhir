@@ -1,5 +1,5 @@
 @extends('layouts.adminlte.main')
- 
+
 @section('title', 'Sistem Penerimaan Karyawan')
 
 @section('custom_css')
@@ -147,11 +147,11 @@ section{
                                                 <div class="form-group">
                                                 <div class="input-group">
                                                 <div class="input-group-prepend">
-                                                  <span class="input-group-text benar"><input type="radio" id="0" class="kunci_jawaban" name="kunci_jawaban[0][]" value="1"></span>
+                                                  <span class="input-group-text"><input type="radio" id="0" class="kunci_jawaban" name="kunci_jawaban[0][]" value="1"></span>
                                                 </div>
                                                 <textarea name="jawaban[0][]" id="jawaban0" class="form-control jawaban"></textarea>
-                                              </div> 
-                                            </div> 
+                                              </div>
+                                            </div>
                                             </td>
                                             <td>
                                                 <a type ="button" id="tambahopsi"><i class="fas fa-plus" style="color:green;"></i></a>
@@ -179,20 +179,20 @@ section{
 @section('script')
 <script>
     var rowCount = 0;
-    
 
-    $('#showtable').on('click', '.kunci_jawaban', function(){
-        var tr_id = $(this).closest('tr').attr('id');
-        var id = $(this).closest('.kunci_jawaban').attr('id');
-        alert(id);
-    })
+
+    // $('#showtable').on('click', '.kunci_jawaban', function(){
+    //     var tr_id = $(this).closest('tr').attr('id');
+    //     var id = $(this).closest('.kunci_jawaban').attr('id');
+    //     alert(id);
+    // })
 
 
     $(function(){
         $('.select2').select2({
       theme: 'bootstrap4'
     })
-        
+
         // select();
         // $('.jabatan').select2();
         var today = new Date();
@@ -258,19 +258,19 @@ section{
                 $(el).find('.soal').attr('name', 'soal[' + j + ']');
                 $(el).find('.soal').attr('id', 'soal' + j);
                 // $(el).find('.jawaban').attr('name', 'jawaban[' + j + '][]');
-                
+
                 $(el).find('.jawaban').attr('id', 'jawaban' + j);
-              
+
                 // $(el).find('.kunci_jawaban').attr('name', 'kunci_jawaban[' + j + '][]' );
                 $(el).find('.poin').attr('name', 'poin[' + j + ']');
                 $(el).find('.poin').attr('id', 'poin' + j);
 
-    
+
                 // select();
             });
         }
 
-        
+
         $('#showtable').on('click', '#tambahrow', function(){
             rowCount++;
             $('#showtable tr:last').after(`<tr class="kolom" id="kolom`+ rowCount +`">
@@ -283,8 +283,8 @@ section{
                                                   <span class="input-group-text"><input type="radio" class="kunci_jawaban" id="0" name="kunci_jawaban[0][]" value="1"></span>
                                                 </div>
                                                 <textarea name="jawaban[0][]" id="jawaban" class="form-control jawaban"></textarea>
-                                              </div> 
-                                            </div> 
+                                              </div>
+                                            </div>
                                             </td>
                                             <td>
                                                 <a type ="button" id="tambahopsi"><i class="fas fa-plus" style="color:green;"></i></a>
@@ -319,7 +319,7 @@ section{
             $(this).closest('tr[id="' + id + '"]').find('.soal').attr('rowspan', (parseInt(x) + 1));
             $(this).closest('tr[id="' + id + '"]').find('.poin').attr('rowspan', (parseInt(x) + 1));
             $(this).closest('tr[id="' + id + '"]').find('.hapus_baris').attr('rowspan', (parseInt(x) + 1));
-        
+
 
             $(this).closest('tr.kolom').after(`<tr id="` + id + `">
             <td>
@@ -329,8 +329,8 @@ section{
                                                   <span class="input-group-text"><input type="radio" class="kunci_jawaban" id="`+columnCount+`" name="kunci_jawaban[` + id.substring(5) + `][]" value="1"></span>
                                                 </div>
                                                 <textarea name="jawaban[` + id.substring(5) + `][]" id="jawaban` + id.substring(5) + `" class="form-control jawaban"></textarea>
-                                              </div> 
-                                            </div> 
+                                              </div>
+                                            </div>
             </td>
             <td>
                 <a type="button" id="hapusopsi"><i class="fas fa-times" style="color:red;"></i></button>
@@ -339,7 +339,7 @@ section{
             numberJawaban(id.substring(5));
         });
 
-        $('#showtable').on('click', '#hapusopsi', function() {     
+        $('#showtable').on('click', '#hapusopsi', function() {
             var id = $(this).closest('tr').attr('id');
             var x = $('tr[id="' + id + '"]').find('.nomor').attr('rowspan');
             $('tr[id="' + id + '"]').find('.nomor').attr('rowspan', (parseInt(x) - 1));

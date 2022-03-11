@@ -116,54 +116,91 @@ td{
 
                 <span class="float-right filter">
                   <div class="form-inline">
-                    <div class="input-group" data-widget="sidebar-search">
+                    <div class="input-group" >
                       <input class="form-control form-control-sidebar" type="search" placeholder="Cari" aria-label="Search" id="search">
                     </div>
                   </div>
                 </span>
-
-
             </div>
           </div>
           <div class="card-body">
           <div class="row" id="showdata">
+            @include('soal.draft.data')
           </div>
+          <input class="d-none" name="hidden_page" id="hidden_page" value="1" />
         </div>
       </div>
     </div>
   </div>
 </div>
-        <!-- /.card-body -->
-
-        {{-- <div class="card-footer" id="paging">
-            @include('soal.draft.paging')
-        </div> --}}
-        <!-- /.card-footer -->
       </div>
 </section>
 @endsection
 
 @section('script')
 <script>
-  $(document).ready(function(){
-  show_data();
-  function show_data(query = ''){
-    $.ajax({
-      url: '{{ route('draft_soal.data') }}',
-      method: 'GET',
-      data : {query:query},
-      datatype : 'json',
-      success : function (data){
-     $('#showdata').html(data.show)
-      }
-    })
-  }
 
-  $(document).on('keyup', '#search', function(){
+$(document).ready(function(){
+
+    function fetch_data(page,query)
+ {
+  $.ajax({
+   url:"/draft_soal_data?page="+page+"&query="+query,
+   success:function(data)
+   {
+    $('#showdata').html(data);
+   }
+  });
+ }
+
+$(document).on('click', '.pagination a', function(event){
+  event.preventDefault();
+  var query = $('#search').val();
+  var page = $(this).attr('href').split('page=')[1];
+  $('#hidden_page').val(page);
+  fetch_data(page,query);
+ });
+
+$(document).on('keyup', '#search', function(){
   var query = $(this).val();
-    console.log(query);
-    show_data(query);
+    var page = $('#hidden_page').val();
+    fetch_data(page,query);
     });
+
+
+    $("#search").autocomplete({
+                source: function(request, response) {
+                    $.ajax({
+                        dataType: 'json',
+                        url: "/draft_soal_search",
+                        data: {
+                            term: request.term
+                        },
+                        success: function(data) {
+
+                            var transformed = $.map(data, function(el) {
+                                return {
+                                    label: el.nama,
+                                    id: el.id
+                                };
+                            });
+                            response(transformed);
+                        },
+                        error: function() {
+                            response([]);
+                        }
+                    });
+                }
+            });
+
+    $('#search').on('autocompletechange change', function () {
+        result = this.value;
+        var query = $(this).val();
+         var page = $('#hidden_page').val();
+         fetch_data(page,query);
+    }).change();
+
 });
 </script>
 @endsection
+

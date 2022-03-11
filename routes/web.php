@@ -21,7 +21,7 @@ Route::view('/jadwal', 'jadwal.show')->name('jadwal');
 // Route::view('/soal_tes', 'soal.tes.show')->name('soal.tes');
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::group(['middleware' => 'auth'], function(){
+Route::group(['middleware' => 'auth'], function () {
     Route::get('/jadwal_create', [App\Http\Controllers\JadwalController::class, 'jadwal_create'])->name('jadwal.create');
     Route::post('/jadwal_store', [App\Http\Controllers\JadwalController::class, 'jadwal_store'])->name('jadwal.store');
     Route::get('/soal_tes/preview', [App\Http\Controllers\HomeController::class, 'soal_tes_preview'])->name('soal_tes.preview');
@@ -32,6 +32,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/draft_soal_data', [App\Http\Controllers\HomeController::class, 'draft_soal_data'])->name('draft_soal.data');
     Route::get('/draft_soal_create', [App\Http\Controllers\HomeController::class, 'draft_soal_create'])->name('draft_soal.create');
     Route::post('/draft_soal_store', [App\Http\Controllers\HomeController::class, 'draft_soal_store'])->name('draft_soal.store');
+    Route::get('/draft_soal_search', [App\Http\Controllers\HomeController::class, 'draft_soal_search'])->name('draft_soal.search');
     Route::get('/draft_soal_preview/{id}', [App\Http\Controllers\HomeController::class, 'draft_soal_preview'])->name('draft_soal.preview');
     Route::get('/draft_soal_preview/data/{id}', [App\Http\Controllers\HomeController::class, 'draft_soal_preview_data'])->name('draft_soal.preview.data');
 });

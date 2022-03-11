@@ -151,6 +151,8 @@ class HomeController extends Controller
         return view('soal.tes.preview', ['soal' => $soal]);
     }
 
+
+
     public function soal_tes_show($id)
     {
         if (!Auth::user()) {
@@ -178,114 +180,24 @@ class HomeController extends Controller
     }
     public function draft_soal_show()
     {
-        $soal = Soal::paginate(6);
-        return view('soal.draft.show', ['soal' => $soal]);
+        $data = Soal::paginate(6);
+        return view('soal.draft.show', ['data' => $data]);
     }
     public function draft_soal_data(Request $request)
     {
         if ($request->ajax()) {
-            // $output ='';
-            //  $query = $request->get('query');
-            //  if($query != '')
-            //  {
-            //     $data = Soal::where('id',1)->get();
-            //  }
-            //  else
-            //  {
-            //   $data = Soal::all();
-            //  }
-            //  $total = $data->count();
-
-            //  if ($total > 0){
-            //    foreach($data as $s){
-            //     $output .= '<input class="form-check-input" type="radio" name="x" checked><br>';
-            //    }
-            //    $output = '<br>';
-            //  }else{
-            //      'Data Kosong';
-            //  }
-
-            $output = '';
-
             $query = $request->get('query');
-            if ($query != '') {
-                $data = Soal::where('nama', 'like', '%' . $query . '%')
-                    ->orwhere('kode_soal', 'like', '%' . $query . '%')->paginate(6);
-            } else {
-                $data = Soal::paginate(6);
-            }
-            $total = $data->count();
-
-            if ($total > 0) {
-                foreach ($data as $s) {
-                    $output .= '   <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
-                    <div class="card bg-light d-flex flex-fill">
-                     <div class="card-header text-muted border-bottom-0">
-                     ' . $s->nama . '
-                     </div>
-                     <div class="card-body pt-0">
-                      <div class="row">
-                        <div class="col-7">
-                          <h2 class="lead"><b>' . $s->kode_soal . '</b></h2>
-                          <p class="text-muted text-sm"><b>Jumlah: </b> ' . $s->getJumlahSoal() . ' Soal </p>
-                          <p class="text-muted text-sm"><b>Jabatan: </b>';
-                    foreach ($s->Jabatan as $j) {
-                        $output .= ' ' . $j->nama;
-                        if ($s->Jabatan->last() == $j) {
-                            $output .= '';
-                        } else {
-                            $output .= ',';
-                        }
-                    }
-                    $output .= ' </p>
-                          <p class="text-muted text-sm"><b>Divisi: </b>';
-                    foreach ($s->Divisi as $d) {
-                        $output .= ' ' . $d->nama;
-                        if ($s->Divisi->last() == $d) {
-                            $output .= '';
-                        } else {
-                            $output .= ',';
-                        }
-                    }
-
-                    $output .= '</p>
-                        </div>
-                      </div>
-                       </div>
-                      <div class="card-footer">
-                       <div class="text-right">
-                         <a href="#" class="btn btn-sm bg-teal">
-                         Edit
-                        </a>
-                         <a href="' . route('draft_soal.preview', ['id' => $s->id]) . '" class="btn btn-sm btn-primary">
-                        Lihat Soal
-                          </a>
-                         </div>
-                        </div>
-                     </div>
-                     </div>
-
-
-                     ';
-                }
-            } else {
-                $output .= '<div class="callout callout-danger">
-                <h5>Data tidak ditemukan</h5>
-                <p>Data belum pernah di input atau adanya kesalahan kata kunci pencarian</p>
-              </div>';
-            }
-
-
-            $output .= ' <div class="card-footer" id="paging">
-            ' . $data->render() . '
-            </div>';
-
-            $data = array(
-                'show' => $output,
-            );
-
-            return response($data);
+            $query = str_replace("", "%", $query);
+            $data = Soal::where('nama', 'like', '%' . $query . '%')
+                ->paginate(6);
+            return view('soal.draft.data', compact('data'))->render();
         }
+    }
+
+    public function draft_soal_search(Request $request)
+    {
+        $data = Soal::where('nama', 'LIKE', '%' . $request->input('term', '') . '%')->groupby('nama')->get();
+        echo json_encode($data);
     }
 
     public function draft_soal_create()
