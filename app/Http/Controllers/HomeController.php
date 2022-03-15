@@ -206,6 +206,13 @@ class HomeController extends Controller
         $jabatan = Jabatan::all();
         return view('soal.draft.create', ['divisi' => $divisi, 'jabatan' => $jabatan]);
     }
+    public function draft_soal_edit($id)
+    {
+        $divisi = Divisi::all();
+        $jabatan = Jabatan::all();
+        $soal = Soal::find($id);
+        return view('soal.draft.edit', ['divisi' => $divisi, 'jabatan' => $jabatan, 'soal' => $soal]);
+    }
 
     public function draft_soal_store(Request $request)
     {
@@ -259,5 +266,28 @@ class HomeController extends Controller
         } else if ($bool == false) {
             return redirect()->back()->with('error', 'Gagal menambahkan Soal');
         }
+    }
+
+    public function select_jabatan(Request $request)
+    {
+        $data = Jabatan::where('nama', 'LIKE', '%' . $request->input('term', '') . '%')
+            ->orderby('nama', 'ASC')
+            ->get();
+        return response()->json($data);
+    }
+    public function select_jabatan_get($id)
+    {
+        $data = Soal::whereHas('Jabatan', function ($q) {
+            $q->whereIN('id', ['1']);
+        })->get();
+        return response()->json($data);
+    }
+
+    public function select_divisi(Request $request)
+    {
+        $data = Divisi::where('nama', 'LIKE', '%' . $request->input('term', '') . '%')
+            ->orderby('nama', 'ASC')
+            ->get();
+        return response()->json($data);
     }
 }

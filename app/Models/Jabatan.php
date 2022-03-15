@@ -11,13 +11,15 @@ class Jabatan extends Model
     public $timestamps = false;
     protected $table = 'jabatan';
     protected $fillable = [
-        'nama','pass_grade'
+        'nama', 'pass_grade'
     ];
 
-    public function Pendaftaran(){
+    public function Pendaftaran()
+    {
         return $this->hasMany(Pendaftaran::class);
     }
-    public function Soal(){
+    public function Soal()
+    {
         return $this->belongsToMany(Soal::class, 'soal_jabatan', 'jawaban_id', 'soal_id');
     }
 }

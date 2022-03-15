@@ -145,7 +145,7 @@ $(document).ready(function(){
     function fetch_data(page,query)
  {
   $.ajax({
-   url:"/draft_soal_data?page="+page+"&query="+query,
+   url:"/draft_soal/data?page="+page+"&query="+query,
    success:function(data)
    {
     $('#showdata').html(data);
@@ -172,7 +172,7 @@ $(document).on('keyup', '#search', function(){
                 source: function(request, response) {
                     $.ajax({
                         dataType: 'json',
-                        url: "/draft_soal_search",
+                        url: "/draft_soal/search",
                         data: {
                             term: request.term
                         },

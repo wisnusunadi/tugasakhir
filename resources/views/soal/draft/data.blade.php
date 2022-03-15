@@ -30,7 +30,7 @@
                 </div>
                 <div class="card-footer">
                   <div class="text-right">
-                    <a href="#" class="btn btn-sm bg-teal">
+                    <a href="{{ route('draft_soal.edit',['id' => $s->id]) }}" class="btn btn-sm bg-teal">
                     Edit
                     </a>
                     <a href="{{ route('draft_soal.preview',['id' => $s->id]) }}" class="btn btn-sm btn-primary">
