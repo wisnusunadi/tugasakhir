@@ -16,25 +16,28 @@ class Soal extends Model
         'waktu'
     ];
 
-    public function SoalDetail(){
+    public function SoalDetail()
+    {
         return $this->hasMany(SoalDetail::class);
     }
-    public function Divisi(){
+    public function Divisi()
+    {
         return $this->belongsToMany(Divisi::class, 'soal_divisi', 'soal_id', 'divisi_id');
     }
-    public function Jabatan(){
-        return $this->belongsToMany(Jabatan::class, 'soal_jabatan', 'soal_id', 'jabatan_id');
+    public function Jabatan()
+    {
+        return $this->belongsToMany(Jabatan::class, 'soal_jabatan');
     }
 
     public function getJumlahSoal()
     {
         $id = $this->id;
-        $s = SoalDetail::whereHas('Soal',function ($q) use ($id){
-            $q->where('id',$id);
+        $s = SoalDetail::whereHas('Soal', function ($q) use ($id) {
+            $q->where('id', $id);
         })->get();
         $jumlah = 0;
         foreach ($s as $i) {
-                $jumlah++;
+            $jumlah++;
         }
         return $jumlah;
     }

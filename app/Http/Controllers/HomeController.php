@@ -141,14 +141,18 @@ class HomeController extends Controller
 
     public function soal_tes_preview()
     {
-        $divisi_id = Auth::user()->Pendaftaran->Divisi->id;
-        $jabatan_id = Auth::user()->Pendaftaran->Jabatan->id;
-        $soal = Soal::whereHas('Divisi', function ($q) use ($divisi_id) {
-            $q->where('id', $divisi_id);
-        })->whereHas('Jabatan', function ($q) use ($jabatan_id) {
-            $q->where('id', $jabatan_id);
-        })->get();
-        return view('soal.tes.preview', ['soal' => $soal]);
+        if (Auth::user()->role != "admin") {
+            $divisi_id = Auth::user()->Pendaftaran->Divisi->id;
+            $jabatan_id = Auth::user()->Pendaftaran->Jabatan->id;
+            $soal = Soal::whereHas('Divisi', function ($q) use ($divisi_id) {
+                $q->where('id', $divisi_id);
+            })->whereHas('Jabatan', function ($q) use ($jabatan_id) {
+                $q->where('id', $jabatan_id);
+            })->get();
+            return view('soal.tes.preview', ['soal' => $soal]);
+        } else {
+            return view('home');
+        }
     }
 
 
@@ -277,8 +281,9 @@ class HomeController extends Controller
     }
     public function select_jabatan_get($id)
     {
-        $data = Soal::whereHas('Jabatan', function ($q) {
-            $q->whereIN('id', ['1']);
+        $x = explode(',', $id);
+        $data = Jabatan::whereHas('Soal', function ($q) use ($x) {
+            $q->whereIN('id', $x);
         })->get();
         return response()->json($data);
     }
@@ -288,6 +293,15 @@ class HomeController extends Controller
         $data = Divisi::where('nama', 'LIKE', '%' . $request->input('term', '') . '%')
             ->orderby('nama', 'ASC')
             ->get();
+        return response()->json($data);
+    }
+
+    public function select_divisi_get($id)
+    {
+        $x = explode(',', $id);
+        $data = Divisi::whereHas('Soal', function ($q) use ($x) {
+            $q->whereIN('id', $x);
+        })->get();
         return response()->json($data);
     }
 }

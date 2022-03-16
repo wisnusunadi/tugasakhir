@@ -136,34 +136,34 @@ section{
                                     </thead>
                                     <tbody>
                                         @foreach ($soal->soaldetail as $index => $soal_detail )
-                                        <tr class="kolom" id="kolom0">
+                                        <tr class="kolom" id="kolom{{$index}}">
                                             <td rowspan="{{$soal_detail->jawaban->count()}}" class="nomor">{{$index+1}}</td>
-                                            <td rowspan="{{$soal_detail->jawaban->count()}}" class="soal"><textarea class="form-control soal" name="soal[0]" id="soal0">{{$soal_detail->deskripsi}}</textarea></td>
+                                            <td rowspan="{{$soal_detail->jawaban->count()}}" class="soal"><textarea class="form-control soal" name="soal[{{$index}}]" id="soal{{$index}}">{{$soal_detail->deskripsi}}</textarea></td>
                                             <td>
                                                 <div class="form-group">
                                                 <div class="input-group">
                                                 <div class="input-group-prepend">
-                                                  <span class="input-group-text"><input type="radio" id="0" class="kunci_jawaban" name="kunci_jawaban[0][]" value="1"></span>
+                                                  <span class="input-group-text"><input type="radio" id="0" class="kunci_jawaban" name="kunci_jawaban[{{$index}}][0]" value="1"></span>
                                                 </div>
-                                                <textarea name="jawaban[0][]" id="jawaban0" class="form-control jawaban">{{$soal_detail->jawaban[0]->jawaban}}</textarea>
+                                                <textarea name="jawaban[{{$index}}][0]" id="jawaban{{$index}}" class="form-control jawaban">{{$soal_detail->jawaban[0]->jawaban}}</textarea>
                                               </div>
                                             </div>
                                             </td>
                                             <td>
                                                 <a type ="button" id="tambahopsi"><i class="fas fa-plus" style="color:green;"></i></a>
                                             </td>
-                                            <td  rowspan="{{$soal_detail->jawaban->count()}}" class="poin"><input  type ="number" class="form-control poin" name="poin[0]" id="poin0" value="{{$soal_detail->bobot}}"></td>
+                                            <td  rowspan="{{$soal_detail->jawaban->count()}}" class="poin"><input  type ="number" class="form-control poin" name="poin[{{$index}}]" id="poin{{$index}}" value="{{$soal_detail->bobot}}"></td>
                                             <td  rowspan="{{$soal_detail->jawaban->count()}}" class="hapus_baris"><a id="removerow"><i class="fas fa-minus" style="color:red;"></i></a></td>
                                         </tr>
                                         @for($i=1;$i<$soal_detail->jawaban->count();$i++)
-                                        <tr class="kolom" id="kolom0">
+                                        <tr class="kolom" id="kolom{{$index}}">
                                             <td>
                                                 <div class="form-group">
                                                 <div class="input-group">
                                                 <div class="input-group-prepend">
-                                                  <span class="input-group-text"><input type="radio" id="0" class="kunci_jawaban" name="kunci_jawaban[0][]" value="1"></span>
+                                                  <span class="input-group-text"><input type="radio" id="{{$i}}" class="kunci_jawaban" name="kunci_jawaban[{{$index}}][{{$i}}]" value="1"></span>
                                                 </div>
-                                                <textarea name="jawaban[0][]" id="jawaban0" class="form-control jawaban">{{$soal_detail->jawaban[$i]->jawaban}}</textarea>
+                                                <textarea name="jawaban[{{$index}}][{{$i}}]" id="jawaban{{$index}}" class="form-control jawaban">{{$soal_detail->jawaban[$i]->jawaban}}</textarea>
                                               </div>
                                             </div>
                                             </td>
@@ -235,7 +235,7 @@ section{
                         }
                     },
                     processResults: function(data) {
-                        console.log(data);
+                       // console.log(data);
                         return {
                             results: $.map(data, function(obj) {
                                 return {
@@ -263,7 +263,7 @@ section{
                         }
                     },
                     processResults: function(data) {
-                        console.log(data);
+                     //   console.log(data);
                         return {
                             results: $.map(data, function(obj) {
                                 return {
@@ -276,22 +276,46 @@ section{
                 }
         });
 
-
-        var option = new Option("","1",true, true);
-        $('.jabatan').append(option);
-        $('.jabatan').trigger('change');
+        set_jabatan({{$soal->id}});
+        set_divisi({{$soal->id}});
 
 
 
-
+        function set_jabatan(soal_id){
             $.ajax({
                 type: "GET",
                 dataType : 'json',
-                url: '/select/jabatan/get/1',
+                url: '/select/jabatan/get/'+soal_id,
                 success: function(data) {
-                    console.log(data);
+                    $.each(data,function(i,j){
+                    var option = new Option(''+data[i].nama+'',''+data[i].id+'',true, true);
+                    $('.jabatan').append(option);
+
+                    });
+                    $('.jabatan').trigger('change');
+
                 },
             });
+        }
+
+        function set_divisi(soal_id){
+            $.ajax({
+                type: "GET",
+                dataType : 'json',
+                url: '/select/divisi/get/'+soal_id,
+                success: function(data) {
+                  //  console.log(data);
+
+                    $.each(data,function(i,j){
+                    var option = new Option(''+data[i].nama+'',''+data[i].id+'',true, true);
+                    $('.divisi').append(option);
+               //     console.log(option);
+                    });
+                    $('.divisi').trigger('change');
+
+                },
+            });
+        }
 
 
 
@@ -301,7 +325,7 @@ section{
         var yyyy = today.getFullYear();
 
         today = yyyy + '-' + mm + '-' + dd;
-        console.log(today);
+       // console.log(today);
         $("#tanggal_mulai").attr("min", today);
         $("#tanggal_akhir").attr("min", today);
 
@@ -330,7 +354,7 @@ section{
                 $(el1).attr('name', 'kunci_jawaban[' + id + ']['+ count_kunci +']');
                 count_kunci++;
             });
-            console.log(id);
+          //  console.log(id);
         }
 
         function numberRows($t) {
@@ -405,13 +429,11 @@ section{
             var id = $(this).closest('tr').attr('id');
             var x = $('tr[id="' + id + '"]').find('.nomor').attr('rowspan');
              arry = [];
-            //     $.each($(".nosericheck:checked"), function() {
-            //         checkedAry.push($(this).closest('tr').find('.nosericheck').attr('data-id'));
-            //     });
 
             $('.kunci_jawaban').each(function() {
                 arry.push($(this).closest('tr[id="' + id + '"]').find('.kunci_jawaban').attr('id'));
             });
+
             console.log(arry)
             columnCount = (arry.length - 1) + 1;
 
@@ -451,8 +473,8 @@ section{
             // $(this).closest('tr[id="' + id + '"]').find('.poin').attr('rowspan', (parseInt(x) - 1));
             // $(this).closest('tr[id="' + id + '"]').find('.hapus_baris').attr('rowspan', (parseInt(x) - 1));
             $(this).closest('tr').remove();
-            console.log(x);
-            console.log(parseInt(x)-1)
+            // console.log(x);
+            // console.log(parseInt(x)-1)
             numberJawaban(id.substring(5));
         });
 

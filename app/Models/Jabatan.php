@@ -20,6 +20,6 @@ class Jabatan extends Model
     }
     public function Soal()
     {
-        return $this->belongsToMany(Soal::class, 'soal_jabatan', 'jawaban_id', 'soal_id');
+        return $this->belongsToMany(Soal::class, 'soal_jabatan');
     }
 }

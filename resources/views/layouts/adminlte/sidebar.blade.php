@@ -29,6 +29,14 @@
           @if(Auth::user())
           @if(Auth::user()->role == "admin")
           <li class="nav-item">
+            <a href="/home" class="nav-link">
+              <i class="nav-icon fa-solid fa-calendar"></i>
+              <p>
+                Beranda
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
             <a href="/jadwal" class="nav-link">
               <i class="nav-icon fa-solid fa-calendar"></i>
               <p>
