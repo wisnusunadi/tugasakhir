@@ -30,7 +30,7 @@
           @if(Auth::user()->role == "admin")
           <li class="nav-item">
             <a href="/home" class="nav-link">
-              <i class="nav-icon fa-solid fa-calendar"></i>
+              <i class="nav-icon fa fa-home"></i>
               <p>
                 Beranda
               </p>

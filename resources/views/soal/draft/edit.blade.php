@@ -55,8 +55,9 @@ section{
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-                <form method="POST" action="{{route('draft_soal.store')}}">
-                @csrf
+                <form method="POST" action="{{route('draft_soal.update',['id' => $soal->id])}}">
+                    {{csrf_field()}}
+                    {{method_field('PUT')}}
                 @if(Session::has('error') || count($errors) > 0 )
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     <strong>{{Session::get('error')}}</strong> Periksa
@@ -180,8 +181,10 @@ section{
                         </div>
                     </div>
                     <div class="card-footer">
-                        <span class="float-left"><button type="button" class="btn btn-danger">Batal</button></span>
-                        <span class="float-right"><button type="submit" class="btn btn-success">Tambah</button></span>
+                        <span class="float-left"><a href="{{route('draft_soal')}}" type="button" class="btn btn-danger">
+                            Batal
+                        </a></span>
+                        <span class="float-right"><button type="submit" class="btn btn-success">Ubah</button></span>
                     </div>
                 </div>
                 </form>
@@ -205,20 +208,9 @@ section{
 
 @section('script')
 <script>
-    var rowCount = 0;
-
-    var jabatan_id = [];
-
-    // $('#showtable').on('click', '.kunci_jawaban', function(){
-    //     var tr_id = $(this).closest('tr').attr('id');
-    //     var id = $(this).closest('.kunci_jawaban').attr('id');
-    //     alert(id);
-    // })
-
-
+    var rowCount = {{$soal->SoalDetail->count()}};
+    console.log(rowCount);
     $(function(){
-
-
     $('.divisi').select2({
                     theme: 'bootstrap4',
                     multiple: true,
@@ -247,10 +239,10 @@ section{
                     },
                 }
         });
+
     $('.jabatan').select2({
                     theme: 'bootstrap4',
                     multiple: true,
-
                  ajax: {
                     minimumResultsForSearch: 20,
                     dataType: 'json',
@@ -317,8 +309,6 @@ section{
             });
         }
 
-
-
         var today = new Date();
         var dd = String(today.getDate()).padStart(2, '0');
         var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
@@ -364,36 +354,32 @@ section{
                 var j = c - 1;
                 var id = $(el).attr('id');
                 $('tr[id="' + id + '"]').find('input[id="soal"]').attr('name', 'soal[' + j + ']');
-                // $('tr[id="' + id + '"]').find('.kunci_jawaban').attr('name', 'kunci_jawaban[' + j + '][]');
-                // $('tr[id="' + id + '"]').find('.jawaban').attr('name', 'jawaban[' + j + '][]');
-                var count_jawaban = 0;
-                $('tr[id="' + id + '"]').find('.jawaban').each(function(ind1, el1){
-                    $(el1).attr('name', 'jawaban[' + j + ']['+ count_jawaban +']');
-                    count_jawaban++;
-                });
-                var count_kunci = 0;
-                $('tr[id="' + id + '"]').find('.kunci_jawaban').each(function(ind1, el1){
-                    $(el1).attr('name', 'kunci_jawaban[' + j + ']['+ count_kunci +']');
-                    count_kunci++;
-                });
+
+                // var count_jawaban = 0;
+                // $('tr[id="' + id + '"]').find('.jawaban').each(function(ind1, el1){
+                //     $(el1).attr('name', 'jawaban[' + j + ']['+ count_jawaban +']');
+                //     count_jawaban++;
+                // });
+                // var count_kunci = 0;
+                // $('tr[id="' + id + '"]').find('.kunci_jawaban').each(function(ind1, el1){
+                //     $(el1).attr('name', 'kunci_jawaban[' + j + ']['+ count_kunci +']');
+                //     count_kunci++;
+                // });
                 $('tr[id="' + id + '"]').find('.jawaban').attr('id', 'jawaban'+j);
                 $('tr[id="' + id + '"]').attr('id', 'kolom' + j);
                 $(el).attr('id', 'kolom' + j);
                 $(el).find('.soal').attr('name', 'soal[' + j + ']');
                 $(el).find('.soal').attr('id', 'soal' + j);
-                // $(el).find('.jawaban').attr('name', 'jawaban[' + j + '][]');
 
                 $(el).find('.jawaban').attr('id', 'jawaban' + j);
 
-                // $(el).find('.kunci_jawaban').attr('name', 'kunci_jawaban[' + j + '][]' );
+
                 $(el).find('.poin').attr('name', 'poin[' + j + ']');
                 $(el).find('.poin').attr('id', 'poin' + j);
-
 
                 // select();
             });
         }
-
 
         $('#showtable').on('click', '#tambahrow', function(){
             rowCount++;
@@ -417,6 +403,7 @@ section{
                                             <td  rowspan="1" class="hapus_baris"><a id="removerow"><i class="fas fa-minus" style="color:red;"></i></a></td>
                                            </tr>`);
             numberRows($("#showtable"));
+            console.log(rowCount);
         });
 
         $('#showtable').on('click', '#removerow', function(e) {
@@ -434,13 +421,15 @@ section{
                 arry.push($(this).closest('tr[id="' + id + '"]').find('.kunci_jawaban').attr('id'));
             });
 
-            console.log(arry)
+            console.log(id);
+            console.log((parseInt(x) + 1));
             columnCount = (arry.length - 1) + 1;
 
-            $(this).closest('tr[id="' + id + '"]').find('.nomor').attr('rowspan', (parseInt(x) + 1));
-            $(this).closest('tr[id="' + id + '"]').find('.soal').attr('rowspan', (parseInt(x) + 1));
-            $(this).closest('tr[id="' + id + '"]').find('.poin').attr('rowspan', (parseInt(x) + 1));
-            $(this).closest('tr[id="' + id + '"]').find('.hapus_baris').attr('rowspan', (parseInt(x) + 1));
+            $('tr[id="' + id + '"]').find('.nomor').attr('rowspan', (parseInt(x) + 1));
+
+            $('tr[id="' + id + '"]').find('.soal').attr('rowspan', (parseInt(x) + 1));
+            $('tr[id="' + id + '"]').find('.poin').attr('rowspan', (parseInt(x) + 1));
+            $('tr[id="' + id + '"]').find('.hapus_baris').attr('rowspan', (parseInt(x) + 1));
 
 
             $(this).closest('tr.kolom').after(`<tr id="` + id + `">
@@ -478,63 +467,7 @@ section{
             numberJawaban(id.substring(5));
         });
 
-        // function select(){
-        //     $('.jabatan').select2({
-        //         ajax: {
-        //             minimumResultsForSearch: 20,
-        //             placeholder: "Pilih Jabatan",
-        //             dataType: 'json',
-        //             theme: "bootstrap",
-        //             delay: 250,
-        //             type: 'GET',
-        //             url: '/api/jabatan',
-        //             data: function(params) {
-        //                 return {
-        //                     term: params.term
-        //                 }
-        //             },
-        //             processResults: function(data) {
-        //                 console.log(data);
-        //                 return {
-        //                     results: $.map(data, function(obj) {
-        //                         return {
-        //                             id: obj.id,
-        //                             text: obj.nama
-        //                         };
-        //                     })
-        //                 };
-        //             },
-        //         }
-        //     })
 
-        //     $('.divisi').select2({
-        //         ajax: {
-        //             minimumResultsForSearch: 20,
-        //             placeholder: "Pilih Divisi",
-        //             dataType: 'json',
-        //             theme: "bootstrap",
-        //             delay: 250,
-        //             type: 'GET',
-        //             url: '/api/divisi',
-        //             data: function(params) {
-        //                 return {
-        //                     term: params.term
-        //                 }
-        //             },
-        //             processResults: function(data) {
-        //                 console.log(data);
-        //                 return {
-        //                     results: $.map(data, function(obj) {
-        //                         return {
-        //                             id: obj.id,
-        //                             text: obj.nama
-        //                         };
-        //                     })
-        //                 };
-        //             },
-        //         }
-        //     });
-        // }
     })
 </script>
 @endsection

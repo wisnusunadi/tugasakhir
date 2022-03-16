@@ -104,7 +104,7 @@ td{
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-12">
-        <div class="card">
+            <div class="card">
           <div class="card-header">
            <div class="col-12">
                 <span class="float-left filter">
@@ -129,7 +129,39 @@ td{
           </div>
           <input class="d-none" name="hidden_page" id="hidden_page" value="1" />
         </div>
-      </div>
+
+        <div class="modal fade" id="hapusmodal" role="dialog" aria-labelledby="hapusmodal" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content" style="margin: 10px">
+                    <div class="modal-header bg-danger">
+                        <h4 class="modal-title"><b>Hapus</b></h4>
+                    </div>
+                    <div class="modal-body" id="hapus">
+                        <div class="row">
+                            <div class="col-12">
+                                <form method="post" action="" id="form-hapus" data-target="">
+                                    @method('delete')
+                                    @csrf
+                                    <div class="card">
+                                        <div class="card-body">Apakah Anda yakin ingin menghapus data ini?</div>
+                                        <div class="card-footer">
+                                            <span class="float-left">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                                            </span>
+                                            <span class="float-right">
+                                                <button type="submit" class="btn btn-danger " id="btnhapus">Hapus</button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
     </div>
   </div>
 </div>
@@ -192,6 +224,13 @@ $(document).on('keyup', '#search', function(){
                     });
                 }
             });
+
+     $(document).on('click', '.hapusmodal', function(event) {
+            event.preventDefault();
+            var id = $(this).data("id");
+            $('#hapusmodal').modal("show");
+
+        });
 
     $('#search').on('autocompletechange change', function () {
         result = this.value;

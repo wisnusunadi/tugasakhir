@@ -40,6 +40,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/create', [App\Http\Controllers\HomeController::class, 'draft_soal_create'])->name('draft_soal.create');
         Route::get('/edit/{id}', [App\Http\Controllers\HomeController::class, 'draft_soal_edit'])->name('draft_soal.edit');
         Route::post('/store', [App\Http\Controllers\HomeController::class, 'draft_soal_store'])->name('draft_soal.store');
+        Route::put('/update/{id}', [App\Http\Controllers\HomeController::class, 'draft_soal_update'])->name('draft_soal.update');
         Route::get('/search', [App\Http\Controllers\HomeController::class, 'draft_soal_search'])->name('draft_soal.search');
         Route::get('/preview/{id}', [App\Http\Controllers\HomeController::class, 'draft_soal_preview'])->name('draft_soal.preview');
         Route::get('/preview/data/{id}', [App\Http\Controllers\HomeController::class, 'draft_soal_preview_data'])->name('draft_soal.preview.data');

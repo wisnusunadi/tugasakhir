@@ -83,6 +83,7 @@
 
  <!-- Font Awesome -->
  <script type="text/javascript" src="{{ asset('themes/plugins/fontawesome-free/js/all.min.js') }}"></script>
+
 @yield('script')
 
 </body>

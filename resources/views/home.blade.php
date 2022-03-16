@@ -99,7 +99,7 @@
 @endsection
 
 @section('script')
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
 <script>
 $(function(){
 get_jabatan();
@@ -117,6 +117,7 @@ $('input[type="radio"][name="filter"]').on('change', function() {
                 $("#divisi").removeClass("d-none");
             }
 });
+
 
 var ctx = document.getElementById('jabatan_chart').getContext('2d');
 var chart = new Chart(ctx, {

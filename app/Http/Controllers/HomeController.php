@@ -218,6 +218,86 @@ class HomeController extends Controller
         return view('soal.draft.edit', ['divisi' => $divisi, 'jabatan' => $jabatan, 'soal' => $soal]);
     }
 
+    public function draft_soal_update(Request $request, $id)
+    {
+        $bool = true;
+        $soal = Soal::find($id);
+        $soal->nama = $request->nama;
+        $soal->kode_soal = $request->kode_soal;
+        $soal->waktu = $request->waktu;
+        $soal = $soal->save();
+
+        if ($request->jabatan != '') {
+            $jabatan_array = [];
+            for ($i = 0; $i < count($request->jabatan); $i++) {
+                $jabatan_array[] = $request->jabatan[$i];
+            }
+            $soals = Soal::find($id);
+            $p = $soals->Jabatan()->sync($jabatan_array);
+        }
+
+        if ($request->divisi != '') {
+            $divisi_array = [];
+            for ($i = 0; $i < count($request->divisi); $i++) {
+                $divisi_array[] = $request->divisi[$i];
+            }
+            $soals = Soal::find($id);
+            $p = $soals->divisi()->sync($divisi_array);
+        }
+
+        $jawaban =  Jawaban::whereHas('SoalDetail', function ($q) use ($id) {
+            $q->where('soal_id', $id);
+        })->get();
+
+        if (count($jawaban) > 0) {
+            $del_jawaban = Jawaban::whereHas('SoalDetail', function ($q) use ($id) {
+                $q->where('soal_id', $id);
+            })->delete();
+        }
+
+        $detjawaban = SoalDetail::where('soal_id', $id)->get();
+        if (count($detjawaban) > 0) {
+            SoalDetail::where('soal_id', $id)->delete();
+        }
+
+
+        for ($i = 0; $i < count($request->soal); $i++) {
+            $sdc = SoalDetail::create([
+                'soal_id' => $id,
+                'deskripsi' => $request->soal[$i],
+                'bobot' => $request->poin[$i]
+            ]);
+
+            if ($sdc) {
+                for ($j = 0; $j < count($request->jawaban[$i]); $j++) {
+                    $status = NULL;
+                    if (isset($request->get('kunci_jawaban')[$i][$j])) {
+                        $status = '1';
+                    } else {
+                        $status = NULL;
+                    }
+                    $jc = Jawaban::create([
+                        'soal_detail_id' => $sdc->id,
+                        'jawaban' => $request->jawaban[$i][$j],
+                        'status' => $status
+                    ]);
+                    if (!$jc) {
+                        $bool = false;
+                    }
+                }
+            } else if (!$sdc) {
+                $bool = false;
+            }
+        }
+
+
+        if ($bool == true) {
+            return redirect()->back()->with('success', 'Berhasil mengubah Soal');
+        } else if ($bool == false) {
+            return redirect()->back()->with('error', 'Gagal mengubah Soal');
+        }
+    }
+
     public function draft_soal_store(Request $request)
     {
 

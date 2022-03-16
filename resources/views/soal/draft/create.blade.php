@@ -105,20 +105,14 @@ section{
                         <div class="form-group row">
                             <label for="tanggal_akhir" class="col-lg-4 col-md-12 col-form-label labelket">Jabatan</label>
                             <div class="col-lg-8 col-md-12">
-                                    <select class="select2" multiple="multiple" data-placeholder="Pilih Jabatan" style="width: 100%;" name="jabatan[]" id="jabatan">
-                                      @foreach ($jabatan as $j)
-                                          <option value="{{ $j->id }}">{{ $j->nama }}</option>
-                                      @endforeach
+                                    <select class="jabatan"  data-placeholder="Pilih Jabatan" style="width: 100%;" name="jabatan[]" id="jabatan">
                                     </select>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="tanggal_akhir" class="col-lg-4 col-md-12 col-form-label labelket">Divisi</label>
                             <div class="col-lg-8 col-md-12">
-                                    <select class="select2" multiple="multiple" data-placeholder="Pilih Divisi" style="width: 100%;" name="divisi[]" id="divisi">
-                                        @foreach ($divisi as $d)
-                                          <option value="{{ $d->id }}">{{ $d->nama }}</option>
-                                      @endforeach
+                                    <select class="divisi" data-placeholder="Pilih Divisi" style="width: 100%;" name="divisi[]" id="divisi">
                                     </select>
                             </div>
                         </div>
@@ -165,7 +159,9 @@ section{
                         </div>
                     </div>
                     <div class="card-footer">
-                        <span class="float-left"><button type="button" class="btn btn-danger">Batal</button></span>
+                        <span class="float-left"><a href="{{route('draft_soal')}}" type="button" class="btn btn-danger">
+                            Batal
+                        </a></span>
                         <span class="float-right"><button type="submit" class="btn btn-success">Tambah</button></span>
                     </div>
                 </div>
@@ -189,9 +185,9 @@ section{
 
 
     $(function(){
-        $('.select2').select2({
-      theme: 'bootstrap4'
-    })
+    get_divisi();
+    get_jabatan();
+    get_nama();
 
         // select();
         // $('.jabatan').select2();
@@ -293,6 +289,7 @@ section{
                                             <td  rowspan="1" class="hapus_baris"><a id="removerow"><i class="fas fa-minus" style="color:red;"></i></a></td>
                                            </tr>`);
             numberRows($("#showtable"));
+            console.log(rowCount);
         });
 
         $('#showtable').on('click', '#removerow', function(e) {
@@ -356,63 +353,91 @@ section{
             numberJawaban(id.substring(5));
         });
 
-        // function select(){
-        //     $('.jabatan').select2({
-        //         ajax: {
-        //             minimumResultsForSearch: 20,
-        //             placeholder: "Pilih Jabatan",
-        //             dataType: 'json',
-        //             theme: "bootstrap",
-        //             delay: 250,
-        //             type: 'GET',
-        //             url: '/api/jabatan',
-        //             data: function(params) {
-        //                 return {
-        //                     term: params.term
-        //                 }
-        //             },
-        //             processResults: function(data) {
-        //                 console.log(data);
-        //                 return {
-        //                     results: $.map(data, function(obj) {
-        //                         return {
-        //                             id: obj.id,
-        //                             text: obj.nama
-        //                         };
-        //                     })
-        //                 };
-        //             },
-        //         }
-        //     })
+        function get_jabatan(){
+$('.jabatan').select2({
+                    theme: 'bootstrap4',
 
-        //     $('.divisi').select2({
-        //         ajax: {
-        //             minimumResultsForSearch: 20,
-        //             placeholder: "Pilih Divisi",
-        //             dataType: 'json',
-        //             theme: "bootstrap",
-        //             delay: 250,
-        //             type: 'GET',
-        //             url: '/api/divisi',
-        //             data: function(params) {
-        //                 return {
-        //                     term: params.term
-        //                 }
-        //             },
-        //             processResults: function(data) {
-        //                 console.log(data);
-        //                 return {
-        //                     results: $.map(data, function(obj) {
-        //                         return {
-        //                             id: obj.id,
-        //                             text: obj.nama
-        //                         };
-        //                     })
-        //                 };
-        //             },
-        //         }
-        //     });
-        // }
-    })
+                 ajax: {
+                    minimumResultsForSearch: 20,
+                    dataType: 'json',
+                    delay: 250,
+                    type: 'GET',
+                    url: '/select/jabatan',
+                    data: function(params) {
+                        return {
+                            term: params.term
+                        }
+                    },
+                    processResults: function(data) {
+                     //   console.log(data);
+                        return {
+                            results: $.map(data, function(obj) {
+                                return {
+                                    id: obj.id,
+                                    text: obj.nama
+                                };
+                            })
+                        };
+                    },
+                }
+        });
+}
+function get_divisi(){
+$('.divisi').select2({
+                    theme: 'bootstrap4',
+
+                 ajax: {
+                    minimumResultsForSearch: 20,
+                    dataType: 'json',
+                    delay: 250,
+                    type: 'GET',
+                    url: '/select/divisi',
+                    data: function(params) {
+                        return {
+                            term: params.term
+                        }
+                    },
+                    processResults: function(data) {
+                     //   console.log(data);
+                        return {
+                            results: $.map(data, function(obj) {
+                                return {
+                                    id: obj.id,
+                                    text: obj.nama
+                                };
+                            })
+                        };
+                    },
+                }
+        });
+}
+
+    function get_nama(){
+        $("#nama").autocomplete({
+                        source: function(request, response) {
+                            $.ajax({
+                                dataType: 'json',
+                                url: "/draft_soal/search",
+                                data: {
+                                    term: request.term
+                                },
+                                success: function(data) {
+
+                                    var transformed = $.map(data, function(el) {
+                                        return {
+                                            label: el.nama,
+                                            id: el.id
+                                        };
+                                    });
+                                    response(transformed);
+                                },
+                                error: function() {
+                                    response([]);
+                                }
+                            });
+                        }
+                    });
+                }
+})
 </script>
 @endsection
