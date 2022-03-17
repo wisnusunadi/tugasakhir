@@ -89,9 +89,6 @@
 <script src="{{ asset('themes/plugins/select2/js/select2.min.js') }}"></script>
 <!-- DataTable-->
 
-
-
-
 <!-- daterangepicker -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
 <script src="{{ asset('themes/plugins/daterangepicker/daterangepicker.js') }}"></script>

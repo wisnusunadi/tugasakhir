@@ -144,7 +144,7 @@ section{
                                                 <div class="form-group">
                                                 <div class="input-group">
                                                 <div class="input-group-prepend">
-                                                  <span class="input-group-text"><input type="radio" id="0" class="kunci_jawaban" data-name="radiokunci{{$index}}" name="kunci_jawaban[{{$index}}][]" value="1"></span>
+                                                  <span class="input-group-text"><input type="radio" id="0" class="kunci_jawaban" data-name="radiokunci{{$index}}" name="kunci_jawaban[{{$index}}][0]" value="1" {{ ($soal_detail->jawaban[0]->status=="1")? "checked" : "" }} ></span>
                                                 </div>
                                                 <textarea name="jawaban[{{$index}}][0]" id="jawaban{{$index}}" class="form-control jawaban">{{$soal_detail->jawaban[0]->jawaban}}</textarea>
                                               </div>
@@ -162,7 +162,7 @@ section{
                                                 <div class="form-group">
                                                 <div class="input-group">
                                                 <div class="input-group-prepend">
-                                                  <span class="input-group-text"><input type="radio" id="{{$i}}" class="kunci_jawaban" data-name="radiokunci{{$index}}" name="kunci_jawaban[{{$index}}][]" value="1"></span>
+                                                  <span class="input-group-text"><input type="radio" id="{{$i}}" class="kunci_jawaban" data-name="radiokunci{{$index}}" name="kunci_jawaban[{{$index}}][{{$i}}]" value="1" {{ ($soal_detail->jawaban[$i]->status=="1")? "checked" : "" }}></span>
                                                 </div>
                                                 <textarea name="jawaban[{{$index}}][{{$i}}]" id="jawaban{{$index}}" class="form-control jawaban">{{$soal_detail->jawaban[$i]->jawaban}}</textarea>
                                               </div>
@@ -172,7 +172,7 @@ section{
                                             @if($i == 0)
                                                 <a type ="button" id="tambahopsi"><i class="fas fa-plus" style="color:green;"></i></a>
                                             @else
-                                                <a id="removerow"><i class="fas fa-minus" style="color:red;"></i></a>
+                                                <a id="hapusopsi"><i class="fas fa-minus" style="color:red;"></i></a>
                                             @endif
                                             </td>
                                         </tr>
