@@ -1,5 +1,5 @@
 @extends('layouts.adminlte.main')
- 
+
 @section('title', 'Sistem Penerimaan Karyawan')
 
 @section('custom_css')
@@ -55,7 +55,7 @@ section{
   width: 15px;
   margin: 0 2px;
   background-color: #bbbbbb;
-  border: none;  
+  border: none;
   border-radius: 50%;
   display: inline-block;
   opacity: 0.5;
@@ -118,7 +118,7 @@ td{
                     <div class="col-7">
                       <h2 class="lead"><b>{{ $s->kode_soal }}</b></h2>
                       <p class="text-muted text-sm"><b>Jumlah: </b> {{ $s->getJumlahSoal() }} Soal </p>
-                      <p class="text-muted text-sm"><b>Jabatan: </b> 
+                      <p class="text-muted text-sm"><b>Jabatan: </b>
                         @foreach($s->Jabatan as $j)
                         {{$j->nama}}
                         @if(!$loop->last)
@@ -126,7 +126,7 @@ td{
                         @endif
                         @endforeach
                       </p>
-                      <p class="text-muted text-sm"><b>Divisi: </b> 
+                      <p class="text-muted text-sm"><b>Divisi: </b>
                         @foreach($s->Divisi as $d)
                         {{$d->nama}}
                         @if(!$loop->last)
@@ -146,7 +146,7 @@ td{
                 </div>
               </div>
             </div>
-            @endforeach            
+            @endforeach
           </div>
         </div>
       </div>

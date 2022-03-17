@@ -1,5 +1,5 @@
 @extends('layouts.adminlte.main')
- 
+
 @section('title', 'Sistem Penerimaan Karyawan')
 
 @section('custom_css')
@@ -55,7 +55,7 @@ section{
   width: 15px;
   margin: 0 2px;
   background-color: #bbbbbb;
-  border: none;  
+  border: none;
   border-radius: 50%;
   display: inline-block;
   opacity: 0.5;
@@ -137,7 +137,7 @@ td{
                                 </tr>
                                 <?php $jawaban++; ?>
                                 @endforeach
-                                
+
                             </tbody>
                         </table>
                     </div>
@@ -259,7 +259,7 @@ td{
                 </div>
                 </form>
                 <div class="card">
-                    <div class="card-body"> 
+                    <div class="card-body">
                         <h4 class="content-title">Navigasi</h4>
                         <nav aria-label="...">
                             <ul class="pagination flex-wrap" id="navigation">
@@ -269,39 +269,19 @@ td{
                                     @else
                                         <li class="page-item " id="page{{ $i }}"><a class="page-link" onclick="navigate({{ $i }})">{{ $i+1 }}</a></li>
                                     @endif
-                         
                               <?php }?>
-                              
                             </ul>
                           </nav>
-
                     </div>
                 </div>
             </div>
         </div>
+        {{$selesai}}
     </div>
 </section>
 @endsection
 
 @section('script')
-<!-- <script>
- window.onbeforeunload = function(event) {
-            return confirm("Confirm refresh");
-        };
-</script>
-
-<script>
-    $(document).ready(function() {
-        $('li').click(function() {
-            $('li.page-item.active').removeClass("active");
-            $(this).addClass("active");
-        });
-        $('#nextBtn').click(function() {
-          alert('ok');
-        });
-    });
-</script> -->
-
 <script>
   var timer2 = "60:01";
   var interval = setInterval(function() {
@@ -353,7 +333,7 @@ td{
         // fixStepIndicator(n)
     }
 
-        
+
 
 
     function validateForm() {
@@ -361,7 +341,7 @@ td{
         var x, y, i, valid = true;
         x = document.getElementsByClassName("tab");
         y = $("input[name='jawaban_id["+currentTab+"]']:checked").val();
-        
+
         // A loop that checks every input field in the current tab:
         if($("input[name='jawaban_id["+currentTab+"]']:checked").val() === "" || $("input[name='jawaban_id["+currentTab+"]']:checked").val() === undefined){
             $("input[name='jawaban_id["+currentTab+"]']").addClass('is-invalid');
@@ -432,7 +412,7 @@ td{
         // Hide the current tab:
         x[currentTab].style.display = "none";
         // Increase or decrease the current tab by 1:
-        
+
 
         currentTab = n;
         $('#page'+currentTab).removeClass("answer");

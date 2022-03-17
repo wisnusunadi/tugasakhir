@@ -24,8 +24,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/jadwal_create', [App\Http\Controllers\JadwalController::class, 'jadwal_create'])->name('jadwal.create');
     Route::post('/jadwal_store', [App\Http\Controllers\JadwalController::class, 'jadwal_store'])->name('jadwal.store');
-    Route::get('/soal_tes/preview', [App\Http\Controllers\HomeController::class, 'soal_tes_preview'])->name('soal_tes.preview');
-    Route::get('/soal_tes/show/{id}', [App\Http\Controllers\HomeController::class, 'soal_tes_show'])->name('soal_tes.show');
     Route::get('/peserta', [App\Http\Controllers\HomeController::class, 'peserta_show'])->name('peserta');
     Route::get('/hasil', [App\Http\Controllers\HomeController::class, 'hasil_show'])->name('hasil');
     Route::group(['prefix' => '/select'], function () {
@@ -33,6 +31,10 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/divisi/get/{id}', [App\Http\Controllers\HomeController::class, 'select_divisi_get'])->name('select.divisi.get');
         Route::get('/jabatan', [App\Http\Controllers\HomeController::class, 'select_jabatan'])->name('select.jabatan');
         Route::get('/divisi', [App\Http\Controllers\HomeController::class, 'select_divisi'])->name('select.divisi');
+    });
+    Route::group(['prefix' => '/soal_tes'], function () {
+        Route::get('/preview', [App\Http\Controllers\HomeController::class, 'soal_tes_preview'])->name('soal_tes.preview');
+        Route::get('/show/{id}', [App\Http\Controllers\HomeController::class, 'soal_tes_show'])->name('soal_tes.show');
     });
     Route::group(['prefix' => '/draft_soal'], function () {
         Route::get('/show', [App\Http\Controllers\HomeController::class, 'draft_soal_show'])->name('draft_soal');

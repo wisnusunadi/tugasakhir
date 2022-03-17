@@ -161,8 +161,15 @@ class HomeController extends Controller
     {
         if (!Auth::user()) {
         } else {
+
+            $now = Carbon::now();
+            $timer = Soal::find($id)->waktu;
+
+            $selesai = Carbon::parse($now)->addMinutes($timer);
             $soal = SoalDetail::where('soal_id', $id)->inRandomOrder()->get();
-            return view('soal.tes.show', ['id' => $id, 'soals' => $soal]);
+
+
+            return view('soal.tes.show', ['id' => $id, 'soals' => $soal, 'selesai' => $selesai]);
         }
     }
 
