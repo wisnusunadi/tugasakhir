@@ -22,6 +22,7 @@
     #thecontent{
         width:60%;
     }
+
 </style>
 @stop
 @section('content')
@@ -74,7 +75,7 @@
                         </div>
                         <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
                                 <div class="row mb-3">
-                                    <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
+                                    <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Nama') }}</label>
 
                                     <div class="col-md-6">
                                         <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
@@ -88,12 +89,25 @@
                                 </div>
 
                                 <div class="row mb-3">
-                                    <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
+                                    <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email') }}</label>
 
                                     <div class="col-md-6">
                                         <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
 
                                         @error('email')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="tgl_lahir" class="col-md-4 col-form-label text-md-end">{{ __('Tgl Lahir') }}</label>
+                                    <div class="col-md-6">
+                                        <input id="tgl_lahir" type="date" class="form-control @error('tgl_lahir') is-invalid @enderror" name="tgl_lahir" value="{{ old('tgl_lahir') }}" required autocomplete="tgl_lahir">
+
+                                        @error('tgl_lahir')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -143,6 +157,17 @@
                                     </div>
                                 </div>
 
+
+                                <div class="row mb-3">
+                                    <label for="password-confirm" class="col-md-4 col-form-label text-md-end">Alamat</label>
+
+                                    <div class="col-md-6">
+                                        <div id="map" style="width: 100%;height: 30vh;"></div>
+                                        <div id="instructions"></div>
+                                            </div>
+                                </div>
+
+
                                 <div class="row mb-0">
                                     <div class="col-md-9 offset-md-2">
                                         <a type="button" class="btn btn-danger" href="{{route('login')}}">Batal</a>
@@ -151,6 +176,8 @@
                                         </button>
                                     </div>
                                 </div>
+
+
                         </div>
                     </div>
 
@@ -166,6 +193,200 @@
 @endsection
 
 @section('script')
+<link href="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.css" rel="stylesheet">
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.js"></script>
+<link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css" type="text/css">
+<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
+<script>
+	// TO MAKE THE MAP APPEAR YOU MUST
+	// ADD YOUR ACCESS TOKEN FROM
+	// https://account.mapbox.com
+	mapboxgl.accessToken = 'pk.eyJ1IjoiY29iYWFqYSIsImEiOiJjbDB1YmF2MW0wbTc5M2lwN29naXNvZmNhIn0.0NSEJTzK2A0B20TS5GNLYA';
+const map = new mapboxgl.Map({
+  container: 'map',
+  style: 'mapbox://styles/mapbox/streets-v11',
+  center: [112.60510145893522, -7.24034151386617], // starting position
+  zoom: 13
+});
+
+// set the bounds of the map
+// const bounds = [
+//   [-123.069003, 45.395273],
+//   [-122.303707, 45.612333]
+// ];
+// map.setMaxBounds(bounds);
+
+// an arbitrary start will always be the same
+// only the end or destination will change
+const start = [112.60254505477201, -7.238722373177026];
+
+// this is where the code for the next step will go
+
+// create a function to make a directions request
+async function getRoute(end) {
+  // make a directions request using cycling profile
+  // an arbitrary start will always be the same
+  // only the end or destination will change
+  const query = await fetch(
+    `https://api.mapbox.com/directions/v5/mapbox/cycling/${start[0]},${start[1]};${end[0]},${end[1]}?steps=true&geometries=geojson&access_token=${mapboxgl.accessToken}`,
+    { method: 'GET' }
+  );
+  const json = await query.json();
+  const data = json.routes[0];
+  const route = data.geometry.coordinates;
+  const geojson = {
+    type: 'Feature',
+    properties: {},
+    geometry: {
+      type: 'LineString',
+      coordinates: route
+    }
+  };
+  // if the route already exists on the map, we'll reset it using setData
+  if (map.getSource('route')) {
+    map.getSource('route').setData(geojson);
+  }
+  // otherwise, we'll make a new request
+  else {
+    map.addLayer({
+      id: 'route',
+      type: 'line',
+      source: {
+        type: 'geojson',
+        data: geojson
+      },
+      layout: {
+        'line-join': 'round',
+        'line-cap': 'round'
+      },
+      paint: {
+        'line-color': '#3887be',
+        'line-width': 5,
+        'line-opacity': 0.75
+      }
+    });
+  }
+  // add turn instructions here at the end
+
+
+// get the sidebar and add the instructions
+const instructions = document.getElementById('instructions');
+console.log(data);
+
+
+if (data.distance < 1000){
+    var label = ' Meter'
+    var h =  data.distance / 1000
+}else{
+    var label = ' Kilometer'
+    var h =  data.distance / 1000
+}
+
+let tripInstructions = '';
+instructions.innerHTML = `<p><strong>Jarak: `+h.toFixed(1)+``+label+`  🚴 </strong></p>`;
+}
+
+map.on('load', () => {
+  // make an initial directions request that
+  // starts and ends at the same location
+  getRoute(start);
+
+  // Add starting point to the map
+  map.addLayer({
+    id: 'point',
+    type: 'circle',
+    source: {
+      type: 'geojson',
+      data: {
+        type: 'FeatureCollection',
+        features: [
+          {
+            type: 'Feature',
+            properties: {},
+            geometry: {
+              type: 'Point',
+              coordinates: start
+            }
+          }
+        ]
+      }
+    },
+    paint: {
+      'circle-radius': 10,
+      'circle-color': '#3887be'
+    },
+  });
+  // this is where the code from the next step will go
+});
+
+map.on('click', (event) => {
+  const coords = Object.keys(event.lngLat).map((key) => event.lngLat[key]);
+  const end = {
+    type: 'FeatureCollection',
+    features: [
+      {
+        type: 'Feature',
+        properties: {},
+        geometry: {
+          type: 'Point',
+          coordinates: coords
+        }
+      }
+    ]
+  };
+  if (map.getLayer('end')) {
+    map.getSource('end').setData(end);
+  } else {
+    map.addLayer({
+      id: 'end',
+      type: 'circle',
+      source: {
+        type: 'geojson',
+        data: {
+          type: 'FeatureCollection',
+          features: [
+            {
+              type: 'Feature',
+              properties: {},
+              geometry: {
+                type: 'Point',
+                coordinates: coords
+              }
+            }
+          ]
+        }
+      },
+      paint: {
+        'circle-radius': 10,
+        'circle-color': '#f30'
+      }
+    });
+  }
+  getRoute(coords);
+
+
+});
+
+
+
+
+var geocoder = new MapboxGeocoder({
+            accessToken: mapboxgl.accessToken,
+            mapboxgl: mapboxgl,
+            marker:false,
+            placeholder: 'Lokasi anda tinggal',
+            zoom:20
+        });
+
+
+        map.addControl(
+            geocoder
+        );
+
+
+
+</script>
+
 <script>
     $(function(){
         $('#pendaftaran_id').select2();
