@@ -141,9 +141,9 @@ section{
                                                 <div class="form-group">
                                                 <div class="input-group">
                                                 <div class="input-group-prepend">
-                                                  <span class="input-group-text"><input type="radio" id="0" class="kunci_jawaban" name="kunci_jawaban[0][]" value="1"></span>
+                                                  <span class="input-group-text"><input type="radio" id="0" data-name="radiokunci0" class="kunci_jawaban" name="kunci_jawaban[0][0]" value="1"></span>
                                                 </div>
-                                                <textarea name="jawaban[0][]" id="jawaban0" class="form-control jawaban"></textarea>
+                                                <textarea name="jawaban[0][0]" id="jawaban0" class="form-control jawaban"></textarea>
                                               </div>
                                             </div>
                                             </td>
@@ -223,7 +223,8 @@ section{
             });
             var count_kunci = 0;
             $('tr[id="kolom' + id + '"]').find('.kunci_jawaban').each(function(ind1, el1){
-                $(el1).attr('name', 'kunci_jawaban[' + id + ']['+ count_kunci +']');
+                $(el1).attr('data-name', 'radiokunci' + id);
+                $(el1).attr('name', 'kunci_jawaban[' + id + ']['+count_kunci+']');
                 count_kunci++;
             });
             console.log(id);
@@ -245,6 +246,7 @@ section{
                 });
                 var count_kunci = 0;
                 $('tr[id="' + id + '"]').find('.kunci_jawaban').each(function(ind1, el1){
+                    $(el1).attr('data-name', 'radiokunci' + j);
                     $(el1).attr('name', 'kunci_jawaban[' + j + ']['+ count_kunci +']');
                     count_kunci++;
                 });
@@ -276,7 +278,7 @@ section{
                                                 <div class="form-group">
                                                 <div class="input-group">
                                                 <div class="input-group-prepend">
-                                                  <span class="input-group-text"><input type="radio" class="kunci_jawaban" id="0" name="kunci_jawaban[0][]" value="1"></span>
+                                                  <span class="input-group-text"><input type="radio" class="kunci_jawaban" data-name="radiokunci0" id="0" name="kunci_jawaban[0][]" value="1"></span>
                                                 </div>
                                                 <textarea name="jawaban[0][]" id="jawaban" class="form-control jawaban"></textarea>
                                               </div>
@@ -323,9 +325,9 @@ section{
                 <div class="form-group">
                                                 <div class="input-group">
                                                 <div class="input-group-prepend">
-                                                  <span class="input-group-text"><input type="radio" class="kunci_jawaban" id="`+columnCount+`" name="kunci_jawaban[` + id.substring(5) + `][]" value="1"></span>
+                                                  <span class="input-group-text"><input type="radio" class="kunci_jawaban" data-name="radiokunci`+ id.substring(5) +`" id="`+columnCount+`" name="kunci_jawaban[` + id.substring(5) + `][`+columnCount+`]" value="1"></span>
                                                 </div>
-                                                <textarea name="jawaban[` + id.substring(5) + `][]" id="jawaban` + id.substring(5) + `" class="form-control jawaban"></textarea>
+                                                <textarea name="jawaban[` + id.substring(5) + `][`+columnCount+`]" id="jawaban` + id.substring(5) + `" class="form-control jawaban"></textarea>
                                               </div>
                                             </div>
             </td>
@@ -351,6 +353,12 @@ section{
             console.log(x);
             console.log(parseInt(x)-1)
             numberJawaban(id.substring(5));
+        });
+
+        $("#showtable").on('change', '.kunci_jawaban', function(){
+            var dataattr = $(this).closest('tr').find('.kunci_jawaban').attr('data-name');
+            $('input[type="radio"][data-name="'+dataattr+'"]').prop('checked', false);
+            $(this).prop('checked', true);
         });
 
         function get_jabatan(){
