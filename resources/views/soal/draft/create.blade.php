@@ -364,7 +364,7 @@ section{
         function get_jabatan(){
 $('.jabatan').select2({
                     theme: 'bootstrap4',
-
+                    multiple: true,
                  ajax: {
                     minimumResultsForSearch: 20,
                     dataType: 'json',
@@ -393,7 +393,7 @@ $('.jabatan').select2({
 function get_divisi(){
 $('.divisi').select2({
                     theme: 'bootstrap4',
-
+                    multiple: true,
                  ajax: {
                     minimumResultsForSearch: 20,
                     dataType: 'json',
