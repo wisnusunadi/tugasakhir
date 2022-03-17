@@ -1,5 +1,5 @@
 @extends('layouts.adminlte.main')
- 
+
 @section('title', 'Sistem Penerimaan Karyawan')
 
 @section('custom_css')
@@ -53,7 +53,7 @@ section{
 
 <section class="content">
     <div class="content-header">
-        
+
     </div>
     <div class="container-fluid">
         <div class="row">
@@ -68,7 +68,7 @@ section{
                     <div class="card-body">
                         <div class="row">
                             <div class="col-12 col-sm-2">
-                              
+
                             </div>
                             <div class="col-12 col-sm-2">
                               <div class="info-box bg-light">
@@ -151,7 +151,7 @@ columnDefs: [
     { orderable: false, target: '_all' }
   ],
             ajax: {
-                'url': '/draft_soal_preview/data/{{ $soal->id }}',
+                'url': '/draft_soal/preview/data/{{ $soal->id }}',
                 'dataType': 'json',
                 'headers': {
                     'X-CSRF-TOKEN': '{{csrf_token()}}'

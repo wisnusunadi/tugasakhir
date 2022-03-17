@@ -18,16 +18,24 @@
         </div>
       </div>
       @endif
- 
+
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
 
-          
+
           @if(Auth::user())
           @if(Auth::user()->role == "admin")
+          <li class="nav-item">
+            <a href="/home" class="nav-link">
+              <i class="nav-icon fa fa-home"></i>
+              <p>
+                Beranda
+              </p>
+            </a>
+          </li>
           <li class="nav-item">
             <a href="/jadwal" class="nav-link">
               <i class="nav-icon fa-solid fa-calendar"></i>
@@ -37,7 +45,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="/draft_soal_show" class="nav-link">
+            <a href="/draft_soal/show" class="nav-link">
               <i class=" nav-icon fa-regular fa-file-lines"></i>
               <p>
                 Soal
@@ -82,7 +90,7 @@
               @csrf
             </form>
           </li>
-          
+
           @else
           <li class="nav-item">
             <a href="/soal_tes/preview" class="nav-link">
@@ -108,7 +116,7 @@
 
     <!-- SidebarSearch Form -->
     <div class="form-inline">
-      
+
     </div>
 
     <!-- /.sidebar-menu -->

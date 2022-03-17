@@ -52,9 +52,9 @@
   }
 </style>
 <body class="hold-transition login-page">
- 
+
     @yield('content')
- 
+
 <!-- jQuery -->
 <script src="{{ asset('themes/plugins/jquery/jquery.min.js')}}"></script>
 <!-- jQuery UI 1.11.4 -->
@@ -73,18 +73,17 @@
 <!-- daterangepicker -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
 <script src="{{ asset('themes/plugins/daterangepicker/daterangepicker.js') }}"></script>
-<!-- Bootstrap WYSIHTML5 -->
-<script src="{{ asset('themes/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js') }}"></script>
+
 <!-- Slimscroll -->
-<script src="{{ asset('themes/plugins/slimScroll/jquery.slimscroll.min.js') }}"></script>
+{{-- <script src="{{ asset('themes/plugins/slimScroll/jquery.slimscroll.min.js') }}"></script> --}}
 <!-- FastClick -->
 <script src="{{ asset('themes/plugins/fastclick/fastclick.js') }}"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('themes/dist/js/adminlte.js') }}"></script>
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="{{ asset('themes/dist/js/pages/dashboard.js') }}"></script>
+
  <!-- Font Awesome -->
  <script type="text/javascript" src="{{ asset('themes/plugins/fontawesome-free/js/all.min.js') }}"></script>
+
 @yield('script')
 
 </body>
