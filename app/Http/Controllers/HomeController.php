@@ -139,6 +139,27 @@ class HomeController extends Controller
         }
     }
 
+    public function selesai_tes(Request $request)
+    {
+        $request->session()->forget('user');
+        return "Data sudah dihapus pada session.";
+    }
+    public function mulai_tes(Request $request)
+    {
+        $now = Carbon::now();
+        $time = Carbon::parse($now)->addMinutes(30)->toTimeString();
+
+        $request->session()->put('user', $time);
+    }
+    public function tampil_tes(Request $request)
+    {
+        if ($request->session()->has('user')) {
+            return $request->session()->get('user');
+        } else {
+            return 'Data tidak ditemukan pada session';
+        }
+    }
+
     public function soal_tes_preview()
     {
         if (Auth::user()->role != "admin") {
@@ -161,11 +182,10 @@ class HomeController extends Controller
     {
         if (!Auth::user()) {
         } else {
-
             $now = Carbon::now();
-            $timer = Soal::find($id)->waktu;
+            $timer = Soal::find($id);
 
-            $selesai = Carbon::parse($now)->addMinutes($timer);
+            $selesai = Carbon::parse($now)->addMinutes($timer->waktu);
             $soal = SoalDetail::where('soal_id', $id)->inRandomOrder()->get();
 
 

@@ -104,7 +104,9 @@ td{
             <div class="col-lg-2">
                 <div class="card">
                     <div class="card-body aligncenter">
-                        <span class="countdown"></span>
+                        <button type="button" class="btn btn-lg btn-primary" disabled> <i class="fa-solid fa-stopwatch"></i>
+                            <div align="center" id="timer" class="form-inline "></div>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -276,32 +278,66 @@ td{
                 </div>
             </div>
         </div>
-        {{$selesai}}
+        @if (session()->has('user'))
+   <input value="{{session()->get('user')}}" type="text" id="session_time" class="d-none">
+   @else
+   <input value="00:00:00" type="text" id="session_time" class="d-none">
+    @endif
+
     </div>
 </section>
 @endsection
 
 @section('script')
 <script>
-  var timer2 = "60:01";
-  var interval = setInterval(function() {
+let text = document.getElementById("session_time").value;
+const myArray = text.split(":");
+let jam = myArray[0];
+let menit = myArray[1];
+let detik = myArray[2];
+
+var end = new Date();
+end.setHours(jam);
+end.setMinutes(menit);
+end.setSeconds(detik);
+
+console.log(end);
 
 
-  var timer = timer2.split(':');
-  //by parsing integer, I avoid all extra string processing
-  var minutes = parseInt(timer[0], 10);
-  var seconds = parseInt(timer[1], 10);
-  --seconds;
-  minutes = (seconds < 0) ? --minutes : minutes;
-  seconds = (seconds < 0) ? 59 : seconds;
-  seconds = (seconds < 10) ? '0' + seconds : seconds;
-  //minutes = (minutes < 10) ?  minutes : minutes;
-  $('.countdown').html(minutes + ':' + seconds);
-  if (minutes < 0) clearInterval(interval);
-  //check if both minutes and seconds are 0
-  if ((seconds <= 0) && (minutes <= 0)) clearInterval(interval);
-  timer2 = minutes + ':' + seconds;
+
+function timePart(val,text,color="black"){
+ return `${val}${text}`
+}
+
+// Update the count down every 1 second
+var x = setInterval(function() {
+
+  // Get todays date and time
+  var now = new Date().getTime();
+
+  // Find the distance between now and the count down date
+  var distance = end - now;
+
+  // Time calculations for days, hours, minutes and seconds
+  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+ var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+ // Display the result in the element with id="demo"
+
+ let res = timePart(hours,':') + timePart(minutes,':')  + timePart(seconds,'','red');
+document.getElementById("timer").innerHTML = res
+
+  // If the count down is finished, write some text
+ if (distance < 0) {
+    clearInterval(x);
+
+document.getElementById("timer").innerHTML = "Tes Selesai";
+  }
 }, 1000);
+
+
 </script>
 
 

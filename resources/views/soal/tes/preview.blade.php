@@ -139,7 +139,7 @@ td{
                 </div>
                 <div class="card-footer">
                   <div class="text-right">
-                    <a href="{{ route('soal_tes.show', ['id' => $s->id]) }}" class="btn btn-sm btn-primary">
+                    <a href="{{ route('soal_tes.show',['id' => $s->id])}}" class="btn btn-sm btn-primary">
                     Mulai Tes
                     </a>
                   </div>

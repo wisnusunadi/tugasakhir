@@ -33,6 +33,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/divisi', [App\Http\Controllers\HomeController::class, 'select_divisi'])->name('select.divisi');
     });
     Route::group(['prefix' => '/soal_tes'], function () {
+        Route::get('/mulai', [App\Http\Controllers\HomeController::class, 'mulai_tes'])->name('soal_tes.mulai');
+        Route::get('/tampil', [App\Http\Controllers\HomeController::class, 'tampil_tes'])->name('soal_tes.tampil');
+        Route::get('/selesai', [App\Http\Controllers\HomeController::class, 'selesai_tes'])->name('soal_tes.selesai');
         Route::get('/preview', [App\Http\Controllers\HomeController::class, 'soal_tes_preview'])->name('soal_tes.preview');
         Route::get('/show/{id}', [App\Http\Controllers\HomeController::class, 'soal_tes_show'])->name('soal_tes.show');
     });
