@@ -141,20 +141,14 @@ class HomeController extends Controller
 
     public function selesai_tes(Request $request)
     {
-        $request->session()->forget('user');
+        $request->session()->forget('waktu');
         return "Data sudah dihapus pada session.";
     }
-    public function mulai_tes(Request $request)
-    {
-        $now = Carbon::now();
-        $time = Carbon::parse($now)->addMinutes(30)->toTimeString();
 
-        $request->session()->put('user', $time);
-    }
     public function tampil_tes(Request $request)
     {
-        if ($request->session()->has('user')) {
-            return $request->session()->get('user');
+        if ($request->session()->has('waktu')) {
+            return $request->session()->get('waktu');
         } else {
             return 'Data tidak ditemukan pada session';
         }
@@ -178,18 +172,27 @@ class HomeController extends Controller
 
 
 
-    public function soal_tes_show($id)
+    public function soal_tes_show(Request $request, $id)
     {
         if (!Auth::user()) {
         } else {
+
             $now = Carbon::now();
             $timer = Soal::find($id);
 
-            $selesai = Carbon::parse($now)->addMinutes($timer->waktu);
+
+            $time = Carbon::parse($now)->addMinutes($timer->waktu)->toTimeString();
+
+
+            if ($request->session()->has('waktu')) {
+            } else {
+                $request->session()->put('waktu', $time);
+            }
+
             $soal = SoalDetail::where('soal_id', $id)->inRandomOrder()->get();
 
 
-            return view('soal.tes.show', ['id' => $id, 'soals' => $soal, 'selesai' => $selesai]);
+            return view('soal.tes.show', ['id' => $id, 'soals' => $soal]);
         }
     }
 
@@ -323,6 +326,20 @@ class HomeController extends Controller
         } else if ($bool == false) {
             return redirect()->back()->with('error', 'Gagal mengubah Soal');
         }
+    }
+
+
+
+    public function soal_tes_store(Request $request)
+    {
+        $User = User::find($request->user);
+        for ($i = 0; $i < count($request->jawaban_id); $i++) {
+            $User->Jawaban()->attach($request->jawaban_id[$i]);
+        }
+
+        $request->session()->forget('waktu');
+        Auth::logout();
+        return redirect('/');
     }
 
     public function draft_soal_store(Request $request)

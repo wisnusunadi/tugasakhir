@@ -111,10 +111,11 @@ td{
                 </div>
             </div>
             <div class="col-lg-8 col-md-12">
-                <form action="" id="soalform">
-                @csrf
+                <form action="{{route('soal_tes.store')}}" id="soalform" method="POST">
+                    {{csrf_field()}}
                 <div class="card">
                     <div class="card-body">
+                       <input type="hidden" name="user" value="{{Auth::user()->id}}">
                     <?php $soal = 0; ?>
                     @foreach($soals as $s)
                     <div class="tab">
@@ -278,8 +279,8 @@ td{
                 </div>
             </div>
         </div>
-        @if (session()->has('user'))
-   <input value="{{session()->get('user')}}" type="text" id="session_time" class="d-none">
+        @if (session()->has('waktu'))
+   <input value="{{session()->get('waktu')}}" type="text" id="session_time" class="d-none">
    @else
    <input value="00:00:00" type="text" id="session_time" class="d-none">
     @endif
@@ -302,8 +303,6 @@ end.setMinutes(menit);
 end.setSeconds(detik);
 
 console.log(end);
-
-
 
 function timePart(val,text,color="black"){
  return `${val}${text}`

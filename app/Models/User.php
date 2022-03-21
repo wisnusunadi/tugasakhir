@@ -45,7 +45,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function Pendaftaran(){
-        return $this->belongsTo(Pendaftaran::class,'pendaftaran_id');
+    public function Pendaftaran()
+    {
+        return $this->belongsTo(Pendaftaran::class, 'pendaftaran_id');
+    }
+
+    public function Jawaban()
+    {
+        return $this->belongsToMany(Jawaban::class, 'user_jawaban');
     }
 }

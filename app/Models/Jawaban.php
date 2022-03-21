@@ -16,8 +16,13 @@ class Jawaban extends Model
         'status'
     ];
 
-    public function SoalDetail(){
-        return $this->belongsTo(SoalDetail::class,'soal_detail_id');
+    public function SoalDetail()
+    {
+        return $this->belongsTo(SoalDetail::class, 'soal_detail_id');
     }
 
+    public function User()
+    {
+        return $this->belongsToMany(User::class, 'user_jawaban');
+    }
 }
