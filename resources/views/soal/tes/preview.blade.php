@@ -134,12 +134,13 @@ td{
                         @endif
                         @endforeach
                       </p>
+                      <p class="text-muted text-sm"><b>Waktu Pengerjaan: </b> {{ $s->waktu }} Menit</p>
                     </div>
                   </div>
                 </div>
                 <div class="card-footer">
                   <div class="text-right">
-                    <a href="{{ route('soal_tes.show',['id' => $s->id])}}" class="btn btn-sm btn-primary">
+                    <a href="{{ route('soal_tes.show',['id' => $s->id])}}" class="btn btn-sm btn-primary"  onclick="return confirm('Siap memulai tes ?')">
                     Mulai Tes
                     </a>
                   </div>
@@ -158,6 +159,9 @@ td{
         </div>
         <!-- /.card-footer -->
       </div>
+
+
+
 </section>
 @endsection
 

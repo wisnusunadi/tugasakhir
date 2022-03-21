@@ -25,6 +25,7 @@
                         @endif
                         @endforeach
                       </p>
+                      <p class="text-muted text-sm"><b>Waktu Pengerjaan: </b> {{ $s->waktu }} Menit</p>
                     </div>
                   </div>
                 </div>

@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Waktu pembuatan: 07 Mar 2022 pada 10.52
--- Versi server: 10.4.17-MariaDB
--- Versi PHP: 7.3.27
+-- Host: localhost:3307
+-- Generation Time: Mar 21, 2022 at 09:56 AM
+-- Server version: 5.7.33
+-- PHP Version: 7.4.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -18,13 +19,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `ta_kuliah`
+-- Database: `ta_me`
 --
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `divisi`
+-- Table structure for table `divisi`
 --
 
 CREATE TABLE `divisi` (
@@ -33,7 +34,7 @@ CREATE TABLE `divisi` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `divisi`
+-- Dumping data for table `divisi`
 --
 
 INSERT INTO `divisi` (`id`, `nama`) VALUES
@@ -46,7 +47,7 @@ INSERT INTO `divisi` (`id`, `nama`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `jabatan`
+-- Table structure for table `jabatan`
 --
 
 CREATE TABLE `jabatan` (
@@ -56,7 +57,7 @@ CREATE TABLE `jabatan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `jabatan`
+-- Dumping data for table `jabatan`
 --
 
 INSERT INTO `jabatan` (`id`, `nama`, `pass_grade`) VALUES
@@ -68,7 +69,7 @@ INSERT INTO `jabatan` (`id`, `nama`, `pass_grade`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `jadwal`
+-- Table structure for table `jadwal`
 --
 
 CREATE TABLE `jadwal` (
@@ -79,7 +80,7 @@ CREATE TABLE `jadwal` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `jadwal`
+-- Dumping data for table `jadwal`
 --
 
 INSERT INTO `jadwal` (`id`, `waktu_mulai`, `waktu_selesai`, `ket`) VALUES
@@ -90,7 +91,7 @@ INSERT INTO `jadwal` (`id`, `waktu_mulai`, `waktu_selesai`, `ket`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `jawaban`
+-- Table structure for table `jawaban`
 --
 
 CREATE TABLE `jawaban` (
@@ -101,30 +102,10 @@ CREATE TABLE `jawaban` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `jawaban`
+-- Dumping data for table `jawaban`
 --
 
 INSERT INTO `jawaban` (`id`, `soal_detail_id`, `jawaban`, `status`) VALUES
-(1, 1, 'wilayah', NULL),
-(2, 1, 'tempat', NULL),
-(3, 1, 'habitat', NULL),
-(4, 1, 'ruang', 1),
-(5, 2, 'Eurasia, Indo-Australia, dan Pasifik', 1),
-(6, 2, 'Eurasia, Pasifik, dan Amerika', NULL),
-(7, 2, 'India, Eurasia, dan Hindia', NULL),
-(8, 2, 'Pasifik, Indo-Australia, dan Antartika', NULL),
-(9, 3, '12.00 WIT', 1),
-(10, 3, '11.00 WIT', NULL),
-(11, 3, '9.00 WIT', NULL),
-(12, 3, '8.00 WIT', NULL),
-(13, 4, 'jalan raya', NULL),
-(14, 4, 'danau', NULL),
-(15, 4, 'permukiman', 1),
-(16, 4, 'hutan', NULL),
-(17, 5, 'Sungai Serayu', NULL),
-(18, 5, 'Sungai Mamberamo', NULL),
-(19, 5, 'Batang Hari', 1),
-(20, 5, 'Sungai Barito', NULL),
 (21, 6, 'emas', 1),
 (22, 6, 'minyak bumi', NULL),
 (23, 6, 'timah', NULL),
@@ -148,12 +129,36 @@ INSERT INTO `jawaban` (`id`, `soal_detail_id`, `jawaban`, `status`) VALUES
 (41, 11, 'sosial', NULL),
 (42, 11, 'ekonomi', 1),
 (43, 11, 'kebudayaan', NULL),
-(44, 11, 'pendidikan', NULL);
+(44, 11, 'pendidikan', NULL),
+(94, 33, 'dfdfsff', 1),
+(95, 33, 'dsfsdfdss', NULL),
+(96, 34, 'dfsf', NULL),
+(97, 34, 'sdfsfsd', 1),
+(98, 35, 'wilayah', NULL),
+(99, 35, 'tempat', NULL),
+(100, 35, 'habitat', NULL),
+(101, 35, 'ruang', 1),
+(102, 36, 'Eurasia, Indo-Australia, dan Pasifik', 1),
+(103, 36, 'Eurasia, Pasifik, dan Amerika', NULL),
+(104, 36, 'India, Eurasia, dan Hindia', NULL),
+(105, 36, 'Pasifik, Indo-Australia, dan Antartika', NULL),
+(106, 37, '12.00 WIT', 1),
+(107, 37, '11.00 WIT', NULL),
+(108, 37, '9.00 WIT', NULL),
+(109, 37, '8.00 WIT', NULL),
+(110, 38, 'jalan raya', NULL),
+(111, 38, 'danau', NULL),
+(112, 38, 'permukiman', 1),
+(113, 38, 'hutan', NULL),
+(114, 39, 'Sungai Serayu', NULL),
+(115, 39, 'Sungai Mamberamo', NULL),
+(116, 39, 'Batang Hari', 1),
+(117, 39, 'Sungai Barito', NULL);
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `pendaftaran`
+-- Table structure for table `pendaftaran`
 --
 
 CREATE TABLE `pendaftaran` (
@@ -165,7 +170,7 @@ CREATE TABLE `pendaftaran` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `pendaftaran`
+-- Dumping data for table `pendaftaran`
 --
 
 INSERT INTO `pendaftaran` (`id`, `jadwal_id`, `jabatan_id`, `divisi_id`, `kuota`) VALUES
@@ -178,7 +183,7 @@ INSERT INTO `pendaftaran` (`id`, `jadwal_id`, `jabatan_id`, `divisi_id`, `kuota`
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `soal`
+-- Table structure for table `soal`
 --
 
 CREATE TABLE `soal` (
@@ -189,17 +194,18 @@ CREATE TABLE `soal` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `soal`
+-- Dumping data for table `soal`
 --
 
 INSERT INTO `soal` (`id`, `kode_soal`, `nama`, `waktu`) VALUES
 (1, 'S001', 'Tes Karyawan Gudang', 120),
-(2, 'S002', 'Tes Loker IT dan Admin', 60);
+(2, 'S002', 'Tes Loker IT dan Admin', 30),
+(25, 'SRT001', 'Tes Loker IT dan Admin 4', 40);
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `soal_detail`
+-- Table structure for table `soal_detail`
 --
 
 CREATE TABLE `soal_detail` (
@@ -210,26 +216,28 @@ CREATE TABLE `soal_detail` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `soal_detail`
+-- Dumping data for table `soal_detail`
 --
 
 INSERT INTO `soal_detail` (`id`, `soal_id`, `deskripsi`, `bobot`) VALUES
-(1, 1, 'Tempat di permukaan bumi, baik secara keseluruhan maupun hanya sebagian yang digunakan oleh makhluk hidup untuk   tinggal disebut….', 20),
-(2, 1, 'Secara geologis, Indonesia terletak di zona pertemuan tiga lempeng besar dunia, yaitu….', 20),
-(3, 1, 'Jika di Bogor menunjukkan waktu pukul 10.00 WIB, maka waktu di Jayapura menunjukkan waktu pukul', 20),
-(4, 1, 'Contoh objek yang bisa digambarkan dengan warna hijau pada peta adalah', 20),
-(5, 1, 'Berikut ini sungai yang terdapat di Pulau Sumatra adalah', 20),
 (6, 2, 'Daerah yang ditunjukkan oleh huruf X merupakan daerah penghasil….', 20),
 (7, 2, 'Suku yang berasal dari Provinsi Sumatra Barat adalah', 20),
 (8, 2, 'Indonesia merupakan negara dengan jumlah penduduk terbanyak keempat di dunia. Hal ini disebabkan oleh pertumbuhan penduduknya yang tinggi. Upaya yang bisa dilakukan untuk menekan angka pertumbuhan penduduk Indonesia adalah', 20),
 (9, 2, 'Puncak, Bogor merupakan salah satu daerah tujuan wisata penduduk perkotaan, terutama Jakarta dan Depok. Hal ini menjadikan terjadinya peningkatan pembangunan villa-villa dan penginapan di Puncak. Namun, pembangunan ini menjadikan potensi banjir di Jakarta semakin meningkat. Faktor yang menyebabkan hal tersebut terjadi adalah', 20),
 (10, 2, 'Perubahan pekerjaan dari yang tadinya berorientasi pada sumber daya alam seperti petani menjadi pekerjaan yang berorientasi pada kegiatan industri dan jasa, merupakan dampak dari interaksi antarruang dalam bidang', 20),
-(11, 2, 'Kegiatan pada gambar tersebut menunjukkan adanya sebuah interaksi di bidang ', 15);
+(11, 2, 'Kegiatan pada gambar tersebut menunjukkan adanya sebuah interaksi di bidang ', 15),
+(33, 25, 'RERERER', 10),
+(34, 25, 'fgngfnfg', 12),
+(35, 1, 'Tempat di permukaan bumi, baik secara keseluruhan maupun hanya sebagian yang digunakan oleh makhluk hidup untuk   tinggal disebut….', 20),
+(36, 1, 'Secara geologis, Indonesia terletak di zona pertemuan tiga lempeng besar dunia, yaitu….', 20),
+(37, 1, 'Jika di Bogor menunjukkan waktu pukul 10.00 WIB, maka waktu di Jayapura menunjukkan waktu pukul', 20),
+(38, 1, 'Contoh objek yang bisa digambarkan dengan warna hijau pada peta adalah', 20),
+(39, 1, 'Berikut ini sungai yang terdapat di Pulau Sumatra adalah', 20);
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `soal_divisi`
+-- Table structure for table `soal_divisi`
 --
 
 CREATE TABLE `soal_divisi` (
@@ -238,18 +246,21 @@ CREATE TABLE `soal_divisi` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `soal_divisi`
+-- Dumping data for table `soal_divisi`
 --
 
 INSERT INTO `soal_divisi` (`soal_id`, `divisi_id`) VALUES
 (1, 5),
 (2, 1),
-(2, 2);
+(2, 2),
+(25, 2),
+(25, 5),
+(1, 4);
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `soal_jabatan`
+-- Table structure for table `soal_jabatan`
 --
 
 CREATE TABLE `soal_jabatan` (
@@ -258,7 +269,7 @@ CREATE TABLE `soal_jabatan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `soal_jabatan`
+-- Dumping data for table `soal_jabatan`
 --
 
 INSERT INTO `soal_jabatan` (`soal_id`, `jabatan_id`) VALUES
@@ -266,12 +277,14 @@ INSERT INTO `soal_jabatan` (`soal_id`, `jabatan_id`) VALUES
 (1, 2),
 (2, 1),
 (2, 2),
-(2, 3);
+(2, 3),
+(25, 4),
+(25, 3);
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `users`
+-- Table structure for table `users`
 --
 
 CREATE TABLE `users` (
@@ -287,7 +300,7 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `users`
+-- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `pendaftaran_id`, `nama`, `password`, `jenis_kelamin`, `email`, `role`, `created_at`, `updated_at`) VALUES
@@ -298,45 +311,57 @@ INSERT INTO `users` (`id`, `pendaftaran_id`, `nama`, `password`, `jenis_kelamin`
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `user_jawaban`
+-- Table structure for table `user_jawaban`
 --
 
 CREATE TABLE `user_jawaban` (
   `user_id` bigint(20) UNSIGNED NOT NULL,
-  `soal_id` bigint(20) UNSIGNED NOT NULL
+  `jawaban_id` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `user_jawaban`
+--
+
+INSERT INTO `user_jawaban` (`user_id`, `jawaban_id`) VALUES
+(11, 24),
+(11, 39),
+(11, 41),
+(11, 33),
+(11, 26),
+(11, 29);
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indeks untuk tabel `divisi`
+-- Indexes for table `divisi`
 --
 ALTER TABLE `divisi`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `jabatan`
+-- Indexes for table `jabatan`
 --
 ALTER TABLE `jabatan`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `jadwal`
+-- Indexes for table `jadwal`
 --
 ALTER TABLE `jadwal`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `jawaban`
+-- Indexes for table `jawaban`
 --
 ALTER TABLE `jawaban`
   ADD PRIMARY KEY (`id`),
   ADD KEY `jawabab_fk1` (`soal_detail_id`);
 
 --
--- Indeks untuk tabel `pendaftaran`
+-- Indexes for table `pendaftaran`
 --
 ALTER TABLE `pendaftaran`
   ADD PRIMARY KEY (`id`),
@@ -345,89 +370,96 @@ ALTER TABLE `pendaftaran`
   ADD KEY `pendaftaran_fk3` (`divisi_id`);
 
 --
--- Indeks untuk tabel `soal`
+-- Indexes for table `soal`
 --
 ALTER TABLE `soal`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `soal_detail`
+-- Indexes for table `soal_detail`
 --
 ALTER TABLE `soal_detail`
   ADD PRIMARY KEY (`id`),
   ADD KEY `soal_detail_fk1` (`soal_id`);
 
 --
--- Indeks untuk tabel `users`
+-- Indexes for table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD KEY `user_fk1` (`pendaftaran_id`);
 
 --
--- AUTO_INCREMENT untuk tabel yang dibuang
+-- Indexes for table `user_jawaban`
+--
+ALTER TABLE `user_jawaban`
+  ADD KEY `user_jawaban_fk1` (`user_id`),
+  ADD KEY `user_jawaban_fk2` (`jawaban_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT untuk tabel `divisi`
+-- AUTO_INCREMENT for table `divisi`
 --
 ALTER TABLE `divisi`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT untuk tabel `jabatan`
+-- AUTO_INCREMENT for table `jabatan`
 --
 ALTER TABLE `jabatan`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT untuk tabel `jadwal`
+-- AUTO_INCREMENT for table `jadwal`
 --
 ALTER TABLE `jadwal`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT untuk tabel `jawaban`
+-- AUTO_INCREMENT for table `jawaban`
 --
 ALTER TABLE `jawaban`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=118;
 
 --
--- AUTO_INCREMENT untuk tabel `pendaftaran`
+-- AUTO_INCREMENT for table `pendaftaran`
 --
 ALTER TABLE `pendaftaran`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT untuk tabel `soal`
+-- AUTO_INCREMENT for table `soal`
 --
 ALTER TABLE `soal`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
--- AUTO_INCREMENT untuk tabel `soal_detail`
+-- AUTO_INCREMENT for table `soal_detail`
 --
 ALTER TABLE `soal_detail`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
--- AUTO_INCREMENT untuk tabel `users`
+-- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
+-- Constraints for dumped tables
 --
 
 --
--- Ketidakleluasaan untuk tabel `jawaban`
+-- Constraints for table `jawaban`
 --
 ALTER TABLE `jawaban`
   ADD CONSTRAINT `jawabab_fk1` FOREIGN KEY (`soal_detail_id`) REFERENCES `soal_detail` (`id`);
 
 --
--- Ketidakleluasaan untuk tabel `pendaftaran`
+-- Constraints for table `pendaftaran`
 --
 ALTER TABLE `pendaftaran`
   ADD CONSTRAINT `pendaftaran_fk1` FOREIGN KEY (`jabatan_id`) REFERENCES `jabatan` (`id`),
@@ -435,16 +467,23 @@ ALTER TABLE `pendaftaran`
   ADD CONSTRAINT `pendaftaran_fk3` FOREIGN KEY (`divisi_id`) REFERENCES `divisi` (`id`);
 
 --
--- Ketidakleluasaan untuk tabel `soal_detail`
+-- Constraints for table `soal_detail`
 --
 ALTER TABLE `soal_detail`
   ADD CONSTRAINT `soal_detail_fk1` FOREIGN KEY (`soal_id`) REFERENCES `soal` (`id`);
 
 --
--- Ketidakleluasaan untuk tabel `users`
+-- Constraints for table `users`
 --
 ALTER TABLE `users`
   ADD CONSTRAINT `user_fk1` FOREIGN KEY (`pendaftaran_id`) REFERENCES `pendaftaran` (`id`);
+
+--
+-- Constraints for table `user_jawaban`
+--
+ALTER TABLE `user_jawaban`
+  ADD CONSTRAINT `user_jawaban_fk1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `user_jawaban_fk2` FOREIGN KEY (`jawaban_id`) REFERENCES `jawaban` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

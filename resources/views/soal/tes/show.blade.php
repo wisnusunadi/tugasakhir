@@ -106,6 +106,7 @@ td{
                     <div class="card-body aligncenter">
                         <button type="button" class="btn btn-lg btn-primary" disabled> <i class="fa-solid fa-stopwatch"></i>
                             <div align="center" id="timer" class="form-inline "></div>
+
                         </button>
                     </div>
                 </div>
@@ -291,6 +292,8 @@ td{
 
 @section('script')
 <script>
+
+
 let text = document.getElementById("session_time").value;
 const myArray = text.split(":");
 let jam = myArray[0];
@@ -302,7 +305,7 @@ end.setHours(jam);
 end.setMinutes(menit);
 end.setSeconds(detik);
 
-console.log(end);
+
 
 function timePart(val,text,color="black"){
  return `${val}${text}`
