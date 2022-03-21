@@ -61,7 +61,11 @@
             </a>
           </li>
           @else
-          <li class="nav-item">
+
+        {{-- if session --}}
+          @if (session()->has('waktu')) {
+        @else
+        <li class="nav-item">
             <a href="/soal_tes/preview" class="nav-link">
               <i class="nav-icon fas fa-edit"></i>
               <p>
@@ -77,6 +81,9 @@
               </p>
             </a>
           </li>
+        @endif
+   {{----}}
+
           @endif
 
           <li class="nav-item">

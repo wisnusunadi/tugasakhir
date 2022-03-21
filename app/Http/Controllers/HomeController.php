@@ -139,20 +139,6 @@ class HomeController extends Controller
         }
     }
 
-    public function selesai_tes(Request $request)
-    {
-        $request->session()->forget('waktu');
-        return "Data sudah dihapus pada session.";
-    }
-
-    public function tampil_tes(Request $request)
-    {
-        if ($request->session()->has('waktu')) {
-            return $request->session()->get('waktu');
-        } else {
-            return 'Data tidak ditemukan pada session';
-        }
-    }
 
     public function soal_tes_preview()
     {

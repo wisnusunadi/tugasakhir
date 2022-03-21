@@ -331,7 +331,7 @@ document.getElementById("timer").innerHTML = res
   // If the count down is finished, write some text
  if (distance < 0) {
     clearInterval(x);
-
+    $('#soalform').submit();
 document.getElementById("timer").innerHTML = "Tes Selesai";
   }
 }, 1000);
@@ -460,6 +460,16 @@ document.getElementById("timer").innerHTML = "Tes Selesai";
         }
         // Otherwise, display the correct tab:
         showTab(currentTab);
+
+
+
+        // function submit_data(){
+        //     $.ajax({
+        //         url: action,
+        //         type: 'POST'
+        //     })
+        // }
+
     }
 </script>
 @endsection
