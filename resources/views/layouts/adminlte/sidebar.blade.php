@@ -29,7 +29,7 @@
           @if(Auth::user())
           @if(Auth::user()->role == "admin")
           <li class="nav-item">
-            <a href="/home" class="nav-link">
+            <a href="/home" class="nav-link {{ (request()->is('home')) ? 'active' : '' }}">
               <i class="nav-icon fa fa-home"></i>
               <p>
                 Beranda
@@ -37,7 +37,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="/jadwal" class="nav-link">
+            <a href="/jadwal/show" class="nav-link {{ (request()->is('jadwal*')) ? 'active' : '' }}">
               <i class="nav-icon fa-solid fa-calendar"></i>
               <p>
                 Jadwal
@@ -45,15 +45,15 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="/draft_soal/show" class="nav-link">
+            <a href="/draft_soal/show" class="nav-link {{ (request()->is('draft_soal*')) ? 'active' : '' }}">
               <i class=" nav-icon fa-regular fa-file-lines"></i>
               <p>
-                Soal
+                Draft Soal
               </p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="/peserta" class="nav-link">
+            <a href="/peserta" class="nav-link  {{ (request()->is('peserta*')) ? 'active' : '' }}">
               <i class="nav-icon fa-solid fa-users"></i>
               <p>
                 Daftar Peserta
@@ -66,7 +66,7 @@
           @if (session()->has('waktu')) {
         @else
         <li class="nav-item">
-            <a href="/soal_tes/preview" class="nav-link">
+            <a href="/soal_tes/preview" class="nav-link {{ (request()->is('soal_tes*')) ? 'active' : '' }}">
               <i class="nav-icon fas fa-edit"></i>
               <p>
                 Mulai Tes
@@ -74,7 +74,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="/jadwal" class="nav-link">
+            <a href="/jadwal/show" class="nav-link  {{ (request()->is('jadwal*')) ? 'active' : '' }}">
               <i class="nav-icon fas fa-calendar"></i>
               <p>
                 Jadwal Recruitment
@@ -108,7 +108,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="/jadwal" class="nav-link">
+            <a href="/jadwal/show" class="nav-link   {{ (request()->is('jadwal*')) ? 'active' : '' }}">
               <i class="nav-icon fas fa-calendar"></i>
               <p>
                 Jadwal Recruitment

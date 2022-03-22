@@ -55,7 +55,9 @@
                                         <th>Aksi</th>
                                     </thead>
                                     <tbody>
-                                        @foreach($p as $i)
+                                        <tr>
+                                            @if(count($p) > 0)
+                                              @foreach($p as $i)
                                         <tr>
                                             <td>{{$loop->iteration}}</td>
                                             <td>{{date('d-m-Y', strtotime($i->Jadwal->waktu_mulai))}} </td>
@@ -69,6 +71,13 @@
                                                 </div></td>
                                         </tr>
                                         @endforeach
+                                            @else
+                                            <td colspan="6">Maaf, info lowongan belum tersedia untuk saat ini</td>
+                                            @endif
+
+
+                                        </tr>
+
                                     </tbody>
                                 </table>
                             </div>
@@ -171,7 +180,7 @@
                                 <div class="row mb-0">
                                     <div class="col-md-9 offset-md-2">
                                         <a type="button" class="btn btn-danger" href="{{route('login')}}">Batal</a>
-                                        <button type="submit" class="btn btn-primary float-right">
+                                        <button type="submit" class="btn btn-primary float-right disabled">
                                             {{ __('Register') }}
                                         </button>
                                     </div>
@@ -382,6 +391,39 @@ var geocoder = new MapboxGeocoder({
         map.addControl(
             geocoder
         );
+
+
+
+        $('#nama_paket').on('keyup change', function() {
+            if ($(this).val() != "") {
+                $.ajax({
+                    type: 'GET',
+                    dataType: 'json',
+                    url: '/api/penjualan_produk/check/0/' + $(this).val(),
+                    success: function(data) {
+                        if (data.jumlah >= 1) {
+                            $("#msgnama_paket").text("Nama sudah terpakai");
+                            $('#nama_paket').addClass('is-invalid');
+                            $("#btntambah").attr('disabled', true);
+                        } else {
+                            $('#msgnama_paket').text("");
+                            $('#nama_paket').removeClass("is-invalid");
+                            console.log($("#createtable tbody").length);
+                            if ($('#harga').val() != "" && $("#createtable tbody").length > 0) {
+                                $("#btntambah").attr('disabled', false);
+                            } else {
+                                $("#btntambah").attr('disabled', true);
+                            }
+                        }
+                    }
+                });
+
+            } else if ($(this).val() == "") {
+                $('#msgnama_paket').text("Nama Paket Harus diisi");
+                $('#nama_paket').addClass("is-invalid");
+                $("#btntambah").attr('disabled', true);
+            }
+        });
 
 
 

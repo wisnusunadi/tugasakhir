@@ -1,5 +1,5 @@
 @extends('layouts.adminlte.main')
- 
+
 @section('title', 'Sistem Penerimaan Karyawan')
 
 @section('custom_css')
@@ -35,7 +35,19 @@ section{
 
 <section class="content">
     <div class="content-header">
-        <h1 class="content-title">Peserta</h1>
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1 class="m-0">Peserta</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="{{route('home')}}">Beranda</a></li>
+                <li class="breadcrumb-item active">Peserta</li>
+              </ol>
+            </div><!-- /.col -->
+          </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
     </div>
     <div class="container-fluid">
         <div class="row">
@@ -145,13 +157,13 @@ section{
                 var api = this.api();
                 var rows = api.rows( {page:'current'} ).nodes();
                 var last=null;
-    
+
                 api.column(groupColumn, {page:'current'} ).data().each( function ( group, i ) {
                     if ( last !== group ) {
                         $(rows).eq( i ).before(
                             '<tr class="group"><td colspan="6">'+group+'</td></tr>'
                         );
-    
+
                         last = group;
                     }
                 });
