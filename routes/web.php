@@ -17,6 +17,8 @@ Route::get('/', function () {
     return view('beranda');
 });
 Route::view('/jadwal', 'jadwal.show')->name('jadwal');
+Route::view('/listuniv', 'soal.tes.listuniv')->name('listuniv');
+
 
 // Route::view('/soal_tes', 'soal.tes.show')->name('soal.tes');
 Auth::routes();
