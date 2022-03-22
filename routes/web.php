@@ -20,12 +20,16 @@ Route::view('/jadwal', 'jadwal.show')->name('jadwal');
 Route::view('/listuniv', 'soal.tes.listuniv')->name('listuniv');
 
 
+Route::get('jadwal/show',  [App\Http\Controllers\JadwalController::class, 'jadwal_show'])->name('jadwal.show');
 // Route::view('/soal_tes', 'soal.tes.show')->name('soal.tes');
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/jadwal_create', [App\Http\Controllers\JadwalController::class, 'jadwal_create'])->name('jadwal.create');
-    Route::post('/jadwal_store', [App\Http\Controllers\JadwalController::class, 'jadwal_store'])->name('jadwal.store');
+    Route::group(['prefix' => '/jadwal'], function () {
+
+        Route::get('/create', [App\Http\Controllers\JadwalController::class, 'jadwal_create'])->name('jadwal.create');
+        Route::post('/store', [App\Http\Controllers\JadwalController::class, 'jadwal_store'])->name('jadwal.store');
+    });
     Route::get('/peserta', [App\Http\Controllers\HomeController::class, 'peserta_show'])->name('peserta');
     Route::get('/hasil', [App\Http\Controllers\HomeController::class, 'hasil_show'])->name('hasil');
     Route::group(['prefix' => '/select'], function () {

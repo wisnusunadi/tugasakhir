@@ -1,5 +1,5 @@
 @extends('layouts.adminlte.main')
- 
+
 @section('title', 'Sistem Penerimaan Karyawan')
 
 @section('custom_css')
@@ -44,7 +44,20 @@ section{
 
 <section class="content">
     <div class="content-header">
-        <h1 class="content-title">Jadwal Open Recruitment</h1>
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1 class="m-0">Jadwal Open Recruitment</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="{{route('home')}}">Beranda</a></li>
+                <li class="breadcrumb-item"><a href="{{route('jadwal.show')}}">Jadwal Open Recruitment</a></li>
+                <li class="breadcrumb-item active">Tambah</li>
+              </ol>
+            </div><!-- /.col -->
+          </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
     </div>
     <div class="container-fluid">
         <div class="row">
@@ -126,7 +139,9 @@ section{
                         </div>
                     </div>
                     <div class="card-footer">
-                        <span class="float-left"><button type="button" class="btn btn-danger">Batal</button></span>
+                        <span class="float-left"><a href="{{route('jadwal.show')}}" type="button" class="btn btn-danger">
+                            Batal
+                        </a></span>
                         <span class="float-right"><button type="submit" class="btn btn-success">Tambah</button></span>
                     </div>
                 </div>
