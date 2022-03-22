@@ -17,8 +17,7 @@ Route::get('/', function () {
     return view('beranda');
 });
 Route::view('/jadwal', 'jadwal.show')->name('jadwal');
-Route::view('/listuniv', 'soal.tes.listuniv')->name('listuniv');
-
+Route::get('/select/universitas', [App\Http\Controllers\GetController::class, 'universitas_select'])->name('select.universitas');
 
 Route::get('jadwal/show',  [App\Http\Controllers\JadwalController::class, 'jadwal_show'])->name('jadwal.show');
 // Route::view('/soal_tes', 'soal.tes.show')->name('soal.tes');
@@ -37,6 +36,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/divisi/get/{id}', [App\Http\Controllers\HomeController::class, 'select_divisi_get'])->name('select.divisi.get');
         Route::get('/jabatan', [App\Http\Controllers\HomeController::class, 'select_jabatan'])->name('select.jabatan');
         Route::get('/divisi', [App\Http\Controllers\HomeController::class, 'select_divisi'])->name('select.divisi');
+        
     });
     Route::group(['prefix' => '/soal_tes'], function () {
         Route::post('/store', [App\Http\Controllers\HomeController::class, 'soal_tes_store'])->name('soal_tes.store');

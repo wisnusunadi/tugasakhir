@@ -28,7 +28,9 @@ class User extends Authenticatable
         'pend',
         'jarak',
         'role',
-        'pendaftaran_id'
+        'pendaftaran_id',
+        'univ_id'
+
     ];
 
     /**
@@ -53,6 +55,11 @@ class User extends Authenticatable
     public function Pendaftaran()
     {
         return $this->belongsTo(Pendaftaran::class, 'pendaftaran_id');
+    }
+
+    public function Universitas()
+    {
+        return $this->belongsTo(Universitas::class, 'univ_id');
     }
 
     public function Jawaban()

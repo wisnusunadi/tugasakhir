@@ -85,6 +85,7 @@ class RegisterController extends Controller
             'username' => $data['username'],
             'tgl_lahir' => $data['tgl_lahir'],
             'pend' => $data['pend'],
+            'univ_id' => $data['universitas'],
             'jarak' => $data['jarak'],
         ]);
     }
