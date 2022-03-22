@@ -26,6 +26,11 @@ Route::prefix('/jadwal')->group(function () {
     Route::get('/table', [App\Http\Controllers\JadwalController::class, 'jadwal_table']);
 });
 
+Route::prefix('/laporan')->group(function () {
+    Route::get('/hasil/data', [App\Http\Controllers\JadwalController::class, 'laporan_hasil_data']);
+    Route::get('/hasil/data/{id}', [App\Http\Controllers\JadwalController::class, 'laporan_hasil_data_detail']);
+});
+
 Route::prefix('/peserta')->group(function () {
     Route::get('/table', [App\Http\Controllers\GetController::class, 'peserta_table']);
 });
@@ -37,4 +42,3 @@ Route::prefix('/divisi')->group(function () {
 Route::prefix('/jabatan')->group(function () {
     Route::get('/select', [App\Http\Controllers\GetController::class, 'jabatan_select']);
 });
-

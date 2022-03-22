@@ -37,7 +37,10 @@
                             <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Pilih Jadwal</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Isi Akun</button>
+                            <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-bio" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Biodata</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Akun</button>
                         </li>
                     </ul>
                     <form method="POST" action="{{ route('register') }}">
@@ -82,7 +85,7 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                        <div class="tab-pane fade" id="pills-bio" role="tabpanel" aria-labelledby="pills-bio-tab">
                                 <div class="row mb-3">
                                     <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Nama') }}</label>
 
@@ -90,20 +93,6 @@
                                         <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
 
                                         @error('name')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div>
-
-                                <div class="row mb-3">
-                                    <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email') }}</label>
-
-                                    <div class="col-md-6">
-                                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-
-                                        @error('email')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -144,6 +133,70 @@
                                     </div>
                                 </div>
 
+                                <div class="form-group row mb-3">
+                                    <label for="password" class="col-md-4 col-form-label text-md-end">Pend Terakhir</label>
+                                    <div class="col-md-8 col-form-label">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" id="laki" value="smak" name="pend" >
+                                            <label class="form-check-label" for="inlineCheckbox1">SMA / SMK</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" id="perempuan"  value=d3" name="pend" >
+                                            <label class="form-check-label" for="inlineCheckbox1">D3</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" id="perempuan"  value="s1d4" name="pend" >
+                                            <label class="form-check-label" for="inlineCheckbox1">S1 / D4</label>
+                                        </div>
+
+                                        @error('jenis_kelamin')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                    </div>
+                                </div>
+
+
+
+                                <div class="row mb-3">
+                                    <label for="password-confirm" class="col-md-4 col-form-label text-md-end">Alamat</label>
+
+                                    <div class="col-md-6">
+                                        <div id="map" style="width: 100%;height: 30vh;"></div>
+                                        <div id="instructions"></div>
+                                            </div>
+                                            <input id="jarak_user" type="text" name="jarak">
+                                </div>
+                        </div>
+                        <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                                <div class="row mb-3">
+                                    <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Username') }}</label>
+
+                                    <div class="col-md-6">
+                                        <input id="username" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" required autocomplete="username" autofocus>
+
+                                        @error('username')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email') }}</label>
+
+                                    <div class="col-md-6">
+                                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+
+                                        @error('email')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
                                 <div class="row mb-3">
                                     <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
 
@@ -167,20 +220,10 @@
                                 </div>
 
 
-                                <div class="row mb-3">
-                                    <label for="password-confirm" class="col-md-4 col-form-label text-md-end">Alamat</label>
-
-                                    <div class="col-md-6">
-                                        <div id="map" style="width: 100%;height: 30vh;"></div>
-                                        <div id="instructions"></div>
-                                            </div>
-                                </div>
-
-
                                 <div class="row mb-0">
                                     <div class="col-md-9 offset-md-2">
                                         <a type="button" class="btn btn-danger" href="{{route('login')}}">Batal</a>
-                                        <button type="submit" class="btn btn-primary float-right disabled">
+                                        <button type="submit" class="btn btn-primary float-right">
                                             {{ __('Register') }}
                                         </button>
                                     </div>
@@ -283,6 +326,7 @@ const instructions = document.getElementById('instructions');
 console.log(data);
 
 
+
 if (data.distance < 1000){
     var label = ' Meter'
     var h =  data.distance / 1000
@@ -291,6 +335,7 @@ if (data.distance < 1000){
     var h =  data.distance / 1000
 }
 
+$('#jarak_user').val(h.toFixed(1));
 let tripInstructions = '';
 instructions.innerHTML = `<p><strong>Jarak: `+h.toFixed(1)+``+label+`  🚴 </strong></p>`;
 }
@@ -374,6 +419,7 @@ map.on('click', (event) => {
   getRoute(coords);
 
 
+
 });
 
 
@@ -394,36 +440,7 @@ var geocoder = new MapboxGeocoder({
 
 
 
-        $('#nama_paket').on('keyup change', function() {
-            if ($(this).val() != "") {
-                $.ajax({
-                    type: 'GET',
-                    dataType: 'json',
-                    url: '/api/penjualan_produk/check/0/' + $(this).val(),
-                    success: function(data) {
-                        if (data.jumlah >= 1) {
-                            $("#msgnama_paket").text("Nama sudah terpakai");
-                            $('#nama_paket').addClass('is-invalid');
-                            $("#btntambah").attr('disabled', true);
-                        } else {
-                            $('#msgnama_paket').text("");
-                            $('#nama_paket').removeClass("is-invalid");
-                            console.log($("#createtable tbody").length);
-                            if ($('#harga').val() != "" && $("#createtable tbody").length > 0) {
-                                $("#btntambah").attr('disabled', false);
-                            } else {
-                                $("#btntambah").attr('disabled', true);
-                            }
-                        }
-                    }
-                });
 
-            } else if ($(this).val() == "") {
-                $('#msgnama_paket').text("Nama Paket Harus diisi");
-                $('#nama_paket').addClass("is-invalid");
-                $("#btntambah").attr('disabled', true);
-            }
-        });
 
 
 

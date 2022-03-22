@@ -60,6 +60,33 @@
               </p>
             </a>
           </li>
+
+          <li class="nav-header">Perhitungan</li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon far fa-envelope"></i>
+              <p>
+                Laporan
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{route('laporan.hasil.show')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Hasil Tes</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="pages/mailbox/compose.html" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Hasil Keputusan</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+
           @else
 
         {{-- if session --}}

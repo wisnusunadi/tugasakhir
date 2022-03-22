@@ -102,6 +102,8 @@ class HomeController extends Controller
             ->make(true);
     }
 
+
+
     public function jadwal_create()
     {
         $divisi = Divisi::all();
@@ -192,7 +194,10 @@ class HomeController extends Controller
         return view('peserta.hasil.show');
     }
 
-
+    public function laporan_hasil_show()
+    {
+        return view('soal.tes.laporan.show');
+    }
     public function draft_soal_preview($id)
     {
         $soal = Soal::find($id);
