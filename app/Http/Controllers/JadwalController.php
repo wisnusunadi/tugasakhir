@@ -9,6 +9,7 @@ use Yajra\DataTables\DataTables;
 use App\Models\Jabatan;
 use App\Models\Divisi;
 use App\Models\Jadwal;
+use App\Models\User;
 
 class JadwalController extends Controller
 {
@@ -30,6 +31,40 @@ class JadwalController extends Controller
                 return $data->Jabatan->nama . ' ' . $data->Divisi->nama;
             })
 
+            ->make(true);
+    }
+    public function laporan_hasil_data()
+    {
+        $data = Pendaftaran::all();
+        return DataTables()->of($data)
+            ->addIndexColumn()
+            ->addColumn('jadwal', function ($data) {
+                return 'Tanggal ' . Carbon::parse($data->Jadwal->waktu_mulai)->format('d-m-Y') . " - " . Carbon::parse($data->Jadwal->waktu_selesai)->format('d-m-Y');
+            })
+            ->addColumn('divisi', function ($data) {
+                return $data->Divisi->nama;
+            })
+            ->addColumn('jabatan', function ($data) {
+                return $data->Jabatan->nama;
+            })
+            ->addColumn('kuota', function ($data) {
+                return $data->kuota;
+            })
+            ->addColumn('detail', function ($data) {
+                return '<a data-toggle="modal" class="realmodal" data-id="' . $data->id . '" data-target="#realmodal"><button type="button" class="btn btn-info btn-circle" alt="Detail">
+                <i class="far fa-plus-square"></i>
+                </button> </a>';
+            })
+
+            ->rawColumns(['detail'])
+            ->make(true);
+    }
+    public function laporan_hasil_data_detail($id)
+    {
+        $data = User::all();
+
+        return DataTables()->of($data)
+            ->addIndexColumn()
             ->make(true);
     }
 

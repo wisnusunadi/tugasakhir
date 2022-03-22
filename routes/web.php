@@ -54,4 +54,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/preview/{id}', [App\Http\Controllers\HomeController::class, 'draft_soal_preview'])->name('draft_soal.preview');
         Route::get('/preview/data/{id}', [App\Http\Controllers\HomeController::class, 'draft_soal_preview_data'])->name('draft_soal.preview.data');
     });
+    Route::group(['prefix' => '/laporan'], function () {
+        Route::get('/hasil/show', [App\Http\Controllers\HomeController::class, 'laporan_hasil_show'])->name('laporan.hasil.show');
+    });
 });

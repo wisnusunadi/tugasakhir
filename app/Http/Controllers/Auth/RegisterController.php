@@ -62,7 +62,7 @@ class RegisterController extends Controller
     public function showRegistrationForm()
     {
         $today = Carbon::now();
-        $p = Pendaftaran::whereHas('Jadwal', function($q) use($today){
+        $p = Pendaftaran::whereHas('Jadwal', function ($q) use ($today) {
             $q->where([['waktu_selesai', '>=', $today], ['waktu_mulai', '<=', $today]]);
         })->get();
         return view('auth.register', compact('p'));
@@ -82,6 +82,10 @@ class RegisterController extends Controller
             'role' => 'user',
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'username' => $data['username'],
+            'tgl_lahir' => $data['tgl_lahir'],
+            'pend' => $data['pend'],
+            'jarak' => $data['jarak'],
         ]);
     }
 }

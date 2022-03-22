@@ -60,7 +60,7 @@ section{
                                     @if(Auth::user()->role == "admin")
                                     <tr>
                                         <th colspan="5">
-                                        <a href="/jadwal/create" type="button" class="btn btn-info btn-sm float-right"><i class="fa-solid fa-plus"></i> Tambah</a>
+                                        <a href="" type="button" class="btn btn-info btn-sm float-right"><i class="fa-solid fa-plus"></i> Tambah</a>
                                         </th>
                                     </tr>
                                     @endif
