@@ -50,29 +50,40 @@
                             <div class="table-responsive">
                                 <table class="table" style="text-align:center;" id="showtable">
                                     <thead>
-                                        <th>No</th>
-                                        <th>Mulai</th>
-                                        <th>Selesai</th>
+                                        <th>Nama</th>
                                         <th>Keterangan</th>
                                         <th>Kuota</th>
                                         <th>Aksi</th>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            @if(count($p) > 0)
-                                              @foreach($p as $i)
+                                            @if(count($jadwal) > 0)
+                                              @foreach($jadwal as $index => $j)
                                         <tr>
-                                            <td>{{$loop->iteration}}</td>
-                                            <td>{{date('d-m-Y', strtotime($i->Jadwal->waktu_mulai))}} </td>
-                                            <td>{{date('d-m-Y', strtotime($i->Jadwal->waktu_selesai))}}</td>
-                                            <td>{{$i->Jabatan->nama}} {{$i->Divisi->nama}}
-                                                <small class="invalid-feedback d-block">{{$i->Jadwal->ket}}</small>
+
+                                            <td rowspan="{{$j->Pendaftaran->count()}}">{{$j->ket}}
+                                                <div><small  class="invalid-feedback d-block">{{date('d M', strtotime($j->waktu_mulai))}} - {{date('d M Y', strtotime($j->waktu_selesai))}}</small></div>
                                             </td>
-                                            <td>{{$i->kuota}}</td>
-                                            <td><div class="form-check">
-                                                <input class="form-check-input" type="radio" name="pendaftaran_id" id="pendaftaran_id{{$loop->iteration}}" value="{{$i->id}}"/>
-                                                </div></td>
+
+                                            <td >{{$j->Pendaftaran[0]->jabatan->nama}} {{$j->Pendaftaran[0]->divisi->nama}}</td>
+                                            <td >{{$j->Pendaftaran[0]->kuota}}</td>
+                                            <td >
+                                                <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="pendaftaran_id" id="pendaftaran_id1" value="{{$j->Pendaftaran[0]->id}}"/>
+                                                </div>
+                                            </td>
                                         </tr>
+                                        @for($i=1;$i<$j->pendaftaran->count();$i++)
+                                        <tr>
+                                            <td >{{$j->Pendaftaran[$i]->jabatan->nama}} {{$j->Pendaftaran[$i]->divisi->nama}}</td>
+                                            <td >{{$j->Pendaftaran[$i]->kuota}}</td>
+                                            <td >
+                                                <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="pendaftaran_id" id="pendaftaran_id{{$i}}" value="{{$j->Pendaftaran[$i]->id}}"/>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                      @endfor
                                         @endforeach
                                             @else
                                             <td colspan="6">Maaf, info lowongan belum tersedia untuk saat ini</td>
@@ -166,7 +177,7 @@
                                         <div id="map" style="width: 100%;height: 30vh;"></div>
                                         <div id="instructions"></div>
                                             </div>
-                                            <input id="jarak_user" type="text" name="jarak">
+                                            <input id="jarak_user" type="text" name="jarak" class="d-none">
                                 </div>
                         </div>
                         <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
@@ -438,21 +449,12 @@ var geocoder = new MapboxGeocoder({
             geocoder
         );
 
+        var today = new Date();
+        var yyyy = today.getFullYear() - 17;
 
+        today = yyyy + '-' + 12 + '-' + 31;
 
+        $("#tgl_lahir").attr("max", today);
 
-
-
-
-</script>
-
-<script>
-    $(function(){
-        $('#pendaftaran_id').select2();
-
-
-
-
-    })
 </script>
 @endsection

@@ -71,6 +71,39 @@ class JadwalController extends Controller
             ->addColumn('waktu', function ($data) {
                 return $data->Jawaban->first()->SoalDetail->Soal->waktu;
             })
+            ->addColumn('j_soal', function ($data) {
+                return  $data->Jawaban->first()->SoalDetail->Soal->getJumlahSoal();
+            })
+            ->addColumn('j_benar', function ($data) {
+                $q = 0;
+                foreach ($data->Jawaban as $j) {
+                    if ($j->status == 1) {
+                        $q++;
+                    }
+                }
+                return $q;
+            })
+            ->addColumn('j_salah', function ($data) {
+                $q = 0;
+                foreach ($data->Jawaban as $j) {
+                    if ($j->status == 0) {
+                        $q++;
+                    }
+                }
+                return $q;
+            })
+            ->addColumn('j_kosong', function ($data) {
+                $q = 0;
+                $p = 0;
+                foreach ($data->Jawaban as $j) {
+                    if ($j->status == 0) {
+                        $q++;
+                    } else if ($j->status == 1) {
+                        $p++;
+                    }
+                }
+                return  $data->Jawaban->first()->SoalDetail->Soal->getJumlahSoal() - ($p + $q);
+            })
             ->addColumn('nilai', function ($data) {
                 $q = 0;
                 foreach ($data->Jawaban as $j) {

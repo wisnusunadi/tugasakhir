@@ -190,18 +190,26 @@ section{
         function format ( data ) {
             return `
             <div class="row">
-                <div class="col-6">
+                <div class="col-7">
                     <div class="card ">
                         <div class="card-header"><h6 class="card-title">Detail</h6></div>
                         <div class="card-body">
 
-                     <table class="table table-hover" id="detailtable`+data.id+`">
-                        <thead>
+                     <table class="table table-hover" id="detailtable`+data.id+`" style="width:100%">
+                        <thead style="text-align: center;">
+                            <tr>
+                                <th  colspan="3"></th>
+                                <th colspan="4"  >Total</th>
+                                <th  colspan="2" ></th>
                             <tr>
                                 <th>No</th>
                                 <th>Nama</th>
                                 <th>Kode Soal</th>
                                 <th>Waktu</th>
+                                <th>Soal</th>
+                                <th>Benar</th>
+                                <th>Salah</th>
+                                <th>Kosong</th>
                                 <th>Nilai</th>
                             </tr>
                         </thead>
@@ -247,8 +255,35 @@ section{
                 },{
                     data: 'waktu',
                     className: 'nowrap-text align-center',
+                    orderable: true,
+                    searchable: false
 
-                },{
+                },
+                {
+                    data: 'j_soal',
+                    className: 'nowrap-text align-center',
+                    orderable: true,
+                    searchable: false
+                },
+                {
+                    data: 'j_benar',
+                    className: 'nowrap-text align-center',
+                    orderable: true,
+                    searchable: false
+                },
+                {
+                    data: 'j_salah',
+                    className: 'nowrap-text align-center',
+                    orderable: true,
+                    searchable: false
+                },
+                {
+                    data: 'j_kosong',
+                    className: 'nowrap-text align-center',
+                    orderable: true,
+                    searchable: false
+                }
+                ,{
                     data: 'nilai',
                     className: 'nowrap-text align-center',
 
