@@ -61,10 +61,25 @@ class JadwalController extends Controller
     }
     public function laporan_hasil_data_detail($id)
     {
-        $data = User::all();
+        $data = User::Has('Jawaban')->where('pendaftaran_id', $id)->get();
 
         return DataTables()->of($data)
             ->addIndexColumn()
+            ->addColumn('kode_soal', function ($data) {
+                return $data->Jawaban->first()->SoalDetail->Soal->kode_soal;
+            })
+            ->addColumn('waktu', function ($data) {
+                return $data->Jawaban->first()->SoalDetail->Soal->waktu;
+            })
+            ->addColumn('nilai', function ($data) {
+                $q = 0;
+                foreach ($data->Jawaban as $j) {
+                    if ($j->status == 1) {
+                        $q += $j->soaldetail->bobot;
+                    }
+                }
+                return $q;
+            })
             ->make(true);
     }
 
