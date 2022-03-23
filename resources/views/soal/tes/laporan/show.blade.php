@@ -252,8 +252,8 @@ section{
                     data: 'kode_soal',
                     className: 'nowrap-text align-center',
 
-                },{
-                    data: 'waktu',
+                 }
+                ,{    data: 'waktu',
                     className: 'nowrap-text align-center',
                     orderable: true,
                     searchable: false
@@ -285,9 +285,9 @@ section{
                 }
                 ,{
                     data: 'nilai',
-                    className: 'nowrap-text align-center',
+                    className: 'nowrap-text align-center',}
 
-                }],
+                 ],
             });
         }
 

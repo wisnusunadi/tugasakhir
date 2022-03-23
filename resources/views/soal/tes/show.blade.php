@@ -145,6 +145,7 @@ td{
                             </tbody>
                         </table>
                     </div>
+
                     <?php $soal++; ?>
                     @endforeach
                     <!-- <div class="tab">
@@ -261,6 +262,12 @@ td{
                     </div> -->
                     </div>
                 </div>
+                @if (session()->has('waktu'))
+                <input value="{{session()->get('waktu')}}" type="text" id="session_time" class="d-none" >
+
+                @else
+                <input value="00:00:00" type="text" id="session_time" class="d-none">
+                 @endif
                 </form>
                 <div class="card">
                     <div class="card-body">
@@ -280,11 +287,7 @@ td{
                 </div>
             </div>
         </div>
-        @if (session()->has('waktu'))
-   <input value="{{session()->get('waktu')}}" type="text" id="session_time" class="d-none">
-   @else
-   <input value="00:00:00" type="text" id="session_time" class="d-none">
-    @endif
+
 
     </div>
 </section>

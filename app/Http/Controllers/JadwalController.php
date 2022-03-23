@@ -10,6 +10,7 @@ use App\Models\Jabatan;
 use App\Models\Divisi;
 use App\Models\Jadwal;
 use App\Models\User;
+use App\Models\UserJawaban;
 
 class JadwalController extends Controller
 {
@@ -61,23 +62,28 @@ class JadwalController extends Controller
     }
     public function laporan_hasil_data_detail($id)
     {
-        $data = User::Has('Jawaban')->where('pendaftaran_id', $id)->get();
+        $data = UserJawaban::WhereHas('User', function ($q) use ($id) {
+            $q->where('pendaftaran_id', $id);
+        })->get();
 
         return DataTables()->of($data)
             ->addIndexColumn()
+            ->addColumn('nama', function ($data) {
+                return $data->User->nama;
+            })
             ->addColumn('kode_soal', function ($data) {
-                return $data->Jawaban->first()->SoalDetail->Soal->kode_soal;
+                return $data->DetailUserJawaban->first()->Jawaban->SoalDetail->Soal->kode_soal;
             })
             ->addColumn('waktu', function ($data) {
-                return $data->Jawaban->first()->SoalDetail->Soal->waktu;
+                return $data->waktu;
             })
             ->addColumn('j_soal', function ($data) {
-                return  $data->Jawaban->first()->SoalDetail->Soal->getJumlahSoal();
+                return  $data->DetailUserJawaban->first()->Jawaban->SoalDetail->Soal->getJumlahSoal();
             })
             ->addColumn('j_benar', function ($data) {
                 $q = 0;
-                foreach ($data->Jawaban as $j) {
-                    if ($j->status == 1) {
+                foreach ($data->DetailUserJawaban as $j) {
+                    if ($j->Jawaban->status == 1) {
                         $q++;
                     }
                 }
@@ -85,8 +91,8 @@ class JadwalController extends Controller
             })
             ->addColumn('j_salah', function ($data) {
                 $q = 0;
-                foreach ($data->Jawaban as $j) {
-                    if ($j->status == 0) {
+                foreach ($data->DetailUserJawaban as $j) {
+                    if ($j->Jawaban->status == 0) {
                         $q++;
                     }
                 }
@@ -95,20 +101,20 @@ class JadwalController extends Controller
             ->addColumn('j_kosong', function ($data) {
                 $q = 0;
                 $p = 0;
-                foreach ($data->Jawaban as $j) {
-                    if ($j->status == 0) {
+                foreach ($data->DetailUserJawaban as $j) {
+                    if ($j->jawaban->status == 0) {
                         $q++;
-                    } else if ($j->status == 1) {
+                    } else if ($j->jawaban->status == 1) {
                         $p++;
                     }
                 }
-                return  $data->Jawaban->first()->SoalDetail->Soal->getJumlahSoal() - ($p + $q);
+                return   $data->DetailUserJawaban->first()->Jawaban->SoalDetail->Soal->getJumlahSoal() - ($p + $q);
             })
             ->addColumn('nilai', function ($data) {
                 $q = 0;
-                foreach ($data->Jawaban as $j) {
-                    if ($j->status == 1) {
-                        $q += $j->soaldetail->bobot;
+                foreach ($data->DetailUserJawaban as $j) {
+                    if ($j->jawaban->status == 1) {
+                        $q += $j->jawaban->soaldetail->bobot;
                     }
                 }
                 return $q;

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3307
--- Generation Time: Mar 21, 2022 at 09:56 AM
+-- Generation Time: Mar 23, 2022 at 09:35 AM
 -- Server version: 5.7.33
 -- PHP Version: 7.4.19
 
@@ -21,6 +21,30 @@ SET time_zone = "+00:00";
 --
 -- Database: `ta_me`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `detail_user_jawaban`
+--
+
+CREATE TABLE `detail_user_jawaban` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_jawaban_id` bigint(20) UNSIGNED NOT NULL,
+  `jawaban_id` bigint(20) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `detail_user_jawaban`
+--
+
+INSERT INTO `detail_user_jawaban` (`id`, `user_jawaban_id`, `jawaban_id`) VALUES
+(12, 10, 151),
+(13, 10, 157),
+(14, 10, 148),
+(15, 10, 165),
+(16, 10, 142),
+(17, 10, 160);
 
 -- --------------------------------------------------------
 
@@ -84,9 +108,9 @@ CREATE TABLE `jadwal` (
 --
 
 INSERT INTO `jadwal` (`id`, `waktu_mulai`, `waktu_selesai`, `ket`) VALUES
-(1, '2022-02-24 11:40:48', '2022-02-26 11:40:48', 'Open Recrutimen IT'),
-(2, '2022-03-03 11:40:48', '2022-03-09 11:40:48', 'Open Recruitment Administrasi'),
-(3, '2022-03-09 11:52:24', '2022-03-17 11:52:24', 'Open Recruitment Logistik dan Produksi');
+(1, '2022-02-24 11:40:48', '2022-03-30 00:00:00', 'Open Recrutimen IT'),
+(2, '2022-03-03 11:40:48', '2022-03-01 00:00:00', 'Open Recruitment Administrasi'),
+(3, '2022-03-09 11:52:24', '2022-04-07 00:00:00', 'Open Recruitment Logistik dan Produksi');
 
 -- --------------------------------------------------------
 
@@ -106,34 +130,6 @@ CREATE TABLE `jawaban` (
 --
 
 INSERT INTO `jawaban` (`id`, `soal_detail_id`, `jawaban`, `status`) VALUES
-(21, 6, 'emas', 1),
-(22, 6, 'minyak bumi', NULL),
-(23, 6, 'timah', NULL),
-(24, 6, 'tembaga', NULL),
-(25, 7, 'Batak', NULL),
-(26, 7, 'Minahasa', NULL),
-(27, 7, 'Anak Dalam', NULL),
-(28, 7, 'Minangkabau', 1),
-(29, 8, 'menggiatkan kampanye banyak anak banyak rezeki', NULL),
-(30, 8, 'mendorong pernikahan usia muda', NULL),
-(31, 8, 'menghilangkan undang-undang yang mengatur batas usia menikah', NULL),
-(32, 8, 'meningkatkan program keluarga berencana', 1),
-(33, 9, 'intensitas curah hujan yang sangat tinggi', NULL),
-(34, 9, 'berkurangnya daerah resapan air', 1),
-(35, 9, 'meningkatnya sampah di perkotaan', NULL),
-(36, 9, 'penyempitan badan aliran sungai', NULL),
-(37, 10, 'sosial dan budaya', NULL),
-(38, 10, 'komposisi penduduk', NULL),
-(39, 10, 'penggunaan lahan', NULL),
-(40, 10, 'orientasi mata pencaharian', 1),
-(41, 11, 'sosial', NULL),
-(42, 11, 'ekonomi', 1),
-(43, 11, 'kebudayaan', NULL),
-(44, 11, 'pendidikan', NULL),
-(94, 33, 'dfdfsff', 1),
-(95, 33, 'dsfsdfdss', NULL),
-(96, 34, 'dfsf', NULL),
-(97, 34, 'sdfsfsd', 1),
 (98, 35, 'wilayah', NULL),
 (99, 35, 'tempat', NULL),
 (100, 35, 'habitat', NULL),
@@ -153,7 +149,51 @@ INSERT INTO `jawaban` (`id`, `soal_detail_id`, `jawaban`, `status`) VALUES
 (114, 39, 'Sungai Serayu', NULL),
 (115, 39, 'Sungai Mamberamo', NULL),
 (116, 39, 'Batang Hari', 1),
-(117, 39, 'Sungai Barito', NULL);
+(117, 39, 'Sungai Barito', NULL),
+(122, 42, 'Buku: Bolpoin', NULL),
+(123, 42, 'Rumah: pondasi', NULL),
+(124, 42, 'Buku: lembar', NULL),
+(125, 42, 'Rumah: pintu', 1),
+(126, 43, 'Permata: perhiasan', NULL),
+(127, 43, 'Lidah: mulut', NULL),
+(128, 43, 'Garam: logam', NULL),
+(129, 43, 'Kayu: pohon', 1),
+(130, 44, 'Luas', NULL),
+(131, 44, 'Bebas', 1),
+(132, 44, 'Belenggu', NULL),
+(133, 44, 'Adil', NULL),
+(134, 45, 'Cacat', NULL),
+(135, 45, 'Derajat', 1),
+(136, 45, 'Jejak', NULL),
+(137, 45, 'Anggaran', NULL),
+(138, 46, 'Pencairan', NULL),
+(139, 46, 'Penggandaan', NULL),
+(140, 46, 'Potongan', 1),
+(141, 46, 'Penyimpanan', NULL),
+(142, 47, 'emas', 1),
+(143, 47, 'minyak bumi', NULL),
+(144, 47, 'timah', NULL),
+(145, 47, 'tembaga', NULL),
+(146, 48, 'Batak', NULL),
+(147, 48, 'Minahasa', NULL),
+(148, 48, 'Anak Dalam', NULL),
+(149, 48, 'Minangkabau', 1),
+(150, 49, 'menggiatkan kampanye banyak anak banyak rezeki', NULL),
+(151, 49, 'mendorong pernikahan usia muda', NULL),
+(152, 49, 'menghilangkan undang-undang yang mengatur batas usia menikah', NULL),
+(153, 49, 'meningkatkan program keluarga berencana', 1),
+(154, 50, 'intensitas curah hujan yang sangat tinggi', NULL),
+(155, 50, 'berkurangnya daerah resapan air', 1),
+(156, 50, 'meningkatnya sampah di perkotaan', NULL),
+(157, 50, 'penyempitan badan aliran sungai', NULL),
+(158, 51, 'sosial dan budaya', NULL),
+(159, 51, 'komposisi penduduk', NULL),
+(160, 51, 'penggunaan lahan', NULL),
+(161, 51, 'orientasi mata pencaharian', 1),
+(162, 52, 'sosial', NULL),
+(163, 52, 'ekonomi', 1),
+(164, 52, 'kebudayaan', NULL),
+(165, 52, 'pendidikan', NULL);
 
 -- --------------------------------------------------------
 
@@ -178,7 +218,7 @@ INSERT INTO `pendaftaran` (`id`, `jadwal_id`, `jabatan_id`, `divisi_id`, `kuota`
 (2, 2, 2, 2, 1),
 (3, 2, 3, 2, 1),
 (4, 3, 1, 3, 4),
-(5, 3, 1, 4, 3);
+(7, 3, 1, 4, 3);
 
 -- --------------------------------------------------------
 
@@ -220,19 +260,22 @@ CREATE TABLE `soal_detail` (
 --
 
 INSERT INTO `soal_detail` (`id`, `soal_id`, `deskripsi`, `bobot`) VALUES
-(6, 2, 'Daerah yang ditunjukkan oleh huruf X merupakan daerah penghasil….', 20),
-(7, 2, 'Suku yang berasal dari Provinsi Sumatra Barat adalah', 20),
-(8, 2, 'Indonesia merupakan negara dengan jumlah penduduk terbanyak keempat di dunia. Hal ini disebabkan oleh pertumbuhan penduduknya yang tinggi. Upaya yang bisa dilakukan untuk menekan angka pertumbuhan penduduk Indonesia adalah', 20),
-(9, 2, 'Puncak, Bogor merupakan salah satu daerah tujuan wisata penduduk perkotaan, terutama Jakarta dan Depok. Hal ini menjadikan terjadinya peningkatan pembangunan villa-villa dan penginapan di Puncak. Namun, pembangunan ini menjadikan potensi banjir di Jakarta semakin meningkat. Faktor yang menyebabkan hal tersebut terjadi adalah', 20),
-(10, 2, 'Perubahan pekerjaan dari yang tadinya berorientasi pada sumber daya alam seperti petani menjadi pekerjaan yang berorientasi pada kegiatan industri dan jasa, merupakan dampak dari interaksi antarruang dalam bidang', 20),
-(11, 2, 'Kegiatan pada gambar tersebut menunjukkan adanya sebuah interaksi di bidang ', 15),
-(33, 25, 'RERERER', 10),
-(34, 25, 'fgngfnfg', 12),
 (35, 1, 'Tempat di permukaan bumi, baik secara keseluruhan maupun hanya sebagian yang digunakan oleh makhluk hidup untuk   tinggal disebut….', 20),
 (36, 1, 'Secara geologis, Indonesia terletak di zona pertemuan tiga lempeng besar dunia, yaitu….', 20),
 (37, 1, 'Jika di Bogor menunjukkan waktu pukul 10.00 WIB, maka waktu di Jayapura menunjukkan waktu pukul', 20),
 (38, 1, 'Contoh objek yang bisa digambarkan dengan warna hijau pada peta adalah', 20),
-(39, 1, 'Berikut ini sungai yang terdapat di Pulau Sumatra adalah', 20);
+(39, 1, 'Berikut ini sungai yang terdapat di Pulau Sumatra adalah', 20),
+(42, 25, 'Motor: Roda', 20),
+(43, 25, 'Emas : tambang', 20),
+(44, 25, 'Merdeka = …', 17),
+(45, 25, 'Taraf = ….', 20),
+(46, 25, 'Rabat = ….', 20),
+(47, 2, 'Daerah yang ditunjukkan oleh huruf X merupakan daerah penghasil….', 20),
+(48, 2, 'Suku yang berasal dari Provinsi Sumatra Barat adalah', 20),
+(49, 2, 'Indonesia merupakan negara dengan jumlah penduduk terbanyak keempat di dunia. Hal ini disebabkan oleh pertumbuhan penduduknya yang tinggi. Upaya yang bisa dilakukan untuk menekan angka pertumbuhan penduduk Indonesia adalah', 20),
+(50, 2, 'Puncak, Bogor merupakan salah satu daerah tujuan wisata penduduk perkotaan, terutama Jakarta dan Depok. Hal ini menjadikan terjadinya peningkatan pembangunan villa-villa dan penginapan di Puncak. Namun, pembangunan ini menjadikan potensi banjir di Jakarta semakin meningkat. Faktor yang menyebabkan hal tersebut terjadi adalah', 20),
+(51, 2, 'Perubahan pekerjaan dari yang tadinya berorientasi pada sumber daya alam seperti petani menjadi pekerjaan yang berorientasi pada kegiatan industri dan jasa, merupakan dampak dari interaksi antarruang dalam bidang', 20),
+(52, 2, 'Kegiatan pada gambar tersebut menunjukkan adanya sebuah interaksi di bidang', 15);
 
 -- --------------------------------------------------------
 
@@ -251,11 +294,9 @@ CREATE TABLE `soal_divisi` (
 
 INSERT INTO `soal_divisi` (`soal_id`, `divisi_id`) VALUES
 (1, 5),
-(2, 1),
-(2, 2),
-(25, 2),
-(25, 5),
-(1, 4);
+(1, 4),
+(25, 3),
+(2, 3);
 
 -- --------------------------------------------------------
 
@@ -276,10 +317,7 @@ INSERT INTO `soal_jabatan` (`soal_id`, `jabatan_id`) VALUES
 (1, 1),
 (1, 2),
 (2, 1),
-(2, 2),
-(2, 3),
-(25, 4),
-(25, 3);
+(25, 1);
 
 -- --------------------------------------------------------
 
@@ -290,9 +328,13 @@ INSERT INTO `soal_jabatan` (`soal_id`, `jabatan_id`) VALUES
 CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `pendaftaran_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `username` varchar(10) NOT NULL,
   `nama` varchar(100) NOT NULL,
   `password` varchar(255) NOT NULL,
+  `tgl_lahir` date NOT NULL,
   `jenis_kelamin` char(1) NOT NULL,
+  `pend` enum('smak','d3','s1d4') NOT NULL,
+  `jarak` double NOT NULL,
   `email` varchar(100) NOT NULL,
   `role` enum('user','admin') NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -303,10 +345,11 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `pendaftaran_id`, `nama`, `password`, `jenis_kelamin`, `email`, `role`, `created_at`, `updated_at`) VALUES
-(9, NULL, 'Wisnu Sunadi', '$2y$10$kNWn1npRmSFTTTuVVo3I7OEfGtRFm.SDY66gpowVVWI73if12Qh5m', 'l', 'wisnu@gmail.com', 'admin', '2022-02-22 05:44:01', '2022-02-22 05:44:01'),
-(10, NULL, 'Rahayu Ajeng', '$2y$10$eB6Lo3hTut9SSibtIy4hY.QmjlACwYtfT/RPgQQM4g0Bx56Stl626', 'p', 'rahayu@gmail.com', 'admin', '2022-02-22 21:28:32', '2022-02-22 21:28:32'),
-(11, 2, 'Joni', '$2y$10$GSUoGznB6zalL3ryiqcg3eeylVSAQVnsjnYvwBjYQCtiTeBVxB8bu', 'l', 'joni@gmail.com', 'user', '2022-03-05 22:16:31', '2022-03-05 22:16:31');
+INSERT INTO `users` (`id`, `pendaftaran_id`, `username`, `nama`, `password`, `tgl_lahir`, `jenis_kelamin`, `pend`, `jarak`, `email`, `role`, `created_at`, `updated_at`) VALUES
+(12, 7, 'andrea', 'Joni Andreas', '$2y$10$K2XqcU7qxDHuf3vkqxQ6UOiJBr8xTADekMeBM/4BnPusJB6iUFjXC', '1997-03-17', 'l', 'smak', 17.3, 'joni@gmail.com', 'user', '2022-03-22 05:20:48', '2022-03-22 05:20:48'),
+(13, 1, 'admin', 'admin', '$2y$10$kSs6K99BBhUZdkGrUhD75.qWme2Eno7emlPNhVtJv/LAGuc7Qpc3y', '2022-03-22', 'l', 'smak', 1.3, 'admin@gmail.com', 'admin', '2022-03-22 05:22:12', '2022-03-22 05:22:12'),
+(14, 4, 'rio', 'Rio Dewanto', '$2y$10$aLoUaSHPqheeBEtoLsZTQuEXjiSYNwDynW7teS4RDV/AKX9GWoyNm', '2005-08-16', 'l', 's1d4', 27.3, 'rio@gmail.com', 'user', '2022-03-23 02:53:10', '2022-03-23 02:53:10'),
+(15, 4, 'ranisetyo', 'Rani Setyowati', '$2y$10$HmwaJ5z3QRVqrfd7bcon6eZSXyh1gW5j77/Sg9qMp0oHx4mJYBuiK', '1998-11-03', 'p', 'smak', 41, 'rani@gmail.com', 'user', '2022-03-23 06:18:07', '2022-03-23 06:18:07');
 
 -- --------------------------------------------------------
 
@@ -315,25 +358,30 @@ INSERT INTO `users` (`id`, `pendaftaran_id`, `nama`, `password`, `jenis_kelamin`
 --
 
 CREATE TABLE `user_jawaban` (
+  `id` bigint(20) UNSIGNED NOT NULL,
   `user_id` bigint(20) UNSIGNED NOT NULL,
-  `jawaban_id` bigint(20) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `waktu` time NOT NULL,
+  `tanggal` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `user_jawaban`
 --
 
-INSERT INTO `user_jawaban` (`user_id`, `jawaban_id`) VALUES
-(11, 24),
-(11, 39),
-(11, 41),
-(11, 33),
-(11, 26),
-(11, 29);
+INSERT INTO `user_jawaban` (`id`, `user_id`, `waktu`, `tanggal`) VALUES
+(10, 14, '00:00:22', '2022-03-23 16:34:08');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `detail_user_jawaban`
+--
+ALTER TABLE `detail_user_jawaban`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `detail_user_jawaban_fk2` (`jawaban_id`),
+  ADD KEY `detail_user_jawaban_fk1` (`user_jawaban_id`);
 
 --
 -- Indexes for table `divisi`
@@ -393,12 +441,18 @@ ALTER TABLE `users`
 -- Indexes for table `user_jawaban`
 --
 ALTER TABLE `user_jawaban`
-  ADD KEY `user_jawaban_fk1` (`user_id`),
-  ADD KEY `user_jawaban_fk2` (`jawaban_id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_jawaban_fk1` (`user_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `detail_user_jawaban`
+--
+ALTER TABLE `detail_user_jawaban`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `divisi`
@@ -422,7 +476,7 @@ ALTER TABLE `jadwal`
 -- AUTO_INCREMENT for table `jawaban`
 --
 ALTER TABLE `jawaban`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=118;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=166;
 
 --
 -- AUTO_INCREMENT for table `pendaftaran`
@@ -440,17 +494,30 @@ ALTER TABLE `soal`
 -- AUTO_INCREMENT for table `soal_detail`
 --
 ALTER TABLE `soal_detail`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- AUTO_INCREMENT for table `user_jawaban`
+--
+ALTER TABLE `user_jawaban`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `detail_user_jawaban`
+--
+ALTER TABLE `detail_user_jawaban`
+  ADD CONSTRAINT `detail_user_jawaban_fk1` FOREIGN KEY (`user_jawaban_id`) REFERENCES `user_jawaban` (`id`),
+  ADD CONSTRAINT `detail_user_jawaban_fk2` FOREIGN KEY (`jawaban_id`) REFERENCES `jawaban` (`id`);
 
 --
 -- Constraints for table `jawaban`
@@ -482,8 +549,7 @@ ALTER TABLE `users`
 -- Constraints for table `user_jawaban`
 --
 ALTER TABLE `user_jawaban`
-  ADD CONSTRAINT `user_jawaban_fk1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `user_jawaban_fk2` FOREIGN KEY (`jawaban_id`) REFERENCES `jawaban` (`id`);
+  ADD CONSTRAINT `user_jawaban_fk1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

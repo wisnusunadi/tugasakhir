@@ -55,8 +55,8 @@ class User extends Authenticatable
         return $this->belongsTo(Pendaftaran::class, 'pendaftaran_id');
     }
 
-    public function Jawaban()
+    public function UserJawaban()
     {
-        return $this->belongsToMany(Jawaban::class, 'user_jawaban');
+        return $this->hasMany(UserJawaban::class);
     }
 }
