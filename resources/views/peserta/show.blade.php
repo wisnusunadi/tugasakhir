@@ -25,9 +25,18 @@ section{
     object-fit: contain;
     width: 100%;
 }
-.aligncenter{
-    text-align: center;
-}
+
+.align-center {
+        text-align: center;
+    }
+
+.nowraptxt {
+        white-space: nowrap;
+    }
+
+.va-mid{
+        vertical-align: middle !important;
+    }
 </style>
 @stop
 
@@ -175,16 +184,22 @@ section{
                 searchable: false
             }, {
                 data: 'pendaftaran',
+                className: 'nowrap-text align-center',
             }, {
                 data: 'tanggal_daftar',
+                className: 'nowrap-text align-center',
             }, {
                 data: 'nama',
+                className: 'nowrap-text align-center',
             }, {
                 data: 'email',
+                className: 'nowrap-text align-center',
             }, {
                 data: 'jenis_kelamin',
+                className: 'nowrap-text align-center',
             }, {
                 data: 'aksi',
+                className: 'nowrap-text align-center',
             }],
         });
     })

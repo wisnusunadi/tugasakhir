@@ -10,6 +10,7 @@ use App\Models\Jabatan;
 use App\Models\Divisi;
 use App\Models\Jadwal;
 use App\Models\User;
+use App\Models\UserJawaban;
 
 class JadwalController extends Controller
 {
@@ -61,10 +62,63 @@ class JadwalController extends Controller
     }
     public function laporan_hasil_data_detail($id)
     {
-        $data = User::all();
+        $data = UserJawaban::WhereHas('User', function ($q) use ($id) {
+            $q->where('pendaftaran_id', $id);
+        })->get();
 
         return DataTables()->of($data)
             ->addIndexColumn()
+            ->addColumn('nama', function ($data) {
+                return $data->User->nama;
+            })
+            ->addColumn('kode_soal', function ($data) {
+                return $data->DetailUserJawaban->first()->Jawaban->SoalDetail->Soal->kode_soal;
+            })
+            ->addColumn('waktu', function ($data) {
+                return $data->waktu;
+            })
+            ->addColumn('j_soal', function ($data) {
+                return  $data->DetailUserJawaban->first()->Jawaban->SoalDetail->Soal->getJumlahSoal();
+            })
+            ->addColumn('j_benar', function ($data) {
+                $q = 0;
+                foreach ($data->DetailUserJawaban as $j) {
+                    if ($j->Jawaban->status == 1) {
+                        $q++;
+                    }
+                }
+                return $q;
+            })
+            ->addColumn('j_salah', function ($data) {
+                $q = 0;
+                foreach ($data->DetailUserJawaban as $j) {
+                    if ($j->Jawaban->status == 0) {
+                        $q++;
+                    }
+                }
+                return $q;
+            })
+            ->addColumn('j_kosong', function ($data) {
+                $q = 0;
+                $p = 0;
+                foreach ($data->DetailUserJawaban as $j) {
+                    if ($j->jawaban->status == 0) {
+                        $q++;
+                    } else if ($j->jawaban->status == 1) {
+                        $p++;
+                    }
+                }
+                return   $data->DetailUserJawaban->first()->Jawaban->SoalDetail->Soal->getJumlahSoal() - ($p + $q);
+            })
+            ->addColumn('nilai', function ($data) {
+                $q = 0;
+                foreach ($data->DetailUserJawaban as $j) {
+                    if ($j->jawaban->status == 1) {
+                        $q += $j->jawaban->soaldetail->bobot;
+                    }
+                }
+                return $q;
+            })
             ->make(true);
     }
 

@@ -21,8 +21,8 @@ class Jawaban extends Model
         return $this->belongsTo(SoalDetail::class, 'soal_detail_id');
     }
 
-    public function User()
+    public function DetailUserJawaban()
     {
-        return $this->belongsToMany(User::class, 'user_jawaban');
+        return $this->hasMany(Jawaban::class);
     }
 }

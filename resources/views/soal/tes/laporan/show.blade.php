@@ -78,8 +78,12 @@ section{
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
-                    <div class="card-body">
-                        <table class="table table-hover" id="showtable">
+                    <div class="card-body"> <div class="table-responsive">
+                        <a id="exportbutton" href=""><button class="btn btn-success">
+                            <i class="far fa-file-excel" id="load"></i> Export
+                        </button>
+                    </a>
+                        <table class="table table-hover" id="showtable" style="width=100%">
                             <thead class="aligncenter">
                                 <tr>
                                     <th></th>
@@ -90,9 +94,9 @@ section{
                                 </tr>
                             </thead>
                             <tbody>
-
                             </tbody>
                         </table>
+                    </div>
                     </div>
                 </div>
             </div>
@@ -127,6 +131,7 @@ section{
                     }
                 });
             },
+            lengthChange: false,
             processing: true,
             serverSide: true,
             ajax: {
@@ -177,26 +182,34 @@ section{
                 // Open this row
                 row.child( format(row.data()) ).show();
                 detailtable(row.data().id);
-                console.log(row.data());
                 tr.addClass('shown');
+
             }
         });
 
         function format ( data ) {
             return `
             <div class="row">
-                <div class="col-6">
+                <div class="col-7">
                     <div class="card ">
                         <div class="card-header"><h6 class="card-title">Detail</h6></div>
                         <div class="card-body">
 
-                     <table class="table table-hover" id="detailtable`+data.id+`">
-                        <thead>
+                     <table class="table table-hover" id="detailtable`+data.id+`" style="width:100%">
+                        <thead style="text-align: center;">
+                            <tr>
+                                <th  colspan="3"></th>
+                                <th colspan="4"  >Total</th>
+                                <th  colspan="2" ></th>
                             <tr>
                                 <th>No</th>
                                 <th>Nama</th>
                                 <th>Kode Soal</th>
                                 <th>Waktu</th>
+                                <th>Soal</th>
+                                <th>Benar</th>
+                                <th>Salah</th>
+                                <th>Kosong</th>
                                 <th>Nilai</th>
                             </tr>
                         </thead>
@@ -236,18 +249,45 @@ section{
                     className: 'nowrap-text align-center',
 
                 },{
-                    data: 'nama',
+                    data: 'kode_soal',
                     className: 'nowrap-text align-center',
 
-                },{
-                    data: 'nama',
+                 }
+                ,{    data: 'waktu',
                     className: 'nowrap-text align-center',
+                    orderable: true,
+                    searchable: false
 
-                },{
-                    data: 'nama',
+                },
+                {
+                    data: 'j_soal',
                     className: 'nowrap-text align-center',
+                    orderable: true,
+                    searchable: false
+                },
+                {
+                    data: 'j_benar',
+                    className: 'nowrap-text align-center',
+                    orderable: true,
+                    searchable: false
+                },
+                {
+                    data: 'j_salah',
+                    className: 'nowrap-text align-center',
+                    orderable: true,
+                    searchable: false
+                },
+                {
+                    data: 'j_kosong',
+                    className: 'nowrap-text align-center',
+                    orderable: true,
+                    searchable: false
+                }
+                ,{
+                    data: 'nilai',
+                    className: 'nowrap-text align-center',}
 
-                }],
+                 ],
             });
         }
 

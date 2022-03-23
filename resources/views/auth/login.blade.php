@@ -22,11 +22,11 @@
   <div class="card">
     <div class="card-body login-card-body">
       <p class="login-box-msg">Silahkan isi untuk Masuk</p>
- 
+
       <form method="POST" action="{{ route('login') }}">
         @csrf
         <div class="input-group mb-3">
-          <input type="email" aria-label="Masukkan Email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }} has-feedback" placeholder="Masukkan Email" name="email" id="email" value="{{ old('email') }}" required>
+          <input type="text" aria-label="Masukkan Email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }} has-feedback" placeholder="Username atau Email" name="email" id="email" value="{{ old('email') }}" required>
           <span class="input-group-text"><i class="fa-solid fa-envelope"></i></span>
         </div>
         @if ($errors->has('email'))
@@ -36,7 +36,7 @@
         @endif
 
         <div class="input-group mb-3">
-          <input type="password" aria-label="Masukkan Password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }} has-feedback" placeholder="Masukkan Password" name="password" id="password" required>
+          <input type="password" aria-label="Masukkan Password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }} has-feedback" placeholder="Password" name="password" id="password" required>
           <span class="input-group-text"><i class="fa-solid fa-key"></i></span>
         </div>
         @if ($errors->has('password'))
@@ -55,7 +55,7 @@
       </form>
 
       <p class="mb-0 aligncenter">
-        Belum Punya Akun? 
+        Belum Punya Akun?
         <a href="{{ route('register') }}" class="text-center">Daftar</a>
       </p>
     </div>

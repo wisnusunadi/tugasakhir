@@ -62,8 +62,8 @@
           </li>
 
           <li class="nav-header">Perhitungan</li>
-          <li class="nav-item">
-            <a href="#" class="nav-link">
+          <li class="nav-item   {{ (request()->is('laporan*')) ? 'menu-open' : '' }}">
+            <a href="#" class="nav-link  {{ (request()->is('laporan*')) ? 'active' : '' }}">
               <i class="nav-icon far fa-envelope"></i>
               <p>
                 Laporan
@@ -72,7 +72,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{route('laporan.hasil.show')}}" class="nav-link">
+                <a href="{{route('laporan.hasil.show')}}" class="nav-link  {{ (request()->is('laporan*')) ? 'active' : '' }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Hasil Tes</p>
                 </a>

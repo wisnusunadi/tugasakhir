@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DetailUserJawaban;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Divisi;
@@ -12,6 +13,8 @@ use App\Models\Soal;
 use App\Models\SoalDetail;
 use App\Models\Jawaban;
 use App\Models\User;
+use App\Models\UserJawaban;
+use DateTime;
 use Illuminate\Support\Arr;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Carbon;
@@ -170,11 +173,13 @@ class HomeController extends Controller
 
 
             $time = Carbon::parse($now)->addMinutes($timer->waktu)->toTimeString();
+            $mulai = Carbon::parse($now)->toTimeString();
 
 
             if ($request->session()->has('waktu')) {
             } else {
                 $request->session()->put('waktu', $time);
+                $request->session()->put('mulai', $mulai);
             }
 
             $soal = SoalDetail::where('soal_id', $id)->inRandomOrder()->get();
@@ -323,12 +328,33 @@ class HomeController extends Controller
 
     public function soal_tes_store(Request $request)
     {
-        $User = User::find($request->user);
-        for ($i = 0; $i < count($request->jawaban_id); $i++) {
-            $User->Jawaban()->attach($request->jawaban_id[$i]);
+
+        $now = Carbon::now();
+        $end_time = Carbon::parse($now)->toTimeString();
+
+
+        $time1 = new DateTime($request->session()->get('mulai'));
+        $time2 = new DateTime($end_time);
+        $interval = $time1->diff($time2);
+
+        $hasil = $interval->format('%h:%i:%s');
+
+
+        $u = UserJawaban::create([
+            'user_id' => $request->user,
+            'waktu' => $hasil,
+            'tanggal' => $now
+        ]);
+
+        for ($d = 0; $d < count($request->jawaban_id); $d++) {
+            $du = DetailUserJawaban::create([
+                'user_jawaban_id' => $u->id,
+                'jawaban_id' => $request->jawaban_id[$d]
+            ]);
         }
 
         $request->session()->forget('waktu');
+        $request->session()->forget('mulai');
         Auth::logout();
         return redirect('/');
     }

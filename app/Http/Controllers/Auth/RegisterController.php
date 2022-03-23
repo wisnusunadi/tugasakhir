@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Jadwal;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use App\Models\Pendaftaran;
@@ -62,10 +63,11 @@ class RegisterController extends Controller
     public function showRegistrationForm()
     {
         $today = Carbon::now();
-        $p = Pendaftaran::whereHas('Jadwal', function ($q) use ($today) {
-            $q->where([['waktu_selesai', '>=', $today], ['waktu_mulai', '<=', $today]]);
-        })->get();
-        return view('auth.register', compact('p'));
+        $jadwal = Jadwal::where([['waktu_selesai', '>=', $today], ['waktu_mulai', '<=', $today]])->get();
+        // $p = Pendaftaran::whereHas('Jadwal', function ($q) use ($today) {
+        //     $q->where([['waktu_selesai', '>=', $today], ['waktu_mulai', '<=', $today]]);
+        // })->get();
+        return view('auth.register', compact('jadwal'));
     }
     /**
      * Create a new user instance after a valid registration.
