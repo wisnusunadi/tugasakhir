@@ -122,7 +122,7 @@ section{
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
+                                        <tr class="kolom0">
                                             <td>1</td>
                                             <td><select class="form-control jabatan" name="jabatan[]" id="jabatan" style="width: 100%">
 
@@ -132,6 +132,116 @@ section{
                                             </select></td>
                                             <td><input type="number" class="form-control kuota" name="kuota[]" id="kuota"></td>
                                             <td><a id="removerow"><i class="fas fa-minus" style="color:red;"></i></a></td>
+                                        </tr>
+                                        <tr class="kolom0">
+                                            <td colspan="5">
+                                                <div class="form-group row">
+                                                    <label for="tanggal_mulai" class="col-lg-4 col-md-12 col-form-label labelket">Tanggal Mulai</label>
+                                                    <div class="col-lg-8 col-md-12 d-flex justify-content-around">
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="usia">
+                                                            <label class="form-check-label" for="inlineCheckbox1">Usia</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="pendidikan">
+                                                            <label class="form-check-label" for="inlineCheckbox2">Pendidikan</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="jarak">
+                                                            <label class="form-check-label" for="inlineCheckbox3">Jarak Rumah</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="soal">
+                                                            <label class="form-check-label" for="inlineCheckbox3">Soal</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row" id="usia">
+                                                    <h6>Usia</h6>
+                                                    <div class="table-responsive">
+                                                        <table class="table table-hover" id="usiatable">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Ketentuan</th>
+                                                                    <th>Usia</th>
+                                                                    <th>Bobot</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td><select class="form-control ketentuan_usia" name="ketentuan_usia[][]" id="ketentuan_usia" style="width: 100%">
+                                                                            <option value="">Minimum</option>
+                                                                            <option value="">Maksimum</option>
+                                                                            <option value="">Lainnya</option>
+                                                                        </select>
+                                                                    </td>
+                                                                    <td><input type="number" class="form-control" name="usia[][]" id="usia"></td>
+                                                                    <td><input type="number" class="form-control" name="bobot_usia[][]" id="bobot_usia"></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row" id="pendidikan">
+                                                    <h6>Pendidikan</h6>
+                                                    <div class="table-responsive">
+                                                        <table class="table table-hover" id="pendidikantable">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Pendidikan Terakhir</th>
+                                                                    <th>Bobot</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row" id="jarak">
+                                                    <h6>Jarak</h6>
+                                                    <div class="table-responsive">
+                                                        <table class="table table-hover" id="jaraktable">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Ketentuan</th>
+                                                                    <th>Jarak</th>
+                                                                    <th>Bobot</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row" id="soal">
+                                                    <h6>Soal</h6>
+                                                    <div class="table-responsive">
+                                                        <table class="table table-hover" id="soaltable">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Soal</th>
+                                                                    <th>Bobot</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>

@@ -23,6 +23,10 @@
         width:60%;
     }
 
+    .hide{
+      display:none;
+    }
+
 </style>
 @stop
 @section('content')
@@ -148,19 +152,19 @@
                                     <label for="password" class="col-md-4 col-form-label text-md-end">Pend Terakhir</label>
                                     <div class="col-md-8 col-form-label">
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" id="laki" value="smak" name="pend" >
+                                            <input class="form-check-input" type="radio" id="pend1" value="smak" name="pend" >
                                             <label class="form-check-label" for="inlineCheckbox1">SMA / SMK</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" id="perempuan"  value=d3" name="pend" >
+                                            <input class="form-check-input" type="radio" id="pend2"  value="d3" name="pend" >
                                             <label class="form-check-label" for="inlineCheckbox1">D3</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" id="perempuan"  value="s1d4" name="pend" >
+                                            <input class="form-check-input" type="radio" id="pend2"  value="s1d4" name="pend" >
                                             <label class="form-check-label" for="inlineCheckbox1">S1 / D4</label>
                                         </div>
 
-                                        @error('jenis_kelamin')
+                                        @error('pendidikan')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -168,7 +172,14 @@
                                     </div>
                                 </div>
 
-
+                                <div class="form-group row mb-3 univ hide">
+                                <label for="password" class="col-md-4 col-form-label text-md-end">Universitas</label>
+                                    <div class="col-md-8 col-form-label">
+                                    <div class="form-group row">
+                                    <select class="universitas" data-placeholder="Pilih universitas" style="width: 100%;" name="universitas" id="universitas">
+                                    </select>
+                                    </div>
+                                </div>
 
                                 <div class="row mb-3">
                                     <label for="password-confirm" class="col-md-4 col-form-label text-md-end">Alamat</label>
@@ -454,5 +465,53 @@ var geocoder = new MapboxGeocoder({
 
         $("#tgl_lahir").attr("max", today);
 
+<<<<<<< HEAD
+
+
+
+</script>
+
+<script>
+    $(function(){
+        $('#pendaftaran_id').select2();
+        $('input[type="radio"][name="pend"]').change(function(){
+          if($(this).val() == "s1d4" || $(this).val() == "d3"){
+            $('.univ').removeClass('hide');
+          }else{
+            $('.univ').addClass('hide');
+          }
+        })
+        $('.universitas').select2({
+            theme: 'bootstrap4',
+            ajax: {
+              minimumResultsForSearch: 20,
+              dataType: 'json',
+              delay: 250,
+              type: 'GET',
+              url: '/select/universitas',
+              data: function(params) {
+                  return {
+                      term: params.term
+                  }
+              },
+              processResults: function(data) {
+               //   console.log(data);
+                  return {
+                      results: $.map(data, function(obj) {
+                          return {
+                              id: obj.id,
+                              text: obj.nama
+                          }
+                      })
+                  }
+              },
+            }
+        });
+
+
+
+    })
+=======
+>>>>>>> dc967b92ed8d81f54595a70e04258cfced9837aa
 </script>
 @endsection
