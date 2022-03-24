@@ -79,7 +79,7 @@ section{
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body"> <div class="table-responsive">
-                        <a id="exportbutton" href=""><button class="btn btn-success">
+                        <a id="exportbutton" href="{{route('laporan.hasil.export')}}"><button class="btn btn-success">
                             <i class="far fa-file-excel" id="load"></i> Export
                         </button>
                     </a>
@@ -194,7 +194,7 @@ section{
                     <div class="card ">
                         <div class="card-header"><h6 class="card-title">Detail</h6></div>
                         <div class="card-body">
-
+                            <div class="table-responsive">
                      <table class="table table-hover" id="detailtable`+data.id+`" style="width:100%">
                         <thead style="text-align: center;">
                             <tr>
@@ -215,6 +215,7 @@ section{
                         </thead>
                         <tbody></tbody>
                     </table>
+                    </div>
                     </div>
                 </div>
                 </div>

@@ -55,5 +55,6 @@ Route::group(['middleware' => 'auth'], function () {
     });
     Route::group(['prefix' => '/laporan'], function () {
         Route::get('/hasil/show', [App\Http\Controllers\HomeController::class, 'laporan_hasil_show'])->name('laporan.hasil.show');
+        Route::get('/hasil/export', [App\Http\Controllers\HomeController::class, 'laporan_hasil_export'])->name('laporan.hasil.export');
     });
 });

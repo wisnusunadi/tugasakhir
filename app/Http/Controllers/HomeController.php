@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\LaporanHasilTes;
 use App\Models\DetailUserJawaban;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,8 +19,9 @@ use DateTime;
 use Illuminate\Support\Arr;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Carbon;
+use Maatwebsite\Excel\Facades\Excel;
 use PhpParser\Node\Expr\Cast\Array_;
-
+use Barryvdh\DomPDF\PDF;
 
 class HomeController extends Controller
 {
@@ -411,6 +413,12 @@ class HomeController extends Controller
         } else if ($bool == false) {
             return redirect()->back()->with('error', 'Gagal menambahkan Soal');
         }
+    }
+
+    public function laporan_hasil_export()
+    {
+        $waktu = Carbon::now();
+        return Excel::download(new LaporanHasilTes(), 'Laporan Hasil Tes ' . $waktu->toDateTimeString() . '.xls');
     }
 
     public function select_jabatan(Request $request)
