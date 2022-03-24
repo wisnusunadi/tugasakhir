@@ -173,11 +173,10 @@
                                 </div>
 
                                 <div class="form-group row mb-3 univ hide">
-                                <label for="password" class="col-md-4 col-form-label text-md-end">Universitas</label>
+                                    <label for="password" class="col-md-4 col-form-label text-md-end">Universitas</label>
                                     <div class="col-md-8 col-form-label">
-                                    <div class="form-group row">
-                                    <select class="universitas" data-placeholder="Pilih universitas" style="width: 100%;" name="universitas" id="universitas">
-                                    </select>
+                                      <select class="universitas" data-placeholder="Pilih universitas" style="width: 100%;" name="universitas" id="universitas">
+                                      </select>
                                     </div>
                                 </div>
 
@@ -467,7 +466,6 @@ var geocoder = new MapboxGeocoder({
 
         $("#tgl_lahir").attr("max", today);
 
-<<<<<<< HEAD
 
 
 
@@ -513,7 +511,5 @@ var geocoder = new MapboxGeocoder({
 
 
     })
-=======
->>>>>>> dc967b92ed8d81f54595a70e04258cfced9837aa
 </script>
 @endsection

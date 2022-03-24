@@ -18,12 +18,42 @@ section{
     height: 100%;
 }
 
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: center;
+}
+
+.flex-container > div{
+    margin: 10px;
+}
+
 .imgoprec{
     object-fit: contain;
     width: 100%;
 }
 .aligncenter{
     text-align: center;
+}
+.hide{
+    display: none;
+}
+
+#usiaform{
+    width: 50%;
+}
+
+#pendidikanform{
+    width: 40%;
+}
+
+#jarakform{
+    width: 35%;
+}
+
+#soalform{
+    width: 55%;
 }
 
 @media only screen and (min-width: 992px){
@@ -137,109 +167,163 @@ section{
                                             <td colspan="5">
                                                 <div class="form-group row">
                                                     <label for="tanggal_mulai" class="col-lg-4 col-md-12 col-form-label labelket">Tanggal Mulai</label>
-                                                    <div class="col-lg-8 col-md-12 d-flex justify-content-around">
+                                                    <div class="col-lg-7 col-md-12 d-flex justify-content-around">
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="usia">
+                                                            <input class="form-check-input kriteria" type="checkbox" name="checkboxkriteria[]" id="inlineCheckbox1" value="usia">
                                                             <label class="form-check-label" for="inlineCheckbox1">Usia</label>
                                                         </div>
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="pendidikan">
+                                                            <input class="form-check-input kriteria" type="checkbox" name="checkboxkriteria[]" id="inlineCheckbox2" value="pendidikan">
                                                             <label class="form-check-label" for="inlineCheckbox2">Pendidikan</label>
                                                         </div>
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="jarak">
+                                                            <input class="form-check-input kriteria" type="checkbox" name="checkboxkriteria[]" id="inlineCheckbox3" value="jarak">
                                                             <label class="form-check-label" for="inlineCheckbox3">Jarak Rumah</label>
                                                         </div>
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="soal">
+                                                            <input class="form-check-input kriteria" type="checkbox" name="checkboxkriteria[]" id="inlineCheckbox4" value="soal">
                                                             <label class="form-check-label" for="inlineCheckbox3">Soal</label>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="form-group row" id="usia">
-                                                    <h6>Usia</h6>
-                                                    <div class="table-responsive">
-                                                        <table class="table table-hover" id="usiatable">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Ketentuan</th>
-                                                                    <th>Usia</th>
-                                                                    <th>Bobot</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td><select class="form-control ketentuan_usia" name="ketentuan_usia[][]" id="ketentuan_usia" style="width: 100%">
-                                                                            <option value="">Minimum</option>
-                                                                            <option value="">Maksimum</option>
-                                                                            <option value="">Lainnya</option>
-                                                                        </select>
-                                                                    </td>
-                                                                    <td><input type="number" class="form-control" name="usia[][]" id="usia"></td>
-                                                                    <td><input type="number" class="form-control" name="bobot_usia[][]" id="bobot_usia"></td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
+                                                <div class="flex-container">
+                                                <div id="usiaform" class="hide">
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <div class="form-group row">
+                                                                <label for="" class="col-lg-5 col-form-label">Usia</label>
+                                                                <div class="col-lg-5">
+                                                                    <input type="number" class="form-control col-form-label" name="master_usia[]">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-hover" id="usiatable">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Ketentuan</th>
+                                                                                <th>Usia</th>
+                                                                                <th>Bobot</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td><select class="form-control ketentuan_usia" name="ketentuan_usia[][]" id="ketentuan_usia" style="width: 100%">
+                                                                                        <option value="">Minimum</option>
+                                                                                        <option value="">Maksimum</option>
+                                                                                        <option value="">Lainnya</option>
+                                                                                    </select>
+                                                                                </td>
+                                                                                <td><input type="number" class="form-control" name="usia_min[]" id="usia_min"></td>
+                                                                                <td><input type="number" class="form-control" name="bobot_usia[][]" id="bobot_usia"></td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="form-group row" id="pendidikan">
-                                                    <h6>Pendidikan</h6>
-                                                    <div class="table-responsive">
-                                                        <table class="table table-hover" id="pendidikantable">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Pendidikan Terakhir</th>
-                                                                    <th>Bobot</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td></td>
-                                                                    <td></td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
+                                                <div id="pendidikanform" class="hide">
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <div class="form-group row">
+                                                                <label for="" class="col-lg-5 col-form-label">Pendidikan</label>
+                                                                <div class="col-lg-5">
+                                                                    <input type="number" class="form-control col-form-label" name="master_pendikan[]">
+                                                                </div>
+                                                            </div>
+                                                            <div class="table-responsive">
+                                                                <table class="table table-hover" id="pendidikantable">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Pendidikan Terakhir</th>
+                                                                            <th>Bobot</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td><select class="form-control ketentuan_pendidikan" name="ketentuan_pendidikan[][]" id="ketentuan_pendidikan" style="width: 100%">
+                                                                                        <option value="smak">SMA / SMK</option>
+                                                                                        <option value="d3">D3</option>
+                                                                                        <option value="s1d4">D4 / S1</option>
+                                                                                    </select>
+                                                                            </td>
+                                                                            <td><input type="number" class="form-control" name="bobot_pendidikan[][]" id="bobot_pendidikan"></td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="form-group row" id="jarak">
-                                                    <h6>Jarak</h6>
-                                                    <div class="table-responsive">
-                                                        <table class="table table-hover" id="jaraktable">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Ketentuan</th>
-                                                                    <th>Jarak</th>
-                                                                    <th>Bobot</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td></td>
-                                                                    <td></td>
-                                                                    <td></td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
+                                                <div id="jarakform" class="hide">
+                                                    <div class="card">
+                                                            <div class="card-body">
+                                                            <div class="form-group row">
+                                                                    <label for="" class="col-lg-5 col-form-label">Jarak</label>
+                                                                    <div class="col-lg-5">
+                                                                        <input type="number" class="form-control col-form-label" name="master_jarak[]">
+                                                                    </div>
+                                                                </div>
+                                                            <div class="form-group row">
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-hover" id="jaraktable">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Ketentuan</th>
+                                                                                <th>Jarak</th>
+                                                                                <th>Bobot</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td><select class="form-control ketentuan_jarak" name="ketentuan_jarak[][]" id="ketentuan_jarak" style="width: 100%">
+                                                                                            <option value="min">Minimal</option>
+                                                                                            <option value="max">Maksimal</option>
+                                                                                            <option value="lain">Lainnya</option>
+                                                                                        </select>
+                                                                                </td>
+                                                                                <td><input type="number" class="form-control" name="jarak[][]" id="jarak"></td>
+                                                                                <td><input type="number" class="form-control" name="bobot_jarak[][]" id="bobot_jarak"></td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="form-group row" id="soal">
-                                                    <h6>Soal</h6>
-                                                    <div class="table-responsive">
-                                                        <table class="table table-hover" id="soaltable">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Soal</th>
-                                                                    <th>Bobot</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td></td>
-                                                                    <td></td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
+                                                <div id="soalform" class="hide">
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <div class="form-group row">
+                                                                <label for="" class="col-lg-5 col-form-label">Jarak</label>
+                                                                <div class="col-lg-5">
+                                                                    <input type="number" class="form-control col-form-label" name="master_jarak[]">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-hover" id="soaltable">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Soal</th>
+                                                                                <th>Bobot</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td></td>
+                                                                                <td></td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
+                                                </div>
                                                 </div>
                                             </td>
                                         </tr>
@@ -321,6 +405,40 @@ section{
         $('#showtable').on('click', '#removerow', function(e) {
             $(this).closest('tr').remove();
             numberRows($("#showtable"));
+        });
+
+        $('#showtable').on('change', '.kriteria', function(e){
+            var kriteria = [];
+            $(this).closest('tr').find('.kriteria:checked').each(function(){
+                kriteria.push($(this).val());
+            });
+            if(kriteria.indexOf("usia") > -1){
+                $(this).closest('tr').find('#usiaform').removeClass('hide');
+            }
+            else if(kriteria.indexOf("usia") <= -1){
+                $(this).closest('tr').find('#usiaform').addClass('hide');
+            }
+
+            if(kriteria.indexOf("pendidikan") > -1){
+                $(this).closest('tr').find('#pendidikanform').removeClass('hide');
+            }
+            else if(kriteria.indexOf("pendidikan") <= -1){
+                $(this).closest('tr').find('#pendidikanform').addClass('hide');
+            }
+
+            if(kriteria.indexOf("jarak") > -1){
+                $(this).closest('tr').find('#jarakform').removeClass('hide');
+            }
+            else if(kriteria.indexOf("jarak") <= -1){
+                $(this).closest('tr').find('#jarakform').addClass('hide');
+            }
+
+            if(kriteria.indexOf("soal") > -1){
+                $(this).closest('tr').find('#soalform').removeClass('hide');
+            }
+            else if(kriteria.indexOf("soal") <= -1){
+                $(this).closest('tr').find('#soalform').addClass('hide');
+            }
         });
 
         function select(){
