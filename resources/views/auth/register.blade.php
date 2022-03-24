@@ -172,12 +172,21 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group row mb-3 univ hide">
+                                {{-- <div class="form-group row mb-3 univ ">
                                 <label for="password" class="col-md-4 col-form-label text-md-end">Universitas</label>
                                     <div class="col-md-8 col-form-label">
                                     <div class="form-group row">
-                                    <select class="universitas" data-placeholder="Pilih universitas" style="width: 100%;" name="universitas" id="universitas">
+                                    <select class="universitas" data-placeholder="Pilih universitas"  name="universitas" id="universitas">
                                     </select>
+                                    </div>
+                                </div> --}}
+
+
+                                <div class="row mb-3 univ hide">
+                                    <label for="tgl_lahir" class="col-md-4 col-form-label text-md-end"></label>
+                                    <div class="col-md-6">
+                                        <select class="universitas" data-placeholder="Pilih universitas"  name="universitas" id="universitas">
+                                        </select>
                                     </div>
                                 </div>
 
@@ -465,7 +474,6 @@ var geocoder = new MapboxGeocoder({
 
         $("#tgl_lahir").attr("max", today);
 
-<<<<<<< HEAD
 
 
 
@@ -473,7 +481,7 @@ var geocoder = new MapboxGeocoder({
 
 <script>
     $(function(){
-        $('#pendaftaran_id').select2();
+        // $('#pendaftaran_id').select2();
         $('input[type="radio"][name="pend"]').change(function(){
           if($(this).val() == "s1d4" || $(this).val() == "d3"){
             $('.univ').removeClass('hide');
@@ -481,6 +489,7 @@ var geocoder = new MapboxGeocoder({
             $('.univ').addClass('hide');
           }
         })
+
         $('.universitas').select2({
             theme: 'bootstrap4',
             ajax: {
@@ -507,11 +516,6 @@ var geocoder = new MapboxGeocoder({
               },
             }
         });
-
-
-
     })
-=======
->>>>>>> dc967b92ed8d81f54595a70e04258cfced9837aa
 </script>
 @endsection
