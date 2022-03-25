@@ -172,23 +172,22 @@
                                     </div>
                                 </div>
 
-                                {{-- <div class="form-group row mb-3 univ ">
-                                <label for="password" class="col-md-4 col-form-label text-md-end">Universitas</label>
+                                <div class="form-group row mb-3 univ hide">
+                                    <label for="password" class="col-md-4 col-form-label text-md-end">Universitas</label>
                                     <div class="col-md-8 col-form-label">
-                                    <div class="form-group row">
-                                    <select class="universitas" data-placeholder="Pilih universitas"  name="universitas" id="universitas">
-                                    </select>
+                                      <select class="universitas" data-placeholder="Pilih universitas" style="width: 100%;" name="universitas" id="universitas">
+                                      </select>
                                     </div>
-                                </div> --}}
+                                </div>
 
 
-                                <div class="row mb-3 univ hide">
+                                {{-- <div class="row mb-3 univ hide">
                                     <label for="tgl_lahir" class="col-md-4 col-form-label text-md-end"></label>
                                     <div class="col-md-6">
                                         <select class="universitas" data-placeholder="Pilih universitas"  name="universitas" id="universitas">
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
 
                                 <div class="row mb-3">
                                     <label for="password-confirm" class="col-md-4 col-form-label text-md-end">Alamat</label>

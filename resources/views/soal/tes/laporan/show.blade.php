@@ -53,6 +53,17 @@ section{
         vertical-align: middle !important;
     }
 
+.modal-dialog{
+            height:100%
+}
+.modal-content{
+            height:90%
+        }
+        .modal-body{
+            height:100%;
+            overflow:auto
+        }
+
 </style>
 @stop
 
@@ -98,6 +109,32 @@ section{
                         </table>
                     </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="detailmodal" tabindex="-1" role="dialog" aria-labelledby="detailmodal" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content" style="margin: 10px">
+                <div class="modal-header">
+                    <h4 id="modal-title">Detail</h4>
+                </div>
+                <div class="modal-body" id="detail">
+                    <div class="table-responsive">
+                        <table class="table  aligncenter" id="detailjawaban" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Soal</th>
+                                    <th class="alignleft">Jawaban</th>
+                                    <th>Poin</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                          </div>
                 </div>
             </div>
         </div>
@@ -198,10 +235,6 @@ section{
                      <table class="table table-hover" id="detailtable`+data.id+`" style="width:100%">
                         <thead style="text-align: center;">
                             <tr>
-                                <th  colspan="3"></th>
-                                <th colspan="4"  >Total</th>
-                                <th  colspan="2" ></th>
-                            <tr>
                                 <th>No</th>
                                 <th>Nama</th>
                                 <th>Kode Soal</th>
@@ -211,6 +244,7 @@ section{
                                 <th>Salah</th>
                                 <th>Kosong</th>
                                 <th>Nilai</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody></tbody>
@@ -221,6 +255,58 @@ section{
                 </div>
             </div>`;
         }
+
+        $(document).on('click', '.detailmodal', function(event) {
+            var user = $(this).data("id");
+            var soal = $(this).data("soal");
+            detailjawaban(soal,user);
+            $('#detailmodal').modal("show");
+        });
+
+        function detailjawaban(soal,user){
+        $('#detailjawaban').DataTable({
+            destroy: true,
+            processing: true,
+            serverSide: true,
+            searching: false,
+            order: [[1,"asc"]],
+            columnDefs: [
+                { orderable: false, target: '_all' }
+            ],
+            ajax: {
+                'url': '/soal_tes/result/'+soal+'/'+user,
+                'dataType': 'json',
+                'headers': {
+                    'X-CSRF-TOKEN': '{{csrf_token()}}'
+                }
+            },
+            language: {
+                processing: '<i class="fa fa-spinner fa-spin"></i> Tunggu Sebentar'
+            },
+            columns: [{
+                data: 'DT_RowIndex',
+                className: 'aligncenter',
+                orderable: false,
+                searchable: false
+            },{
+                data: 'deskripsi',
+                className: 'alignleft',
+                orderable: false,
+                searchable: false
+            },{
+                data: 'jawaban',
+                className: 'alignleft',
+                orderable: false,
+                searchable: false
+            },{
+                data: 'bobot',
+                orderable: false,
+                searchable: false
+            }]
+        });
+
+    }
+
 
         function detailtable(id){
             $('#detailtable'+id).DataTable({
@@ -286,6 +372,9 @@ section{
                 }
                 ,{
                     data: 'nilai',
+                    className: 'nowrap-text align-center',}
+                ,{
+                    data: 'button',
                     className: 'nowrap-text align-center',}
 
                  ],

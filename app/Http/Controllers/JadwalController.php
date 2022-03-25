@@ -119,6 +119,12 @@ class JadwalController extends Controller
                 }
                 return $q;
             })
+            ->addColumn('button', function ($data) {
+                return  '<a data-toggle="modal" class="detailmodal"  data-soal="' . $data->DetailUserJawaban->first()->Jawaban->SoalDetail->Soal->id . '"  data-id="' . $data->id . '">
+                <i class="fas fa-search"></i>
+          </a>';
+            })
+            ->rawColumns(['button'])
             ->make(true);
     }
 
