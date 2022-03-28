@@ -53,6 +53,17 @@ section{
         vertical-align: middle !important;
     }
 
+.modal-dialog{
+            height:100%
+}
+.modal-content{
+            height:90%
+        }
+        .modal-body{
+            height:100%;
+            overflow:auto
+        }
+
 </style>
 @stop
 
@@ -79,7 +90,7 @@ section{
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body"> <div class="table-responsive">
-                        <a id="exportbutton" href=""><button class="btn btn-success">
+                        <a id="exportbutton" href="{{route('laporan.hasil.export')}}"><button class="btn btn-success">
                             <i class="far fa-file-excel" id="load"></i> Export
                         </button>
                     </a>
@@ -98,6 +109,32 @@ section{
                         </table>
                     </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="detailmodal" tabindex="-1" role="dialog" aria-labelledby="detailmodal" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content" style="margin: 10px">
+                <div class="modal-header">
+                    <h4 id="modal-title">Detail</h4>
+                </div>
+                <div class="modal-body" id="detail">
+                    <div class="table-responsive">
+                        <table class="table  aligncenter" id="detailjawaban" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Soal</th>
+                                    <th class="alignleft">Jawaban</th>
+                                    <th>Poin</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                          </div>
                 </div>
             </div>
         </div>
@@ -194,13 +231,9 @@ section{
                     <div class="card ">
                         <div class="card-header"><h6 class="card-title">Detail</h6></div>
                         <div class="card-body">
-
+                            <div class="table-responsive">
                      <table class="table table-hover" id="detailtable`+data.id+`" style="width:100%">
                         <thead style="text-align: center;">
-                            <tr>
-                                <th  colspan="3"></th>
-                                <th colspan="4"  >Total</th>
-                                <th  colspan="2" ></th>
                             <tr>
                                 <th>No</th>
                                 <th>Nama</th>
@@ -211,21 +244,74 @@ section{
                                 <th>Salah</th>
                                 <th>Kosong</th>
                                 <th>Nilai</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody></tbody>
                     </table>
+                    </div>
                     </div>
                 </div>
                 </div>
             </div>`;
         }
 
+        $(document).on('click', '.detailmodal', function(event) {
+            var user = $(this).data("id");
+            var soal = $(this).data("soal");
+            detailjawaban(soal,user);
+            $('#detailmodal').modal("show");
+        });
+
+        function detailjawaban(soal,user){
+        $('#detailjawaban').DataTable({
+            destroy: true,
+            processing: true,
+            serverSide: true,
+            searching: false,
+            order: [[1,"asc"]],
+            columnDefs: [
+                { orderable: false, target: '_all' }
+            ],
+            ajax: {
+                'url': '/soal_tes/result/'+soal+'/'+user,
+                'dataType': 'json',
+                'headers': {
+                    'X-CSRF-TOKEN': '{{csrf_token()}}'
+                }
+            },
+            language: {
+                processing: '<i class="fa fa-spinner fa-spin"></i> Tunggu Sebentar'
+            },
+            columns: [{
+                data: 'DT_RowIndex',
+                className: 'aligncenter',
+                orderable: false,
+                searchable: false
+            },{
+                data: 'deskripsi',
+                className: 'alignleft',
+                orderable: false,
+                searchable: false
+            },{
+                data: 'jawaban',
+                className: 'alignleft',
+                orderable: false,
+                searchable: false
+            },{
+                data: 'bobot',
+                orderable: false,
+                searchable: false
+            }]
+        });
+
+    }
         function detailtable(id){
             $('#detailtable'+id).DataTable({
                 destroy: true,
                 processing: true,
                 serverSide: false,
+                searching: false,
                 paging: false,
                 info:false,
                 language: {
@@ -285,7 +371,14 @@ section{
                 }
                 ,{
                     data: 'nilai',
+                    orderable: false,
+                searchable: false,
                     className: 'nowrap-text align-center',}
+                ,{
+                    data: 'button',
+                    className: 'nowrap-text align-center',
+                    orderable: false,
+                searchable: false,}
 
                  ],
             });

@@ -180,6 +180,15 @@
                                     </div>
                                 </div>
 
+
+                                {{-- <div class="row mb-3 univ hide">
+                                    <label for="tgl_lahir" class="col-md-4 col-form-label text-md-end"></label>
+                                    <div class="col-md-6">
+                                        <select class="universitas" data-placeholder="Pilih universitas"  name="universitas" id="universitas">
+                                        </select>
+                                    </div>
+                                </div> --}}
+
                                 <div class="row mb-3">
                                     <label for="password-confirm" class="col-md-4 col-form-label text-md-end">Alamat</label>
 
@@ -249,8 +258,6 @@
                                         </button>
                                     </div>
                                 </div>
-
-
                         </div>
                     </div>
 
@@ -473,7 +480,7 @@ var geocoder = new MapboxGeocoder({
 
 <script>
     $(function(){
-        $('#pendaftaran_id').select2();
+        // $('#pendaftaran_id').select2();
         $('input[type="radio"][name="pend"]').change(function(){
           if($(this).val() == "s1d4" || $(this).val() == "d3"){
             $('.univ').removeClass('hide');
@@ -481,6 +488,7 @@ var geocoder = new MapboxGeocoder({
             $('.univ').addClass('hide');
           }
         })
+
         $('.universitas').select2({
             theme: 'bootstrap4',
             ajax: {
@@ -507,9 +515,6 @@ var geocoder = new MapboxGeocoder({
               },
             }
         });
-
-
-
     })
 </script>
 @endsection

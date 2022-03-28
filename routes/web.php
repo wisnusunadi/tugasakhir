@@ -36,12 +36,12 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/divisi/get/{id}', [App\Http\Controllers\HomeController::class, 'select_divisi_get'])->name('select.divisi.get');
         Route::get('/jabatan', [App\Http\Controllers\HomeController::class, 'select_jabatan'])->name('select.jabatan');
         Route::get('/divisi', [App\Http\Controllers\HomeController::class, 'select_divisi'])->name('select.divisi');
-        
     });
     Route::group(['prefix' => '/soal_tes'], function () {
         Route::post('/store', [App\Http\Controllers\HomeController::class, 'soal_tes_store'])->name('soal_tes.store');
         Route::get('/preview', [App\Http\Controllers\HomeController::class, 'soal_tes_preview'])->name('soal_tes.preview');
         Route::get('/show/{id}', [App\Http\Controllers\HomeController::class, 'soal_tes_show'])->name('soal_tes.show');
+        Route::get('/result/{soal}/{user}', [App\Http\Controllers\HomeController::class, 'soal_tes_result'])->name('soal_tes.result');
     });
     Route::group(['prefix' => '/draft_soal'], function () {
         Route::get('/show', [App\Http\Controllers\HomeController::class, 'draft_soal_show'])->name('draft_soal');
@@ -56,5 +56,6 @@ Route::group(['middleware' => 'auth'], function () {
     });
     Route::group(['prefix' => '/laporan'], function () {
         Route::get('/hasil/show', [App\Http\Controllers\HomeController::class, 'laporan_hasil_show'])->name('laporan.hasil.show');
+        Route::get('/hasil/export', [App\Http\Controllers\HomeController::class, 'laporan_hasil_export'])->name('laporan.hasil.export');
     });
 });

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\LaporanHasilTes;
 use App\Models\DetailUserJawaban;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,8 +19,9 @@ use DateTime;
 use Illuminate\Support\Arr;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Carbon;
+use Maatwebsite\Excel\Facades\Excel;
 use PhpParser\Node\Expr\Cast\Array_;
-
+use Barryvdh\DomPDF\PDF;
 
 class HomeController extends Controller
 {
@@ -81,6 +83,72 @@ class HomeController extends Controller
             ->rawColumns(['jawaban'])
             ->make(true);
     }
+    public function soal_tes_result($soal, $user)
+    {
+
+        $data = SoalDetail::where('soal_id', $soal);
+        return DataTables()->of($data)
+            ->addIndexColumn()
+            ->addColumn('jawaban', function ($data) use ($user) {
+                $soal = $data->id;
+                $user_jawaban = DetailUserJawaban::whereHas('Jawaban.SoalDetail', function ($q) use ($soal) {
+                    $q->where('id', $soal);
+                })
+                    ->where('user_jawaban_id', $user)->get();
+
+
+
+                $g = array();
+                $return = "";
+                $return .= ' <div class="form-group">';
+                foreach ($data->Jawaban as $s) {
+                    if ($s->id ==  $user_jawaban->first()->Jawaban->id) {
+                        if ($s->status == 1) {
+
+                            $g[] =   '<div class="form-check">
+                            <input class="form-check-input" type="radio" name="' . $s->id . '" checked>
+                            <label class="form-check-label">' . $s->jawaban . ' <i class="fas fa-check-circle  text-success"></i></label>
+                          </div>';
+                        } else {
+
+                            $g[] =   '<div class="form-check">
+                            <input class="form-check-input" type="radio" name="' . $s->id . '" checked>
+                            <label class="form-check-label">' . $s->jawaban . ' <i class="fas fa-times-circle text-danger"></i></label>
+                          </div>';
+                        }
+                    } else {
+                        if ($s->status == 1) {
+                            $g[] =   '<div class="form-check">
+                            <input class="form-check-input" type="radio" disabled>
+                            <label class="form-check-label"> ' . $s->jawaban . ' <i class="fas fa-check-circle  text-success"></i></label>
+                          </div>';
+                        } else {
+                            $g[] =   '<div class="form-check">
+                            <input class="form-check-input" type="radio" disabled>
+                            <label class="form-check-label"> ' . $s->jawaban . '</label>
+                          </div>';
+                        }
+                    }
+                }
+                $return .= implode('', $g);
+                $return .= '</div>';
+                return $return;
+
+
+
+
+
+
+
+
+
+
+
+                // return  $user_jawaban->first()->Jawaban->jawaban;
+            })
+            ->rawColumns(['jawaban'])
+            ->make(true);
+    }
 
     public function jadwal_table()
     {
@@ -104,8 +172,6 @@ class HomeController extends Controller
             })
             ->make(true);
     }
-
-
 
     public function jadwal_create()
     {
@@ -411,6 +477,12 @@ class HomeController extends Controller
         } else if ($bool == false) {
             return redirect()->back()->with('error', 'Gagal menambahkan Soal');
         }
+    }
+
+    public function laporan_hasil_export()
+    {
+        $waktu = Carbon::now();
+        return Excel::download(new LaporanHasilTes(), 'Laporan Hasil Tes ' . $waktu->toDateTimeString() . '.pdf');
     }
 
     public function select_jabatan(Request $request)

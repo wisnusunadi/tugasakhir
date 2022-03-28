@@ -15,6 +15,7 @@
   <!-- <link rel="stylesheet" href="{{ asset('themes/plugins/datatables/datatables.min.css') }}"> -->
      <!-- Select2 -->
      <link rel="stylesheet" href="{{ asset('themes/plugins/select2/css/select2.min.css') }}">
+     <link rel="stylesheet" href="{{ asset('themes/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Theme style -->
