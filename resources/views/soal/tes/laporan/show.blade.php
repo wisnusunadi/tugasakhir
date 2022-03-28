@@ -306,13 +306,12 @@ section{
         });
 
     }
-
-
         function detailtable(id){
             $('#detailtable'+id).DataTable({
                 destroy: true,
                 processing: true,
                 serverSide: false,
+                searching: false,
                 paging: false,
                 info:false,
                 language: {
@@ -372,10 +371,14 @@ section{
                 }
                 ,{
                     data: 'nilai',
+                    orderable: false,
+                searchable: false,
                     className: 'nowrap-text align-center',}
                 ,{
                     data: 'button',
-                    className: 'nowrap-text align-center',}
+                    className: 'nowrap-text align-center',
+                    orderable: false,
+                searchable: false,}
 
                  ],
             });

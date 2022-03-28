@@ -177,7 +177,7 @@ section{
                         <span class="float-left"><a href="{{route('draft_soal')}}" type="button" class="btn btn-danger">
                             Batal
                         </a></span>
-                        <span class="float-right"><button type="submit" class="btn btn-success">Tambah</button></span>
+                        <span class="float-right"><button id="tambah" type="submit" class="btn btn-success" disabled >Tambah</button></span>
                     </div>
                 </div>
                 </form>
@@ -197,7 +197,6 @@ section{
     //     var id = $(this).closest('.kunci_jawaban').attr('id');
     //     alert(id);
     // })
-
 
     $(function(){
     get_divisi();
@@ -461,6 +460,63 @@ $('.divisi').select2({
                         }
                     });
                 }
+
+            $('#nama').on('keyup change', function() {
+            if ($(this).val() != "") {
+                if ($('#kode_soal').val() != "" &&  $('#waktu').val() != "" &&  $('#jabatan').val() != ""  &&  $('#divisi').val() != "") {
+                    $('#tambah').attr("disabled", false);
+                } else {
+                    $('#tambah').attr("disabled", true);
+                }
+            } else if ($(this).val() == "") {
+                $('#tambah').attr("disabled", true);
+            }
+        });
+            $('#kode_soal').on('keyup change', function() {
+            if ($(this).val() != "") {
+                if ($('#nama').val() != "" &&  $('#waktu').val() != "" &&  $('#jabatan').val() != ""  &&  $('#divisi').val() != "") {
+                    $('#tambah').attr("disabled", false);
+                } else {
+                    $('#tambah').attr("disabled", true);
+                }
+            } else if ($(this).val() == "") {
+                $('#tambah').attr("disabled", true);
+            }
+        });
+            $('#waktu').on('keyup change', function() {
+            if ($(this).val() != "") {
+                if ($('#nama').val() != "" &&  $('#kode_soal').val() != "" &&  $('#jabatan').val() != ""  &&  $('#divisi').val() != "") {
+                    $('#tambah').attr("disabled", false);
+                } else {
+                    $('#tambah').attr("disabled", true);
+                }
+            } else if ($(this).val() == "") {
+                $('#tambah').attr("disabled", true);
+            }
+        });
+            $('#jabatan').on('keyup change', function() {
+            if ($(this).val() != "") {
+                if ($('#nama').val() != "" &&  $('#kode_soal').val() != "" &&  $('#waktu').val() != ""  &&  $('#divisi').val() != "" ) {
+                    $('#tambah').attr("disabled", false);
+                } else {
+                    $('#tambah').attr("disabled", true);
+                }
+            } else if ($(this).val() == "") {
+                $('#tambah').attr("disabled", true);
+            }
+        });
+            $('#divisi').on('keyup change', function() {
+            if ($(this).val() != "") {
+                if ($('#nama').val() != "" &&  $('#kode_soal').val() != "" &&  $('#waktu').val() != ""   &&  $('#jabatan').val() != "") {
+                    $('#tambah').attr("disabled", false);
+                } else {
+                    $('#tambah').attr("disabled", true);
+                }
+            } else if ($(this).val() == "") {
+                $('#tambah').attr("disabled", true);
+            }
+        });
+
 })
 </script>
 @endsection
