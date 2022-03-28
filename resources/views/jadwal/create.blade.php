@@ -212,7 +212,7 @@ section{
                                                                                 <td><input type="number" class="form-control usia_min" name="usia_min[0][]" id="usia_min0"></td>
                                                                                 <td><input type="number" class="form-control usia_max" name="usia_max[0][]" id="usia_max0"></td>
                                                                                 <td><input type="number" class="form-control bobot_usia" name="bobot_usia[0][]" id="bobot_usia0"></td>
-                                                                                <td><a id="addusiarow"><i class="fas fa-plus text-success"></i></a></td>
+                                                                                <td><a class="addusiarow"><i class="fas fa-plus text-success"></i></a></td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
@@ -273,6 +273,7 @@ section{
                                                                                 <th>Range Min</th>
                                                                                 <th>Range Max</th>
                                                                                 <th>Bobot</th>
+                                                                                <th>Aksi</th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
@@ -549,7 +550,7 @@ section{
                                                                                 <td><input type="number" class="form-control usia_min" name="usia_min[`+countable+`][]" id="usia_min`+countable+`"></td>
                                                                                 <td><input type="number" class="form-control usia_max" name="usia_max[`+countable+`][]" id="usia_max`+countable+`"></td>
                                                                                 <td><input type="number" class="form-control bobot_usia" name="bobot_usia[`+countable+`][]" id="bobot_usia`+countable+`"></td>
-                                                                                <td><a id="addusiarow"><i class="fas fa-plus text-success"></i></a></td>
+                                                                                <td><a class="addusiarow"><i class="fas fa-plus text-success"></i></a></td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
@@ -610,6 +611,7 @@ section{
                                                                                 <th>Range Min</th>
                                                                                 <th>Range Max</th>
                                                                                 <th>Bobot</th>
+                                                                                <th>Aksi</th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
@@ -673,40 +675,114 @@ section{
             
         });
 
-        $('.usiatable').on('click', '#addusiarow', function(){
+        function numberRowsUsia(id) {
+            var c = 0 - 1;
+            $('#usiatable'+id).find("tr").each(function(ind, el) {
+                var j = c;
+                $(el).find('.usia_min').attr('name', 'usia_min[' + id + ']['+ j +']');
+                $(el).find('.usia_min').attr('id', 'usia_min'+ j);
+                $(el).find('.usia_max').attr('name', 'usia_max[' + id + ']['+ j +']');
+                $(el).find('.usia_max').attr('id', 'usia_max'+ j);
+                $(el).find('.bobot_usia').attr('name', 'bobot_usia[' + id + ']['+ j +']');
+                $(el).find('.bobot_usia').attr('id', 'bobot_usia'+ j);
+                c++;
+            });
+        }
+
+        $('.usiatable').on('click', '.addusiarow', function(){
+            var ids = $(this).closest('.usiatable').attr('id');
+            var idt = ids.substring(9);
             $('.usiatable tr:last').after(addusiarow());
+            console.log(ids);
+            numberRowsUsia(idt);
         });
 
         $('.usiatable').on('click', '#removeusiarow', function(e) {
+            var ids = $(this).closest('.usiatable').attr('id');
+            var idt = ids.substring(9);
             $(this).closest('tr').remove();
-            // numberRows($("#usiatable"));
+            console.log(ids);
+            numberRowsUsia(idt);
         });
 
+        function numberRowsPendidikan(id) {
+            var c = 0 - 1;
+            $('#pendidikantable'+id).find("tr").each(function(ind, el1) {
+                var j = c;
+                $(el1).find('.ketentuan_pendidikan').attr('name', 'ketentuan_pendidikan[' + id + ']['+ j +']');
+                $(el1).find('.ketentuan_pendidikan').attr('id', 'ketentuan_pendidikan'+id+''+ j);
+                $(el1).find('.bobot_pendidikan').attr('name', 'bobot_pendidikan[' + id + ']['+ j +']');
+                $(el1).find('.bobot_pendidikan').attr('id', 'bobot_pendidikan'+ j);
+                c++;
+            });
+        }
+
         $('.pendidikantable').on('click', '#addpendidikanrow', function(){
+            var ids = $(this).closest('.pendidikantable').attr('id');
+            var idt = ids.substring(15);
             $('.pendidikantable tr:last').after(addpendidikanrow());
+            numberRowsPendidikan(idt);
         });
 
         $('.pendidikantable').on('click', '#removependidikanrow', function(e) {
+            var ids = $(this).closest('.pendidikantable').attr('id');
+            var idt = ids.substring(9);
             $(this).closest('tr').remove();
-            // numberRows($("#pendidikantable"));
+            numberRowsPendidikan(idt);
         });
+
+        function numberRowsJarak(id) {
+            var c = 0 - 1;
+            $('#jaraktable'+id).find("tr").each(function(ind, el1) {
+                var j = c;
+                $(el1).find('.jarak_min').attr('name', 'jarak_min[' + id + ']['+ j +']');
+                $(el1).find('.jarak_min').attr('id', 'jarak_min'+ j);
+                $(el1).find('.jarak_max').attr('name', 'jarak_max[' + id + ']['+ j +']');
+                $(el1).find('.jarak_max').attr('id', 'jarak_max'+ j);
+                $(el1).find('.bobot_jarak').attr('name', 'bobot_jarak[' + id + ']['+ j +']');
+                $(el1).find('.bobot_jarak').attr('id', 'bobot_jarak'+ j);
+                c++;
+            });
+        }
 
         $('.jaraktable').on('click', '#addjarakrow', function(){
+            var ids = $(this).closest('.jaraktable').attr('id');
+            var idt = ids.substring(10);
             $('.jaraktable tr:last').after(addjarakrow());
+            numberRowsJarak(idt);
         });
 
-        $('#jaraktable').on('click', '#removejarakrow', function(e) {
+        $('.jaraktable').on('click', '#removejarakrow', function(e) {
+            var ids = $(this).closest('.jaraktable').attr('id');
+            var idt = ids.substring(10);
             $(this).closest('tr').remove();
-            // numberRows($("#jaraktable"));
+            numberRowsJarak(idt);
         });
+
+        function numberRowsSoal(id) {
+            var c = 0 - 1;
+            $('#soaltable'+id).find("tr").each(function(ind, el1) {
+                var j = c;
+                $(el1).find('.soal_id').attr('name', 'soal_id[' + id + ']['+ j +']');
+                $(el1).find('.soal_id').attr('id', 'soal_id'+id+''+ j);
+                $(el1).find('.bobot_soal').attr('name', 'bobot_soal[' + id + ']['+ j +']');
+                $(el1).find('.bobot_soal').attr('id', 'bobot_soal'+ j);
+                c++;
+            });
+        }
 
         $('.soaltable').on('click', '#addsoalrow', function(){
+            var ids = $(this).closest('.soaltable').attr('id');
+            var idt = ids.substring(9);
             $('.soaltable tr:last').after(addsoalrow());
+            numberRowsSoal(idt);
         });
 
         $('.soaltable').on('click', '#removesoalrow', function(e) {
+            var ids = $(this).closest('.soaltable').attr('id');
+            var idt = ids.substring(9);
             $(this).closest('tr').remove();
-            // numberRows($("#soaltable"));
+            numberRowsSoal(idt);
         });
 
         $('#showtable').on('change', '.kriteria', function(e){
