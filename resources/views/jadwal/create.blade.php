@@ -166,22 +166,22 @@ section{
                                         <tr class="kolom0">
                                             <td colspan="5">
                                                 <div class="form-group row">
-                                                    <label for="tanggal_mulai" class="col-lg-4 col-md-12 col-form-label labelket">Tanggal Mulai</label>
+                                                    <label for="tanggal_mulai" class="col-lg-4 col-md-12 col-form-label labelket">Kriteria</label>
                                                     <div class="col-lg-7 col-md-12 d-flex justify-content-around">
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input kriteria" type="checkbox" name="checkboxkriteria[]" id="inlineCheckbox1" value="usia">
+                                                            <input class="form-check-input kriteria" type="checkbox" name="checkboxkriteria[0]" id="inlineCheckbox1" value="usia">
                                                             <label class="form-check-label" for="inlineCheckbox1">Usia</label>
                                                         </div>
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input kriteria" type="checkbox" name="checkboxkriteria[]" id="inlineCheckbox2" value="pendidikan">
+                                                            <input class="form-check-input kriteria" type="checkbox" name="checkboxkriteria[0]" id="inlineCheckbox2" value="pendidikan">
                                                             <label class="form-check-label" for="inlineCheckbox2">Pendidikan</label>
                                                         </div>
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input kriteria" type="checkbox" name="checkboxkriteria[]" id="inlineCheckbox3" value="jarak">
+                                                            <input class="form-check-input kriteria" type="checkbox" name="checkboxkriteria[0]" id="inlineCheckbox3" value="jarak">
                                                             <label class="form-check-label" for="inlineCheckbox3">Jarak Rumah</label>
                                                         </div>
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input kriteria" type="checkbox" name="checkboxkriteria[]" id="inlineCheckbox4" value="soal">
+                                                            <input class="form-check-input kriteria" type="checkbox" name="checkboxkriteria[0]" id="inlineCheckbox4" value="soal">
                                                             <label class="form-check-label" for="inlineCheckbox3">Soal</label>
                                                         </div>
                                                     </div>
@@ -193,7 +193,7 @@ section{
                                                             <div class="form-group row">
                                                                 <label for="" class="col-lg-5 col-form-label">Usia</label>
                                                                 <div class="col-lg-5">
-                                                                    <input type="number" class="form-control col-form-label" name="master_usia[]">
+                                                                    <input type="number" class="form-control col-form-label" name="master_usia[0]">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group row">
@@ -201,21 +201,18 @@ section{
                                                                     <table class="table table-hover" id="usiatable">
                                                                         <thead>
                                                                             <tr>
-                                                                                <th>Ketentuan</th>
-                                                                                <th>Usia</th>
+                                                                                <th>Range Min</th>
+                                                                                <th>Range Max</th>
                                                                                 <th>Bobot</th>
+                                                                                <th>Aksi</th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
                                                                             <tr>
-                                                                                <td><select class="form-control ketentuan_usia" name="ketentuan_usia[][]" id="ketentuan_usia" style="width: 100%">
-                                                                                        <option value="">Minimum</option>
-                                                                                        <option value="">Maksimum</option>
-                                                                                        <option value="">Lainnya</option>
-                                                                                    </select>
-                                                                                </td>
-                                                                                <td><input type="number" class="form-control" name="usia_min[]" id="usia_min"></td>
-                                                                                <td><input type="number" class="form-control" name="bobot_usia[][]" id="bobot_usia"></td>
+                                                                                <td><input type="number" class="form-control usia_min" name="usia_min[0][]" id="usia_min"></td>
+                                                                                <td><input type="number" class="form-control usia_max" name="usia_max[0][]" id="usia_max"></td>
+                                                                                <td><input type="number" class="form-control bobot_usia" name="bobot_usia[0][]" id="bobot_usia"></td>
+                                                                                <td><a id="addusiarow"><i class="fas fa-plus text-success"></i></a></td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
@@ -230,7 +227,7 @@ section{
                                                             <div class="form-group row">
                                                                 <label for="" class="col-lg-5 col-form-label">Pendidikan</label>
                                                                 <div class="col-lg-5">
-                                                                    <input type="number" class="form-control col-form-label" name="master_pendikan[]">
+                                                                    <input type="number" class="form-control col-form-label" name="master_pendikan[0]">
                                                                 </div>
                                                             </div>
                                                             <div class="table-responsive">
@@ -239,17 +236,19 @@ section{
                                                                         <tr>
                                                                             <th>Pendidikan Terakhir</th>
                                                                             <th>Bobot</th>
+                                                                            <th>Aksi</th>
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
                                                                         <tr>
-                                                                            <td><select class="form-control ketentuan_pendidikan" name="ketentuan_pendidikan[][]" id="ketentuan_pendidikan" style="width: 100%">
+                                                                            <td><select class="form-control ketentuan_pendidikan" name="ketentuan_pendidikan[0][]" id="ketentuan_pendidikan" style="width: 100%">
                                                                                         <option value="smak">SMA / SMK</option>
                                                                                         <option value="d3">D3</option>
                                                                                         <option value="s1d4">D4 / S1</option>
                                                                                     </select>
                                                                             </td>
-                                                                            <td><input type="number" class="form-control" name="bobot_pendidikan[][]" id="bobot_pendidikan"></td>
+                                                                            <td><input type="number" class="form-control" name="bobot_pendidikan[0][]" id="bobot_pendidikan"></td>
+                                                                            <td><a id="addpendidikanrow"><i class="fas fa-plus text-success"></i></a></td>
                                                                         </tr>
                                                                     </tbody>
                                                                 </table>
@@ -263,7 +262,7 @@ section{
                                                             <div class="form-group row">
                                                                     <label for="" class="col-lg-5 col-form-label">Jarak</label>
                                                                     <div class="col-lg-5">
-                                                                        <input type="number" class="form-control col-form-label" name="master_jarak[]">
+                                                                        <input type="number" class="form-control col-form-label" name="master_jarak[0]">
                                                                     </div>
                                                                 </div>
                                                             <div class="form-group row">
@@ -278,14 +277,10 @@ section{
                                                                         </thead>
                                                                         <tbody>
                                                                             <tr>
-                                                                                <td><select class="form-control ketentuan_jarak" name="ketentuan_jarak[][]" id="ketentuan_jarak" style="width: 100%">
-                                                                                            <option value="min">Minimal</option>
-                                                                                            <option value="max">Maksimal</option>
-                                                                                            <option value="lain">Lainnya</option>
-                                                                                        </select>
-                                                                                </td>
-                                                                                <td><input type="number" class="form-control" name="jarak[][]" id="jarak"></td>
-                                                                                <td><input type="number" class="form-control" name="bobot_jarak[][]" id="bobot_jarak"></td>
+                                                                                <td><input type="number" class="form-control jarak_min" name="jarak_min[0][]" id="jarak_min"></td>
+                                                                                <td><input type="number" class="form-control jarak_max" name="jarak_max[0][]" id="jarak_max"></td>
+                                                                                <td><input type="number" class="form-control bobot_jarak" name="bobot_jarak[0][]" id="bobot_jarak"></td>
+                                                                                <td><a id="addjarakrow"><i class="fas fa-plus text-success"></i></a></td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
@@ -298,9 +293,9 @@ section{
                                                     <div class="card">
                                                         <div class="card-body">
                                                             <div class="form-group row">
-                                                                <label for="" class="col-lg-5 col-form-label">Jarak</label>
+                                                                <label for="" class="col-lg-5 col-form-label">Soal</label>
                                                                 <div class="col-lg-5">
-                                                                    <input type="number" class="form-control col-form-label" name="master_jarak[]">
+                                                                    <input type="number" class="form-control col-form-label" name="master_soal[0]">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group row">
@@ -310,12 +305,14 @@ section{
                                                                             <tr>
                                                                                 <th>Soal</th>
                                                                                 <th>Bobot</th>
+                                                                                <th>Aksi</th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
                                                                             <tr>
-                                                                                <td></td>
-                                                                                <td></td>
+                                                                                <td><select class="form-control" id="soal_id" name="soal_id[][]"></select></td>
+                                                                                <td><input type="number" class="form-control bobot_soal" name="bobot_soal[0][]" id="bobot_soal"></td>
+                                                                                <td><a id="addsoalrow"><i class="fas fa-plus text-success"></i></a></td>
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
@@ -390,14 +387,177 @@ section{
         }
 
         $('#showtable').on('click', '#tambahrow', function(){
-            $('#showtable tr:last').after(`<tr>
-                                            <td></td>
+            $('#showtable tr:last').after(`<tr class="kolom0">
+                                            <td>1</td>
                                             <td><select class="form-control jabatan" name="jabatan[]" id="jabatan" style="width: 100%">
-                                                </select></td>
+
+                                            </select></td>
                                             <td><select class="form-control divisi" name="divisi[]" id="divisi" style="width: 100%">
-                                                </select></td>
+
+                                            </select></td>
                                             <td><input type="number" class="form-control kuota" name="kuota[]" id="kuota"></td>
                                             <td><a id="removerow"><i class="fas fa-minus" style="color:red;"></i></a></td>
+                                        </tr>
+                                        <tr class="kolom0">
+                                            <td colspan="5">
+                                                <div class="form-group row">
+                                                    <label for="tanggal_mulai" class="col-lg-4 col-md-12 col-form-label labelket">Kriteria</label>
+                                                    <div class="col-lg-7 col-md-12 d-flex justify-content-around">
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input kriteria" type="checkbox" name="checkboxkriteria[0]" id="inlineCheckbox1" value="usia">
+                                                            <label class="form-check-label" for="inlineCheckbox1">Usia</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input kriteria" type="checkbox" name="checkboxkriteria[0]" id="inlineCheckbox2" value="pendidikan">
+                                                            <label class="form-check-label" for="inlineCheckbox2">Pendidikan</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input kriteria" type="checkbox" name="checkboxkriteria[0]" id="inlineCheckbox3" value="jarak">
+                                                            <label class="form-check-label" for="inlineCheckbox3">Jarak Rumah</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input kriteria" type="checkbox" name="checkboxkriteria[0]" id="inlineCheckbox4" value="soal">
+                                                            <label class="form-check-label" for="inlineCheckbox3">Soal</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="flex-container">
+                                                <div id="usiaform" class="hide">
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <div class="form-group row">
+                                                                <label for="" class="col-lg-5 col-form-label">Usia</label>
+                                                                <div class="col-lg-5">
+                                                                    <input type="number" class="form-control col-form-label" name="master_usia[0]">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-hover" id="usiatable">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Range Min</th>
+                                                                                <th>Range Max</th>
+                                                                                <th>Bobot</th>
+                                                                                <th>Aksi</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td><input type="number" class="form-control usia_min" name="usia_min[0][]" id="usia_min"></td>
+                                                                                <td><input type="number" class="form-control usia_max" name="usia_max[0][]" id="usia_max"></td>
+                                                                                <td><input type="number" class="form-control bobot_usia" name="bobot_usia[0][]" id="bobot_usia"></td>
+                                                                                <td><a id="addusiarow"><i class="fas fa-plus text-success"></i></a></td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="pendidikanform" class="hide">
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <div class="form-group row">
+                                                                <label for="" class="col-lg-5 col-form-label">Pendidikan</label>
+                                                                <div class="col-lg-5">
+                                                                    <input type="number" class="form-control col-form-label" name="master_pendikan[0]">
+                                                                </div>
+                                                            </div>
+                                                            <div class="table-responsive">
+                                                                <table class="table table-hover" id="pendidikantable">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Pendidikan Terakhir</th>
+                                                                            <th>Bobot</th>
+                                                                            <th>Aksi</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td><select class="form-control ketentuan_pendidikan" name="ketentuan_pendidikan[0][]" id="ketentuan_pendidikan" style="width: 100%">
+                                                                                        <option value="smak">SMA / SMK</option>
+                                                                                        <option value="d3">D3</option>
+                                                                                        <option value="s1d4">D4 / S1</option>
+                                                                                    </select>
+                                                                            </td>
+                                                                            <td><input type="number" class="form-control" name="bobot_pendidikan[0][]" id="bobot_pendidikan"></td>
+                                                                            <td><a id="addpendidikanrow"><i class="fas fa-plus text-success"></i></a></td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="jarakform" class="hide">
+                                                    <div class="card">
+                                                            <div class="card-body">
+                                                            <div class="form-group row">
+                                                                    <label for="" class="col-lg-5 col-form-label">Jarak</label>
+                                                                    <div class="col-lg-5">
+                                                                        <input type="number" class="form-control col-form-label" name="master_jarak[0]">
+                                                                    </div>
+                                                                </div>
+                                                            <div class="form-group row">
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-hover" id="jaraktable">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Ketentuan</th>
+                                                                                <th>Jarak</th>
+                                                                                <th>Bobot</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td><input type="number" class="form-control jarak_min" name="jarak_min[0][]" id="jarak_min"></td>
+                                                                                <td><input type="number" class="form-control jarak_max" name="jarak_max[0][]" id="jarak_max"></td>
+                                                                                <td><input type="number" class="form-control bobot_jarak" name="bobot_jarak[0][]" id="bobot_jarak"></td>
+                                                                                <td><a id="addjarakrow"><i class="fas fa-plus text-success"></i></a></td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="soalform" class="hide">
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <div class="form-group row">
+                                                                <label for="" class="col-lg-5 col-form-label">Soal</label>
+                                                                <div class="col-lg-5">
+                                                                    <input type="number" class="form-control col-form-label" name="master_soal[0]">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-hover" id="soaltable">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Soal</th>
+                                                                                <th>Bobot</th>
+                                                                                <th>Aksi</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <td><select class="form-control" id="soal_id" name="soal_id[][]"></select></td>
+                                                                                <td><input type="number" class="form-control bobot_soal" name="bobot_soal[0][]" id="bobot_soal"></td>
+                                                                                <td><a id="addsoalrow"><i class="fas fa-plus text-success"></i></a></td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                            </td>
                                         </tr>`);
             numberRows($("#showtable"));
         });
@@ -405,6 +565,42 @@ section{
         $('#showtable').on('click', '#removerow', function(e) {
             $(this).closest('tr').remove();
             numberRows($("#showtable"));
+        });
+
+        $('#usiatable').on('click', '#addusiarow', function(){
+            $('#usiatable tr:last').after(addusiarow());
+        });
+
+        $('#usiatable').on('click', '#removeusiarow', function(e) {
+            $(this).closest('tr').remove();
+            // numberRows($("#usiatable"));
+        });
+
+        $('#pendidikantable').on('click', '#addpendidikanrow', function(){
+            $('#pendidikantable tr:last').after(addpendidikanrow());
+        });
+
+        $('#pendidikantable').on('click', '#removependidikanrow', function(e) {
+            $(this).closest('tr').remove();
+            // numberRows($("#pendidikantable"));
+        });
+
+        $('#jaraktable').on('click', '#addjarakrow', function(){
+            $('#jaraktable tr:last').after(addjarakrow());
+        });
+
+        $('#jaraktable').on('click', '#removejarakrow', function(e) {
+            $(this).closest('tr').remove();
+            // numberRows($("#jaraktable"));
+        });
+
+        $('#soaltable').on('click', '#addsoalrow', function(){
+            $('#soaltable tr:last').after(addsoalrow());
+        });
+
+        $('#soaltable').on('click', '#removesoalrow', function(e) {
+            $(this).closest('tr').remove();
+            // numberRows($("#soaltable"));
         });
 
         $('#showtable').on('change', '.kriteria', function(e){
@@ -440,6 +636,45 @@ section{
                 $(this).closest('tr').find('#soalform').addClass('hide');
             }
         });
+
+        function addusiarow(){
+            return `<tr>
+                <td><input type="number" class="form-control usia_min" name="usia_min[0][]" id="usia_min"></td>
+                <td><input type="number" class="form-control usia_max" name="usia_max[0][]" id="usia_max"></td>
+                <td><input type="number" class="form-control bobot_usia" name="bobot_usia[0][]" id="bobot_usia"></td>
+                <td><a id="removeusiarow"><i class="fas fa-minus text-danger"></i></a></td>
+            </tr>`;
+        }
+
+        function addpendidikanrow(){
+            return `<tr>
+                        <td><select class="form-control ketentuan_pendidikan" name="ketentuan_pendidikan[0][]" id="ketentuan_pendidikan" style="width: 100%">
+                                <option value="smak">SMA / SMK</option>
+                                <option value="d3">D3</option>
+                                <option value="s1d4">D4 / S1</option>
+                            </select>
+                        </td>
+                        <td><input type="number" class="form-control" name="bobot_pendidikan[0][]" id="bobot_pendidikan"></td>
+                        <td><a id="removependidikanrow"><i class="fas fa-minus text-danger"></i></a></td>
+                    </tr>`;
+        }
+
+        function addjarakrow(){
+            return `<tr>
+                    <td><input type="number" class="form-control jarak_min" name="jarak_min[0][]" id="jarak_min"></td>
+                    <td><input type="number" class="form-control jarak_max" name="jarak_max[0][]" id="jarak_max"></td>
+                    <td><input type="number" class="form-control bobot_jarak" name="bobot_jarak[0][]" id="bobot_jarak"></td>
+                    <td><a id="removejarakrow"><i class="fas fa-minus text-danger"></i></a></td>
+                </tr>`;
+        }
+
+        function addsoalrow(){
+            return `<tr>
+                        <td><select class="form-control" id="soal_id" name="soal_id[][]"></select></td>
+                        <td><input type="number" class="form-control bobot_soal" name="bobot_soal[0][]" id="bobot_soal"></td>
+                        <td><a id="removesoalrow"><i class="fas fa-minus text-danger"></i></a></td>
+                    </tr>`
+        }
 
         function select(){
             $('.jabatan').select2({
