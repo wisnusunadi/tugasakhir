@@ -42,3 +42,8 @@ Route::prefix('/divisi')->group(function () {
 Route::prefix('/jabatan')->group(function () {
     Route::get('/select', [App\Http\Controllers\GetController::class, 'jabatan_select']);
 });
+
+Route::prefix('/soal')->group(function () {
+    Route::post('/get_select/{jabatan}/{divisi}', [App\Http\Controllers\GetController::class, 'soal_get_select']);
+});
+

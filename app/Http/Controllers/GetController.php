@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Jabatan;
 use App\Models\Divisi;
+use App\Models\Soal;
 use App\Models\Universitas;
 use Illuminate\Support\Carbon;
 use Yajra\DataTables\DataTables;
@@ -41,6 +42,17 @@ class GetController extends Controller
             })
             ->rawColumns(['aksi', 'nama'])
             ->make(true);
+    }
+
+    public function soal_get_select($jabatan, $divisi, Request $request){
+        $data = Soal::where('nama', 'LIKE', '%' . $request->input('term', '') . '%')
+            ->whereHas('Divisi', function($q) use($divisi){
+                $q->where('id', $divisi);
+            })->whereHas('Jabatan', function($q) use($jabatan){
+                $q->where('id', $jabatan);
+            })
+            ->orderby('nama', 'ASC')->get();
+        echo json_encode($data);
     }
 
     public function jabatan_select(Request $request)
@@ -109,13 +121,13 @@ class GetController extends Controller
     }
 
     public function count_usia_peserta($id_user){
-        $user = user::find($id_user);
-        $usia = Carbon::parse($data->tgl_lahir)->age;
+        $user = User::find($id_user);
+        $usia = Carbon::parse($user->tgl_lahir)->age;
         $alluser = user::where('pendaftaran_id', $user->pendaftaran_id)->get();
-        $bobot = bobot_usia_peserta($usia);
+        $bobot = $this->bobot_usia_peserta($usia);
         $arrayusia = [];
         foreach ($alluser as $i){
-            $arrayusia[] = bobot_usia_peserta(Carbon::parse($data->tgl_lahir)->age);
+            $arrayusia[] = $this->bobot_usia_peserta(Carbon::parse($user->tgl_lahir)->age);
         }
 
         $maxusia = max($arrayusia);
@@ -123,26 +135,26 @@ class GetController extends Controller
     }
 
     public function count_pend_peserta($id_user){
-        $user = user::find($id_user);
+        $user = User::find($id_user);
         $pend = $user->pend;
         $akreditasi = "";
         if($user->univ_id){
             $akreditasi = $user->Universitas->peringkat;
         }
-        $alluser = user::where('pendaftaran_id', $user->pendaftaran_id)->get();
-        $bobot = bobot_pend_peserta($pend, $akreditasi);
+        $alluser = User::where('pendaftaran_id', $user->pendaftaran_id)->get();
+        $bobot = $this->bobot_pend_peserta($pend, $akreditasi);
         $arrayupend = [];
         foreach ($alluser as $i){
             $akreditasi_i = "";
             if($i->univ_id){
                 $akreditasi_i = $i->Universitas->peringkat;
             }
-            $arraypend[] = bobot_pend_peserta($i->pend, $akreditasi_i);
+            $arraypend[] = $this->bobot_pend_peserta($i->pend, $akreditasi_i);
         }
 
         $maxpend = max($arraypend);
         return $bobot / $maxpend;
     }
 
-    
+
 }
