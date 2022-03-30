@@ -45,4 +45,17 @@ class Soal extends Model
         }
         return $jumlah;
     }
+
+    public function getAllNilaiBenar()
+    {
+        $id = $this->id;
+        $s = Jawaban::whereHas('SoalDetail.Soal', function ($q) use ($id) {
+            $q->where('id', $id);
+        })->whereNotNull('status')->get();
+        $jumlah = 0;
+        foreach ($s as $i) {
+            $jumlah = $jumlah + $i->status;
+        }
+        return $jumlah;
+    }
 }

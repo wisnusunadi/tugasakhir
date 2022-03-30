@@ -2,17 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DetailUserJawaban;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Jabatan;
 use App\Models\Divisi;
 use App\Models\Soal;
+use App\Models\SoalDetail;
 use App\Models\Universitas;
 use App\Models\Kriteria;
 use App\Models\KriteriaUsia;
 use App\Models\KriteriaPendidikan;
 use App\Models\KriteriaJarak;
 use App\Models\KriteriaSoal;
+use App\Models\UserJawaban;
 use Illuminate\Support\Carbon;
 use Yajra\DataTables\DataTables;
 
@@ -84,13 +87,11 @@ class GetController extends Controller
     public function bobot_usia_peserta($usia, $daftar_id){
         $bobot = "";
         $k = Kriteria::where([['nama', '=', 'usia'], ['pendaftaran_id', '=', $daftar_id]])->first();
-        $k_usia = KriteriaUsia::where('kriteria_id', $k->id);
+        $k_usia = KriteriaUsia::where('kriteria_id', $k->id)->get();
         foreach($k_usia as $i){
-            if($bobot == ""){
                 if($usia > $i->range_min && $usia <= $i->range_max){
                     $bobot = $i->nilai;
                 }
-            }
         }
 
         if($bobot == ""){
@@ -102,9 +103,8 @@ class GetController extends Controller
     public function bobot_pend_peserta($pend, $akreditasi, $daftar_id){
         $bobot = "";
         $k = Kriteria::where([['nama', '=', 'pendidikan'], ['pendaftaran_id', '=', $daftar_id]])->first();
-        $k_pend = KriteriaPendidikan::where('kriteria_id', $k->id);
+        $k_pend = KriteriaPendidikan::where('kriteria_id', $k->id)->get();
         foreach($k_pend as $i){
-            if($bobot == ""){
                 if($pend == "smak" && $i->pendidikan == "smak"){
                     $bobot = $i->nilai;
                 }else{
@@ -112,7 +112,6 @@ class GetController extends Controller
                         $bobot = $i->nilai;
                     }
                 }
-            }
         }
 
         if($bobot == ""){
@@ -124,12 +123,29 @@ class GetController extends Controller
     public function bobot_jarak_peserta($jarak, $daftar_id){
         $bobot = "";
         $k = Kriteria::where([['nama', '=', 'jarak'], ['pendaftaran_id', '=', $daftar_id]])->first();
-        $k_jarak = KriteriaJarak::where('kriteria_id', $k->id);
+        $k_jarak = KriteriaJarak::where('kriteria_id', $k->id)->get();
         foreach($k_jarak as $i){
-            if($bobot == ""){
                 if($jarak > $i->range_min && $jarak <= $i->range_max){
                     $bobot = $i->nilai;
                 }
+        }
+
+        if($bobot == ""){
+            $bobot = "0";
+        }
+        return $bobot;
+    }
+
+    public function bobot_soal_peserta($soal, $nilai, $daftar_id){
+        $bobot = "";
+        $k = Kriteria::where([['nama', '=', 'soal'], ['pendaftaran_id', '=', $daftar_id]])->first();
+        $k_soal = KriteriaSoal::where('kriteria_id', $k->id)->get();
+        foreach($k_soal as $i){
+            if($soal == $i->soal_id){
+                $allbenar = $i->Soal->getAllNilaiBenar();
+                $bobotsoal = $i->nilai;
+
+                $bobot = ($bobotsoal * ($nilai / $allbenar));
             }
         }
 
@@ -137,6 +153,31 @@ class GetController extends Controller
             $bobot = "0";
         }
         return $bobot;
+    }
+
+    public function sum_soal_peserta($user_id){
+        $user = User::find($user_id);
+        $user_jwb = UserJawaban::where('user_id', $user_id)->get();
+        $bobotall = 0;
+        foreach($user_jwb as $i){
+            $jwb_id = "";
+            if(isset($i->DetailUserJawaban[0])){
+                $jwb_id = $i->DetailUserJawaban[0]->jawaban_id;
+            }
+            $soal = SoalDetail::whereHas('Jawaban', function($q) use($jwb_id){
+                           $q->where('id', $jwb_id);
+                       })->first();
+            $soal_id = $soal->soal_id;
+            $nilai = 0;
+            $duj = DetailUserJawaban::where('user_jawaban_id', $i->id)->get();
+            foreach($duj as $j){
+                $nilai = $nilai + $j->Jawaban->status;
+            }
+            $bobots = $this->bobot_soal_peserta($soal_id, $nilai, $user->pendaftaran_id);
+
+            $bobotall = $bobotall + $bobots;
+        }
+        return $bobotall;
     }
 
     public function count_usia_peserta($id_user){
@@ -147,11 +188,12 @@ class GetController extends Controller
         $bobot = $this->bobot_usia_peserta($usia, $daftar_id);
         $arrayusia = [];
         foreach ($alluser as $i){
-            $arrayusia[] = $this->bobot_usia_peserta(Carbon::parse($user->tgl_lahir)->age, $daftar_id);
+            $arrayusia[] = $this->bobot_usia_peserta(Carbon::parse($i->tgl_lahir)->age, $daftar_id);
         }
 
         $maxusia = max($arrayusia);
-        return $bobot / $maxusia;
+        $res = round(($bobot / $maxusia), 3);
+        return $res;
     }
 
     public function count_pend_peserta($id_user){
@@ -174,7 +216,8 @@ class GetController extends Controller
         }
 
         $maxpend = max($arraypend);
-        return $bobot / $maxpend;
+        $res = round(($bobot / $maxpend), 3);
+        return $res;
     }
 
     public function count_jarak_peserta($id_user){
@@ -185,11 +228,42 @@ class GetController extends Controller
         $bobot = $this->bobot_jarak_peserta($jarak, $daftar_id);
         $arrayjarak = [];
         foreach ($alluser as $i){
-            $arrayjarak[] = $this->bobot_jarak_peserta(Carbon::parse($user->tgl_lahir)->age, $daftar_id);
+            $arrayjarak[] = $this->bobot_jarak_peserta($i->jarak, $daftar_id);
         }
 
         $maxjarak = max($arrayjarak);
-        return $bobot / $maxjarak;
+        $res = round(($bobot / $maxjarak), 3);
+        return $res;
+    }
+
+    public function count_soal_peserta($id_user){
+        $user = User::find($id_user);
+        $daftar_id = $user->pendaftaran_id;
+        $alluser = user::where('pendaftaran_id', $daftar_id)->get();
+        $bobot = $this->sum_soal_peserta($id_user);
+        $arraysoal = [];
+        foreach ($alluser as $i){
+            $arraysoal[] = $this->sum_soal_peserta($i->id);
+        }
+
+        $maxsoal = max($arraysoal);
+        $res = round(($bobot / $maxsoal), 3);
+        return $res;
+    }
+
+    public function all_peserta(){
+        $data = array();
+        $u = User::where('pendaftaran_id', '9')->get();
+        $c = 0;
+        foreach($u as $i){
+            $data[$c]['nama'] = $i->nama;
+            $data[$c]['usia'] = $this->count_usia_peserta($i->id);
+            $data[$c]['pend'] = $this->count_pend_peserta($i->id);
+            $data[$c]['jarak'] = $this->count_jarak_peserta($i->id);
+            $data[$c]['soal'] = $this->count_soal_peserta($i->id);
+            $c++;
+        }
+        return $data;
     }
 
 
