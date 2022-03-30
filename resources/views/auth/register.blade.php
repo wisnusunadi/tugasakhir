@@ -41,10 +41,10 @@
                             <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Pilih Jadwal</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-bio" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Biodata</button>
+                            <button class="nav-link " id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-bio" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Biodata</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Akun</button>
+                            <button class="nav-link " id="pills-akun-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Akun</button>
                         </li>
                     </ul>
                     <form method="POST" action="{{ route('register') }}">
@@ -198,6 +198,16 @@
                                             </div>
                                             <input id="jarak_user" type="text" name="jarak" class="d-none">
                                 </div>
+
+
+                                <div class="row mb-0">
+                                    <div class="col-md-9 offset-md-2">
+                                        <a type="button" class="btn btn-danger" href="{{route('login')}}">Batal</a>
+                                        <button type="submit" class="btn btn-primary float-right" id="tambah" disabled>
+                                            {{ __('Register') }}
+                                        </button>
+                                    </div>
+                                </div>
                         </div>
                         <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
                                 <div class="row mb-3">
@@ -250,14 +260,7 @@
                                 </div>
 
 
-                                <div class="row mb-0">
-                                    <div class="col-md-9 offset-md-2">
-                                        <a type="button" class="btn btn-danger" href="{{route('login')}}">Batal</a>
-                                        <button type="submit" class="btn btn-primary float-right">
-                                            {{ __('Register') }}
-                                        </button>
-                                    </div>
-                                </div>
+
                         </div>
                     </div>
 
@@ -515,6 +518,73 @@ var geocoder = new MapboxGeocoder({
               },
             }
         });
+
+
+
+        $('#name').on('keyup change', function() {
+            if ($(this).val() != "") {
+                if ($('#tgl_lahir').val() != "" &&  $('input[name=jenis_kelamin]:checked').length > 0  &&  $('input[name=pend]:checked').val() == 'smak' && $('#jarak_user').val() > 0 ) {
+                    $('#tambah').attr("disabled", false);
+                } else {
+                    $('#tambah').attr("disabled", true);
+                }
+            } else {
+                $('#tambah').attr("disabled", true);
+            }
+        });
+
+        $('#tgl_lahir').on('keyup change', function() {
+            if ($(this).val() != "") {
+                if ($('#name').val() != "" && $('input[name=jenis_kelamin]:checked').length > 0  &&  $('input[name=pend]:checked').val() == 'smak'  && $('#jarak_user').val() > 0 ) {
+                    $('#tambah').attr("disabled", false);
+                } else {
+                    $('#tambah').attr("disabled", true);
+                }
+            } else {
+                $('#tambah').attr("disabled", true);
+            }
+        });
+
+        $('input[type="radio"][name="jenis_kelamin"]').on('change', function() {
+            if ($(this).val() != "") {
+                if ($('#name').val() != "" && $('#tgl_lahir').val() != ""  &&  $('input[name=pend]:checked').val() == 'smak'  && $('#jarak_user').val() > 0 ) {
+                    $('#tambah').attr("disabled", false);
+                } else {
+                    $('#tambah').attr("disabled", true);
+                }
+            } else {
+                $('#tambah').attr("disabled", true);
+            }
+        });
+
+        $('input[type="radio"][name="pend"]').on('change', function() {
+            $("#universitas").empty().trigger('change')
+            if ($(this).val() == "smak" && $('#name').val() != "" && $('#tgl_lahir').val() != ""  && $('input[name=jenis_kelamin]:checked').length > 0   && $('#jarak_user').val() > 0 ) {
+                $('#tambah').attr("disabled", false);
+            } else {
+
+                $('#tambah').attr("disabled", true);
+            }
+        });
+
+        $('#universitas').change(function() {
+            if ($(this).val() != "" && $('#name').val() != "" && $('#tgl_lahir').val() != ""  && $('input[name=jenis_kelamin]:checked').length > 0 &&  ($('input[name=pend]:checked').val() == 'd3'|| $('input[name=pend]:checked').val() == 's1d4')  ) {
+                $('#tambah').attr("disabled", false);
+            } else {
+                $('#tambah').attr("disabled", true);
+            }
+        });
+
+        $('#jarak_user').change(function() {
+            if ($(this).val() > "0" && $('#name').val() != "" && $('#tgl_lahir').val() != ""  && $('input[name=jenis_kelamin]:checked').length > 0   ) {
+                $('#tambah').attr("disabled", false);
+            } else {
+                $('#tambah').attr("disabled", true);
+            }
+        });
+
+
     })
 </script>
+
 @endsection
