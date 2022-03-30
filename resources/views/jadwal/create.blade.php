@@ -169,19 +169,19 @@ section{
                                                     <label for="kriteria" class="col-lg-4 col-md-12 col-form-label labelket">Kriteria</label>
                                                     <div class="col-lg-7 col-md-12 d-flex justify-content-around">
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input kriteria" type="checkbox" name="kriteria[0]" id="kriteria01" value="usia">
-                                                            <label class="form-check-label kriterialabel" for="kriteria01">Usia</label>
+                                                            <input class="form-check-input kriteria" type="checkbox" name="kriteria[0][0]" id="kriteria00" value="usia">
+                                                            <label class="form-check-label kriterialabel" for="kriteria00">Usia</label>
                                                         </div>
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input kriteria" type="checkbox" name="kriteria[0]" id="kriteria02" value="pendidikan">
-                                                            <label class="form-check-label kriterialabel" for="kriteria02">Pendidikan</label>
+                                                            <input class="form-check-input kriteria" type="checkbox" name="kriteria[0][1]" id="kriteria01" value="pendidikan">
+                                                            <label class="form-check-label kriterialabel" for="kriteria01">Pendidikan</label>
                                                         </div>
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input kriteria" type="checkbox" name="kriteria[0]" id="kriteria03" value="jarak">
-                                                            <label class="form-check-label kriterialabel" for="kriteria03">Jarak Rumah</label>
+                                                            <input class="form-check-input kriteria" type="checkbox" name="kriteria[0][2]" id="kriteria02" value="jarak">
+                                                            <label class="form-check-label kriterialabel" for="kriteria02">Jarak Rumah</label>
                                                         </div>
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input kriteria" type="checkbox" name="kriteria[0]" id="kriteria04" value="soal">
+                                                            <input class="form-check-input kriteria" type="checkbox" name="kriteria[0][3]" id="kriteria03" value="soal">
                                                             <label class="form-check-label kriterialabel" for="kriteria03">Soal</label>
                                                         </div>
                                                     </div>
@@ -209,9 +209,9 @@ section{
                                                                         </thead>
                                                                         <tbody>
                                                                             <tr>
-                                                                                <td><input type="number" class="form-control usia_min" name="usia_min[0][]" id="usia_min0"></td>
-                                                                                <td><input type="number" class="form-control usia_max" name="usia_max[0][]" id="usia_max0"></td>
-                                                                                <td><input type="number" class="form-control bobot_usia" name="bobot_usia[0][]" id="bobot_usia0"></td>
+                                                                                <td><input type="number" class="form-control usia_min" name="usia_min[0][0]" id="usia_min00"></td>
+                                                                                <td><input type="number" class="form-control usia_max" name="usia_max[0][0]" id="usia_max00"></td>
+                                                                                <td><input type="number" class="form-control bobot_usia" name="bobot_usia[0][0]" id="bobot_usia00"></td>
                                                                                 <td><a class="addusiarow"><i class="fas fa-plus text-success"></i></a></td>
                                                                             </tr>
                                                                         </tbody>
@@ -235,19 +235,27 @@ section{
                                                                     <thead>
                                                                         <tr>
                                                                             <th>Pendidikan Terakhir</th>
+                                                                            <th>Akreditasi</th>
                                                                             <th>Bobot</th>
                                                                             <th>Aksi</th>
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
                                                                         <tr>
-                                                                            <td><select class="form-control ketentuan_pendidikan" name="ketentuan_pendidikan[0][]" id="ketentuan_pendidikan0" style="width: 100%">
+                                                                            <td><select class="form-control ketentuan_pendidikan" name="ketentuan_pendidikan[0][0]" id="ketentuan_pendidikan00" style="width: 100%">
                                                                                         <option value="smak">SMA / SMK</option>
                                                                                         <option value="d3">D3</option>
                                                                                         <option value="s1d4">D4 / S1</option>
                                                                                     </select>
                                                                             </td>
-                                                                            <td><input type="number" class="form-control bobot_pendidikan" name="bobot_pendidikan[0][]" id="bobot_pendidikan0"></td>
+                                                                            <td><select class="form-control peringkat" name="peringkat[0][0]" id="peringkat00" style="width: 100%">
+                                                                                        <option value="NULL">Tidak Terakreditasi</option>
+                                                                                        <option value="A">A</option>
+                                                                                        <option value="B">B</option>
+                                                                                        <option value="C">C</option>
+                                                                                    </select>
+                                                                            </td>
+                                                                            <td><input type="number" class="form-control bobot_pendidikan" name="bobot_pendidikan[0][0]" id="bobot_pendidikan00"></td>
                                                                             <td><a id="addpendidikanrow"><i class="fas fa-plus text-success"></i></a></td>
                                                                         </tr>
                                                                     </tbody>
@@ -278,9 +286,9 @@ section{
                                                                         </thead>
                                                                         <tbody>
                                                                             <tr>
-                                                                                <td><input type="number" class="form-control jarak_min" name="jarak_min[0][]" id="jarak_min0"></td>
-                                                                                <td><input type="number" class="form-control jarak_max" name="jarak_max[0][]" id="jarak_max0"></td>
-                                                                                <td><input type="number" class="form-control bobot_jarak" name="bobot_jarak[0][]" id="bobot_jarak0"></td>
+                                                                                <td><input type="number" class="form-control jarak_min" name="jarak_min[0][0]" id="jarak_min00" step="0.01" min="0"></td>
+                                                                                <td><input type="number" class="form-control jarak_max" name="jarak_max[0][0]" id="jarak_max00" step="0.01" min="0"></td>
+                                                                                <td><input type="number" class="form-control bobot_jarak" name="bobot_jarak[0][0]" id="bobot_jarak00" min="0"></td>
                                                                                 <td><a id="addjarakrow"><i class="fas fa-plus text-success"></i></a></td>
                                                                             </tr>
                                                                         </tbody>
@@ -311,8 +319,8 @@ section{
                                                                         </thead>
                                                                         <tbody>
                                                                             <tr>
-                                                                                <td><select class="form-control soal_id" id="soal_id0" name="soal_id[0][]"></select></td>
-                                                                                <td><input type="number" class="form-control bobot_soal" name="bobot_soal[0][]" id="bobot_soal0"></td>
+                                                                                <td><select class="form-control soal_id" id="soal_id00" name="soal_id[0][0]"></select></td>
+                                                                                <td><input type="number" class="form-control bobot_soal" name="bobot_soal[0][0]" id="bobot_soal00"></td>
                                                                                 <td><a id="addsoalrow"><i class="fas fa-plus text-success"></i></a></td>
                                                                             </tr>
                                                                         </tbody>
@@ -463,8 +471,12 @@ section{
                 $('tr[id="' + id + '"] .pendidikantable').find('tr').each(function(ind1, el1){
                     $(el1).find('.ketentuan_pendidikan').attr('name', 'ketentuan_pendidikan[' + j + ']['+ count_pendidikan +']');
                     $(el1).find('.ketentuan_pendidikan').attr('id', 'ketentuan_pendidikan'+j+''+ count_pendidikan);
+                    $(el1).find('.peringkat').attr('name', 'peringkat[' + j + ']['+ count_pendidikan +']');
+                    $(el1).find('.peringkat').attr('id', 'peringkat'+j+''+ count_pendidikan);
                     $(el1).find('.bobot_pendidikan').attr('name', 'bobot_pendidikan[' + j + ']['+ count_pendidikan +']');
                     $(el1).find('.bobot_pendidikan').attr('id', 'bobot_pendidikan'+ count_pendidikan);
+                    $('.ketentuan_pendidikan').select2();
+                    $('.peringkat').select2();
                     count_pendidikan++;
                 });
 
@@ -489,11 +501,13 @@ section{
                     $(el1).find('.soal_id').attr('id', 'soal_id'+j+''+ count_soal);
                     $(el1).find('.bobot_soal').attr('name', 'bobot_soal[' + j + ']['+ count_soal +']');
                     $(el1).find('.bobot_soal').attr('id', 'bobot_soal'+ count_soal);
+                    $('.soal_id').select2();
                     count_soal++;
                 });
                 $('tr[id="' + id + '"]').attr('id', 'kolom' + j);
-                $('.ketentuan_pendidikan').select2();
-                $('.soal_id').select2();
+
+
+
                 select();
                 // var count_kunci = 0;
                 // $('tr[id="' + id + '"]').find('.kunci_jawaban').each(function(ind1, el1){
@@ -614,6 +628,7 @@ section{
                                                                     <thead>
                                                                         <tr>
                                                                             <th>Pendidikan Terakhir</th>
+                                                                            <th>Akreditasi</th>
                                                                             <th>Bobot</th>
                                                                             <th>Aksi</th>
                                                                         </tr>
@@ -624,6 +639,13 @@ section{
                                                                                         <option value="smak">SMA / SMK</option>
                                                                                         <option value="d3">D3</option>
                                                                                         <option value="s1d4">D4 / S1</option>
+                                                                                    </select>
+                                                                            </td>
+                                                                            <td><select class="form-control peringkat" name="peringkat[`+countable+`][]" id="peringkat`+countable+`" style="width: 100%">
+                                                                                        <option value="NULL">Tidak Terakreditasi</option>
+                                                                                        <option value="A">A</option>
+                                                                                        <option value="B">B</option>
+                                                                                        <option value="C">C</option>
                                                                                     </select>
                                                                             </td>
                                                                             <td><input type="number" class="form-control bobot_pendidikan" name="bobot_pendidikan[`+countable+`][]" id="bobot_pendidikan`+countable+`"></td>
@@ -657,9 +679,9 @@ section{
                                                                         </thead>
                                                                         <tbody>
                                                                             <tr>
-                                                                                <td><input type="number" class="form-control jarak_min" name="jarak_min[`+countable+`][]" id="jarak_min`+countable+`"></td>
-                                                                                <td><input type="number" class="form-control jarak_max" name="jarak_max[`+countable+`][]" id="jarak_max`+countable+`"></td>
-                                                                                <td><input type="number" class="form-control bobot_jarak" name="bobot_jarak[`+countable+`][]" id="bobot_jarak`+countable+`"></td>
+                                                                                <td><input type="number" class="form-control jarak_min" name="jarak_min[`+countable+`][]" id="jarak_min`+countable+`" step="0.01" min="0"></td>
+                                                                                <td><input type="number" class="form-control jarak_max" name="jarak_max[`+countable+`][]" id="jarak_max`+countable+`" step="0.01" min="0"></td>
+                                                                                <td><input type="number" class="form-control bobot_jarak" name="bobot_jarak[`+countable+`][]" id="bobot_jarak`+countable+`" min="0"></td>
                                                                                 <td><a id="addjarakrow"><i class="fas fa-plus text-success"></i></a></td>
                                                                             </tr>
                                                                         </tbody>
@@ -752,8 +774,12 @@ section{
                 var j = c;
                 $(el1).find('.ketentuan_pendidikan').attr('name', 'ketentuan_pendidikan[' + id + ']['+ j +']');
                 $(el1).find('.ketentuan_pendidikan').attr('id', 'ketentuan_pendidikan'+id+''+ j);
+                $(el1).find('.peringkat').attr('name', 'peringkat[' + id + ']['+ j +']');
+                $(el1).find('.peringkat').attr('id', 'peringkat'+id+''+ j);
                 $(el1).find('.bobot_pendidikan').attr('name', 'bobot_pendidikan[' + id + ']['+ j +']');
                 $(el1).find('.bobot_pendidikan').attr('id', 'bobot_pendidikan'+ j);
+                $(el1).find('.ketentuan_pendidikan').select2();
+                $(el1).find('.peringkat').select2();
                 c++;
             });
         }
@@ -904,6 +930,13 @@ section{
                             <option value="s1d4">D4 / S1</option>
                         </select>
                     </td>
+                    <td><select class="form-control peringkat" name="peringkat[0][]" id="peringkat0" style="width: 100%">
+                            <option value="NULL">Tidak Terakreditasi</option>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                        </select>
+                    </td>
                     <td><input type="number" class="form-control bobot_pendidikan" name="bobot_pendidikan[0][]" id="bobot_pendidikan0"></td>
                     <td><a id="removependidikanrow"><i class="fas fa-minus text-danger"></i></a></td>
                 </tr>`;
@@ -911,9 +944,9 @@ section{
 
         function addjarakrow(){
             return `<tr>
-                        <td><input type="number" class="form-control jarak_min" name="jarak_min[0][]" id="jarak_min0"></td>
-                        <td><input type="number" class="form-control jarak_max" name="jarak_max[0][]" id="jarak_max0"></td>
-                        <td><input type="number" class="form-control bobot_jarak" name="bobot_jarak[0][]" id="bobot_jarak0"></td>
+                        <td><input type="number" class="form-control jarak_min" name="jarak_min[0][]" id="jarak_min0" step="0.01" min="0"></td>
+                        <td><input type="number" class="form-control jarak_max" name="jarak_max[0][]" id="jarak_max0" step="0.01" min="0"></td>
+                        <td><input type="number" class="form-control bobot_jarak" name="bobot_jarak[0][]" id="bobot_jarak0" min="0"></td>
                         <td><a id="removejarakrow"><i class="fas fa-minus text-danger"></i></a></td>
                     </tr>`;
         }
@@ -982,6 +1015,14 @@ section{
                     },
                 }
             });
+
+            $('.ketentuan_pendidikan').select2({
+                placeholder: 'Pilih Pendidikan'
+            });
+            $('.peringkat').select2({
+                placeholder: 'Pilih Akreditasi'
+            });
+            $('.soal_id').select2();
         }
     })
 </script>

@@ -113,7 +113,7 @@
                                     <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Nama') }}</label>
 
                                     <div class="col-md-6">
-                                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror col-form-label" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
 
                                         @error('name')
                                             <span class="invalid-feedback" role="alert">
@@ -126,7 +126,7 @@
                                 <div class="row mb-3">
                                     <label for="tgl_lahir" class="col-md-4 col-form-label text-md-end">{{ __('Tgl Lahir') }}</label>
                                     <div class="col-md-6">
-                                        <input id="tgl_lahir" type="date" class="form-control @error('tgl_lahir') is-invalid @enderror" name="tgl_lahir" value="{{ old('tgl_lahir') }}" required autocomplete="tgl_lahir">
+                                        <input id="tgl_lahir" type="date" class="form-control @error('tgl_lahir') is-invalid @enderror col-form-label" name="tgl_lahir" value="{{ old('tgl_lahir') }}" required autocomplete="tgl_lahir">
 
                                         @error('tgl_lahir')
                                             <span class="invalid-feedback" role="alert">
@@ -140,11 +140,11 @@
                                     <label for="password" class="col-md-4 col-form-label text-md-end">Jenis Kelamin</label>
                                     <div class="col-md-6 col-form-label">
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" id="laki" value="l" name="jenis_kelamin" {{(old('jenis_kelamin') == 'l') ? 'checked' : ''}}>
+                                            <input class="form-check-input" type="radio" id="laki" value="l" name="jenis_kelamin" {{(old('jenis_kelamin') == 'l') ? 'checked' : ''}} required>
                                             <label class="form-check-label" for="inlineCheckbox1">Laki - laki</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" id="perempuan"  value="p" name="jenis_kelamin"  {{(old('jenis_kelamin') == 'p') ? 'checked' : ''}}>
+                                            <input class="form-check-input" type="radio" id="perempuan"  value="p" name="jenis_kelamin"  {{(old('jenis_kelamin') == 'p') ? 'checked' : ''}} required>
                                             <label class="form-check-label" for="inlineCheckbox1">Perempuan</label>
                                         </div>
 
@@ -160,15 +160,15 @@
                                     <label for="password" class="col-md-4 col-form-label text-md-end">Pend Terakhir</label>
                                     <div class="col-md-8 col-form-label">
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" id="pend1" value="smak" name="pend" >
+                                            <input class="form-check-input" type="radio" id="pend1" value="smak" name="pend" required>
                                             <label class="form-check-label" for="inlineCheckbox1">SMA / SMK</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" id="pend2"  value="d3" name="pend" >
+                                            <input class="form-check-input" type="radio" id="pend2"  value="d3" name="pend" required>
                                             <label class="form-check-label" for="inlineCheckbox1">D3</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" id="pend2"  value="s1d4" name="pend" >
+                                            <input class="form-check-input" type="radio" id="pend2"  value="s1d4" name="pend" required>
                                             <label class="form-check-label" for="inlineCheckbox1">S1 / D4</label>
                                         </div>
 
@@ -183,7 +183,7 @@
                                 {{-- <div class="form-group row mb-3 univ hide">
                                     <label for="password" class="col-md-4 col-form-label text-md-end">Universitas</label>
                                     <div class="col-md-8 col-form-label">
-                                      <select class="universitas" data-placeholder="Pilih universitas" style="width: 100%;" name="universitas" id="universitas">
+                                      <select class="form-control col-form-label universitas" data-placeholder="Pilih universitas" style="width: 100%;" name="universitas" id="universitas">
                                       </select>
                                     </div>
                                 </div> --}}
@@ -192,7 +192,7 @@
                                 <div class="row mb-3 univ hide">
                                     <label for="tgl_lahir" class="col-md-4 col-form-label text-md-end"></label>
                                     <div class="col-md-6">
-                                        <select class="universitas" data-placeholder="Pilih universitas"  name="universitas" id="universitas">
+                                        <select class="universitas" data-placeholder="Pilih universitas"  name="universitas" id="universitas" >
                                         </select>
                                     </div>
                                 </div>
@@ -259,23 +259,45 @@
                                         <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                                     </div>
                                 </div>
-
-                                <div class="row mb-0">
-                                    <div class="col-md-9 offset-md-2">
-                                        <a type="button" class="btn btn-danger" href="{{route('login')}}">Batal</a>
-                                        <button type="submit" class="btn btn-primary float-right" id="tambah" disabled>
-                                            {{ __('Register') }}
-                                        </button>
+                                <div class="row mb-3">
+                                    <label for="captcha" class="col-md-4 col-form-label text-md-end"></label>
+                                    <div class="col-md-6 captcha row">
+                                        <div class="col-md-5 ">
+                                            <input type="text" class="form-control" name="captcha" placeholder="captcha" id="captcha" required>
+                                            @error('captcha')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                        </div>
+                                        <div class="col-md-4 ">
+                                            <span>{!! captcha_img() !!}</span>
+                                        </div>
+                                        <div class="col-md-1 ">
+                                        </div>
+                                        <div class="col-md-2 ">
+                                            <button type="button" class="btn btn-danger btn-sm" class="reload" id="reload"> <i class="fa fa-refresh" aria-hidden="true"></i></button>
+                                        </div>
                                     </div>
+                                </div>
+
+                                <div class="row mb-12">
+
                                 </div>
 
                         </div>
                     </div>
 
                     </div>
-
+                    <div class="card-footer">
+                        <a type="button" class="btn btn-danger float-left" href="{{route('login')}}">Batal</a>
+                        <button type="submit" class="btn btn-success float-right" id="tambah" disabled>
+                            {{ __('Register') }}
+                        </button>
+                     </div>
                     </form>
                 </div>
+
 
             </div>
         </div>
@@ -498,8 +520,10 @@ var geocoder = new MapboxGeocoder({
         $('input[type="radio"][name="pend"]').change(function(){
           if($(this).val() == "s1d4" || $(this).val() == "d3"){
             $('.univ').removeClass('hide');
+            $('.universitas').attr("required", true);
           }else{
             $('.univ').addClass('hide');
+            $('.universitas').attr("required", false);
           }
         })
 
@@ -534,7 +558,7 @@ var geocoder = new MapboxGeocoder({
 
         $('#name').on('keyup change', function() {
             if ($(this).val() != "") {
-                if ($('#tgl_lahir').val() != "" &&  $('input[name=jenis_kelamin]:checked').length > 0  && $('#username').val() != ""  && $('#email').val() != "" && $('#password').val() != "" && $('#password-confirm').val() != ""  && $('#jarak_user').val() != 0.0 && !$('#username').hasClass('is-invalid')  && !$('#email').hasClass('is-invalid') ) {
+                if ($('#tgl_lahir').val() != "" &&  $('input[name=jenis_kelamin]:checked').length > 0  && $('#username').val() != ""  && $('#email').val() != "" && $('#password').val() != "" && $('#password-confirm').val() != ""  && $('#jarak_user').val() != 0.0 && !$('#username').hasClass('is-invalid')  && !$('#email').hasClass('is-invalid') && $('#captcha').val() != "" ) {
                     $('#tambah').attr("disabled", false);
                 } else {
                     $('#tambah').attr("disabled", true);
@@ -546,7 +570,7 @@ var geocoder = new MapboxGeocoder({
 
         $('#tgl_lahir').on('keyup change', function() {
             if ($(this).val() != "") {
-                if ($('#name').val() != "" && $('input[name=jenis_kelamin]:checked').length > 0  && $('#username').val() != "" && $('#email').val() != "" && $('#password').val() != "" && $('#password-confirm').val() != ""  && $('#jarak_user').val() != 0.0 && !$('#username').hasClass('is-invalid')  && !$('#email').hasClass('is-invalid') ) {
+                if ($('#name').val() != "" && $('input[name=jenis_kelamin]:checked').length > 0  && $('#username').val() != "" && $('#email').val() != "" && $('#password').val() != "" && $('#password-confirm').val() != ""  && $('#jarak_user').val() != 0.0 && !$('#username').hasClass('is-invalid')  && !$('#email').hasClass('is-invalid') && $('#captcha').val() != ""  ) {
                     $('#tambah').attr("disabled", false);
                 } else {
                     $('#tambah').attr("disabled", true);
@@ -558,7 +582,7 @@ var geocoder = new MapboxGeocoder({
 
         $('input[type="radio"][name="jenis_kelamin"]').on('change', function() {
             if ($(this).val() != "") {
-                if ($('#name').val() != "" && $('#tgl_lahir').val() != ""   && $('#username').val() != ""  && $('#email').val() != "" && $('#password').val() != "" && $('#password-confirm').val() != ""  && $('#jarak_user').val() != 0.0  && !$('#username').hasClass('is-invalid')  && !$('#email').hasClass('is-invalid') )  {
+                if ($('#name').val() != "" && $('#tgl_lahir').val() != ""   && $('#username').val() != ""  && $('#email').val() != "" && $('#password').val() != "" && $('#password-confirm').val() != ""  && $('#jarak_user').val() != 0.0  && !$('#username').hasClass('is-invalid')  && !$('#email').hasClass('is-invalid') && $('#captcha').val() != "" )  {
                     $('#tambah').attr("disabled", false);
                 } else {
                     $('#tambah').attr("disabled", true);
@@ -570,7 +594,7 @@ var geocoder = new MapboxGeocoder({
 
         $('#username').on('keyup change', function() {
             if ($(this).val() != "") {
-                if ($('#name').val() != "" && $('input[name=jenis_kelamin]:checked').length > 0 && $('#tgl_lahir').val() != ""  && $('#email').val() != "" && $('#password').val() != "" && $('#password-confirm').val() != "" && $('#jarak_user').val() != 0.0 && !$('#username').hasClass('is-invalid')  && !$('#email').hasClass('is-invalid')  ) {
+                if ($('#name').val() != "" && $('input[name=jenis_kelamin]:checked').length > 0 && $('#tgl_lahir').val() != ""  && $('#email').val() != "" && $('#password').val() != "" && $('#password-confirm').val() != "" && $('#jarak_user').val() != 0.0 && !$('#username').hasClass('is-invalid')  && !$('#email').hasClass('is-invalid') && $('#captcha').val() != ""  ) {
                     $('#tambah').attr("disabled", false);
                 } else {
                     $('#tambah').attr("disabled", true);
@@ -582,7 +606,7 @@ var geocoder = new MapboxGeocoder({
 
         $('#email').on('keyup change', function() {
             if ($(this).val() != "") {
-                if ($('#name').val() != "" && $('input[name=jenis_kelamin]:checked').length > 0 && $('#tgl_lahir').val() != ""  && $('#username').val() != "" && $('#password').val() != "" && $('#password-confirm').val() != ""  && $('#jarak_user').val() != 0.0 && !$('#username').hasClass('is-invalid')  && !$('#email').hasClass('is-invalid') ) {
+                if ($('#name').val() != "" && $('input[name=jenis_kelamin]:checked').length > 0 && $('#tgl_lahir').val() != ""  && $('#username').val() != "" && $('#password').val() != "" && $('#password-confirm').val() != ""  && $('#jarak_user').val() != 0.0 && !$('#username').hasClass('is-invalid')  && !$('#email').hasClass('is-invalid') && $('#captcha').val() != ""  ) {
                     $('#tambah').attr("disabled", false);
                 } else {
                     $('#tambah').attr("disabled", true);
@@ -594,7 +618,7 @@ var geocoder = new MapboxGeocoder({
 
         $('#password').on('keyup change', function() {
             if ($(this).val() != "") {
-                if ($('#name').val() != "" && $('input[name=jenis_kelamin]:checked').length > 0 && $('#tgl_lahir').val() != ""  && $('#username').val() != "" && $('#email').val() != "" && $('#password-confirm').val() != ""  && $('#jarak_user').val() != 0.0 && !$('#username').hasClass('is-invalid')  && !$('#email').hasClass('is-invalid') ) {
+                if ($('#name').val() != "" && $('input[name=jenis_kelamin]:checked').length > 0 && $('#tgl_lahir').val() != ""  && $('#username').val() != "" && $('#email').val() != "" && $('#password-confirm').val() != ""  && $('#jarak_user').val() != 0.0 && !$('#username').hasClass('is-invalid')  && !$('#email').hasClass('is-invalid') && $('#captcha').val() != "" ) {
                     $('#tambah').attr("disabled", false);
                 } else {
                     $('#tambah').attr("disabled", true);
@@ -606,7 +630,18 @@ var geocoder = new MapboxGeocoder({
 
         $('#password-confirm').on('keyup change', function() {
             if ($(this).val() != "") {
-                if ($('#name').val() != "" && $('input[name=jenis_kelamin]:checked').length > 0 && $('#tgl_lahir').val() != ""  && $('#username').val() != "" && $('#email').val() != "" && $('#password').val() != "" && $('#jarak_user').val() != 0.0  && !$('#username').hasClass('is-invalid')  && !$('#email').hasClass('is-invalid')  ) {
+                if ($('#name').val() != "" && $('input[name=jenis_kelamin]:checked').length > 0 && $('#tgl_lahir').val() != ""  && $('#username').val() != "" && $('#email').val() != "" && $('#password').val() != "" && $('#jarak_user').val() != 0.0  && !$('#username').hasClass('is-invalid')  && !$('#email').hasClass('is-invalid')   && $('#captcha').val() != "" ) {
+                    $('#tambah').attr("disabled", false);
+                } else {
+                    $('#tambah').attr("disabled", true);
+                }
+            } else {
+                $('#tambah').attr("disabled", true);
+            }
+        });
+        $('#captcha').on('keyup change', function() {
+            if ($(this).val() != "") {
+                if ($('#name').val() != "" && $('input[name=jenis_kelamin]:checked').length > 0 && $('#tgl_lahir').val() != ""  && $('#username').val() != "" && $('#email').val() != "" && $('#password').val() != "" && $('#jarak_user').val() != 0.0  && !$('#username').hasClass('is-invalid')  && !$('#email').hasClass('is-invalid')  && $('#password-confirm').val() != ""  ) {
                     $('#tambah').attr("disabled", false);
                 } else {
                     $('#tambah').attr("disabled", true);
@@ -634,7 +669,7 @@ var geocoder = new MapboxGeocoder({
                          } else {
                             $('#user_duplicate').text("");
                             $('#username').removeClass("is-invalid");
-                            if ($('#name').val() != "" && $('input[name=jenis_kelamin]:checked').length > 0 && $('#tgl_lahir').val() != ""  && $('#username').val() != "" && $('#email').val() != "" && $('#password').val() != "" && $('#jarak_user').val() != 0.0  && $('#password-confirm').val() != "" && !$('#email').hasClass('is-invalid') ) {
+                            if ($('#name').val() != "" && $('input[name=jenis_kelamin]:checked').length > 0 && $('#tgl_lahir').val() != ""  && $('#username').val() != "" && $('#email').val() != "" && $('#password').val() != "" && $('#jarak_user').val() != 0.0  && $('#password-confirm').val() != "" && !$('#email').hasClass('is-invalid') && $('#captcha').val() != ""  ) {
                                 $('#tambah').attr("disabled", false);
                                 } else {
                                  $('#tambah').attr("disabled", true);
@@ -665,7 +700,7 @@ var geocoder = new MapboxGeocoder({
                          } else {
                         $('#email_duplicate').text("");
                         $('#email').removeClass("is-invalid");
-                        if ($('#name').val() != "" && $('input[name=jenis_kelamin]:checked').length > 0 && $('#tgl_lahir').val() != ""  && $('#username').val() != "" && $('#email').val() != "" && $('#password').val() != "" && $('#jarak_user').val() != 0.0  && $('#password-confirm').val() != ""  && !$('#username').hasClass('is-invalid') ) {
+                        if ($('#name').val() != "" && $('input[name=jenis_kelamin]:checked').length > 0 && $('#tgl_lahir').val() != ""  && $('#username').val() != "" && $('#email').val() != "" && $('#password').val() != "" && $('#jarak_user').val() != 0.0  && $('#password-confirm').val() != ""  && !$('#username').hasClass('is-invalid') && $('#captcha').val() != "" ) {
                                 $('#tambah').attr("disabled", false);
                                 } else {
                                  $('#tambah').attr("disabled", true);
@@ -675,11 +710,23 @@ var geocoder = new MapboxGeocoder({
                 });
 
             } else if ($(this).val() == "") {
-                $("#user_duplicate").html("<i class='fa fa-exclamation-circle' aria-hidden='true'></i> Email harus di isi");
-                $('#user').addClass("is-invalid");
+                $("#email_duplicate").html("<i class='fa fa-exclamation-circle' aria-hidden='true'></i> Email harus di isi");
+                $('#email').addClass("is-invalid");
                 $("#tambah").attr('disabled', true);
             }
         });
+
+
+        $('#reload').click(function () {
+        $.ajax({
+            type: 'GET',
+            url: 'api/reload_captcha',
+            success: function (data) {
+                console.log(data);
+                $(".captcha span").html(data.captcha);
+            }
+        });
+    });
 
         // $('input[type="radio"][name="pend"]').on('change', function() {
         //     if ($(this).val() != "") {

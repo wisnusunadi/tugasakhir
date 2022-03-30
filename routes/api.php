@@ -18,6 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('/reload_captcha', [App\Http\Controllers\GetController::class, 'reload_captcha']);
 Route::get('/jabatan', [App\Http\Controllers\HomeController::class, 'jabatan_data']);
 Route::get('/divisi', [App\Http\Controllers\HomeController::class, 'divisi_data']);
 // Route::get('/jadwal/table', [App\Http\Controllers\HomeController::class, 'jadwal_table']);

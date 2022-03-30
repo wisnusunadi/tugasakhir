@@ -9,6 +9,11 @@ use Yajra\DataTables\DataTables;
 use App\Models\Jabatan;
 use App\Models\Divisi;
 use App\Models\Jadwal;
+use App\Models\Kriteria;
+use App\Models\KriteriaJarak;
+use App\Models\KriteriaPendidikan;
+use App\Models\KriteriaSoal;
+use App\Models\KriteriaUsia;
 use App\Models\User;
 use App\Models\UserJawaban;
 
@@ -175,8 +180,94 @@ class JadwalController extends Controller
                     'jadwal_id' => $j->id,
                     'kuota' => $r->kuota[$i]
                 ]);
+
                 if (!$p) {
                     $bool = false;
+                }else{
+                    if(in_array('usia', $r->kriteria[$i])){
+                        $k = Kriteria::create([
+                            'pendaftaran_id' => $p->id,
+                            'nama' => 'usia',
+                            'bobot' => $r->master_usia[$i]
+                        ]);
+
+                        if($k){
+                            for($j = 0; $j < count($r->usia_min[$i]); $j++){
+                                KriteriaUsia::create([
+                                    'kriteria_id' => $k->id,
+                                    'range_min' => $r->usia_min[$i][$j],
+                                    'range_max' => $r->usia_max[$i][$j],
+                                    'nilai' => $r->bobot_usia[$i][$j],
+                                ]);
+                            }
+                        }
+                    }
+
+                    if(in_array('pendidikan', $r->kriteria[$i])){
+                        $k = Kriteria::create([
+                            'pendaftaran_id' => $p->id,
+                            'nama' => 'pendidikan',
+                            'bobot' => $r->master_pendidikan[$i]
+                        ]);
+
+                        if($k){
+                            for($j = 0; $j < count($r->ketentuan_pendidikan[$i]); $j++){
+                                $peringkat = "";
+                                if($r->ketentuan_pendidikan[$i][$j] == "smak"){
+                                    $peringkat = NULL;
+                                }else{
+                                    if($r->peringkat[$i][$j] == "NULL"){
+                                        $peringkat = NULL;
+                                    }else{
+                                        $peringkat = $r->peringkat[$i][$j];
+                                    }
+                                }
+                                KriteriaPendidikan::create([
+                                    'kriteria_id' => $k->id,
+                                    'pendidikan' => $r->ketentuan_pendidikan[$i][$j],
+                                    'peringkat' => $peringkat,
+                                    'nilai' => $r->bobot_pendidikan[$i][$j],
+                                ]);
+                            }
+                        }
+                    }
+
+                    if(in_array('jarak', $r->kriteria[$i])){
+                        $k = Kriteria::create([
+                            'pendaftaran_id' => $p->id,
+                            'nama' => 'jarak',
+                            'bobot' => $r->master_jarak[$i]
+                        ]);
+
+                        if($k){
+                            for($j = 0; $j < count($r->jarak_min[$i]); $j++){
+                                KriteriaJarak::create([
+                                    'kriteria_id' => $k->id,
+                                    'range_min' => $r->jarak_min[$i][$j],
+                                    'range_max' => $r->jarak_max[$i][$j],
+                                    'nilai' => $r->bobot_jarak[$i][$j],
+                                ]);
+                            }
+                        }
+                    }
+
+                    if(in_array('soal', $r->kriteria[$i])){
+                        $k = Kriteria::create([
+                            'pendaftaran_id' => $p->id,
+                            'nama' => 'soal',
+                            'bobot' => $r->master_soal[$i]
+                        ]);
+
+                        if($k){
+                            for($j = 0; $j < count($r->soal_id[$i]); $j++){
+                                KriteriaSoal::create([
+                                    'kriteria_id' => $k->id,
+                                    'soal_id' => $r->soal_id[$i][$j],
+                                    'nilai' => $r->bobot_soal[$i][$j],
+                                ]);
+                            }
+                        }
+                    }
                 }
             }
         }

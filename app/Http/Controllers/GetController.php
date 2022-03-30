@@ -8,6 +8,11 @@ use App\Models\Jabatan;
 use App\Models\Divisi;
 use App\Models\Soal;
 use App\Models\Universitas;
+use App\Models\Kriteria;
+use App\Models\KriteriaUsia;
+use App\Models\KriteriaPendidikan;
+use App\Models\KriteriaJarak;
+use App\Models\KriteriaSoal;
 use Illuminate\Support\Carbon;
 use Yajra\DataTables\DataTables;
 
@@ -87,42 +92,63 @@ class GetController extends Controller
         echo json_encode($data);
     }
 
-    public function bobot_usia_peserta($usia)
+    public function bobot_usia_peserta($usia, $daftar_id)
     {
-        $bobot = 0;
-        if ($usia >= 18 && $usia <= 25) {
-            $bobot = 80;
-        } else {
-            $bobot = 60;
+        $bobot = "";
+        $k = Kriteria::where([['nama', '=', 'usia'], ['pendaftaran_id', '=', $daftar_id]])->first();
+        $k_usia = KriteriaUsia::where('kriteria_id', $k->id);
+        foreach ($k_usia as $i) {
+            if ($bobot == "") {
+                if ($usia > $i->range_min && $usia <= $i->range_max) {
+                    $bobot = $i->nilai;
+                }
+            }
+        }
+
+        if ($bobot == "") {
+            $bobot = "0";
         }
         return $bobot;
     }
 
-    public function bobot_pend_peserta($pend, $akreditasi)
+    public function bobot_pend_peserta($pend, $akreditasi, $daftar_id)
     {
-        $bobot = 0;
-        if ($pend == "smak") {
-            $bobot = 20;
-        } else if ($pend == "d3") {
-            if ($akreditasi == 'A') {
-                $bobot = '50';
-            } else if ($akreditasi == 'B') {
-                $bobot = '45';
-            } else if ($akreditasi == 'C') {
-                $bobot = '40';
-            } else {
-                $bobot = '25';
+        $bobot = "";
+        $k = Kriteria::where([['nama', '=', 'pendidikan'], ['pendaftaran_id', '=', $daftar_id]])->first();
+        $k_pend = KriteriaPendidikan::where('kriteria_id', $k->id);
+        foreach ($k_pend as $i) {
+            if ($bobot == "") {
+                if ($pend == "smak" && $i->pendidikan == "smak") {
+                    $bobot = $i->nilai;
+                } else {
+                    if ($pend == $i->pendidikan && $akreditasi == $i->peringkat) {
+                        $bobot = $i->nilai;
+                    }
+                }
             }
-        } else if ($pend == "s1d4") {
-            if ($akreditasi == 'A') {
-                $bobot = '70';
-            } else if ($akreditasi == 'B') {
-                $bobot = '65';
-            } else if ($akreditasi == 'C') {
-                $bobot = '60';
-            } else {
-                $bobot = '35';
+        }
+
+        if ($bobot == "") {
+            $bobot = "0";
+        }
+        return $bobot;
+    }
+
+    public function bobot_jarak_peserta($jarak, $daftar_id)
+    {
+        $bobot = "";
+        $k = Kriteria::where([['nama', '=', 'jarak'], ['pendaftaran_id', '=', $daftar_id]])->first();
+        $k_jarak = KriteriaJarak::where('kriteria_id', $k->id);
+        foreach ($k_jarak as $i) {
+            if ($bobot == "") {
+                if ($jarak > $i->range_min && $jarak <= $i->range_max) {
+                    $bobot = $i->nilai;
+                }
             }
+        }
+
+        if ($bobot == "") {
+            $bobot = "0";
         }
         return $bobot;
     }
@@ -131,11 +157,12 @@ class GetController extends Controller
     {
         $user = User::find($id_user);
         $usia = Carbon::parse($user->tgl_lahir)->age;
-        $alluser = user::where('pendaftaran_id', $user->pendaftaran_id)->get();
-        $bobot = $this->bobot_usia_peserta($usia);
+        $daftar_id = $user->pendaftaran_id;
+        $alluser = user::where('pendaftaran_id', $daftar_id)->get();
+        $bobot = $this->bobot_usia_peserta($usia, $daftar_id);
         $arrayusia = [];
         foreach ($alluser as $i) {
-            $arrayusia[] = $this->bobot_usia_peserta(Carbon::parse($user->tgl_lahir)->age);
+            $arrayusia[] = $this->bobot_usia_peserta(Carbon::parse($user->tgl_lahir)->age, $daftar_id);
         }
 
         $maxusia = max($arrayusia);
@@ -150,18 +177,40 @@ class GetController extends Controller
         if ($user->univ_id) {
             $akreditasi = $user->Universitas->peringkat;
         }
-        $alluser = User::where('pendaftaran_id', $user->pendaftaran_id)->get();
-        $bobot = $this->bobot_pend_peserta($pend, $akreditasi);
-        $arrayupend = [];
+        $daftar_id = $user->pendaftaran_id;
+        $alluser = User::where('pendaftaran_id', $daftar_id)->get();
+        $bobot = $this->bobot_pend_peserta($pend, $akreditasi, $daftar_id);
+        $arraypend = [];
         foreach ($alluser as $i) {
             $akreditasi_i = "";
             if ($i->univ_id) {
                 $akreditasi_i = $i->Universitas->peringkat;
             }
-            $arraypend[] = $this->bobot_pend_peserta($i->pend, $akreditasi_i);
+            $arraypend[] = $this->bobot_pend_peserta($i->pend, $akreditasi_i, $daftar_id);
         }
 
         $maxpend = max($arraypend);
         return $bobot / $maxpend;
+    }
+
+    public function count_jarak_peserta($id_user)
+    {
+        $user = User::find($id_user);
+        $jarak = $user->jarak;
+        $daftar_id = $user->pendaftaran_id;
+        $alluser = user::where('pendaftaran_id', $daftar_id)->get();
+        $bobot = $this->bobot_jarak_peserta($jarak, $daftar_id);
+        $arrayjarak = [];
+        foreach ($alluser as $i) {
+            $arrayjarak[] = $this->bobot_jarak_peserta(Carbon::parse($user->tgl_lahir)->age, $daftar_id);
+        }
+
+        $maxjarak = max($arrayjarak);
+        return $bobot / $maxjarak;
+    }
+
+    public function reload_captcha()
+    {
+        return response()->json(['captcha' => captcha_img()]);
     }
 }
