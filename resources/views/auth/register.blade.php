@@ -31,10 +31,13 @@
 @stop
 @section('content')
 <div class="container">
+    <div id="index-alert" class="alert alert-danger alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <b>An Error occured</b>
+    </div>
     <div class="row" id="thecontent">
         <div class="col-md-12">
             <div class="card">
-
                 <div class="card-body">
                     <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                         <li class="nav-item" role="presentation">
@@ -195,8 +198,8 @@
                                     <div class="col-md-6">
                                         <div id="map" style="width: 100%;height: 30vh;"></div>
                                         <div id="instructions"></div>
-                                            </div>
-                                            <input id="jarak_user" type="text" name="jarak" class="d-none">
+                                    </div>
+                                    <input id="jarak_user" type="text" name="jarak" class="d-none" >
                                 </div>
 
 
@@ -314,6 +317,7 @@ async function getRoute(end) {
     `https://api.mapbox.com/directions/v5/mapbox/cycling/${start[0]},${start[1]};${end[0]},${end[1]}?steps=true&geometries=geojson&access_token=${mapboxgl.accessToken}`,
     { method: 'GET' }
   );
+
   const json = await query.json();
   const data = json.routes[0];
   const route = data.geometry.coordinates;
@@ -405,6 +409,7 @@ map.on('load', () => {
 });
 
 map.on('click', (event) => {
+
   const coords = Object.keys(event.lngLat).map((key) => event.lngLat[key]);
   const end = {
     type: 'FeatureCollection',
@@ -449,11 +454,12 @@ map.on('click', (event) => {
   }
   getRoute(coords);
 
-
-
+                if ($('#name').val() != "" && $('input[name=jenis_kelamin]:checked').length > 0 && $('#tgl_lahir').val() != ""  && $('#username').val() != "" && $('#email').val() != "" && $('#password').val() != "" && $('#jarak_user').val() != 0.0 && $('#password-confirm').val() != "") {
+                    $('#tambah').attr("disabled", false);
+                } else {
+                    $('#tambah').attr("disabled", true);
+                }
 });
-
-
 
 
 var geocoder = new MapboxGeocoder({
@@ -523,7 +529,7 @@ var geocoder = new MapboxGeocoder({
 
         $('#name').on('keyup change', function() {
             if ($(this).val() != "") {
-                if ($('#tgl_lahir').val() != "" &&  $('input[name=jenis_kelamin]:checked').length > 0  &&  $('input[name=pend]:checked').val() == 'smak' && $('#jarak_user').val() > 0 ) {
+                if ($('#tgl_lahir').val() != "" &&  $('input[name=jenis_kelamin]:checked').length > 0  && $('#username').val() != ""  && $('#email').val() != "" && $('#password').val() != "" && $('#password-confirm').val() != ""  && $('#jarak_user').val() != 0.0 ) {
                     $('#tambah').attr("disabled", false);
                 } else {
                     $('#tambah').attr("disabled", true);
@@ -535,7 +541,7 @@ var geocoder = new MapboxGeocoder({
 
         $('#tgl_lahir').on('keyup change', function() {
             if ($(this).val() != "") {
-                if ($('#name').val() != "" && $('input[name=jenis_kelamin]:checked').length > 0  &&  $('input[name=pend]:checked').val() == 'smak'  && $('#jarak_user').val() > 0 ) {
+                if ($('#name').val() != "" && $('input[name=jenis_kelamin]:checked').length > 0  && $('#username').val() != "" && $('#email').val() != "" && $('#password').val() != "" && $('#password-confirm').val() != ""  && $('#jarak_user').val() != 0.0 ) {
                     $('#tambah').attr("disabled", false);
                 } else {
                     $('#tambah').attr("disabled", true);
@@ -547,7 +553,7 @@ var geocoder = new MapboxGeocoder({
 
         $('input[type="radio"][name="jenis_kelamin"]').on('change', function() {
             if ($(this).val() != "") {
-                if ($('#name').val() != "" && $('#tgl_lahir').val() != ""  &&  $('input[name=pend]:checked').val() == 'smak'  && $('#jarak_user').val() > 0 ) {
+                if ($('#name').val() != "" && $('#tgl_lahir').val() != ""   && $('#username').val() != ""  && $('#email').val() != "" && $('#password').val() != "" && $('#password-confirm').val() != ""  && $('#jarak_user').val() != 0.0 )  {
                     $('#tambah').attr("disabled", false);
                 } else {
                     $('#tambah').attr("disabled", true);
@@ -557,31 +563,83 @@ var geocoder = new MapboxGeocoder({
             }
         });
 
-        $('input[type="radio"][name="pend"]').on('change', function() {
-            $("#universitas").empty().trigger('change')
-            if ($(this).val() == "smak" && $('#name').val() != "" && $('#tgl_lahir').val() != ""  && $('input[name=jenis_kelamin]:checked').length > 0   && $('#jarak_user').val() > 0 ) {
-                $('#tambah').attr("disabled", false);
-            } else {
-
-                $('#tambah').attr("disabled", true);
-            }
-        });
-
-        $('#universitas').change(function() {
-            if ($(this).val() != "" && $('#name').val() != "" && $('#tgl_lahir').val() != ""  && $('input[name=jenis_kelamin]:checked').length > 0 &&  ($('input[name=pend]:checked').val() == 'd3'|| $('input[name=pend]:checked').val() == 's1d4')  ) {
-                $('#tambah').attr("disabled", false);
+        $('#username').on('keyup change', function() {
+            if ($(this).val() != "") {
+                if ($('#name').val() != "" && $('input[name=jenis_kelamin]:checked').length > 0 && $('#tgl_lahir').val() != ""  && $('#email').val() != "" && $('#password').val() != "" && $('#password-confirm').val() != "" && $('#jarak_user').val() != 0.0 ) {
+                    $('#tambah').attr("disabled", false);
+                } else {
+                    $('#tambah').attr("disabled", true);
+                }
             } else {
                 $('#tambah').attr("disabled", true);
             }
         });
 
-        $('#jarak_user').change(function() {
-            if ($(this).val() > "0" && $('#name').val() != "" && $('#tgl_lahir').val() != ""  && $('input[name=jenis_kelamin]:checked').length > 0   ) {
-                $('#tambah').attr("disabled", false);
+        $('#email').on('keyup change', function() {
+            if ($(this).val() != "") {
+                if ($('#name').val() != "" && $('input[name=jenis_kelamin]:checked').length > 0 && $('#tgl_lahir').val() != ""  && $('#username').val() != "" && $('#password').val() != "" && $('#password-confirm').val() != ""  && $('#jarak_user').val() != 0.0 ) {
+                    $('#tambah').attr("disabled", false);
+                } else {
+                    $('#tambah').attr("disabled", true);
+                }
             } else {
                 $('#tambah').attr("disabled", true);
             }
         });
+
+        $('#password').on('keyup change', function() {
+            if ($(this).val() != "") {
+                if ($('#name').val() != "" && $('input[name=jenis_kelamin]:checked').length > 0 && $('#tgl_lahir').val() != ""  && $('#username').val() != "" && $('#email').val() != "" && $('#password-confirm').val() != ""  && $('#jarak_user').val() != 0.0 ) {
+                    $('#tambah').attr("disabled", false);
+                } else {
+                    $('#tambah').attr("disabled", true);
+                }
+            } else {
+                $('#tambah').attr("disabled", true);
+            }
+        });
+
+        $('#password-confirm').on('keyup change', function() {
+            if ($(this).val() != "") {
+                if ($('#name').val() != "" && $('input[name=jenis_kelamin]:checked').length > 0 && $('#tgl_lahir').val() != ""  && $('#username').val() != "" && $('#email').val() != "" && $('#password').val() != "" && $('#jarak_user').val() != 0.0 ) {
+                    $('#tambah').attr("disabled", false);
+                } else {
+                    $('#tambah').attr("disabled", true);
+                }
+            } else {
+                $('#tambah').attr("disabled", true);
+            }
+        });
+
+
+
+        // $('input[type="radio"][name="pend"]').on('change', function() {
+        //     if ($(this).val() != "") {
+        //         if ($('#name').val() != "" && $('input[name=jenis_kelamin]:checked').length > 0 && $('#tgl_lahir').val() != ""  && $('#username').val() != "" && $('#email').val() != "" && $('#password').val() != "" && $('#jarak_user').val() != 0.0  && $('#password-confirm').val() != "") {
+        //             $('#tambah').attr("disabled", false);
+        //         } else {
+        //             $('#tambah').attr("disabled", true);
+        //         }
+        //     } else {
+        //         $('#tambah').attr("disabled", true);
+        //     }
+        // });
+
+        // $('#universitas').change(function() {
+        //     if ($(this).val() != "" && $('#name').val() != "" && $('#tgl_lahir').val() != ""  && $('input[name=jenis_kelamin]:checked').length > 0 &&  ($('input[name=pend]:checked').val() == 'd3'|| $('input[name=pend]:checked').val() == 's1d4')  ) {
+        //         $('#tambah').attr("disabled", false);
+        //     } else {
+        //         $('#tambah').attr("disabled", true);
+        //     }
+        // });
+
+        // $('#jarak_user').change(function() {
+        //     if ($(this).val() > "0" && $('#name').val() != "" && $('#tgl_lahir').val() != ""  && $('input[name=jenis_kelamin]:checked').length > 0   ) {
+        //         $('#tambah').attr("disabled", false);
+        //     } else {
+        //         $('#tambah').attr("disabled", true);
+        //     }
+        // });
 
 
     })
