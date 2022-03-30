@@ -20,6 +20,10 @@ class Soal extends Model
     {
         return $this->hasMany(SoalDetail::class);
     }
+    public function KriteriaSoal()
+    {
+        return $this->hasMany(KriteriaSoal::class);
+    }
     public function Divisi()
     {
         return $this->belongsToMany(Divisi::class, 'soal_divisi', 'soal_id', 'divisi_id');

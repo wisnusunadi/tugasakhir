@@ -18,7 +18,6 @@ Route::get('/', function () {
 });
 Route::view('/jadwal', 'jadwal.show')->name('jadwal');
 Route::get('/select/universitas', [App\Http\Controllers\GetController::class, 'universitas_select'])->name('select.universitas');
-
 Route::get('jadwal/show',  [App\Http\Controllers\JadwalController::class, 'jadwal_show'])->name('jadwal.show');
 // Route::view('/soal_tes', 'soal.tes.show')->name('soal.tes');
 Auth::routes();

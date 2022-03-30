@@ -105,7 +105,7 @@
                                     <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Nama') }}</label>
 
                                     <div class="col-md-6">
-                                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror col-form-label" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
 
                                         @error('name')
                                             <span class="invalid-feedback" role="alert">
@@ -118,7 +118,7 @@
                                 <div class="row mb-3">
                                     <label for="tgl_lahir" class="col-md-4 col-form-label text-md-end">{{ __('Tgl Lahir') }}</label>
                                     <div class="col-md-6">
-                                        <input id="tgl_lahir" type="date" class="form-control @error('tgl_lahir') is-invalid @enderror" name="tgl_lahir" value="{{ old('tgl_lahir') }}" required autocomplete="tgl_lahir">
+                                        <input id="tgl_lahir" type="date" class="form-control @error('tgl_lahir') is-invalid @enderror col-form-label" name="tgl_lahir" value="{{ old('tgl_lahir') }}" required autocomplete="tgl_lahir">
 
                                         @error('tgl_lahir')
                                             <span class="invalid-feedback" role="alert">
@@ -175,7 +175,7 @@
                                 <div class="form-group row mb-3 univ hide">
                                     <label for="password" class="col-md-4 col-form-label text-md-end">Universitas</label>
                                     <div class="col-md-8 col-form-label">
-                                      <select class="universitas" data-placeholder="Pilih universitas" style="width: 100%;" name="universitas" id="universitas">
+                                      <select class="form-control col-form-label universitas" data-placeholder="Pilih universitas" style="width: 100%;" name="universitas" id="universitas">
                                       </select>
                                     </div>
                                 </div>
