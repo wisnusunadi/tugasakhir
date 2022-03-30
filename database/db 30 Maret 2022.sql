@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3307
--- Generation Time: Mar 30, 2022 at 05:22 AM
+-- Generation Time: Mar 30, 2022 at 09:38 AM
 -- Server version: 5.7.33
 -- PHP Version: 7.4.19
 
@@ -44,7 +44,22 @@ INSERT INTO `detail_user_jawaban` (`id`, `user_jawaban_id`, `jawaban_id`) VALUES
 (14, 10, 148),
 (15, 10, 165),
 (16, 10, 142),
-(17, 10, 160);
+(17, 10, 160),
+(18, 11, 116),
+(19, 11, 101),
+(20, 11, 112),
+(21, 11, 103),
+(22, 11, 106),
+(23, 12, 100),
+(24, 12, 117),
+(25, 12, 106),
+(26, 12, 113),
+(27, 12, 104),
+(28, 13, 106),
+(29, 13, 112),
+(30, 13, 115),
+(31, 13, 99),
+(32, 13, 105);
 
 -- --------------------------------------------------------
 
@@ -314,8 +329,8 @@ CREATE TABLE `kriteria_usia` (
 
 INSERT INTO `kriteria_usia` (`id`, `kriteria_id`, `range_min`, `range_max`, `nilai`) VALUES
 (1, 2, 18, 25, 20),
-(2, 2, 26, 40, 40),
-(3, 2, 41, 55, 30);
+(2, 2, 25, 40, 40),
+(3, 2, 40, 55, 30);
 
 -- --------------------------------------------------------
 
@@ -3342,7 +3357,10 @@ INSERT INTO `users` (`id`, `pendaftaran_id`, `univ_id`, `username`, `nama`, `pas
 (12, 7, NULL, 'andrea', 'Joni Andreas', '$2y$10$K2XqcU7qxDHuf3vkqxQ6UOiJBr8xTADekMeBM/4BnPusJB6iUFjXC', '1997-03-17', 'l', 'smak', 17.3, 'joni@gmail.com', 'user', '2022-03-22 05:20:48', '2022-03-22 05:20:48'),
 (13, 1, NULL, 'admin', 'admin', '$2y$10$kSs6K99BBhUZdkGrUhD75.qWme2Eno7emlPNhVtJv/LAGuc7Qpc3y', '2022-03-22', 'l', 'smak', 1.3, 'admin@gmail.com', 'admin', '2022-03-22 05:22:12', '2022-03-22 05:22:12'),
 (14, 4, NULL, 'rio', 'Rio Dewanto', '$2y$10$aLoUaSHPqheeBEtoLsZTQuEXjiSYNwDynW7teS4RDV/AKX9GWoyNm', '2005-08-16', 'l', 's1d4', 27.3, 'rio@gmail.com', 'user', '2022-03-23 02:53:10', '2022-03-23 02:53:10'),
-(15, 4, NULL, 'ranisetyo', 'Rani Setyowati', '$2y$10$HmwaJ5z3QRVqrfd7bcon6eZSXyh1gW5j77/Sg9qMp0oHx4mJYBuiK', '1998-11-03', 'p', 'smak', 41, 'rani@gmail.com', 'user', '2022-03-23 06:18:07', '2022-03-23 06:18:07');
+(15, 4, NULL, 'ranisetyo', 'Rani Setyowati', '$2y$10$HmwaJ5z3QRVqrfd7bcon6eZSXyh1gW5j77/Sg9qMp0oHx4mJYBuiK', '1998-11-03', 'p', 'smak', 41, 'rani@gmail.com', 'user', '2022-03-23 06:18:07', '2022-03-23 06:18:07'),
+(16, 9, 2640, 'marthanila', 'Martha Nilam Hapsari', '$2y$10$veej9IkL8bxoTwQ4lGgjDuJKAscwNZFE6I.0kz2DzPYSo5ZVE4d3.', '1992-01-04', 'p', 's1d4', 19, 'marthanilam0401@gmail.com', 'user', '2022-03-30 06:28:30', '2022-03-30 06:28:30'),
+(17, 9, 2369, 'nurdinhnf', 'Nurdin Hanif', '$2y$10$nQsZfCfRua0.HNTMM4ycpOJVzt1vQPJpc39a6B2jrP4tWl9lC/U8W', '1984-12-19', 'l', 'd3', 0.3, 'nurdinhanif@gmail.com', 'user', '2022-03-30 06:33:52', '2022-03-30 06:33:52'),
+(18, 9, NULL, 'ryangarya', 'Ryan Gary Andrew', '$2y$10$2AKLYYg.R3k8d9kjzOhCKevq8UCA76SVMiu8bUlof1GoYAQxOxiKS', '1996-07-29', 'l', 'smak', 5.3, 'ryangarya@gmail.com', 'user', '2022-03-30 06:40:17', '2022-03-30 06:40:17');
 
 -- --------------------------------------------------------
 
@@ -3362,7 +3380,10 @@ CREATE TABLE `user_jawaban` (
 --
 
 INSERT INTO `user_jawaban` (`id`, `user_id`, `waktu`, `tanggal`) VALUES
-(10, 14, '00:00:22', '2022-03-23 16:34:08');
+(10, 14, '00:00:22', '2022-03-23 16:34:08'),
+(11, 16, '00:00:15', '2022-03-30 14:56:58'),
+(12, 17, '00:00:27', '2022-03-30 14:59:02'),
+(13, 18, '00:00:17', '2022-03-30 14:59:49');
 
 --
 -- Indexes for dumped tables
@@ -3488,7 +3509,7 @@ ALTER TABLE `user_jawaban`
 -- AUTO_INCREMENT for table `detail_user_jawaban`
 --
 ALTER TABLE `detail_user_jawaban`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `divisi`
@@ -3572,13 +3593,13 @@ ALTER TABLE `universitas`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `user_jawaban`
 --
 ALTER TABLE `user_jawaban`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- Constraints for dumped tables
