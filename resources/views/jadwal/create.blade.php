@@ -373,6 +373,42 @@ section{
             }
         });
 
+        function soal_select(ids, jab_id, div_id){
+            if(jab_id && div_id){
+                ids.select2({
+                        placeholder: "Pilih Soal",
+                        ajax: {
+                            minimumResultsForSearch: 20,
+                            dataType: 'json',
+                            theme: "bootstrap",
+                            delay: 250,
+                            type: 'POST',
+                            url: '/api/soal/get_select/'+jab_id+'/'+div_id,
+                            data: function(params) {
+                                return {
+                                    term: params.term
+                                }
+                            },
+                            processResults: function(data) {
+                                console.log(data);
+                                return {
+                                    results: $.map(data, function(obj) {
+                                        return {
+                                            id: obj.id,
+                                            text: obj.nama
+                                        };
+                                    })
+                                };
+                            },
+                        }
+                    });
+            }else{
+                ids.select2({
+                    placeholder: 'Pilih Soal',
+                });
+            }
+        }
+
         function numberRows($t) {
             var c = 0;
             $t.find("tr.kolom").each(function(ind, el) {
@@ -394,6 +430,9 @@ section{
                 $('tr[id="' + id + '"]').find('.soaltable').attr('id', 'soaltable' + j);
                 $('tr[id="' + id + '"]').find('.soalform').attr('id', 'soalform' + j);
 
+                var jab_id = $('tr[id="' + id + '"]').find('.jabatan').val();
+                var div_id = $('tr[id="' + id + '"]').find('.divisi').val();
+
                 var count_kriteria = 0;
                 $('tr[id="' + id + '"]').find('.kriteria').each(function(ind1, el1){
                     $(el1).attr('id', 'kriteria' + j+''+count_kriteria);
@@ -408,8 +447,8 @@ section{
                 });
 
                 $('tr[id="' + id + '"]').find('.master_usia').attr('name', 'master_usia[' + j +']');
-                var count_usia = 0;
-                $('tr[id="' + id + '"]').find('.usiatable').each(function(ind1, el1){
+                var count_usia = 0 - 1;
+                $('tr[id="' + id + '"] .usiatable').find('tr').each(function(ind1, el1){
                     $(el1).find('.usia_min').attr('name', 'usia_min[' + j + ']['+ count_usia +']');
                     $(el1).find('.usia_min').attr('id', 'usia_min'+ count_usia);
                     $(el1).find('.usia_max').attr('name', 'usia_max[' + j + ']['+ count_usia +']');
@@ -420,8 +459,8 @@ section{
                 });
 
                 $('tr[id="' + id + '"]').find('.master_pendidikan').attr('name', 'master_pendidikan[' + j +']');
-                var count_pendidikan = 0;
-                $('tr[id="' + id + '"]').find('.pendidikantable').each(function(ind1, el1){
+                var count_pendidikan = 0 - 1;
+                $('tr[id="' + id + '"] .pendidikantable').find('tr').each(function(ind1, el1){
                     $(el1).find('.ketentuan_pendidikan').attr('name', 'ketentuan_pendidikan[' + j + ']['+ count_pendidikan +']');
                     $(el1).find('.ketentuan_pendidikan').attr('id', 'ketentuan_pendidikan'+j+''+ count_pendidikan);
                     $(el1).find('.bobot_pendidikan').attr('name', 'bobot_pendidikan[' + j + ']['+ count_pendidikan +']');
@@ -430,8 +469,8 @@ section{
                 });
 
                 $('tr[id="' + id + '"]').find('.master_jarak').attr('name', 'master_jarak[' + j +']');
-                var count_jarak = 0;
-                $('tr[id="' + id + '"]').find('.jaraktable').each(function(ind1, el1){
+                var count_jarak = 0 - 1;
+                $('tr[id="' + id + '"] .jaraktable').find('tr').each(function(ind1, el1){
                     $(el1).find('.jarak_min').attr('name', 'jarak_min[' + j + ']['+ count_jarak +']');
                     $(el1).find('.jarak_min').attr('id', 'jarak_min'+ count_jarak);
                     $(el1).find('.jarak_max').attr('name', 'jarak_max[' + j + ']['+ count_jarak +']');
@@ -440,10 +479,12 @@ section{
                     $(el1).find('.bobot_jarak').attr('id', 'bobot_jarak'+ count_jarak);
                     count_jarak++;
                 });
-                
+
+                soal_select($('tr[id="' + id + '"] .soaltable .soal_id'), jab_id, div_id);
+
                 $('tr[id="' + id + '"]').find('.master_soal').attr('name', 'master_soal[' + j +']');
-                var count_soal = 0;
-                $('tr[id="' + id + '"]').find('.soaltable').each(function(ind1, el1){
+                var count_soal = 0 - 1;
+                $('tr[id="' + id + '"] .soaltable').find('tr').each(function(ind1, el1){
                     $(el1).find('.soal_id').attr('name', 'soal_id[' + j + ']['+ count_soal +']');
                     $(el1).find('.soal_id').attr('id', 'soal_id'+j+''+ count_soal);
                     $(el1).find('.bobot_soal').attr('name', 'bobot_soal[' + j + ']['+ count_soal +']');
@@ -461,7 +502,7 @@ section{
                 //     count_kunci++;
                 // });
                 // $('tr[id="' + id + '"]').find('.jawaban').attr('id', 'jawaban'+j);
-                
+
                 // $(el).attr('id', 'kolom' + j);
                 // $(el).find('.soal').attr('name', 'soal[' + j + ']');
                 // $(el).find('.soal').attr('id', 'soal' + j);
@@ -470,7 +511,7 @@ section{
                 // $(el).find('.poin').attr('name', 'poin[' + j + ']');
                 // $(el).find('.poin').attr('id', 'poin' + j);
 
-                
+
             });
         }
 
@@ -672,7 +713,7 @@ section{
             $('tr[id="'+idtable+'"]').remove();
             countable--;
             numberRows($("#showtable"));
-            
+
         });
 
         function numberRowsUsia(id) {
@@ -689,15 +730,15 @@ section{
             });
         }
 
-        $('.usiatable').on('click', '.addusiarow', function(){
+        $(document).on('click', '.usiatable .addusiarow', function(){
             var ids = $(this).closest('.usiatable').attr('id');
             var idt = ids.substring(9);
-            $('.usiatable tr:last').after(addusiarow());
+            $('#'+ids+' tr:last').after(addusiarow());
             console.log(ids);
             numberRowsUsia(idt);
         });
 
-        $('.usiatable').on('click', '#removeusiarow', function(e) {
+        $(document).on('click', '.usiatable #removeusiarow', function(e) {
             var ids = $(this).closest('.usiatable').attr('id');
             var idt = ids.substring(9);
             $(this).closest('tr').remove();
@@ -717,14 +758,14 @@ section{
             });
         }
 
-        $('.pendidikantable').on('click', '#addpendidikanrow', function(){
+        $(document).on('click', '.pendidikantable #addpendidikanrow', function(){
             var ids = $(this).closest('.pendidikantable').attr('id');
             var idt = ids.substring(15);
-            $('.pendidikantable tr:last').after(addpendidikanrow());
+            $('#'+ids+' tr:last').after(addpendidikanrow());
             numberRowsPendidikan(idt);
         });
 
-        $('.pendidikantable').on('click', '#removependidikanrow', function(e) {
+        $(document).on('click', '.pendidikantable #removependidikanrow', function(e) {
             var ids = $(this).closest('.pendidikantable').attr('id');
             var idt = ids.substring(9);
             $(this).closest('tr').remove();
@@ -745,40 +786,45 @@ section{
             });
         }
 
-        $('.jaraktable').on('click', '#addjarakrow', function(){
+        $(document).on('click', '.jaraktable #addjarakrow', function(){
             var ids = $(this).closest('.jaraktable').attr('id');
             var idt = ids.substring(10);
-            $('.jaraktable tr:last').after(addjarakrow());
+            console.log(idt);
+            $('#'+ids+' tr:last').after(addjarakrow());
             numberRowsJarak(idt);
         });
 
-        $('.jaraktable').on('click', '#removejarakrow', function(e) {
+        $(document).on('click', '.jaraktable #removejarakrow', function(e) {
             var ids = $(this).closest('.jaraktable').attr('id');
             var idt = ids.substring(10);
             $(this).closest('tr').remove();
             numberRowsJarak(idt);
         });
 
-        function numberRowsSoal(id) {
+        function numberRowsSoal(id, jab_id, div_id) {
             var c = 0 - 1;
             $('#soaltable'+id).find("tr").each(function(ind, el1) {
                 var j = c;
                 $(el1).find('.soal_id').attr('name', 'soal_id[' + id + ']['+ j +']');
                 $(el1).find('.soal_id').attr('id', 'soal_id'+id+''+ j);
+                soal_select($(el1).find('.soal_id'), jab_id, div_id);
                 $(el1).find('.bobot_soal').attr('name', 'bobot_soal[' + id + ']['+ j +']');
                 $(el1).find('.bobot_soal').attr('id', 'bobot_soal'+ j);
                 c++;
             });
         }
 
-        $('.soaltable').on('click', '#addsoalrow', function(){
+        $(document).on('click', '.soaltable #addsoalrow', function(){
             var ids = $(this).closest('.soaltable').attr('id');
             var idt = ids.substring(9);
-            $('.soaltable tr:last').after(addsoalrow());
-            numberRowsSoal(idt);
+            var jab_id = $('tr[id="kolom'+idt+'"]').find('.jabatan').val();
+            var div_id = $('tr[id="kolom'+idt+'"]').find('.divisi').val();
+            console.log(jab_id+" "+div_id);
+            $('#'+ids+' tr:last').after(addsoalrow());
+            numberRowsSoal(idt, jab_id, div_id);
         });
 
-        $('.soaltable').on('click', '#removesoalrow', function(e) {
+        $(document).on('click', '.soaltable #removesoalrow', function(e) {
             var ids = $(this).closest('.soaltable').attr('id');
             var idt = ids.substring(9);
             $(this).closest('tr').remove();
@@ -816,6 +862,28 @@ section{
             }
             else if(kriteria.indexOf("soal") <= -1){
                 $(this).closest('tr').find('.soalform').addClass('hide');
+            }
+        });
+
+        $('#showtable').on('change', '.jabatan', function(e){
+            var id = $(this).closest('tr.kolom').attr('id');
+            var val = $(this).closest('tr').find('.jabatan').val();
+            var val_divisi = $(this).closest('tr').find('.divisi').val();
+            if(val){
+                if(val_divisi){
+                    soal_select($('tr[id="'+id+'"] .soaltable .soal_id'), val, val_divisi);
+                }
+            }
+        });
+
+        $('#showtable').on('change', '.divisi', function(e){
+            var id = $(this).closest('tr.kolom').attr('id');
+            var val = $(this).closest('tr').find('.divisi').val();
+            var val_jabatan = $(this).closest('tr').find('.jabatan').val();
+            if(val){
+                if(val_jabatan){
+                    soal_select($('tr[id="'+id+'"] .soaltable .soal_id'), val_jabatan, val);
+                }
             }
         });
 
