@@ -52,6 +52,39 @@ class GetController extends Controller
             ->make(true);
     }
 
+    public function peserta_hasil_table()
+    {
+        $data = User::where([['role', '=', 'user']])->Has('Pendaftaran.Kriteria')->get();
+        return datatables()->of($data)
+            ->addIndexColumn()
+            ->addColumn('pendaftaran', function ($data) {
+                return $data->Pendaftaran->Jabatan->nama . ' ' . $data->Pendaftaran->Divisi->nama;
+            })
+            ->addColumn('tanggal_daftar', function ($data) {
+                return Carbon::parse($data->created_at)->format('d-m-Y');
+            })
+            ->addColumn('nama', function ($data) {
+                return $data->nama;
+            })
+            ->addColumn('usia', function ($data) {
+                return $this->count_usia_peserta($data->id);
+            })
+            ->addColumn('pendidikan', function ($data) {
+                return $this->count_pend_peserta($data->id);
+            })
+            ->addColumn('jarak', function ($data) {
+                return $this->count_jarak_peserta($data->id);
+            })
+            ->addColumn('soal', function ($data) {
+                return $this->count_soal_peserta($data->id);
+            })
+            ->addColumn('rerata', function ($data) {
+                return $this->count_all_bobot($data->id);
+            })
+            ->rawColumns(['aksi', 'nama'])
+            ->make(true);
+    }
+
     public function soal_get_select($jabatan, $divisi, Request $request){
         $data = Soal::where('nama', 'LIKE', '%' . $request->input('term', '') . '%')
             ->whereHas('Divisi', function($q) use($divisi){
@@ -249,6 +282,29 @@ class GetController extends Controller
         $maxsoal = max($arraysoal);
         $res = round(($bobot / $maxsoal), 3);
         return $res;
+    }
+
+    public function count_all_bobot($id_user){
+        $user = User::find($id_user);
+        $k = Kriteria::where('pendaftaran_id', $user->pendaftaran_id)->get();
+        $rerata = 0;
+        foreach($k as $i){
+            if($i->nama == "usia"){
+                $res = $this->count_usia_peserta($id_user);
+                $rerata = $rerata + ($res * $i->bobot);
+            }else
+            if($i->nama == "pendidikan"){
+                $res = $this->count_pend_peserta($id_user);
+                $rerata = $rerata + ($res * $i->bobot);
+            }else if($i->nama == "jarak"){
+                $res = $this->count_jarak_peserta($id_user);
+                $rerata = $rerata + ($res * $i->bobot);
+            }else if($i->nama == "soal"){
+                $res = $this->count_soal_peserta($id_user);
+                $rerata = $rerata + ($res * $i->bobot);
+            }
+        }
+        return $rerata;
     }
 
     public function all_peserta(){

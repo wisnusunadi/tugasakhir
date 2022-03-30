@@ -33,7 +33,7 @@ Route::prefix('/laporan')->group(function () {
 
 Route::prefix('/peserta')->group(function () {
     Route::get('/table', [App\Http\Controllers\GetController::class, 'peserta_table']);
-    Route::get('/hasil', [App\Http\Controllers\GetController::class, 'all_peserta']);
+    Route::get('/hasil', [App\Http\Controllers\GetController::class, 'peserta_hasil_table']);
 });
 
 Route::prefix('/divisi')->group(function () {

@@ -24,12 +24,12 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::group(['middleware' => 'auth'], function () {
     Route::group(['prefix' => '/jadwal'], function () {
-
         Route::get('/create', [App\Http\Controllers\JadwalController::class, 'jadwal_create'])->name('jadwal.create');
         Route::post('/store', [App\Http\Controllers\JadwalController::class, 'jadwal_store'])->name('jadwal.store');
     });
     Route::get('/peserta', [App\Http\Controllers\HomeController::class, 'peserta_show'])->name('peserta');
     Route::get('/hasil', [App\Http\Controllers\HomeController::class, 'hasil_show'])->name('hasil');
+    Route::view('/hasil/peserta', 'peserta.hasil.show_result')->name('peserta.hasil');
     Route::group(['prefix' => '/select'], function () {
         Route::get('/jabatan/get/{id}', [App\Http\Controllers\HomeController::class, 'select_jabatan_get'])->name('select.jabatan.get');
         Route::get('/divisi/get/{id}', [App\Http\Controllers\HomeController::class, 'select_divisi_get'])->name('select.divisi.get');

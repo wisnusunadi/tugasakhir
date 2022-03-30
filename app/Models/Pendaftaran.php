@@ -25,4 +25,7 @@ class Pendaftaran extends Model
     public function User(){
         return $this->hasMany(User::class);
     }
+    public function Kriteria(){
+        return $this->hasMany(Kriteria::class);
+    }
 }
