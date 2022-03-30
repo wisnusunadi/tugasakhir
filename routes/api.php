@@ -33,6 +33,7 @@ Route::prefix('/laporan')->group(function () {
 
 Route::prefix('/peserta')->group(function () {
     Route::get('/table', [App\Http\Controllers\GetController::class, 'peserta_table']);
+    Route::get('/check/{parameter}/{value}', [App\Http\Controllers\GetController::class, 'peserta_check']);
 });
 
 Route::prefix('/divisi')->group(function () {
@@ -46,4 +47,3 @@ Route::prefix('/jabatan')->group(function () {
 Route::prefix('/soal')->group(function () {
     Route::post('/get_select/{jabatan}/{divisi}', [App\Http\Controllers\GetController::class, 'soal_get_select']);
 });
-

@@ -13,6 +13,16 @@ use Yajra\DataTables\DataTables;
 
 class GetController extends Controller
 {
+    public function peserta_check($param, $value)
+    {
+        if ($param == 'username') {
+            $data = User::where('username', $value)->count();
+        } else if ($param == 'email') {
+            $data = User::where('email', $value)->count();
+        }
+
+        return response()->json(['jumlah' => $data]);
+    }
     public function peserta_table()
     {
         $data = User::where('role', 'user')->get();
@@ -44,11 +54,12 @@ class GetController extends Controller
             ->make(true);
     }
 
-    public function soal_get_select($jabatan, $divisi, Request $request){
+    public function soal_get_select($jabatan, $divisi, Request $request)
+    {
         $data = Soal::where('nama', 'LIKE', '%' . $request->input('term', '') . '%')
-            ->whereHas('Divisi', function($q) use($divisi){
+            ->whereHas('Divisi', function ($q) use ($divisi) {
                 $q->where('id', $divisi);
-            })->whereHas('Jabatan', function($q) use($jabatan){
+            })->whereHas('Jabatan', function ($q) use ($jabatan) {
                 $q->where('id', $jabatan);
             })
             ->orderby('nama', 'ASC')->get();
@@ -76,57 +87,54 @@ class GetController extends Controller
         echo json_encode($data);
     }
 
-    public function bobot_usia_peserta($usia){
+    public function bobot_usia_peserta($usia)
+    {
         $bobot = 0;
-        if($usia >= 18 && $usia <= 25){
+        if ($usia >= 18 && $usia <= 25) {
             $bobot = 80;
-        }else{
+        } else {
             $bobot = 60;
         }
         return $bobot;
     }
 
-    public function bobot_pend_peserta($pend, $akreditasi){
+    public function bobot_pend_peserta($pend, $akreditasi)
+    {
         $bobot = 0;
-        if($pend == "smak"){
+        if ($pend == "smak") {
             $bobot = 20;
-        }else if($pend == "d3"){
-            if($akreditasi == 'A'){
+        } else if ($pend == "d3") {
+            if ($akreditasi == 'A') {
                 $bobot = '50';
-            }
-            else if($akreditasi == 'B'){
+            } else if ($akreditasi == 'B') {
                 $bobot = '45';
-            }
-            else if($akreditasi == 'C'){
+            } else if ($akreditasi == 'C') {
                 $bobot = '40';
-            }
-            else{
+            } else {
                 $bobot = '25';
             }
-        }else if($pend == "s1d4"){
-            if($akreditasi == 'A'){
+        } else if ($pend == "s1d4") {
+            if ($akreditasi == 'A') {
                 $bobot = '70';
-            }
-            else if($akreditasi == 'B'){
+            } else if ($akreditasi == 'B') {
                 $bobot = '65';
-            }
-            else if($akreditasi == 'C'){
+            } else if ($akreditasi == 'C') {
                 $bobot = '60';
-            }
-            else{
+            } else {
                 $bobot = '35';
             }
         }
         return $bobot;
     }
 
-    public function count_usia_peserta($id_user){
+    public function count_usia_peserta($id_user)
+    {
         $user = User::find($id_user);
         $usia = Carbon::parse($user->tgl_lahir)->age;
         $alluser = user::where('pendaftaran_id', $user->pendaftaran_id)->get();
         $bobot = $this->bobot_usia_peserta($usia);
         $arrayusia = [];
-        foreach ($alluser as $i){
+        foreach ($alluser as $i) {
             $arrayusia[] = $this->bobot_usia_peserta(Carbon::parse($user->tgl_lahir)->age);
         }
 
@@ -134,19 +142,20 @@ class GetController extends Controller
         return $bobot / $maxusia;
     }
 
-    public function count_pend_peserta($id_user){
+    public function count_pend_peserta($id_user)
+    {
         $user = User::find($id_user);
         $pend = $user->pend;
         $akreditasi = "";
-        if($user->univ_id){
+        if ($user->univ_id) {
             $akreditasi = $user->Universitas->peringkat;
         }
         $alluser = User::where('pendaftaran_id', $user->pendaftaran_id)->get();
         $bobot = $this->bobot_pend_peserta($pend, $akreditasi);
         $arrayupend = [];
-        foreach ($alluser as $i){
+        foreach ($alluser as $i) {
             $akreditasi_i = "";
-            if($i->univ_id){
+            if ($i->univ_id) {
                 $akreditasi_i = $i->Universitas->peringkat;
             }
             $arraypend[] = $this->bobot_pend_peserta($i->pend, $akreditasi_i);
@@ -155,6 +164,4 @@ class GetController extends Controller
         $maxpend = max($arraypend);
         return $bobot / $maxpend;
     }
-
-
 }
