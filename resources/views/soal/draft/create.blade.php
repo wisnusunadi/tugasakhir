@@ -75,8 +75,8 @@ section{
                 @if(Session::has('error') || count($errors) > 0 )
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     <strong>{{Session::get('error')}}</strong> Periksa
-                    kembali data yang diinput
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    kembali data yang di input
+                    <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -84,7 +84,7 @@ section{
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                     <strong>{{Session::get('success')}}</strong>,
                     Terima kasih
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>

@@ -21,6 +21,16 @@ use Yajra\DataTables\DataTables;
 
 class GetController extends Controller
 {
+    public function peserta_check($param, $value)
+    {
+        if ($param == 'username') {
+            $data = User::where('username', $value)->count();
+        } else if ($param == 'email') {
+            $data = User::where('email', $value)->count();
+        }
+
+        return response()->json(['jumlah' => $data]);
+    }
     public function peserta_table()
     {
         $data = User::where('role', 'user')->get();
@@ -95,9 +105,9 @@ class GetController extends Controller
 
     public function soal_get_select($jabatan, $divisi, Request $request){
         $data = Soal::where('nama', 'LIKE', '%' . $request->input('term', '') . '%')
-            ->whereHas('Divisi', function($q) use($divisi){
+            ->whereHas('Divisi', function ($q) use ($divisi) {
                 $q->where('id', $divisi);
-            })->whereHas('Jabatan', function($q) use($jabatan){
+            })->whereHas('Jabatan', function ($q) use ($jabatan) {
                 $q->where('id', $jabatan);
             })
             ->orderby('nama', 'ASC')->get();
@@ -139,7 +149,7 @@ class GetController extends Controller
                 }
         }
 
-        if($bobot == ""){
+        if ($bobot == "") {
             $bobot = "0";
         }
         return $bobot;
@@ -160,14 +170,14 @@ class GetController extends Controller
         foreach($k_pend as $i){
                 if($pend == "smak" && $i->pendidikan == "smak"){
                     $bobot = $i->nilai;
-                }else{
-                    if($pend == $i->pendidikan && $akreditasi == $i->peringkat){
+                } else {
+                    if ($pend == $i->pendidikan && $akreditasi == $i->peringkat) {
                         $bobot = $i->nilai;
                     }
                 }
         }
 
-        if($bobot == ""){
+        if ($bobot == "") {
             $bobot = "0";
         }
         return $bobot;
@@ -206,7 +216,7 @@ class GetController extends Controller
             }
         }
 
-        if($bobot == ""){
+        if ($bobot == "") {
             $bobot = "0";
         }
         return $bobot;
@@ -256,7 +266,8 @@ class GetController extends Controller
         return $res;
     }
 
-    public function count_pend_peserta($id_user){
+    public function count_pend_peserta($id_user)
+    {
         $user = User::find($id_user);
         $daftar_id = $user->pendaftaran_id;
         $bobot = $this->bobot_pend_peserta($user->id);
@@ -275,7 +286,8 @@ class GetController extends Controller
         return $res;
     }
 
-    public function count_jarak_peserta($id_user){
+    public function count_jarak_peserta($id_user)
+    {
         $user = User::find($id_user);
         $daftar_id = $user->pendaftaran_id;
         $bobot = $this->bobot_jarak_peserta($user->id);
@@ -370,5 +382,8 @@ class GetController extends Controller
         }
     }
 
-
+    public function reload_captcha()
+    {
+        return response()->json(['captcha' => captcha_img()]);
+    }
 }

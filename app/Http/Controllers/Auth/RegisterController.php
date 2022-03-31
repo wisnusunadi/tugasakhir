@@ -34,6 +34,7 @@ class RegisterController extends Controller
      */
     protected $redirectTo = RouteServiceProvider::HOME;
 
+
     /**
      * Create a new controller instance.
      *
@@ -57,6 +58,7 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'pendaftaran_id' => ['required'],
+            'captcha' => ['required', 'captcha'],
         ]);
     }
 
@@ -78,12 +80,12 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         $univ = "";
-        if($data['pend'] == "smak"){
+        if ($data['pend'] == 'smak') {
             $univ = NULL;
-        }else{
+        } else {
             $univ = $data['universitas'];
         }
-        return User::create([
+        $u =  User::create([
             'nama' => $data['name'],
             'pendaftaran_id' => $data['pendaftaran_id'],
             'jenis_kelamin' => $data['jenis_kelamin'],
@@ -96,5 +98,11 @@ class RegisterController extends Controller
             'univ_id' => $univ,
             'jarak' => $data['jarak'],
         ]);
+
+        if ($u) {
+            return $u;
+        } else {
+            return redirect()->back()->with('error', 'Gagal menambahkan Jadwal');
+        }
     }
 }

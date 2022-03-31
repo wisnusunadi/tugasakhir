@@ -33,18 +33,26 @@
 <div class="container">
     <div class="row" id="thecontent">
         <div class="col-md-12">
+            @if(Session::has('error') || count($errors) > 0 )
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>{{Session::get('error')}}</strong> Periksa
+                kembali data yang di input
+                <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @endif
             <div class="card">
-
                 <div class="card-body">
                     <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                         <li class="nav-item" role="presentation">
                             <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Pilih Jadwal</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-bio" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Biodata</button>
+                            <button class="nav-link " id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-bio" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Biodata</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Akun</button>
+                            <button class="nav-link " id="pills-akun-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Akun</button>
                         </li>
                     </ul>
                     <form method="POST" action="{{ route('register') }}">
@@ -73,7 +81,7 @@
                                             <td >{{$j->Pendaftaran[0]->kuota}}</td>
                                             <td >
                                                 <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="pendaftaran_id" id="pendaftaran_id1" value="{{$j->Pendaftaran[0]->id}}"/>
+                                                <input class="form-check-input" type="radio" name="pendaftaran_id" id="pendaftaran_id1" value="{{$j->Pendaftaran[0]->id}}"  required/>
                                                 </div>
                                             </td>
                                         </tr>
@@ -83,7 +91,7 @@
                                             <td >{{$j->Pendaftaran[$i]->kuota}}</td>
                                             <td >
                                                 <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="pendaftaran_id" id="pendaftaran_id{{$i}}" value="{{$j->Pendaftaran[$i]->id}}"/>
+                                                <input class="form-check-input" type="radio" name="pendaftaran_id" id="pendaftaran_id{{$i}}" value="{{$j->Pendaftaran[$i]->id}}" required/>
                                                 </div>
                                             </td>
                                         </tr>
@@ -132,11 +140,11 @@
                                     <label for="password" class="col-md-4 col-form-label text-md-end">Jenis Kelamin</label>
                                     <div class="col-md-6 col-form-label">
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" id="laki" value="l" name="jenis_kelamin" >
+                                            <input class="form-check-input" type="radio" id="laki" value="l" name="jenis_kelamin" {{(old('jenis_kelamin') == 'l') ? 'checked' : ''}} required>
                                             <label class="form-check-label" for="inlineCheckbox1">Laki - laki</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" id="perempuan"  value="p" name="jenis_kelamin" >
+                                            <input class="form-check-input" type="radio" id="perempuan"  value="p" name="jenis_kelamin"  {{(old('jenis_kelamin') == 'p') ? 'checked' : ''}} required>
                                             <label class="form-check-label" for="inlineCheckbox1">Perempuan</label>
                                         </div>
 
@@ -152,15 +160,15 @@
                                     <label for="password" class="col-md-4 col-form-label text-md-end">Pend Terakhir</label>
                                     <div class="col-md-8 col-form-label">
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" id="pend1" value="smak" name="pend" >
+                                            <input class="form-check-input" type="radio" id="pend1" value="smak" name="pend" required>
                                             <label class="form-check-label" for="inlineCheckbox1">SMA / SMK</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" id="pend2"  value="d3" name="pend" >
+                                            <input class="form-check-input" type="radio" id="pend2"  value="d3" name="pend" required>
                                             <label class="form-check-label" for="inlineCheckbox1">D3</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" id="pend2"  value="s1d4" name="pend" >
+                                            <input class="form-check-input" type="radio" id="pend2"  value="s1d4" name="pend" required>
                                             <label class="form-check-label" for="inlineCheckbox1">S1 / D4</label>
                                         </div>
 
@@ -172,22 +180,22 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group row mb-3 univ hide">
+                                {{-- <div class="form-group row mb-3 univ hide">
                                     <label for="password" class="col-md-4 col-form-label text-md-end">Universitas</label>
                                     <div class="col-md-8 col-form-label">
                                       <select class="form-control col-form-label universitas" data-placeholder="Pilih universitas" style="width: 100%;" name="universitas" id="universitas">
                                       </select>
                                     </div>
-                                </div>
+                                </div> --}}
 
 
-                                {{-- <div class="row mb-3 univ hide">
+                                <div class="row mb-3 univ hide">
                                     <label for="tgl_lahir" class="col-md-4 col-form-label text-md-end"></label>
                                     <div class="col-md-6">
-                                        <select class="universitas" data-placeholder="Pilih universitas"  name="universitas" id="universitas">
+                                        <select class="universitas" data-placeholder="Pilih universitas"  name="universitas" id="universitas" >
                                         </select>
                                     </div>
-                                </div> --}}
+                                </div>
 
                                 <div class="row mb-3">
                                     <label for="password-confirm" class="col-md-4 col-form-label text-md-end">Alamat</label>
@@ -195,9 +203,12 @@
                                     <div class="col-md-6">
                                         <div id="map" style="width: 100%;height: 30vh;"></div>
                                         <div id="instructions"></div>
-                                            </div>
-                                            <input id="jarak_user" type="text" name="jarak" class="d-none">
+                                    </div>
+                                    <input id="jarak_user" type="text" name="jarak" class="d-none" >
                                 </div>
+
+
+
                         </div>
                         <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
                                 <div class="row mb-3">
@@ -205,7 +216,7 @@
 
                                     <div class="col-md-6">
                                         <input id="username" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" required autocomplete="username" autofocus>
-
+                                        <small class="text-danger" id="user_duplicate"></small>
                                         @error('username')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -219,7 +230,7 @@
 
                                     <div class="col-md-6">
                                         <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-
+                                        <small class="text-danger" id="email_duplicate"></small>
                                         @error('email')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -248,23 +259,45 @@
                                         <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                                     </div>
                                 </div>
-
-
-                                <div class="row mb-0">
-                                    <div class="col-md-9 offset-md-2">
-                                        <a type="button" class="btn btn-danger" href="{{route('login')}}">Batal</a>
-                                        <button type="submit" class="btn btn-primary float-right">
-                                            {{ __('Register') }}
-                                        </button>
+                                <div class="row mb-3">
+                                    <label for="captcha" class="col-md-4 col-form-label text-md-end"></label>
+                                    <div class="col-md-6 captcha row">
+                                        <div class="col-md-5 ">
+                                            <input type="text" class="form-control" name="captcha" placeholder="captcha" id="captcha" required>
+                                            @error('captcha')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                        </div>
+                                        <div class="col-md-4 ">
+                                            <span>{!! captcha_img() !!}</span>
+                                        </div>
+                                        <div class="col-md-1 ">
+                                        </div>
+                                        <div class="col-md-2 ">
+                                            <button type="button" class="btn btn-danger btn-sm" class="reload" id="reload"> <i class="fa fa-refresh" aria-hidden="true"></i></button>
+                                        </div>
                                     </div>
                                 </div>
+
+                                <div class="row mb-12">
+
+                                </div>
+
                         </div>
                     </div>
 
                     </div>
-
+                    <div class="card-footer">
+                        <a type="button" class="btn btn-danger float-left" href="{{route('login')}}">Batal</a>
+                        <button type="submit" class="btn btn-success float-right" id="tambah" disabled>
+                            {{ __('Register') }}
+                        </button>
+                     </div>
                     </form>
                 </div>
+
 
             </div>
         </div>
@@ -311,6 +344,7 @@ async function getRoute(end) {
     `https://api.mapbox.com/directions/v5/mapbox/cycling/${start[0]},${start[1]};${end[0]},${end[1]}?steps=true&geometries=geojson&access_token=${mapboxgl.accessToken}`,
     { method: 'GET' }
   );
+
   const json = await query.json();
   const data = json.routes[0];
   const route = data.geometry.coordinates;
@@ -402,6 +436,7 @@ map.on('load', () => {
 });
 
 map.on('click', (event) => {
+
   const coords = Object.keys(event.lngLat).map((key) => event.lngLat[key]);
   const end = {
     type: 'FeatureCollection',
@@ -446,11 +481,12 @@ map.on('click', (event) => {
   }
   getRoute(coords);
 
-
-
+                if ($('#name').val() != "" && $('input[name=jenis_kelamin]:checked').length > 0 && $('#tgl_lahir').val() != ""  && $('#username').val() != "" && $('#email').val() != "" && $('#password').val() != "" && $('#jarak_user').val() != 0.0 && $('#password-confirm').val() != "") {
+                    $('#tambah').attr("disabled", false);
+                } else {
+                    $('#tambah').attr("disabled", true);
+                }
 });
-
-
 
 
 var geocoder = new MapboxGeocoder({
@@ -484,8 +520,10 @@ var geocoder = new MapboxGeocoder({
         $('input[type="radio"][name="pend"]').change(function(){
           if($(this).val() == "s1d4" || $(this).val() == "d3"){
             $('.univ').removeClass('hide');
+            $('.universitas').attr("required", true);
           }else{
             $('.univ').addClass('hide');
+            $('.universitas').attr("required", false);
           }
         })
 
@@ -515,6 +553,213 @@ var geocoder = new MapboxGeocoder({
               },
             }
         });
+
+
+
+        $('#name').on('keyup change', function() {
+            if ($(this).val() != "") {
+                if ($('#tgl_lahir').val() != "" &&  $('input[name=jenis_kelamin]:checked').length > 0  && $('#username').val() != ""  && $('#email').val() != "" && $('#password').val() != "" && $('#password-confirm').val() != ""  && $('#jarak_user').val() != 0.0 && !$('#username').hasClass('is-invalid')  && !$('#email').hasClass('is-invalid') && $('#captcha').val() != "" ) {
+                    $('#tambah').attr("disabled", false);
+                } else {
+                    $('#tambah').attr("disabled", true);
+                }
+            } else {
+                $('#tambah').attr("disabled", true);
+            }
+        });
+
+        $('#tgl_lahir').on('keyup change', function() {
+            if ($(this).val() != "") {
+                if ($('#name').val() != "" && $('input[name=jenis_kelamin]:checked').length > 0  && $('#username').val() != "" && $('#email').val() != "" && $('#password').val() != "" && $('#password-confirm').val() != ""  && $('#jarak_user').val() != 0.0 && !$('#username').hasClass('is-invalid')  && !$('#email').hasClass('is-invalid') && $('#captcha').val() != ""  ) {
+                    $('#tambah').attr("disabled", false);
+                } else {
+                    $('#tambah').attr("disabled", true);
+                }
+            } else {
+                $('#tambah').attr("disabled", true);
+            }
+        });
+
+        $('input[type="radio"][name="jenis_kelamin"]').on('change', function() {
+            if ($(this).val() != "") {
+                if ($('#name').val() != "" && $('#tgl_lahir').val() != ""   && $('#username').val() != ""  && $('#email').val() != "" && $('#password').val() != "" && $('#password-confirm').val() != ""  && $('#jarak_user').val() != 0.0  && !$('#username').hasClass('is-invalid')  && !$('#email').hasClass('is-invalid') && $('#captcha').val() != "" )  {
+                    $('#tambah').attr("disabled", false);
+                } else {
+                    $('#tambah').attr("disabled", true);
+                }
+            } else {
+                $('#tambah').attr("disabled", true);
+            }
+        });
+
+        $('#username').on('keyup change', function() {
+            if ($(this).val() != "") {
+                if ($('#name').val() != "" && $('input[name=jenis_kelamin]:checked').length > 0 && $('#tgl_lahir').val() != ""  && $('#email').val() != "" && $('#password').val() != "" && $('#password-confirm').val() != "" && $('#jarak_user').val() != 0.0 && !$('#username').hasClass('is-invalid')  && !$('#email').hasClass('is-invalid') && $('#captcha').val() != ""  ) {
+                    $('#tambah').attr("disabled", false);
+                } else {
+                    $('#tambah').attr("disabled", true);
+                }
+            } else {
+                $('#tambah').attr("disabled", true);
+            }
+        });
+
+        $('#email').on('keyup change', function() {
+            if ($(this).val() != "") {
+                if ($('#name').val() != "" && $('input[name=jenis_kelamin]:checked').length > 0 && $('#tgl_lahir').val() != ""  && $('#username').val() != "" && $('#password').val() != "" && $('#password-confirm').val() != ""  && $('#jarak_user').val() != 0.0 && !$('#username').hasClass('is-invalid')  && !$('#email').hasClass('is-invalid') && $('#captcha').val() != ""  ) {
+                    $('#tambah').attr("disabled", false);
+                } else {
+                    $('#tambah').attr("disabled", true);
+                }
+            } else {
+                $('#tambah').attr("disabled", true);
+            }
+        });
+
+        $('#password').on('keyup change', function() {
+            if ($(this).val() != "") {
+                if ($('#name').val() != "" && $('input[name=jenis_kelamin]:checked').length > 0 && $('#tgl_lahir').val() != ""  && $('#username').val() != "" && $('#email').val() != "" && $('#password-confirm').val() != ""  && $('#jarak_user').val() != 0.0 && !$('#username').hasClass('is-invalid')  && !$('#email').hasClass('is-invalid') && $('#captcha').val() != "" ) {
+                    $('#tambah').attr("disabled", false);
+                } else {
+                    $('#tambah').attr("disabled", true);
+                }
+            } else {
+                $('#tambah').attr("disabled", true);
+            }
+        });
+
+        $('#password-confirm').on('keyup change', function() {
+            if ($(this).val() != "") {
+                if ($('#name').val() != "" && $('input[name=jenis_kelamin]:checked').length > 0 && $('#tgl_lahir').val() != ""  && $('#username').val() != "" && $('#email').val() != "" && $('#password').val() != "" && $('#jarak_user').val() != 0.0  && !$('#username').hasClass('is-invalid')  && !$('#email').hasClass('is-invalid')   && $('#captcha').val() != "" ) {
+                    $('#tambah').attr("disabled", false);
+                } else {
+                    $('#tambah').attr("disabled", true);
+                }
+            } else {
+                $('#tambah').attr("disabled", true);
+            }
+        });
+        $('#captcha').on('keyup change', function() {
+            if ($(this).val() != "") {
+                if ($('#name').val() != "" && $('input[name=jenis_kelamin]:checked').length > 0 && $('#tgl_lahir').val() != ""  && $('#username').val() != "" && $('#email').val() != "" && $('#password').val() != "" && $('#jarak_user').val() != 0.0  && !$('#username').hasClass('is-invalid')  && !$('#email').hasClass('is-invalid')  && $('#password-confirm').val() != ""  ) {
+                    $('#tambah').attr("disabled", false);
+                } else {
+                    $('#tambah').attr("disabled", true);
+                }
+            } else {
+                $('#tambah').attr("disabled", true);
+            }
+        });
+
+
+
+
+        $('#username').on('keyup change', function() {
+            if ($(this).val() != "") {
+                $.ajax({
+                    type: 'GET',
+                    dataType: 'json',
+                    url: '/api/peserta/check/username/' + $(this).val(),
+                    success: function(data) {
+                        console.log(data);
+                        if (data.jumlah >= 1) {
+                        $("#user_duplicate").html("<i class='fa fa-exclamation-circle' aria-hidden='true'></i> Nama sudah terpakai");
+                        $('#tambah').attr("disabled", true);
+                        $('#username').addClass("is-invalid");
+                         } else {
+                            $('#user_duplicate').text("");
+                            $('#username').removeClass("is-invalid");
+                            if ($('#name').val() != "" && $('input[name=jenis_kelamin]:checked').length > 0 && $('#tgl_lahir').val() != ""  && $('#username').val() != "" && $('#email').val() != "" && $('#password').val() != "" && $('#jarak_user').val() != 0.0  && $('#password-confirm').val() != "" && !$('#email').hasClass('is-invalid') && $('#captcha').val() != ""  ) {
+                                $('#tambah').attr("disabled", false);
+                                } else {
+                                 $('#tambah').attr("disabled", true);
+                                }
+                        }
+                    }
+                });
+
+            } else if ($(this).val() == "") {
+                $("#user_duplicate").html("<i class='fa fa-exclamation-circle' aria-hidden='true'></i> Username harus di isi");
+                $('#user').addClass("is-invalid");
+                $("#tambah").attr('disabled', true);
+            }
+        });
+
+        $('#email').on('keyup change', function() {
+            if ($(this).val() != "") {
+                $.ajax({
+                    type: 'GET',
+                    dataType: 'json',
+                    url: '/api/peserta/check/email/' + $(this).val(),
+                    success: function(data) {
+                        console.log(data);
+                        if (data.jumlah >= 1) {
+                        $("#email_duplicate").html("<i class='fa fa-exclamation-circle' aria-hidden='true'></i> Email sudah terpakai");
+                        $('#tambah').attr("disabled", true);
+                        $('#email').addClass("is-invalid");
+                         } else {
+                        $('#email_duplicate').text("");
+                        $('#email').removeClass("is-invalid");
+                        if ($('#name').val() != "" && $('input[name=jenis_kelamin]:checked').length > 0 && $('#tgl_lahir').val() != ""  && $('#username').val() != "" && $('#email').val() != "" && $('#password').val() != "" && $('#jarak_user').val() != 0.0  && $('#password-confirm').val() != ""  && !$('#username').hasClass('is-invalid') && $('#captcha').val() != "" ) {
+                                $('#tambah').attr("disabled", false);
+                                } else {
+                                 $('#tambah').attr("disabled", true);
+                                }
+                        }
+                    }
+                });
+
+            } else if ($(this).val() == "") {
+                $("#email_duplicate").html("<i class='fa fa-exclamation-circle' aria-hidden='true'></i> Email harus di isi");
+                $('#email').addClass("is-invalid");
+                $("#tambah").attr('disabled', true);
+            }
+        });
+
+
+        $('#reload').click(function () {
+        $.ajax({
+            type: 'GET',
+            url: 'api/reload_captcha',
+            success: function (data) {
+                console.log(data);
+                $(".captcha span").html(data.captcha);
+            }
+        });
+    });
+
+        // $('input[type="radio"][name="pend"]').on('change', function() {
+        //     if ($(this).val() != "") {
+        //         if ($('#name').val() != "" && $('input[name=jenis_kelamin]:checked').length > 0 && $('#tgl_lahir').val() != ""  && $('#username').val() != "" && $('#email').val() != "" && $('#password').val() != "" && $('#jarak_user').val() != 0.0  && $('#password-confirm').val() != "") {
+        //             $('#tambah').attr("disabled", false);
+        //         } else {
+        //             $('#tambah').attr("disabled", true);
+        //         }
+        //     } else {
+        //         $('#tambah').attr("disabled", true);
+        //     }
+        // });
+
+        // $('#universitas').change(function() {
+        //     if ($(this).val() != "" && $('#name').val() != "" && $('#tgl_lahir').val() != ""  && $('input[name=jenis_kelamin]:checked').length > 0 &&  ($('input[name=pend]:checked').val() == 'd3'|| $('input[name=pend]:checked').val() == 's1d4')  ) {
+        //         $('#tambah').attr("disabled", false);
+        //     } else {
+        //         $('#tambah').attr("disabled", true);
+        //     }
+        // });
+
+        // $('#jarak_user').change(function() {
+        //     if ($(this).val() > "0" && $('#name').val() != "" && $('#tgl_lahir').val() != ""  && $('input[name=jenis_kelamin]:checked').length > 0   ) {
+        //         $('#tambah').attr("disabled", false);
+        //     } else {
+        //         $('#tambah').attr("disabled", true);
+        //     }
+        // });
+
+
+
+
     })
 </script>
+
 @endsection
