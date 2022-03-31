@@ -67,21 +67,29 @@ class GetController extends Controller
                 return $data->nama;
             })
             ->addColumn('usia', function ($data) {
-                return $this->count_usia_peserta($data->id);
+                return $this->bobot_usia_peserta($data->id).'<br><small class="text-muted"><i>Rerata: '.$this->count_usia_peserta($data->id).'</i></small>';
             })
             ->addColumn('pendidikan', function ($data) {
-                return $this->count_pend_peserta($data->id);
+                return $this->bobot_pend_peserta($data->id).'<br><small class="text-muted"><i>Rerata: '.$this->count_pend_peserta($data->id).'</i></small>';
             })
             ->addColumn('jarak', function ($data) {
-                return $this->count_jarak_peserta($data->id);
+                return $this->bobot_jarak_peserta($data->id).'<br><small class="text-muted"><i>Rerata: '.$this->count_jarak_peserta($data->id).'</i></small>';
             })
             ->addColumn('soal', function ($data) {
-                return $this->count_soal_peserta($data->id);
+                return $this->sum_soal_peserta($data->id).'<br><small class="text-muted"><i>Rerata: '.$this->count_soal_peserta($data->id).'</i></small>';
             })
             ->addColumn('rerata', function ($data) {
                 return $this->count_all_bobot($data->id);
             })
-            ->rawColumns(['aksi', 'nama'])
+            ->addColumn('keputusan', function ($data) {
+                $bool = $this->get_keputusan_rekruitmen($data->id);
+                if($bool == true){
+                    return '<small class="badge badge-success"> Diterima </small>';
+                }else{
+                    return '<small class="badge badge-danger"> Tidak Diterima </small>';
+                }
+            })
+            ->rawColumns(['usia', 'pendidikan', 'jarak', 'soal', 'keputusan'])
             ->make(true);
     }
 
@@ -117,8 +125,12 @@ class GetController extends Controller
         echo json_encode($data);
     }
 
-    public function bobot_usia_peserta($usia, $daftar_id){
+    public function bobot_usia_peserta($user_id){
         $bobot = "";
+        $u = User::find($user_id);
+        $daftar_id = $u->pendaftaran_id;
+        $usia = Carbon::parse($u->tgl_lahir)->age;
+
         $k = Kriteria::where([['nama', '=', 'usia'], ['pendaftaran_id', '=', $daftar_id]])->first();
         $k_usia = KriteriaUsia::where('kriteria_id', $k->id)->get();
         foreach($k_usia as $i){
@@ -133,8 +145,16 @@ class GetController extends Controller
         return $bobot;
     }
 
-    public function bobot_pend_peserta($pend, $akreditasi, $daftar_id){
+    public function bobot_pend_peserta($user_id){
         $bobot = "";
+        $u = User::find($user_id);
+        $pend = $u->pend;
+        $akreditasi = "";
+        if($u->univ_id){
+            $akreditasi = $u->Universitas->peringkat;
+        }
+        $daftar_id = $u->pendaftaran_id;
+
         $k = Kriteria::where([['nama', '=', 'pendidikan'], ['pendaftaran_id', '=', $daftar_id]])->first();
         $k_pend = KriteriaPendidikan::where('kriteria_id', $k->id)->get();
         foreach($k_pend as $i){
@@ -153,8 +173,12 @@ class GetController extends Controller
         return $bobot;
     }
 
-    public function bobot_jarak_peserta($jarak, $daftar_id){
+    public function bobot_jarak_peserta($user_id){
         $bobot = "";
+        $u = User::find($user_id);
+        $jarak = $u->jarak;
+        $daftar_id = $u->pendaftaran_id;
+
         $k = Kriteria::where([['nama', '=', 'jarak'], ['pendaftaran_id', '=', $daftar_id]])->first();
         $k_jarak = KriteriaJarak::where('kriteria_id', $k->id)->get();
         foreach($k_jarak as $i){
@@ -215,13 +239,13 @@ class GetController extends Controller
 
     public function count_usia_peserta($id_user){
         $user = User::find($id_user);
-        $usia = Carbon::parse($user->tgl_lahir)->age;
         $daftar_id = $user->pendaftaran_id;
+        $bobot = $this->bobot_usia_peserta($user->id);
+
         $alluser = user::where('pendaftaran_id', $daftar_id)->get();
-        $bobot = $this->bobot_usia_peserta($usia, $daftar_id);
         $arrayusia = [];
         foreach ($alluser as $i){
-            $arrayusia[] = $this->bobot_usia_peserta(Carbon::parse($i->tgl_lahir)->age, $daftar_id);
+            $arrayusia[] = $this->bobot_usia_peserta($i->id);
         }
 
         $maxusia = max($arrayusia);
@@ -231,21 +255,13 @@ class GetController extends Controller
 
     public function count_pend_peserta($id_user){
         $user = User::find($id_user);
-        $pend = $user->pend;
-        $akreditasi = "";
-        if($user->univ_id){
-            $akreditasi = $user->Universitas->peringkat;
-        }
         $daftar_id = $user->pendaftaran_id;
+        $bobot = $this->bobot_pend_peserta($user->id);
+
         $alluser = User::where('pendaftaran_id', $daftar_id)->get();
-        $bobot = $this->bobot_pend_peserta($pend, $akreditasi, $daftar_id);
         $arraypend = [];
         foreach ($alluser as $i){
-            $akreditasi_i = "";
-            if($i->univ_id){
-                $akreditasi_i = $i->Universitas->peringkat;
-            }
-            $arraypend[] = $this->bobot_pend_peserta($i->pend, $akreditasi_i, $daftar_id);
+            $arraypend[] = $this->bobot_pend_peserta($i->id);
         }
 
         $maxpend = max($arraypend);
@@ -255,13 +271,13 @@ class GetController extends Controller
 
     public function count_jarak_peserta($id_user){
         $user = User::find($id_user);
-        $jarak = $user->jarak;
         $daftar_id = $user->pendaftaran_id;
+        $bobot = $this->bobot_jarak_peserta($user->id);
+
         $alluser = user::where('pendaftaran_id', $daftar_id)->get();
-        $bobot = $this->bobot_jarak_peserta($jarak, $daftar_id);
         $arrayjarak = [];
         foreach ($alluser as $i){
-            $arrayjarak[] = $this->bobot_jarak_peserta($i->jarak, $daftar_id);
+            $arrayjarak[] = $this->bobot_jarak_peserta($i->id);
         }
 
         $maxjarak = max($arrayjarak);
@@ -307,19 +323,29 @@ class GetController extends Controller
         return $rerata;
     }
 
-    public function all_peserta(){
-        $data = array();
-        $u = User::where('pendaftaran_id', '9')->get();
-        $c = 0;
-        foreach($u as $i){
-            $data[$c]['nama'] = $i->nama;
-            $data[$c]['usia'] = $this->count_usia_peserta($i->id);
-            $data[$c]['pend'] = $this->count_pend_peserta($i->id);
-            $data[$c]['jarak'] = $this->count_jarak_peserta($i->id);
-            $data[$c]['soal'] = $this->count_soal_peserta($i->id);
-            $c++;
+    public function get_keputusan_rekruitmen($user_id){
+        $user = User::find($user_id);
+        $daftar_id = $user->pendaftaran_id;
+        $kuota = $user->Pendaftaran->kuota;
+        $bobot = $this->count_all_bobot($user_id);
+
+        $alluser = User::where('pendaftaran_id', $daftar_id)->get();
+        $arraybobot = [];
+        foreach ($alluser as $i){
+            $arraybobot[] = $this->count_all_bobot($i->id);
         }
-        return $data;
+
+        rsort($arraybobot);
+        $data = [];
+        for($i = 0; $i < $kuota; $i++){
+            $data[] = $arraybobot[$i];
+        }
+
+        if(in_array($bobot, $data)){
+            return true;
+        }else{
+            return false;
+        }
     }
 
 

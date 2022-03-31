@@ -66,6 +66,7 @@ section{
                                     <th>Jarak</th>
                                     <th>Soal</th>
                                     <th>Rata Rata</th>
+                                    <th>Keputusan</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -87,7 +88,7 @@ section{
             "columnDefs": [
                 { "visible": false, "targets": groupColumn }
             ],
-            "order": [[ groupColumn, 'asc' ]],
+            "order": [[ groupColumn, 'asc'], ['9', 'desc']],
             "displayLength": 25,
             "drawCallback": function ( settings ) {
                 var api = this.api();
@@ -97,7 +98,7 @@ section{
                 api.column(groupColumn, {page:'current'} ).data().each( function ( group, i ) {
                     if ( last !== group ) {
                         $(rows).eq( i ).before(
-                            '<tr class="group"><td colspan="8">'+group+'</td></tr>'
+                            '<tr class="group"><td colspan="9">'+group+'</td></tr>'
                         );
 
                         last = group;
@@ -139,6 +140,8 @@ section{
                     data: 'soal',
                 }, {
                     data: 'rerata',
+                }, {
+                    data: 'keputusan',
                 },
             ]
         });
