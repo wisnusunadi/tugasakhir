@@ -54,7 +54,7 @@ class GetController extends Controller
 
     public function peserta_hasil_table()
     {
-        $data = User::where([['role', '=', 'user']])->Has('Pendaftaran.Kriteria')->get();
+        $data = User::where([['role', '=', 'user']])->has('Pendaftaran.Kriteria')->get();
         return datatables()->of($data)
             ->addIndexColumn()
             ->addColumn('pendaftaran', function ($data) {
@@ -249,6 +249,9 @@ class GetController extends Controller
         }
 
         $maxusia = max($arrayusia);
+        if($maxusia == "0"){
+            $maxusia = 1;
+        }
         $res = round(($bobot / $maxusia), 3);
         return $res;
     }
@@ -265,6 +268,9 @@ class GetController extends Controller
         }
 
         $maxpend = max($arraypend);
+        if($maxpend == "0"){
+            $maxpend = 1;
+        }
         $res = round(($bobot / $maxpend), 3);
         return $res;
     }
@@ -281,6 +287,9 @@ class GetController extends Controller
         }
 
         $maxjarak = max($arrayjarak);
+        if($maxjarak == "0"){
+            $maxjarak = 1;
+        }
         $res = round(($bobot / $maxjarak), 3);
         return $res;
     }
@@ -296,6 +305,9 @@ class GetController extends Controller
         }
 
         $maxsoal = max($arraysoal);
+        if($maxsoal == "0"){
+            $maxsoal = 1;
+        }
         $res = round(($bobot / $maxsoal), 3);
         return $res;
     }
@@ -306,18 +318,26 @@ class GetController extends Controller
         $rerata = 0;
         foreach($k as $i){
             if($i->nama == "usia"){
-                $res = $this->count_usia_peserta($id_user);
-                $rerata = $rerata + ($res * $i->bobot);
+                if($user->tgl_lahir){
+                    $res = $this->count_usia_peserta($id_user);
+                    $rerata = $rerata + ($res * $i->bobot);
+                }
             }else
             if($i->nama == "pendidikan"){
-                $res = $this->count_pend_peserta($id_user);
-                $rerata = $rerata + ($res * $i->bobot);
+                if($user->pend){
+                    $res = $this->count_pend_peserta($id_user);
+                    $rerata = $rerata + ($res * $i->bobot);
+                }
             }else if($i->nama == "jarak"){
-                $res = $this->count_jarak_peserta($id_user);
-                $rerata = $rerata + ($res * $i->bobot);
+                if($user->jarak){
+                    $res = $this->count_jarak_peserta($id_user);
+                    $rerata = $rerata + ($res * $i->bobot);
+                }
             }else if($i->nama == "soal"){
-                $res = $this->count_soal_peserta($id_user);
-                $rerata = $rerata + ($res * $i->bobot);
+                if($user->UserJawaban){
+                    $res = $this->count_soal_peserta($id_user);
+                    $rerata = $rerata + ($res * $i->bobot);
+                }
             }
         }
         return $rerata;
@@ -338,7 +358,9 @@ class GetController extends Controller
         rsort($arraybobot);
         $data = [];
         for($i = 0; $i < $kuota; $i++){
-            $data[] = $arraybobot[$i];
+            if(isset($arraybobot[$i])){
+                $data[] = $arraybobot[$i];
+            }
         }
 
         if(in_array($bobot, $data)){

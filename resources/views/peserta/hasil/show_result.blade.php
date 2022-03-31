@@ -57,16 +57,20 @@ section{
                         <table class="table table-hover aligncenter" id="showtable">
                             <thead>
                                 <tr>
-                                    <th>No</th>
-                                    <th>Pendaftaran</th>
-                                    <th>Tanggal Daftar</th>
-                                    <th>Nama Peserta</th>
+                                    <th rowspan="2">No</th>
+                                    <th rowspan="2">Pendaftaran</th>
+                                    <th rowspan="2">Tanggal Daftar</th>
+                                    <th rowspan="2">Nama Peserta</th>
+                                    <th colspan="5">Penilaian</th>
+
+                                    <th rowspan="2">Keputusan</th>
+                                </tr>
+                                <tr>
                                     <th>Usia</th>
                                     <th>Pendidikan</th>
                                     <th>Jarak</th>
                                     <th>Soal</th>
                                     <th>Rata Rata</th>
-                                    <th>Keputusan</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -88,7 +92,7 @@ section{
             "columnDefs": [
                 { "visible": false, "targets": groupColumn }
             ],
-            "order": [[ groupColumn, 'asc'], ['9', 'desc']],
+            "order": [[ groupColumn, 'asc']],
             "displayLength": 25,
             "drawCallback": function ( settings ) {
                 var api = this.api();

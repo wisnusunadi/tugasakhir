@@ -201,8 +201,8 @@ section{
                                                                     <table class="table table-hover usiatable" id="usiatable0">
                                                                         <thead>
                                                                             <tr>
-                                                                                <th>Range Min</th>
-                                                                                <th>Range Max</th>
+                                                                                <th>Range Min ( <i class="fas fa-greater-than"></i> )</th>
+                                                                                <th>Range Max ( <i class="fas fa-less-than-equal"></i> )</th>
                                                                                 <th>Bobot</th>
                                                                                 <th>Aksi</th>
                                                                             </tr>
@@ -227,7 +227,7 @@ section{
                                                             <div class="form-group row">
                                                                 <label for="" class="col-lg-5 col-form-label">Pendidikan</label>
                                                                 <div class="col-lg-5">
-                                                                    <input type="number" class="form-control col-form-label master_pendidikan" name="master_pendikan[0]">
+                                                                    <input type="number" class="form-control col-form-label master_pendidikan" name="master_pendidikan[0]">
                                                                 </div>
                                                             </div>
                                                             <div class="table-responsive">
@@ -243,6 +243,7 @@ section{
                                                                     <tbody>
                                                                         <tr>
                                                                             <td><select class="form-control ketentuan_pendidikan" name="ketentuan_pendidikan[0][0]" id="ketentuan_pendidikan00" style="width: 100%">
+                                                                                        <option value=""></option>
                                                                                         <option value="smak">SMA / SMK</option>
                                                                                         <option value="d3">D3</option>
                                                                                         <option value="s1d4">D4 / S1</option>
@@ -278,8 +279,8 @@ section{
                                                                     <table class="table table-hover jaraktable" id="jaraktable0">
                                                                         <thead>
                                                                             <tr>
-                                                                                <th>Range Min</th>
-                                                                                <th>Range Max</th>
+                                                                                <th>( <i class="fas fa-greater-than"></i> ) Range Min (KM)</th>
+                                                                                <th>( <i class="fas fa-less-than-equal"></i> ) Range Max (KM)</th>
                                                                                 <th>Bobot</th>
                                                                                 <th>Aksi</th>
                                                                             </tr>
@@ -594,8 +595,8 @@ section{
                                                                     <table class="table table-hover usiatable" id="usiatable`+countable+`">
                                                                         <thead>
                                                                             <tr>
-                                                                                <th>Range Min</th>
-                                                                                <th>Range Max</th>
+                                                                                <th>( <i class="fas fa-greater-than"></i> ) Range Min (KM)</th>
+                                                                                <th>( <i class="fas fa-less-than-equal"></i> ) Range Max (KM)</th>
                                                                                 <th>Bobot</th>
                                                                                 <th>Aksi</th>
                                                                             </tr>
@@ -636,6 +637,7 @@ section{
                                                                     <tbody>
                                                                         <tr>
                                                                             <td><select class="form-control ketentuan_pendidikan" name="ketentuan_pendidikan[`+countable+`][]" id="ketentuan_pendidikan`+countable+`" style="width: 100%">
+                                                                                        <option value=""></option>
                                                                                         <option value="smak">SMA / SMK</option>
                                                                                         <option value="d3">D3</option>
                                                                                         <option value="s1d4">D4 / S1</option>
@@ -671,8 +673,8 @@ section{
                                                                     <table class="table table-hover jaraktable" id="jaraktable`+countable+`">
                                                                         <thead>
                                                                             <tr>
-                                                                                <th>Range Min</th>
-                                                                                <th>Range Max</th>
+                                                                                <th>Range Min ( <i class="fas fa-greater-than"></i> ) Km</th>
+                                                                                <th>Range Max ( <i class="fas fa-less-than-equal"></i> ) Km</th>
                                                                                 <th>Bobot</th>
                                                                                 <th>Aksi</th>
                                                                             </tr>
@@ -789,6 +791,17 @@ section{
             var idt = ids.substring(15);
             $('#'+ids+' tr:last').after(addpendidikanrow());
             numberRowsPendidikan(idt);
+        });
+
+        $(document).on('change', '.pendidikantable .ketentuan_pendidikan', function(){
+            var val = $(this).closest('tr').find('.ketentuan_pendidikan').val();
+            var peringkat = $(this).closest('tr').find('.peringkat');
+            if(val == "smak"){
+                peringkat.prop('disabled', true);
+            }
+            else{
+                peringkat.prop('disabled', false);
+            }
         });
 
         $(document).on('click', '.pendidikantable #removependidikanrow', function(e) {
@@ -925,6 +938,7 @@ section{
         function addpendidikanrow(){
             return `<tr>
                     <td><select class="form-control ketentuan_pendidikan" name="ketentuan_pendidikan[0][]" id="ketentuan_pendidikan0" style="width: 100%">
+                            <option value=""></option>
                             <option value="smak">SMA / SMK</option>
                             <option value="d3">D3</option>
                             <option value="s1d4">D4 / S1</option>
