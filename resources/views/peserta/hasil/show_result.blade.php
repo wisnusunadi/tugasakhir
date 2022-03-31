@@ -62,7 +62,6 @@ section{
                                     <th rowspan="2">Tanggal Daftar</th>
                                     <th rowspan="2">Nama Peserta</th>
                                     <th colspan="5">Penilaian</th>
-
                                     <th rowspan="2">Keputusan</th>
                                 </tr>
                                 <tr>

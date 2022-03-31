@@ -193,7 +193,7 @@ section{
                                                             <div class="form-group row">
                                                                 <label for="" class="col-lg-5 col-form-label">Usia</label>
                                                                 <div class="col-lg-5">
-                                                                    <input type="number" class="form-control col-form-label master_usia" name="master_usia[0]">
+                                                                    <input type="number" class="form-control col-form-label master_usia" name="master_usia[0]" step="0.01" min="0">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group row">
@@ -209,9 +209,9 @@ section{
                                                                         </thead>
                                                                         <tbody>
                                                                             <tr>
-                                                                                <td><input type="number" class="form-control usia_min" name="usia_min[0][0]" id="usia_min00"></td>
-                                                                                <td><input type="number" class="form-control usia_max" name="usia_max[0][0]" id="usia_max00"></td>
-                                                                                <td><input type="number" class="form-control bobot_usia" name="bobot_usia[0][0]" id="bobot_usia00"></td>
+                                                                                <td><input type="number" class="form-control usia_min" name="usia_min[0][0]" id="usia_min00" min="0"></td>
+                                                                                <td><input type="number" class="form-control usia_max" name="usia_max[0][0]" id="usia_max00" min="0"></td>
+                                                                                <td><input type="number" class="form-control bobot_usia" name="bobot_usia[0][0]" id="bobot_usia00" step="0.01" min="0"></td>
                                                                                 <td><a class="addusiarow"><i class="fas fa-plus text-success"></i></a></td>
                                                                             </tr>
                                                                         </tbody>
@@ -227,7 +227,7 @@ section{
                                                             <div class="form-group row">
                                                                 <label for="" class="col-lg-5 col-form-label">Pendidikan</label>
                                                                 <div class="col-lg-5">
-                                                                    <input type="number" class="form-control col-form-label master_pendidikan" name="master_pendidikan[0]">
+                                                                    <input type="number" class="form-control col-form-label master_pendidikan" name="master_pendidikan[0]" step="0.01" min="0">
                                                                 </div>
                                                             </div>
                                                             <div class="table-responsive">
@@ -256,7 +256,7 @@ section{
                                                                                         <option value="C">C</option>
                                                                                     </select>
                                                                             </td>
-                                                                            <td><input type="number" class="form-control bobot_pendidikan" name="bobot_pendidikan[0][0]" id="bobot_pendidikan00"></td>
+                                                                            <td><input type="number" class="form-control bobot_pendidikan" name="bobot_pendidikan[0][0]" id="bobot_pendidikan00" step="0.01" min="0"></td>
                                                                             <td><a id="addpendidikanrow"><i class="fas fa-plus text-success"></i></a></td>
                                                                         </tr>
                                                                     </tbody>
@@ -271,7 +271,7 @@ section{
                                                             <div class="form-group row">
                                                                     <label for="" class="col-lg-5 col-form-label">Jarak</label>
                                                                     <div class="col-lg-5">
-                                                                        <input type="number" class="form-control col-form-label master_jarak" name="master_jarak[0]">
+                                                                        <input type="number" class="form-control col-form-label master_jarak" name="master_jarak[0]" step="0.01" min="0">
                                                                     </div>
                                                                 </div>
                                                             <div class="form-group row">
@@ -289,7 +289,7 @@ section{
                                                                             <tr>
                                                                                 <td><input type="number" class="form-control jarak_min" name="jarak_min[0][0]" id="jarak_min00" step="0.01" min="0"></td>
                                                                                 <td><input type="number" class="form-control jarak_max" name="jarak_max[0][0]" id="jarak_max00" step="0.01" min="0"></td>
-                                                                                <td><input type="number" class="form-control bobot_jarak" name="bobot_jarak[0][0]" id="bobot_jarak00" min="0"></td>
+                                                                                <td><input type="number" class="form-control bobot_jarak" name="bobot_jarak[0][0]" id="bobot_jarak00"  step="0.01" min="0"></td>
                                                                                 <td><a id="addjarakrow"><i class="fas fa-plus text-success"></i></a></td>
                                                                             </tr>
                                                                         </tbody>
@@ -305,7 +305,7 @@ section{
                                                             <div class="form-group row">
                                                                 <label for="" class="col-lg-5 col-form-label">Soal</label>
                                                                 <div class="col-lg-5">
-                                                                    <input type="number" class="form-control col-form-label master_soal" name="master_soal[0]">
+                                                                    <input type="number" class="form-control col-form-label master_soal" name="master_soal[0]"  step="0.01" min="0">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group row">
@@ -321,7 +321,7 @@ section{
                                                                         <tbody>
                                                                             <tr>
                                                                                 <td><select class="form-control soal_id" id="soal_id00" name="soal_id[0][0]"></select></td>
-                                                                                <td><input type="number" class="form-control bobot_soal" name="bobot_soal[0][0]" id="bobot_soal00"></td>
+                                                                                <td><input type="number" class="form-control bobot_soal" name="bobot_soal[0][0]" id="bobot_soal00"  step="0.01" min="0"></td>
                                                                                 <td><a id="addsoalrow"><i class="fas fa-plus text-success"></i></a></td>
                                                                             </tr>
                                                                         </tbody>
@@ -358,6 +358,7 @@ section{
     $(function(){
         var countable = 1;
         select();
+        select_pend();
         // $('.jabatan').select2();
         var today = new Date();
         var dd = String(today.getDate()).padStart(2, '0');
@@ -476,8 +477,8 @@ section{
                     $(el1).find('.peringkat').attr('id', 'peringkat'+j+''+ count_pendidikan);
                     $(el1).find('.bobot_pendidikan').attr('name', 'bobot_pendidikan[' + j + ']['+ count_pendidikan +']');
                     $(el1).find('.bobot_pendidikan').attr('id', 'bobot_pendidikan'+ count_pendidikan);
-                    $('.ketentuan_pendidikan').select2();
-                    $('.peringkat').select2();
+                    // $('.ketentuan_pendidikan').select2();
+                    // $('.peringkat').select2();
                     count_pendidikan++;
                 });
 
@@ -510,6 +511,7 @@ section{
 
 
                 select();
+                select_pend();
                 // var count_kunci = 0;
                 // $('tr[id="' + id + '"]').find('.kunci_jawaban').each(function(ind1, el1){
                 //     $(el1).attr('data-name', 'radiokunci' + j);
@@ -587,7 +589,7 @@ section{
                                                             <div class="form-group row">
                                                                 <label for="" class="col-lg-5 col-form-label">Usia</label>
                                                                 <div class="col-lg-5">
-                                                                    <input type="number" class="form-control col-form-label master_usia" name="master_usia[`+countable+`]">
+                                                                    <input type="number" class="form-control col-form-label master_usia" name="master_usia[`+countable+`]" step="0.01" min="0">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group row">
@@ -603,9 +605,9 @@ section{
                                                                         </thead>
                                                                         <tbody>
                                                                             <tr>
-                                                                                <td><input type="number" class="form-control usia_min" name="usia_min[`+countable+`][]" id="usia_min`+countable+`"></td>
-                                                                                <td><input type="number" class="form-control usia_max" name="usia_max[`+countable+`][]" id="usia_max`+countable+`"></td>
-                                                                                <td><input type="number" class="form-control bobot_usia" name="bobot_usia[`+countable+`][]" id="bobot_usia`+countable+`"></td>
+                                                                                <td><input type="number" class="form-control usia_min" name="usia_min[`+countable+`][]" id="usia_min`+countable+`" min="0"></td>
+                                                                                <td><input type="number" class="form-control usia_max" name="usia_max[`+countable+`][]" id="usia_max`+countable+`" min="0"></td>
+                                                                                <td><input type="number" class="form-control bobot_usia" name="bobot_usia[`+countable+`][]" id="bobot_usia`+countable+`" step="0.01" min="0"></td>
                                                                                 <td><a class="addusiarow"><i class="fas fa-plus text-success"></i></a></td>
                                                                             </tr>
                                                                         </tbody>
@@ -621,7 +623,7 @@ section{
                                                             <div class="form-group row">
                                                                 <label for="" class="col-lg-5 col-form-label">Pendidikan</label>
                                                                 <div class="col-lg-5">
-                                                                    <input type="number" class="form-control col-form-label master_pendidikan" name="master_pendikan[`+countable+`]">
+                                                                    <input type="number" class="form-control col-form-label master_pendidikan" name="master_pendikan[`+countable+`]" step="0.01" min="0">
                                                                 </div>
                                                             </div>
                                                             <div class="table-responsive">
@@ -650,7 +652,7 @@ section{
                                                                                         <option value="C">C</option>
                                                                                     </select>
                                                                             </td>
-                                                                            <td><input type="number" class="form-control bobot_pendidikan" name="bobot_pendidikan[`+countable+`][]" id="bobot_pendidikan`+countable+`"></td>
+                                                                            <td><input type="number" class="form-control bobot_pendidikan" name="bobot_pendidikan[`+countable+`][]" id="bobot_pendidikan`+countable+`" step="0.01" min="0"></td>
                                                                             <td><a id="addpendidikanrow"><i class="fas fa-plus text-success"></i></a></td>
                                                                         </tr>
                                                                     </tbody>
@@ -665,7 +667,7 @@ section{
                                                             <div class="form-group row">
                                                                     <label for="" class="col-lg-5 col-form-label">Jarak</label>
                                                                     <div class="col-lg-5">
-                                                                        <input type="number" class="form-control col-form-label master_jarak" name="master_jarak[`+countable+`]">
+                                                                        <input type="number" class="form-control col-form-label master_jarak" name="master_jarak[`+countable+`]" step="0.01" min="0">
                                                                     </div>
                                                                 </div>
                                                             <div class="form-group row">
@@ -683,7 +685,7 @@ section{
                                                                             <tr>
                                                                                 <td><input type="number" class="form-control jarak_min" name="jarak_min[`+countable+`][]" id="jarak_min`+countable+`" step="0.01" min="0"></td>
                                                                                 <td><input type="number" class="form-control jarak_max" name="jarak_max[`+countable+`][]" id="jarak_max`+countable+`" step="0.01" min="0"></td>
-                                                                                <td><input type="number" class="form-control bobot_jarak" name="bobot_jarak[`+countable+`][]" id="bobot_jarak`+countable+`" min="0"></td>
+                                                                                <td><input type="number" class="form-control bobot_jarak" name="bobot_jarak[`+countable+`][]" id="bobot_jarak`+countable+`" step="0.01" min="0"></td>
                                                                                 <td><a id="addjarakrow"><i class="fas fa-plus text-success"></i></a></td>
                                                                             </tr>
                                                                         </tbody>
@@ -699,7 +701,7 @@ section{
                                                             <div class="form-group row">
                                                                 <label for="" class="col-lg-5 col-form-label">Soal</label>
                                                                 <div class="col-lg-5">
-                                                                    <input type="number" class="form-control col-form-label master_soal" name="master_soal[`+countable+`]">
+                                                                    <input type="number" class="form-control col-form-label master_soal" name="master_soal[`+countable+`]" step="0.01" min="0">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group row">
@@ -715,7 +717,7 @@ section{
                                                                         <tbody>
                                                                             <tr>
                                                                                 <td><select class="form-control soal_id" id="soal_id`+countable+`" name="soal_id[`+countable+`][]"></select></td>
-                                                                                <td><input type="number" class="form-control bobot_soal" name="bobot_soal[`+countable+`][]" id="bobot_soal`+countable+`"></td>
+                                                                                <td><input type="number" class="form-control bobot_soal" name="bobot_soal[`+countable+`][]" id="bobot_soal`+countable+`" step="0.01" min="0"></td>
                                                                                 <td><a id="addsoalrow"><i class="fas fa-plus text-success"></i></a></td>
                                                                             </tr>
                                                                         </tbody>
@@ -780,8 +782,7 @@ section{
                 $(el1).find('.peringkat').attr('id', 'peringkat'+id+''+ j);
                 $(el1).find('.bobot_pendidikan').attr('name', 'bobot_pendidikan[' + id + ']['+ j +']');
                 $(el1).find('.bobot_pendidikan').attr('id', 'bobot_pendidikan'+ j);
-                $(el1).find('.ketentuan_pendidikan').select2();
-                $(el1).find('.peringkat').select2();
+                select_pend();
                 c++;
             });
         }
@@ -928,9 +929,9 @@ section{
 
         function addusiarow(){
             return `<tr>
-                        <td><input type="number" class="form-control usia_min" name="usia_min[0][]" id="usia_min0"></td>
-                        <td><input type="number" class="form-control usia_max" name="usia_max[0][]" id="usia_max0"></td>
-                        <td><input type="number" class="form-control bobot_usia" name="bobot_usia[0][]" id="bobot_usia0"></td>
+                        <td><input type="number" class="form-control usia_min" name="usia_min[0][]" id="usia_min0" min="0"></td>
+                        <td><input type="number" class="form-control usia_max" name="usia_max[0][]" id="usia_max0" min="0"></td>
+                        <td><input type="number" class="form-control bobot_usia" name="bobot_usia[0][]" id="bobot_usia0" step="0.01" min="0"></td>
                         <td><a id="removeusiarow"><i class="fas fa-minus text-danger"></i></a></td>
                     </tr>`;
         }
@@ -951,7 +952,7 @@ section{
                             <option value="C">C</option>
                         </select>
                     </td>
-                    <td><input type="number" class="form-control bobot_pendidikan" name="bobot_pendidikan[0][]" id="bobot_pendidikan0"></td>
+                    <td><input type="number" class="form-control bobot_pendidikan" name="bobot_pendidikan[0][]" id="bobot_pendidikan0" step="0.01" min="0"></td>
                     <td><a id="removependidikanrow"><i class="fas fa-minus text-danger"></i></a></td>
                 </tr>`;
         }
@@ -960,7 +961,7 @@ section{
             return `<tr>
                         <td><input type="number" class="form-control jarak_min" name="jarak_min[0][]" id="jarak_min0" step="0.01" min="0"></td>
                         <td><input type="number" class="form-control jarak_max" name="jarak_max[0][]" id="jarak_max0" step="0.01" min="0"></td>
-                        <td><input type="number" class="form-control bobot_jarak" name="bobot_jarak[0][]" id="bobot_jarak0" min="0"></td>
+                        <td><input type="number" class="form-control bobot_jarak" name="bobot_jarak[0][]" id="bobot_jarak0" step="0.01" min="0"></td>
                         <td><a id="removejarakrow"><i class="fas fa-minus text-danger"></i></a></td>
                     </tr>`;
         }
@@ -968,7 +969,7 @@ section{
         function addsoalrow(){
             return `<tr>
                     <td><select class="form-control soal_id" id="soal_id0" name="soal_id[0][]"></select></td>
-                    <td><input type="number" class="form-control bobot_soal" name="bobot_soal[0][]" id="bobot_soal0"></td>
+                    <td><input type="number" class="form-control bobot_soal" name="bobot_soal[0][]" id="bobot_soal0" step="0.01" min="0"></td>
                     <td><a id="removesoalrow"><i class="fas fa-minus text-danger"></i></a></td>
                 </tr>`
         }
@@ -1029,14 +1030,18 @@ section{
                     },
                 }
             });
+            $('.soal_id').select2({
+                placeholder: 'Pilih Soal'
+            });
+        }
 
+        function select_pend(){
             $('.ketentuan_pendidikan').select2({
                 placeholder: 'Pilih Pendidikan'
             });
             $('.peringkat').select2({
                 placeholder: 'Pilih Akreditasi'
             });
-            $('.soal_id').select2();
         }
     })
 </script>

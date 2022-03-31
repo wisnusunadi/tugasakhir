@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3307
--- Generation Time: Mar 30, 2022 at 09:38 AM
+-- Generation Time: Mar 31, 2022 at 06:45 AM
 -- Server version: 5.7.33
 -- PHP Version: 7.4.19
 
@@ -127,7 +127,10 @@ INSERT INTO `jadwal` (`id`, `waktu_mulai`, `waktu_selesai`, `ket`) VALUES
 (2, '2022-03-03 11:40:48', '2022-03-01 00:00:00', 'Open Recruitment Administrasi'),
 (3, '2022-03-09 11:52:24', '2022-04-07 00:00:00', 'Open Recruitment Logistik dan Produksi'),
 (4, '2022-03-30 00:00:00', '2022-04-30 00:00:00', 'Open Recruitment Supervisor Gudang'),
-(5, '2022-03-30 00:00:00', '2022-04-30 00:00:00', 'Open Recruitment Supervisor Gudang');
+(5, '2022-03-30 00:00:00', '2022-04-30 00:00:00', 'Open Recruitment Supervisor Gudang'),
+(6, '2022-03-31 00:00:00', '2022-06-10 00:00:00', 'Open Recruitment Staff Gudang'),
+(7, '2022-03-31 00:00:00', '2022-05-02 00:00:00', 'Open Recruitment Staff Gudang'),
+(8, '2022-03-31 00:00:00', '2022-05-31 00:00:00', 'Oprec Staff Produksi');
 
 -- --------------------------------------------------------
 
@@ -233,7 +236,16 @@ INSERT INTO `kriteria` (`id`, `pendaftaran_id`, `nama`, `bobot`) VALUES
 (2, 9, 'usia', 10),
 (3, 9, 'pendidikan', 15),
 (4, 9, 'jarak', 5),
-(5, 9, 'soal', 30);
+(5, 9, 'soal', 30),
+(6, 10, 'usia', 10),
+(7, 11, 'usia', 10),
+(8, 11, 'pendidikan', 20),
+(9, 11, 'jarak', 5),
+(10, 11, 'soal', 35),
+(11, 12, 'usia', 0.02),
+(12, 12, 'pendidikan', 0.26),
+(13, 12, 'jarak', 0.2),
+(14, 12, 'soal', 0.31);
 
 -- --------------------------------------------------------
 
@@ -258,7 +270,11 @@ INSERT INTO `kriteria_jarak` (`id`, `kriteria_id`, `range_min`, `range_max`, `ni
 (2, 4, 5, 10, 25),
 (3, 4, 10, 20, 20),
 (4, 4, 20, 50, 15),
-(5, 4, 50, 10000, 10);
+(5, 4, 50, 10000, 10),
+(6, 9, 0, 20, 40),
+(7, 9, 20, 40, 30),
+(8, 9, 40, 100, 20),
+(9, 13, 0.3, 0.37, 0.05);
 
 -- --------------------------------------------------------
 
@@ -287,7 +303,13 @@ INSERT INTO `kriteria_pendidikan` (`id`, `kriteria_id`, `pendidikan`, `peringkat
 (6, 3, 's1d4', 'A', 51),
 (7, 3, 's1d4', 'B', 45),
 (8, 3, 's1d4', 'C', 40),
-(9, 3, 's1d4', NULL, 35);
+(9, 3, 's1d4', NULL, 35),
+(10, 8, 'smak', NULL, 50),
+(11, 8, 'd3', NULL, 30),
+(12, 8, 'd3', 'A', 30),
+(13, 8, 'd3', 'B', 30),
+(14, 8, 'd3', 'C', 30),
+(15, 12, 'smak', NULL, 0.18);
 
 -- --------------------------------------------------------
 
@@ -307,7 +329,9 @@ CREATE TABLE `kriteria_soal` (
 --
 
 INSERT INTO `kriteria_soal` (`id`, `kriteria_id`, `soal_id`, `nilai`) VALUES
-(1, 5, 1, 100);
+(1, 5, 1, 100),
+(2, 10, 1, 50),
+(3, 14, 1, 0.28);
 
 -- --------------------------------------------------------
 
@@ -330,7 +354,14 @@ CREATE TABLE `kriteria_usia` (
 INSERT INTO `kriteria_usia` (`id`, `kriteria_id`, `range_min`, `range_max`, `nilai`) VALUES
 (1, 2, 18, 25, 20),
 (2, 2, 25, 40, 40),
-(3, 2, 40, 55, 30);
+(3, 2, 40, 55, 30),
+(4, 6, 16, 25, 25),
+(5, 6, 25, 40, 20),
+(6, 6, 40, 55, 15),
+(7, 7, 17, 25, 40),
+(8, 7, 25, 40, 30),
+(9, 7, 40, 55, 20),
+(10, 11, 17, 25, 0.08);
 
 -- --------------------------------------------------------
 
@@ -357,7 +388,10 @@ INSERT INTO `pendaftaran` (`id`, `jadwal_id`, `jabatan_id`, `divisi_id`, `kuota`
 (4, 3, 1, 3, 4),
 (7, 3, 1, 4, 3),
 (8, 4, 2, 5, 1),
-(9, 5, 2, 5, 1);
+(9, 5, 2, 5, 1),
+(10, 6, 1, 5, 3),
+(11, 7, 1, 5, 3),
+(12, 8, 1, 4, 5);
 
 -- --------------------------------------------------------
 
@@ -3360,7 +3394,9 @@ INSERT INTO `users` (`id`, `pendaftaran_id`, `univ_id`, `username`, `nama`, `pas
 (15, 4, NULL, 'ranisetyo', 'Rani Setyowati', '$2y$10$HmwaJ5z3QRVqrfd7bcon6eZSXyh1gW5j77/Sg9qMp0oHx4mJYBuiK', '1998-11-03', 'p', 'smak', 41, 'rani@gmail.com', 'user', '2022-03-23 06:18:07', '2022-03-23 06:18:07'),
 (16, 9, 2640, 'marthanila', 'Martha Nilam Hapsari', '$2y$10$veej9IkL8bxoTwQ4lGgjDuJKAscwNZFE6I.0kz2DzPYSo5ZVE4d3.', '1992-01-04', 'p', 's1d4', 19, 'marthanilam0401@gmail.com', 'user', '2022-03-30 06:28:30', '2022-03-30 06:28:30'),
 (17, 9, 2369, 'nurdinhnf', 'Nurdin Hanif', '$2y$10$nQsZfCfRua0.HNTMM4ycpOJVzt1vQPJpc39a6B2jrP4tWl9lC/U8W', '1984-12-19', 'l', 'd3', 0.3, 'nurdinhanif@gmail.com', 'user', '2022-03-30 06:33:52', '2022-03-30 06:33:52'),
-(18, 9, NULL, 'ryangarya', 'Ryan Gary Andrew', '$2y$10$2AKLYYg.R3k8d9kjzOhCKevq8UCA76SVMiu8bUlof1GoYAQxOxiKS', '1996-07-29', 'l', 'smak', 5.3, 'ryangarya@gmail.com', 'user', '2022-03-30 06:40:17', '2022-03-30 06:40:17');
+(18, 9, NULL, 'ryangarya', 'Ryan Gary Andrew', '$2y$10$2AKLYYg.R3k8d9kjzOhCKevq8UCA76SVMiu8bUlof1GoYAQxOxiKS', '1996-07-29', 'l', 'smak', 5.3, 'ryangarya@gmail.com', 'user', '2022-03-30 06:40:17', '2022-03-30 06:40:17'),
+(19, 11, 2414, 'lailimfz', 'Laili Mafazah', '$2y$10$XXk1UljuppX4IOQMmGEhw.tKX/Xp1woYZEaUq0538.yFm1xaJJyv.', '1997-12-04', 'p', 'd3', 64.3, 'lailimafazah@gmail.com', 'user', '2022-03-31 05:01:13', '2022-03-31 05:01:13'),
+(20, 11, NULL, 'rsubagyo', 'Rahmat Subagyo', '$2y$10$f.VR9OnuhYNG96XA7uoFSOCiEjQepSmA6c9eldHauW5S0Sm9W.1qW', '1985-05-22', 'l', 'smak', 4, 'rsubagyo@gmail.com', 'user', '2022-03-31 05:21:18', '2022-03-31 05:21:18');
 
 -- --------------------------------------------------------
 
@@ -3527,7 +3563,7 @@ ALTER TABLE `jabatan`
 -- AUTO_INCREMENT for table `jadwal`
 --
 ALTER TABLE `jadwal`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `jawaban`
@@ -3539,37 +3575,37 @@ ALTER TABLE `jawaban`
 -- AUTO_INCREMENT for table `kriteria`
 --
 ALTER TABLE `kriteria`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `kriteria_jarak`
 --
 ALTER TABLE `kriteria_jarak`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `kriteria_pendidikan`
 --
 ALTER TABLE `kriteria_pendidikan`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `kriteria_soal`
 --
 ALTER TABLE `kriteria_soal`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `kriteria_usia`
 --
 ALTER TABLE `kriteria_usia`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `pendaftaran`
 --
 ALTER TABLE `pendaftaran`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `soal`
@@ -3593,7 +3629,7 @@ ALTER TABLE `universitas`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `user_jawaban`
