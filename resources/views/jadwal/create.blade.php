@@ -120,18 +120,21 @@ section{
                             <label for="tanggal_mulai" class="col-lg-4 col-md-12 col-form-label labelket">Tanggal Mulai</label>
                             <div class="col-lg-8 col-md-12">
                                 <input type="date" class="form-control" id="tanggal_mulai" name="tanggal_mulai">
+                                <small id="msg_tanggal_mulai" class="form-text text-danger"></small>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="tanggal_akhir" class="col-lg-4 col-md-12 col-form-label labelket">Tanggal Akhir</label>
                             <div class="col-lg-8 col-md-12">
                                 <input type="date" class="form-control" id="tanggal_akhir" name="tanggal_akhir">
+                                <small id="msg_tanggal_akhir" class="form-text text-danger"></small>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="keterangan" class="col-lg-4 col-md-12 col-form-label labelket">Keterangan</label>
                             <div class="col-lg-8 col-md-12">
                                 <textarea class="form-control" id="keterangan" name="keterangan" placeholder="Masukkan Keterangan"></textarea>
+                                <small id="msg_keterangan" class="form-text text-danger"></small>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -343,7 +346,7 @@ section{
                         <span class="float-left"><a href="{{route('jadwal.show')}}" type="button" class="btn btn-danger">
                             Batal
                         </a></span>
-                        <span class="float-right"><button type="submit" class="btn btn-success">Tambah</button></span>
+                        <span class="float-right"><button type="submit" id="btnsubmit" class="btn btn-success" disabled>Tambah</button></span>
                     </div>
                 </div>
                 </form>
@@ -375,13 +378,60 @@ section{
             $("#tanggal_akhir").val("");
             $("#btncetak").removeAttr('disabled');
             if ($(this).val() != "") {
+                $('#tanggal_mulai').removeClass('is-invalid');
+                $('#msg_tanggal_mulai').html("");
                 $('#tanggal_akhir').removeAttr('readonly');
                 $("#tanggal_akhir").attr("min", $(this).val());
             } else {
+                $('#tanggal_mulai').addClass('is-invalid');
+                $('#msg_tanggal_mulai').html("Tanggal Mulai Pendaftaran harus diisi");
                 $("#tanggal_akhir").val("");
                 $("#btncetak").attr('disabled', true);
             }
+
+            validasi();
         });
+
+        $('#tanggal_akhir').on('keyup change', function() {
+
+            $("#btncetak").removeAttr('disabled');
+            if ($(this).val() != "") {
+                $('#tanggal_akhir').removeClass('is-invalid');
+                $('#msg_tanggal_mulai').html("");
+            } else {
+                $('#tanggal_akhir').addClass('is-invalid');
+                $('#msg_tanggal_akhir').html("Tanggal Akhir Pendaftaran harus diisi");
+                $("#btncetak").attr('disabled', true);
+            }
+
+            validasi();
+        });
+
+        $('#keterangan').on('keyup change', function() {
+            $("#btncetak").removeAttr('disabled');
+            if ($(this).val() != "") {
+                $('#keterangan').removeClass('is-invalid');
+                $('#msg_keterangan').html("");
+            } else {
+                $('#keterangan').addClass('is-invalid');
+                $('#msg_keterangan').html("Keterangan harus diisi");
+                $("#btncetak").attr('disabled', true);
+            }
+
+            validasi();
+        });
+
+        function validasi(){
+            var tgl_mulai = $("#tanggal_mulai").val();
+            var tgl_akhir = $("#tanggal_akhir").val();
+            var ket = $('#keterangan').val();
+            if(tgl_mulai != "" && tgl_akhir != "" && ket != ""){
+                $('#btnsubmit').removeAttr('disabled');
+            }
+            else{
+                $('#btnsubmit').attr('disabled', true);
+            }
+        }
 
         function soal_select(ids, jab_id, div_id){
             if(jab_id && div_id){
