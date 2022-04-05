@@ -153,6 +153,11 @@ class JadwalController extends Controller
             ->addColumn('kuota', function ($data) {
                 return $data->kuota;
             })
+            ->addColumn('aksi', function ($data) {
+                if(count($data->User) <= 0){
+                    return '<a href="/jadwal/edit/'.$data->id.'"><button type="button" class="btn btn-info"></button></a>';
+                }
+            })
             ->make(true);
     }
 
@@ -161,6 +166,14 @@ class JadwalController extends Controller
         $divisi = Divisi::all();
         $jabatan = Jabatan::all();
         return view('jadwal.create', ['d' => $divisi, 'j' => $jabatan]);
+    }
+
+    public function jadwal_edit($id)
+    {
+        $jadwal = Jadwal::find($id);
+        $divisi = Divisi::all();
+        $jabatan = Jabatan::all();
+        return view('jadwal.edit', ['id' => $id, 'jd' => $jadwal, 'd' => $divisi, 'j' => $jabatan]);
     }
 
     public function jadwal_store(Request $r)

@@ -25,6 +25,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::group(['middleware' => 'auth'], function () {
     Route::group(['prefix' => '/jadwal'], function () {
         Route::get('/create', [App\Http\Controllers\JadwalController::class, 'jadwal_create'])->name('jadwal.create');
+        Route::get('/edit/{id}', [App\Http\Controllers\JadwalController::class, 'jadwal_edit'])->name('jadwal.edit');
         Route::post('/store', [App\Http\Controllers\JadwalController::class, 'jadwal_store'])->name('jadwal.store');
     });
     Route::get('/peserta', [App\Http\Controllers\HomeController::class, 'peserta_show'])->name('peserta');

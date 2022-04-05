@@ -174,171 +174,257 @@ section{
                                                     <label for="kriteria" class="col-lg-4 col-md-12 col-form-label labelket">Kriteria</label>
                                                     <div class="col-lg-7 col-md-12 d-flex justify-content-around">
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input kriteria" type="checkbox" name="kriteria[{{$x}}][0]" id="kriteria{{$x}}0" value="usia">
+                                                            <input class="form-check-input kriteria" type="checkbox" name="kriteria[{{$x}}][0]" id="kriteria{{$x}}0" value="usia" @if(isset($p->Kriteria[0]->KriteriaUsia)) checked="true" @endif>
                                                             <label class="form-check-label kriterialabel" for="kriteria{{$x}}0">Usia</label>
                                                         </div>
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input kriteria" type="checkbox" name="kriteria[{{$x}}][1]" id="kriteria{{$x}}1" value="pendidikan">
+                                                            <input class="form-check-input kriteria" type="checkbox" name="kriteria[{{$x}}][1]" id="kriteria{{$x}}1" value="pendidikan" @if(isset($p->Kriteria[0]->KriteriaPendidikan)) checked="true" @endif>
                                                             <label class="form-check-label kriterialabel" for="kriteria{{$x}}1">Pendidikan</label>
                                                         </div>
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input kriteria" type="checkbox" name="kriteria[{{$x}}][2]" id="kriteria{{$x}}2" value="jarak">
+                                                            <input class="form-check-input kriteria" type="checkbox" name="kriteria[{{$x}}][2]" id="kriteria{{$x}}2" value="jarak" @if(isset($p->Kriteria[0]->KriteriaJarak)) checked="true" @endif>
                                                             <label class="form-check-label kriterialabel" for="kriteria{{$x}}2">Jarak Rumah</label>
                                                         </div>
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input kriteria" type="checkbox" name="kriteria[{{$x}}][3]" id="kriteria{{$x}}3" value="soal">
+                                                            <input class="form-check-input kriteria" type="checkbox" name="kriteria[{{$x}}][3]" id="kriteria{{$x}}3" value="soal" @if(isset($p->Kriteria[0]->KriteriaSoal)) checked="true" @endif>
                                                             <label class="form-check-label kriterialabel" for="kriteria{{$x}}3">Soal</label>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="flex-container">
-                                                <div id="usiaform0" class="hide usiaform">
-                                                    <div class="card">
-                                                        <div class="card-body">
-                                                            <div class="form-group row">
-                                                                <label for="" class="col-lg-5 col-form-label">Usia</label>
-                                                                <div class="col-lg-5">
-                                                                    <input type="number" class="form-control col-form-label master_usia" name="master_usia[{{$x}}]" step="0.01" min="0">
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <div class="table-responsive">
-                                                                    <table class="table table-hover usiatable" id="usiatable{{$x}}">
-                                                                        <thead>
-                                                                            <tr>
-                                                                                <th>Range Min ( <i class="fas fa-greater-than"></i> )</th>
-                                                                                <th>Range Max ( <i class="fas fa-less-than-equal"></i> )</th>
-                                                                                <th>Bobot</th>
-                                                                                <th>Aksi</th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tbody>
-                                                                            <tr>
-                                                                                <td><input type="number" class="form-control usia_min" name="usia_min[{{$x}}][0]" id="usia_min{{$x}}0" min="0"></td>
-                                                                                <td><input type="number" class="form-control usia_max" name="usia_max[{{$x}}][0]" id="usia_max{{$x}}0" min="0"></td>
-                                                                                <td><input type="number" class="form-control bobot_usia" name="bobot_usia[{{$x}}][0]" id="bobot_usia{{$x}}0" step="0.01" min="0"></td>
-                                                                                <td><a class="addusiarow"><i class="fas fa-plus text-success"></i></a></td>
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div id="pendidikanform0" class="hide pendidikanform">
-                                                    <div class="card">
-                                                        <div class="card-body">
-                                                            <div class="form-group row">
-                                                                <label for="" class="col-lg-5 col-form-label">Pendidikan</label>
-                                                                <div class="col-lg-5">
-                                                                    <input type="number" class="form-control col-form-label master_pendidikan" name="master_pendidikan[0]" step="0.01" min="0">
-                                                                </div>
-                                                            </div>
-                                                            <div class="table-responsive">
-                                                                <table class="table table-hover pendidikantable" id="pendidikantable0">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th>Pendidikan Terakhir</th>
-                                                                            <th>Akreditasi</th>
-                                                                            <th>Bobot</th>
-                                                                            <th>Aksi</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td><select class="form-control ketentuan_pendidikan" name="ketentuan_pendidikan[0][0]" id="ketentuan_pendidikan00" style="width: 100%">
-                                                                                        <option value=""></option>
-                                                                                        <option value="smak">SMA / SMK</option>
-                                                                                        <option value="d3">D3</option>
-                                                                                        <option value="s1d4">D4 / S1</option>
-                                                                                    </select>
-                                                                            </td>
-                                                                            <td><select class="form-control peringkat" name="peringkat[0][0]" id="peringkat00" style="width: 100%">
-                                                                                        <option value="NULL">Tidak Terakreditasi</option>
-                                                                                        <option value="A">A</option>
-                                                                                        <option value="B">B</option>
-                                                                                        <option value="C">C</option>
-                                                                                    </select>
-                                                                            </td>
-                                                                            <td><input type="number" class="form-control bobot_pendidikan" name="bobot_pendidikan[0][0]" id="bobot_pendidikan00" step="0.01" min="0"></td>
-                                                                            <td><a id="addpendidikanrow"><i class="fas fa-plus text-success"></i></a></td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div id="jarakform0" class="hide jarakform">
-                                                    <div class="card">
+                                                    <div id="usiaform{{$x}}" class="@if(!isset($p->Kriteria->KriteriaUsia)) hide @endif usiaform">
+                                                        <div class="card">
                                                             <div class="card-body">
-                                                            <div class="form-group row">
-                                                                    <label for="" class="col-lg-5 col-form-label">Jarak</label>
+                                                                <div class="form-group row">
+                                                                    <label for="" class="col-lg-5 col-form-label">Usia</label>
                                                                     <div class="col-lg-5">
-                                                                        <input type="number" class="form-control col-form-label master_jarak" name="master_jarak[0]" step="0.01" min="0">
+                                                                        <input type="number" class="form-control col-form-label master_usia" name="master_usia[{{$x}}]" step="0.01" min="0" @if(isset($p->Kriteria[0]->KriteriaUsia)) value="{{$p->Kriteria[0]->KriteriaUsia->Kriteria->bobot}}" @endif>
                                                                     </div>
                                                                 </div>
-                                                            <div class="form-group row">
+                                                                <div class="form-group row">
+                                                                    <div class="table-responsive">
+                                                                        <table class="table table-hover usiatable" id="usiatable{{$x}}">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Range Min ( <i class="fas fa-greater-than"></i> )</th>
+                                                                                    <th>Range Max ( <i class="fas fa-less-than-equal"></i> )</th>
+                                                                                    <th>Bobot</th>
+                                                                                    <th>Aksi</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                @if(isset($p->Kriteria[0]->KriteriaUsia))
+                                                                                @foreach ($p->Kriteria[0]->KriteriaUsia as $ku)
+                                                                                <tr>
+                                                                                    <td><input type="number" class="form-control usia_min" name="usia_min[{{$x}}][{{$loop->iteration - 1}}]" id="usia_min{{$x}}{{$loop->iteration - 1}}" min="0" value="{{$ku->range_min}}"></td>
+                                                                                    <td><input type="number" class="form-control usia_max" name="usia_max[{{$x}}][{{$loop->iteration - 1}}]" id="usia_max{{$x}}{{$loop->iteration - 1}}" min="0" value="{{$ku->range_max}}"></td>
+                                                                                    <td><input type="number" class="form-control bobot_usia" name="bobot_usia[{{$x}}][{{$loop->iteration - 1}}]" id="bobot_usia{{$x}}{{$loop->iteration - 1}}" step="0.01" min="0" value="{{$ku->nilai}}"></td>
+                                                                                    <td>
+                                                                                        @if($loop->iteration <= 1)
+                                                                                            <a id="addusiarow"><i class="fas fa-plus text-success"></i></a>
+                                                                                        @else
+                                                                                            <a id="removeusiarow"><i class="fas fa-minus text-danger"></i></a>
+                                                                                        @endif
+                                                                                    </td>
+                                                                                </tr>
+                                                                                @endforeach
+                                                                                @else
+                                                                                <tr>
+                                                                                    <td><input type="number" class="form-control usia_min" name="usia_min[{{$x}}][0]" id="usia_min{{$x}}0" min="0"></td>
+                                                                                    <td><input type="number" class="form-control usia_max" name="usia_max[{{$x}}][0]" id="usia_max{{$x}}0" min="0"></td>
+                                                                                    <td><input type="number" class="form-control bobot_usia" name="bobot_usia[{{$x}}][0]" id="bobot_usia{{$x}}0" step="0.01" min="0"></td>
+                                                                                    <td><a class="addusiarow"><i class="fas fa-plus text-success"></i></a></td>
+                                                                                </tr>
+                                                                                @endif
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div id="pendidikanform{{$x}}" class="@if(!isset($p->Kriteria->KriteriaPendidikan)) hide @endif pendidikanform">
+                                                        <div class="card">
+                                                            <div class="card-body">
+                                                                <div class="form-group row">
+                                                                    <label for="" class="col-lg-5 col-form-label">Pendidikan</label>
+                                                                    <div class="col-lg-5">
+                                                                        <input type="number" class="form-control col-form-label master_pendidikan" name="master_pendidikan[{{$x}}]" step="0.01" min="0" @if(isset($p->Kriteria[0]->KriteriaPendidikan)) value="{{$p->Kriteria[0]->KriteriaPendidikan->Kriteria->bobot}}" @endif>
+                                                                    </div>
+                                                                </div>
                                                                 <div class="table-responsive">
-                                                                    <table class="table table-hover jaraktable" id="jaraktable0">
+                                                                    <table class="table table-hover pendidikantable" id="pendidikantable{{$x}}">
                                                                         <thead>
                                                                             <tr>
-                                                                                <th>( <i class="fas fa-greater-than"></i> ) Range Min (KM)</th>
-                                                                                <th>( <i class="fas fa-less-than-equal"></i> ) Range Max (KM)</th>
+                                                                                <th>Pendidikan Terakhir</th>
+                                                                                <th>Akreditasi</th>
                                                                                 <th>Bobot</th>
                                                                                 <th>Aksi</th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
+                                                                            @if(isset($p->Kriteria->KriteriaPendidikan))
+                                                                            @foreach ($p->Kriteria->KriteriaPendidikan as $kp)
                                                                             <tr>
-                                                                                <td><input type="number" class="form-control jarak_min" name="jarak_min[0][0]" id="jarak_min00" step="0.01" min="0"></td>
-                                                                                <td><input type="number" class="form-control jarak_max" name="jarak_max[0][0]" id="jarak_max00" step="0.01" min="0"></td>
-                                                                                <td><input type="number" class="form-control bobot_jarak" name="bobot_jarak[0][0]" id="bobot_jarak00"  step="0.01" min="0"></td>
-                                                                                <td><a id="addjarakrow"><i class="fas fa-plus text-success"></i></a></td>
+                                                                                <td><select class="form-control ketentuan_pendidikan" name="ketentuan_pendidikan[{{$x}}][{{$loop->iteration - 1}}]" id="ketentuan_pendidikan{{$x}}{{$loop->iteration - 1}}" style="width: 100%">
+                                                                                            <option value=""></option>
+                                                                                            <option value="smak" @if($kp->pendidikan == "smak") selected @endif>SMA / SMK</option>
+                                                                                            <option value="d3" @if($kp->pendidikan == "d3") selected @endif>D3</option>
+                                                                                            <option value="s1d4" @if($kp->pendidikan == "s1d4") selected @endif>D4 / S1</option>
+                                                                                        </select>
+                                                                                </td>
+                                                                                <td><select class="form-control peringkat" name="peringkat[{{$x}}][{{$loop->iteration - 1}}]" id="peringkat{{$x}}{{$loop->iteration - 1}}" style="width: 100%">
+                                                                                            <option value="NULL" @if($kp->peringkat == NULL) selected @endif>Tidak Terakreditasi</option>
+                                                                                            <option value="A" @if($kp->peringkat == "A") selected @endif>A</option>
+                                                                                            <option value="B" @if($kp->peringkat == "B") selected @endif>B</option>
+                                                                                            <option value="C" @if($kp->peringkat == "C") selected @endif>C</option>
+                                                                                        </select>
+                                                                                </td>
+                                                                                <td><input type="number" class="form-control bobot_pendidikan" name="bobot_pendidikan[{{$x}}][{{$loop->iteration - 1}}]" id="bobot_pendidikan{{$x}}{{$loop->iteration - 1}}" step="0.01" min="0" value="{{$kp->nilai}}"></td>
+                                                                                <td>
+                                                                                    @if($loop->iteration <= 1)
+                                                                                        <a id="addpendidikanrow"><i class="fas fa-plus text-success"></i></a>
+                                                                                    @else
+                                                                                        <a id="removependidikanrow"><i class="fas fa-minus text-danger"></i></a>
+                                                                                    @endif
+                                                                                </td>
                                                                             </tr>
+                                                                            @endforeach
+                                                                            @else
+                                                                            <tr>
+                                                                                <td><select class="form-control ketentuan_pendidikan" name="ketentuan_pendidikan[{{$x}}][0]" id="ketentuan_pendidikan{{$x}}0" style="width: 100%">
+                                                                                            <option value=""></option>
+                                                                                            <option value="smak">SMA / SMK</option>
+                                                                                            <option value="d3">D3</option>
+                                                                                            <option value="s1d4">D4 / S1</option>
+                                                                                        </select>
+                                                                                </td>
+                                                                                <td><select class="form-control peringkat" name="peringkat[{{$x}}][0]" id="peringkat{{$x}}0" style="width: 100%">
+                                                                                            <option value="NULL">Tidak Terakreditasi</option>
+                                                                                            <option value="A">A</option>
+                                                                                            <option value="B">B</option>
+                                                                                            <option value="C">C</option>
+                                                                                        </select>
+                                                                                </td>
+                                                                                <td><input type="number" class="form-control bobot_pendidikan" name="bobot_pendidikan[{{$x}}][0]" id="bobot_pendidikan{{$x}}0" step="0.01" min="0"></td>
+                                                                                <td>
+                                                                                    <a id="addpendidikanrow"><i class="fas fa-plus text-success"></i></a>
+                                                                                </td>
+                                                                            </tr>
+                                                                            @endif
                                                                         </tbody>
                                                                     </table>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div id="soalform0" class="hide soalform">
-                                                    <div class="card">
-                                                        <div class="card-body">
-                                                            <div class="form-group row">
-                                                                <label for="" class="col-lg-5 col-form-label">Soal</label>
-                                                                <div class="col-lg-5">
-                                                                    <input type="number" class="form-control col-form-label master_soal" name="master_soal[0]"  step="0.01" min="0">
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <div class="table-responsive">
-                                                                    <table class="table table-hover soaltable" id="soaltable0">
-                                                                        <thead>
-                                                                            <tr>
-                                                                                <th>Soal</th>
-                                                                                <th>Bobot</th>
-                                                                                <th>Aksi</th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tbody>
-                                                                            <tr>
-                                                                                <td><select class="form-control soal_id" id="soal_id00" name="soal_id[0][0]"></select></td>
-                                                                                <td><input type="number" class="form-control bobot_soal" name="bobot_soal[0][0]" id="bobot_soal00"  step="0.01" min="0"></td>
-                                                                                <td><a id="addsoalrow"><i class="fas fa-plus text-success"></i></a></td>
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    </table>
+                                                    <div id="jarakform{{$x}}" class="@if(!isset($p->Kriteria->KriteriaJarak)) hide @endif jarakform">
+                                                        <div class="card">
+                                                                <div class="card-body">
+                                                                <div class="form-group row">
+                                                                        <label for="" class="col-lg-5 col-form-label">Jarak</label>
+                                                                        <div class="col-lg-5">
+                                                                            <input type="number" class="form-control col-form-label master_jarak" name="master_jarak[{{$x}}]" step="0.01" min="0" @if(isset($p->Kriteria[0]->KriteriaJarak)) value="{{$p->Kriteria[0]->KriteriaJarak->Kriteria->bobot}}" @endif>
+                                                                        </div>
+                                                                    </div>
+                                                                <div class="form-group row">
+                                                                    <div class="table-responsive">
+                                                                        <table class="table table-hover jaraktable" id="jaraktable{{$x}}">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>( <i class="fas fa-greater-than"></i> ) Range Min (KM)</th>
+                                                                                    <th>( <i class="fas fa-less-than-equal"></i> ) Range Max (KM)</th>
+                                                                                    <th>Bobot</th>
+                                                                                    <th>Aksi</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                @if(isset($p->Kriteria->KriteriaJarak))
+                                                                                @foreach ($p->Kriteria->KriteriaJarak as $kj)
+                                                                                <tr>
+                                                                                    <td><input type="number" class="form-control jarak_min" name="jarak_min[{{$x}}][{{$loop->iteration - 1}}]" id="jarak_min{{$x}}{{$loop->iteration - 1}}" step="0.01" min="0" value="{{$kj->range_min}}"></td>
+                                                                                    <td><input type="number" class="form-control jarak_max" name="jarak_max[{{$x}}][{{$loop->iteration - 1}}]" id="jarak_max{{$x}}{{$loop->iteration - 1}}" step="0.01" min="0" value="{{$kj->range_max}}"></td>
+                                                                                    <td><input type="number" class="form-control bobot_jarak" name="bobot_jarak[{{$x}}][{{$loop->iteration - 1}}]" id="bobot_jarak{{$x}}{{$loop->iteration - 1}}"  step="0.01" min="0" value="{{$kj->nilai}}"></td>
+                                                                                    <td>
+                                                                                        @if($loop->iteration <= 1)
+                                                                                            <a id="addjarakrow"><i class="fas fa-plus text-success"></i></a>
+                                                                                        @else
+                                                                                            <a id="removejarakrow"><i class="fas fa-minus text-danger"></i></a>
+                                                                                        @endif
+                                                                                    </td>
+                                                                                </tr>
+                                                                                @endforeach
+                                                                                @else
+                                                                                <tr>
+                                                                                    <td><input type="number" class="form-control jarak_min" name="jarak_min[{{$x}}][0]" id="jarak_min{{$x}}0" step="0.01" min="0"></td>
+                                                                                    <td><input type="number" class="form-control jarak_max" name="jarak_max[{{$x}}][0]" id="jarak_max{{$x}}0" step="0.01" min="0"></td>
+                                                                                    <td><input type="number" class="form-control bobot_jarak" name="bobot_jarak[{{$x}}][0]" id="bobot_jarak{{$x}}0"  step="0.01" min="0"></td>
+                                                                                    <td><a id="addjarakrow"><i class="fas fa-plus text-success"></i></a></td>
+                                                                                </tr>
+                                                                                @endif
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                    <div id="soalform{{$x}}" class="@if(!isset($p->Kriteria->KriteriaSoal)) hide @endif soalform">
+                                                        <div class="card">
+                                                            <div class="card-body">
+                                                                <div class="form-group row">
+                                                                    <label for="" class="col-lg-5 col-form-label">Soal</label>
+                                                                    <div class="col-lg-5">
+                                                                        <input type="number" class="form-control col-form-label master_soal" name="master_soal[{{$x}}]"  step="0.01" min="0" @if(isset($p->Kriteria[0]->KriteriaSoal)) value="{{$p->Kriteria[0]->KriteriaSoal->Kriteria->bobot}}" @endif>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <div class="table-responsive">
+                                                                        <table class="table table-hover soaltable" id="soaltable{{$x}}">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Soal</th>
+                                                                                    <th>Bobot</th>
+                                                                                    <th>Aksi</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                @if(isset($p->Kriteria->KriteriaSoal))
+                                                                                @foreach ($p->Kriteria->KriteriaSoal as $ks)
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <select class="form-control soal_id" id="soal_id{{$x}}{{$loop->iteration - 1}}" name="soal_id[{{$x}}][{{$loop->iteration - 1}}]">
+                                                                                            <option value="{{$ks->soal_id}}" selected>{{$ks->Soal->nama}}</option>
+                                                                                        </select>
+                                                                                    </td>
+                                                                                    <td><input type="number" class="form-control bobot_soal" name="bobot_soal[{{$x}}][{{$loop->iteration - 1}}]" id="bobot_soal{{$x}}{{$loop->iteration - 1}}"  step="0.01" min="0" value="{{$ks->nilai}}"></td>
+                                                                                    <td>
+                                                                                        @if($loop->iteration <= 1)
+                                                                                        <a id="addsoalrow"><i class="fas fa-plus text-success"></i></a>
+                                                                                        @else
+                                                                                        <a id="removesoalrow"><i class="fas fa-minus text-danger"></i></a>
+                                                                                        @endif
+                                                                                    </td>
+                                                                                </tr>
+                                                                                @endforeach
+                                                                                @else
+                                                                                <tr>
+                                                                                    <td><select class="form-control soal_id" id="soal_id{{$x}}{{$loop->iteration - 1}}" name="soal_id[{{$x}}][{{$loop->iteration - 1}}]"></select></td>
+                                                                                    <td><input type="number" class="form-control bobot_soal" name="bobot_soal[{{$x}}][{{$loop->iteration - 1}}]" id="bobot_soal{{$x}}{{$loop->iteration - 1}}"  step="0.01" min="0"></td>
+                                                                                    <td><a id="addsoalrow"><i class="fas fa-plus text-success"></i></a></td>
+                                                                                </tr>
+                                                                                @endif
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </td>
                                         </tr>
+                                        <?php $x++; ?>
                                         @endforeach
                                     </tbody>
                                 </table>
