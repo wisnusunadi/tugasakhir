@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Mail\VerifyMail;
 use App\Models\Jadwal;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use App\Models\Pendaftaran;
+use App\Models\VerifyUser;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -85,7 +87,7 @@ class RegisterController extends Controller
         } else {
             $univ = $data['universitas'];
         }
-        $u =  User::create([
+        $user =  User::create([
             'nama' => $data['name'],
             'pendaftaran_id' => $data['pendaftaran_id'],
             'jenis_kelamin' => $data['jenis_kelamin'],
@@ -99,10 +101,34 @@ class RegisterController extends Controller
             'jarak' => $data['jarak'],
         ]);
 
-        if ($u) {
-            return $u;
+        $verifyUser = VerifyUser::create([
+            'user_id' => $user->id,
+            'token' => sha1(time())
+        ]);
+        \Mail::to($user->email)->send(new VerifyMail($user));
+
+        if ($user) {
+            return $user;
         } else {
             return redirect()->back()->with('error', 'Gagal menambahkan Jadwal');
         }
+    }
+
+    public function verifyUser($token)
+    {
+        $verifyUser = VerifyUser::where('token', $token)->first();
+        if (isset($verifyUser)) {
+            $user = $verifyUser->user;
+            if (!$user->verified) {
+                $verifyUser->user->verified = 1;
+                $verifyUser->user->save();
+                $status = "Selamat Email sudah terverifikasi, Silahkan login";
+            } else {
+                $status = "Email sudah terverifikasi, Silahkan login";
+            }
+        } else {
+            return redirect('/login')->with('warning', "Email tidak ditemukan.");
+        }
+        return redirect('/login')->with('status', $status);
     }
 }

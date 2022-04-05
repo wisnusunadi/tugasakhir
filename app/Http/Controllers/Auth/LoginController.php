@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -65,5 +66,14 @@ class LoginController extends Controller
     public function username()
     {
         return $this->username;
+    }
+
+    public function authenticated(Request $request, $user)
+    {
+        if (!$user->verified) {
+            auth()->logout();
+            return redirect()->back()->with('error', 'E-mail belum terverifikasi, cek terlebih dahulu');
+        }
+        return redirect()->intended($this->redirectPath());
     }
 }

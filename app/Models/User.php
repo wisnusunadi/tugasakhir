@@ -66,4 +66,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserJawaban::class);
     }
+
+    public function verifyUser()
+    {
+        return $this->hasOne(VerifyUser::class);
+    }
 }
