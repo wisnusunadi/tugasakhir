@@ -18,6 +18,22 @@
   <div class="login-logo">
     <a href="/"> Login</a>
   </div>
+  @if(Session::has('error')  )
+  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    {{ Session::get('error') }}
+    <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+@endif
+@if(Session::has('status'))
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    {{ Session::get('status') }}
+    <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+@endif
   <div class="card">
     <div class="card-body login-card-body">
       <p class="login-box-msg">Silahkan isi untuk Masuk</p>

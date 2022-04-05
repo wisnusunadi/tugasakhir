@@ -19,6 +19,8 @@ Route::get('/', function () {
 Route::view('/jadwal', 'jadwal.show')->name('jadwal');
 Route::get('/select/universitas', [App\Http\Controllers\GetController::class, 'universitas_select'])->name('select.universitas');
 Route::get('jadwal/show',  [App\Http\Controllers\JadwalController::class, 'jadwal_show'])->name('jadwal.show');
+Route::get('/user/verify/{token}', [App\Http\Controllers\Auth\RegisterController::class, 'verifyUser'])->name('verify_user');
+
 // Route::view('/soal_tes', 'soal.tes.show')->name('soal.tes');
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
