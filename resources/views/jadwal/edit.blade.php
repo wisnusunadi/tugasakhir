@@ -112,28 +112,28 @@ section{
                 </div>
                 @endif
                 <div class="card">
-                    <div class="card-header bg-success">
-                        <h6 class="card-title">Tambah Jadwal</h6>
+                    <div class="card-header bg-warning">
+                        <h6 class="card-title">Ubah Jadwal</h6>
                     </div>
                     <div class="card-body">
                         <div class="form-group row">
                             <label for="tanggal_mulai" class="col-lg-4 col-md-12 col-form-label labelket">Tanggal Mulai</label>
                             <div class="col-lg-8 col-md-12">
-                                <input type="date" class="form-control" id="tanggal_mulai" name="tanggal_mulai" value="{{$j->tanggal_mulai}}">
+                                <input type="date" class="form-control" id="tanggal_mulai" name="tanggal_mulai" value="{{ date('Y-m-d', strtotime($j->waktu_mulai)) }}">
                                 <small id="msg_tanggal_mulai" class="form-text text-danger"></small>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="tanggal_akhir" class="col-lg-4 col-md-12 col-form-label labelket">Tanggal Akhir</label>
                             <div class="col-lg-8 col-md-12">
-                                <input type="date" class="form-control" id="tanggal_akhir" name="tanggal_akhir" value="{{$j->tanggal_akhir}}">
+                                <input type="date" class="form-control" id="tanggal_akhir" name="tanggal_akhir" value="{{ date('Y-m-d', strtotime($j->waktu_selesai)) }}">
                                 <small id="msg_tanggal_akhir" class="form-text text-danger"></small>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="keterangan" class="col-lg-4 col-md-12 col-form-label labelket">Keterangan</label>
                             <div class="col-lg-8 col-md-12">
-                                <textarea class="form-control" id="keterangan" name="keterangan" placeholder="Masukkan Keterangan">{{$j->keterangan}}</textarea>
+                                <textarea class="form-control" id="keterangan" name="keterangan" placeholder="Masukkan Keterangan">{{$j->ket}}</textarea>
                                 <small id="msg_keterangan" class="form-text text-danger"></small>
                             </div>
                         </div>
@@ -174,19 +174,19 @@ section{
                                                     <label for="kriteria" class="col-lg-4 col-md-12 col-form-label labelket">Kriteria</label>
                                                     <div class="col-lg-7 col-md-12 d-flex justify-content-around">
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input kriteria" type="checkbox" name="kriteria[{{$x}}][0]" id="kriteria{{$x}}0" value="usia" @if(isset($p->Kriteria[0]->KriteriaUsia)) checked="true" @endif>
+                                                            <input class="form-check-input kriteria" type="checkbox" name="kriteria[{{$x}}][0]" id="kriteria{{$x}}0" value="usia" @if(isset($p->Kriteria->KriteriaUsia)) checked="true" @endif>
                                                             <label class="form-check-label kriterialabel" for="kriteria{{$x}}0">Usia</label>
                                                         </div>
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input kriteria" type="checkbox" name="kriteria[{{$x}}][1]" id="kriteria{{$x}}1" value="pendidikan" @if(isset($p->Kriteria[0]->KriteriaPendidikan)) checked="true" @endif>
+                                                            <input class="form-check-input kriteria" type="checkbox" name="kriteria[{{$x}}][1]" id="kriteria{{$x}}1" value="pendidikan" @if(isset($p->Kriteria->KriteriaPendidikan)) checked="true" @endif>
                                                             <label class="form-check-label kriterialabel" for="kriteria{{$x}}1">Pendidikan</label>
                                                         </div>
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input kriteria" type="checkbox" name="kriteria[{{$x}}][2]" id="kriteria{{$x}}2" value="jarak" @if(isset($p->Kriteria[0]->KriteriaJarak)) checked="true" @endif>
+                                                            <input class="form-check-input kriteria" type="checkbox" name="kriteria[{{$x}}][2]" id="kriteria{{$x}}2" value="jarak" @if(isset($p->Kriteria->KriteriaJarak)) checked="true" @endif>
                                                             <label class="form-check-label kriterialabel" for="kriteria{{$x}}2">Jarak Rumah</label>
                                                         </div>
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input kriteria" type="checkbox" name="kriteria[{{$x}}][3]" id="kriteria{{$x}}3" value="soal" @if(isset($p->Kriteria[0]->KriteriaSoal)) checked="true" @endif>
+                                                            <input class="form-check-input kriteria" type="checkbox" name="kriteria[{{$x}}][3]" id="kriteria{{$x}}3" value="soal" @if(isset($p->Kriteria->KriteriaSoal)) checked="true" @endif>
                                                             <label class="form-check-label kriterialabel" for="kriteria{{$x}}3">Soal</label>
                                                         </div>
                                                     </div>
@@ -198,7 +198,7 @@ section{
                                                                 <div class="form-group row">
                                                                     <label for="" class="col-lg-5 col-form-label">Usia</label>
                                                                     <div class="col-lg-5">
-                                                                        <input type="number" class="form-control col-form-label master_usia" name="master_usia[{{$x}}]" step="0.01" min="0" @if(isset($p->Kriteria[0]->KriteriaUsia)) value="{{$p->Kriteria[0]->KriteriaUsia->Kriteria->bobot}}" @endif>
+                                                                        <input type="number" class="form-control col-form-label master_usia" name="master_usia[{{$x}}]" step="0.01" min="0" @if(isset($p->Kriteria->KriteriaUsia)) value="{{$p->Kriteria->KriteriaUsia->Kriteria->bobot}}" @endif>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group row">
@@ -213,8 +213,8 @@ section{
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody>
-                                                                                @if(isset($p->Kriteria[0]->KriteriaUsia))
-                                                                                @foreach ($p->Kriteria[0]->KriteriaUsia as $ku)
+                                                                                @if(isset($p->Kriteria->KriteriaUsia))
+                                                                                @foreach ($p->Kriteria->KriteriaUsia as $ku)
                                                                                 <tr>
                                                                                     <td><input type="number" class="form-control usia_min" name="usia_min[{{$x}}][{{$loop->iteration - 1}}]" id="usia_min{{$x}}{{$loop->iteration - 1}}" min="0" value="{{$ku->range_min}}"></td>
                                                                                     <td><input type="number" class="form-control usia_max" name="usia_max[{{$x}}][{{$loop->iteration - 1}}]" id="usia_max{{$x}}{{$loop->iteration - 1}}" min="0" value="{{$ku->range_max}}"></td>
@@ -249,7 +249,7 @@ section{
                                                                 <div class="form-group row">
                                                                     <label for="" class="col-lg-5 col-form-label">Pendidikan</label>
                                                                     <div class="col-lg-5">
-                                                                        <input type="number" class="form-control col-form-label master_pendidikan" name="master_pendidikan[{{$x}}]" step="0.01" min="0" @if(isset($p->Kriteria[0]->KriteriaPendidikan)) value="{{$p->Kriteria[0]->KriteriaPendidikan->Kriteria->bobot}}" @endif>
+                                                                        <input type="number" class="form-control col-form-label master_pendidikan" name="master_pendidikan[{{$x}}]" step="0.01" min="0" @if(isset($p->Kriteria->KriteriaPendidikan)) value="{{$p->Kriteria->KriteriaPendidikan->Kriteria->bobot}}" @endif>
                                                                     </div>
                                                                 </div>
                                                                 <div class="table-responsive">
@@ -324,7 +324,7 @@ section{
                                                                 <div class="form-group row">
                                                                         <label for="" class="col-lg-5 col-form-label">Jarak</label>
                                                                         <div class="col-lg-5">
-                                                                            <input type="number" class="form-control col-form-label master_jarak" name="master_jarak[{{$x}}]" step="0.01" min="0" @if(isset($p->Kriteria[0]->KriteriaJarak)) value="{{$p->Kriteria[0]->KriteriaJarak->Kriteria->bobot}}" @endif>
+                                                                            <input type="number" class="form-control col-form-label master_jarak" name="master_jarak[{{$x}}]" step="0.01" min="0" @if(isset($p->Kriteria->KriteriaJarak)) value="{{$p->Kriteria->KriteriaJarak->Kriteria->bobot}}" @endif>
                                                                         </div>
                                                                     </div>
                                                                 <div class="form-group row">
@@ -375,7 +375,7 @@ section{
                                                                 <div class="form-group row">
                                                                     <label for="" class="col-lg-5 col-form-label">Soal</label>
                                                                     <div class="col-lg-5">
-                                                                        <input type="number" class="form-control col-form-label master_soal" name="master_soal[{{$x}}]"  step="0.01" min="0" @if(isset($p->Kriteria[0]->KriteriaSoal)) value="{{$p->Kriteria[0]->KriteriaSoal->Kriteria->bobot}}" @endif>
+                                                                        <input type="number" class="form-control col-form-label master_soal" name="master_soal[{{$x}}]"  step="0.01" min="0" @if(isset($p->Kriteria->KriteriaSoal)) value="{{$p->Kriteria->KriteriaSoal->Kriteria->bobot}}" @endif>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group row">
@@ -459,8 +459,8 @@ section{
 
         today = yyyy + '-' + mm + '-' + dd;
         console.log(today);
-        $("#tanggal_mulai").attr("min", today);
-        $("#tanggal_akhir").attr("min", today);
+        // $("#tanggal_mulai").attr("min", today);
+        // $("#tanggal_akhir").attr("min", today);
 
 
         $('#tanggal_mulai').on('keyup change', function() {

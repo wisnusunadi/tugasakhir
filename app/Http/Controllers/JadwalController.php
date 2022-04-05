@@ -155,9 +155,10 @@ class JadwalController extends Controller
             })
             ->addColumn('aksi', function ($data) {
                 if(count($data->User) <= 0){
-                    return '<a href="/jadwal/edit/'.$data->id.'"><button type="button" class="btn btn-info"></button></a>';
+                    return '<a href="/jadwal/edit/'.$data->id.'"><button type="button" class="btn btn-warning">Ubah</button></a>';
                 }
             })
+            ->rawColumns(['aksi'])
             ->make(true);
     }
 
@@ -170,10 +171,12 @@ class JadwalController extends Controller
 
     public function jadwal_edit($id)
     {
-        $jadwal = Jadwal::find($id);
+        $jadwal = Jadwal::whereHas('Pendaftaran', function($q) use($id){
+            $q->where('id', $id);
+        })->first();
         $divisi = Divisi::all();
         $jabatan = Jabatan::all();
-        return view('jadwal.edit', ['id' => $id, 'jd' => $jadwal, 'd' => $divisi, 'j' => $jabatan]);
+        return view('jadwal.edit', ['id' => $id, 'j' => $jadwal, 'db' => $divisi, 'jb' => $jabatan]);
     }
 
     public function jadwal_store(Request $r)

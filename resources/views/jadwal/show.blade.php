@@ -71,6 +71,7 @@ section{
                                     <th>Jabatan</th>
                                     <th>Divisi</th>
                                     <th>Kuota</th>
+                                    <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -136,6 +137,8 @@ section{
                 data: 'divisi',
             }, {
                 data: 'kuota',
+            }, {
+                data: 'aksi',
             },]
         });
     })
