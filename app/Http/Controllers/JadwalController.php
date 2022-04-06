@@ -142,7 +142,16 @@ class JadwalController extends Controller
         return datatables()->of($data)
             ->addIndexColumn()
             ->addColumn('jadwal', function ($data) {
-                return 'Tanggal ' . Carbon::parse($data->Jadwal->waktu_mulai)->format('d-m-Y') . " - " . Carbon::parse($data->Jadwal->waktu_selesai)->format('d-m-Y');
+                $j = $data->jadwal_id;
+                $u = User::whereHas('Pendaftaran', function($q) use($j){
+                    $q->where('jadwal_id', $j);
+                })->count();
+                $datas = "";
+                $datas .= 'Tanggal ' . Carbon::parse($data->Jadwal->waktu_mulai)->format('d-m-Y') . " - " . Carbon::parse($data->Jadwal->waktu_selesai)->format('d-m-Y');
+                if($u <= 0){
+                    $datas .= ' <span><a href="/jadwal/edit/'.$data->id.'"><button type="button" class="btn btn-warning">Ubah</button></a></span>';
+                }
+                return $datas;
             })
             ->addColumn('divisi', function ($data) {
                 return $data->Divisi->nama;
@@ -158,7 +167,7 @@ class JadwalController extends Controller
                     return '<a href="/jadwal/edit/'.$data->id.'"><button type="button" class="btn btn-warning">Ubah</button></a>';
                 }
             })
-            ->rawColumns(['aksi'])
+            ->rawColumns(['aksi', 'jadwal'])
             ->make(true);
     }
 

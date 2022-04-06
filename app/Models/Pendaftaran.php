@@ -28,4 +28,26 @@ class Pendaftaran extends Model
     public function Kriteria(){
         return $this->hasMany(Kriteria::class);
     }
+    public function KriteriaStatus($status){
+        $id = $this->id;
+        $res = "";
+        if($status == "usia"){
+            $res = KriteriaUsia::whereHas('Kriteria', function($q) use($id){
+                $q->where('pendaftaran_id', $id);
+            })->get();
+        }else if($status == "pendidikan"){
+            $res = KriteriaPendidikan::whereHas('Kriteria', function($q) use($id){
+                $q->where('pendaftaran_id', $id);
+            })->get();
+        }else if($status == "jarak"){
+            $res = KriteriaJarak::whereHas('Kriteria', function($q) use($id){
+                $q->where('pendaftaran_id', $id);
+            })->get();
+        }else if($status == "soal"){
+            $res = KriteriaSoal::whereHas('Kriteria', function($q) use($id){
+                $q->where('pendaftaran_id', $id);
+            })->get();
+        }
+        return $res;
+    }
 }

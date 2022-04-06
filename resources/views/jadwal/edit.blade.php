@@ -160,10 +160,10 @@ section{
                                         <tr class="kolom" id="kolom{{$x}}">
                                             <td rowspan="2">1</td>
                                             <td><select class="form-control jabatan" name="jabatan[{{$x}}]" id="jabatan{{$x}}" style="width: 100%">
-
+                                                <option value="{{$p->jabatan_id}}" selected>{{$p->Jabatan->nama}}</option>
                                             </select></td>
                                             <td><select class="form-control divisi" name="divisi[{{$x}}]" id="divisi{{$x}}" style="width: 100%">
-
+                                                <option value="{{$p->divisi_id}}" selected>{{$p->Divisi->nama}}</option>
                                             </select></td>
                                             <td><input type="number" class="form-control kuota" name="kuota[{{$x}}]" id="kuota{{$x}}"></td>
                                             <td rowspan="2"><a id="removerow"><i class="fas fa-minus" style="color:red;"></i></a></td>
@@ -174,31 +174,32 @@ section{
                                                     <label for="kriteria" class="col-lg-4 col-md-12 col-form-label labelket">Kriteria</label>
                                                     <div class="col-lg-7 col-md-12 d-flex justify-content-around">
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input kriteria" type="checkbox" name="kriteria[{{$x}}][0]" id="kriteria{{$x}}0" value="usia" @if(isset($p->Kriteria->KriteriaUsia)) checked="true" @endif>
+                                                            <input class="form-check-input kriteria" type="checkbox" name="kriteria[{{$x}}][0]" id="kriteria{{$x}}0" value="usia" @if(count($p->KriteriaStatus('usia')) > 0) checked="true" @endif>
                                                             <label class="form-check-label kriterialabel" for="kriteria{{$x}}0">Usia</label>
                                                         </div>
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input kriteria" type="checkbox" name="kriteria[{{$x}}][1]" id="kriteria{{$x}}1" value="pendidikan" @if(isset($p->Kriteria->KriteriaPendidikan)) checked="true" @endif>
+                                                            <input class="form-check-input kriteria" type="checkbox" name="kriteria[{{$x}}][1]" id="kriteria{{$x}}1" value="pendidikan" @if(count($p->KriteriaStatus('pendidikan')) > 0) checked="true" @endif>
                                                             <label class="form-check-label kriterialabel" for="kriteria{{$x}}1">Pendidikan</label>
                                                         </div>
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input kriteria" type="checkbox" name="kriteria[{{$x}}][2]" id="kriteria{{$x}}2" value="jarak" @if(isset($p->Kriteria->KriteriaJarak)) checked="true" @endif>
+                                                            <input class="form-check-input kriteria" type="checkbox" name="kriteria[{{$x}}][2]" id="kriteria{{$x}}2" value="jarak" @if(count($p->KriteriaStatus('jarak')) > 0) checked="true" @endif>
                                                             <label class="form-check-label kriterialabel" for="kriteria{{$x}}2">Jarak Rumah</label>
                                                         </div>
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input kriteria" type="checkbox" name="kriteria[{{$x}}][3]" id="kriteria{{$x}}3" value="soal" @if(isset($p->Kriteria->KriteriaSoal)) checked="true" @endif>
+                                                            <input class="form-check-input kriteria" type="checkbox" name="kriteria[{{$x}}][3]" id="kriteria{{$x}}3" value="soal" @if(count($p->KriteriaStatus('soal')) > 0)  checked="true" @endif>
                                                             <label class="form-check-label kriterialabel" for="kriteria{{$x}}3">Soal</label>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="flex-container">
-                                                    <div id="usiaform{{$x}}" class="@if(!isset($p->Kriteria->KriteriaUsia)) hide @endif usiaform">
+                                                    <div id="usiaform{{$x}}" class="@if(!isset($p->Kriteria[0]->KriteriaUsia)) hide @endif usiaform">
                                                         <div class="card">
                                                             <div class="card-body">
                                                                 <div class="form-group row">
                                                                     <label for="" class="col-lg-5 col-form-label">Usia</label>
                                                                     <div class="col-lg-5">
-                                                                        <input type="number" class="form-control col-form-label master_usia" name="master_usia[{{$x}}]" step="0.01" min="0" @if(isset($p->Kriteria->KriteriaUsia)) value="{{$p->Kriteria->KriteriaUsia->Kriteria->bobot}}" @endif>
+
+                                                                        <input type="number" class="form-control col-form-label master_usia" name="master_usia[{{$x}}]" step="0.01" min="0" @if(count($p->KriteriaStatus('usia')) > 0) value="{{$p->KriteriaStatus('usia')->first()->Kriteria->bobot}}" @endif>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group row">
@@ -213,8 +214,8 @@ section{
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody>
-                                                                                @if(isset($p->Kriteria->KriteriaUsia))
-                                                                                @foreach ($p->Kriteria->KriteriaUsia as $ku)
+                                                                                @if(count($p->KriteriaStatus('usia')) > 0)
+                                                                                @foreach ($p->KriteriaStatus('usia') as $ku)
                                                                                 <tr>
                                                                                     <td><input type="number" class="form-control usia_min" name="usia_min[{{$x}}][{{$loop->iteration - 1}}]" id="usia_min{{$x}}{{$loop->iteration - 1}}" min="0" value="{{$ku->range_min}}"></td>
                                                                                     <td><input type="number" class="form-control usia_max" name="usia_max[{{$x}}][{{$loop->iteration - 1}}]" id="usia_max{{$x}}{{$loop->iteration - 1}}" min="0" value="{{$ku->range_max}}"></td>
@@ -243,7 +244,7 @@ section{
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div id="pendidikanform{{$x}}" class="@if(!isset($p->Kriteria->KriteriaPendidikan)) hide @endif pendidikanform">
+                                                    <div id="pendidikanform{{$x}}" class="@if(!isset($p->Kriteria[0]->KriteriaPendidikan)) hide @endif pendidikanform">
                                                         <div class="card">
                                                             <div class="card-body">
                                                                 <div class="form-group row">
@@ -263,8 +264,9 @@ section{
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
-                                                                            @if(isset($p->Kriteria->KriteriaPendidikan))
-                                                                            @foreach ($p->Kriteria->KriteriaPendidikan as $kp)
+                                                                            @if(isset($p->Kriteria[0]->KriteriaPendidikan))
+                                                                            @foreach ($p->Kriteria[0]->KriteriaPendidikan as $kp)
+                                                                            {{$kp}}
                                                                             <tr>
                                                                                 <td><select class="form-control ketentuan_pendidikan" name="ketentuan_pendidikan[{{$x}}][{{$loop->iteration - 1}}]" id="ketentuan_pendidikan{{$x}}{{$loop->iteration - 1}}" style="width: 100%">
                                                                                             <option value=""></option>
@@ -318,7 +320,7 @@ section{
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div id="jarakform{{$x}}" class="@if(!isset($p->Kriteria->KriteriaJarak)) hide @endif jarakform">
+                                                    <div id="jarakform{{$x}}" class="@if(!isset($p->Kriteria[0]->KriteriaJarak)) hide @endif jarakform">
                                                         <div class="card">
                                                                 <div class="card-body">
                                                                 <div class="form-group row">
@@ -339,8 +341,8 @@ section{
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody>
-                                                                                @if(isset($p->Kriteria->KriteriaJarak))
-                                                                                @foreach ($p->Kriteria->KriteriaJarak as $kj)
+                                                                                @if(isset($p->Kriteria[0]->KriteriaJarak))
+                                                                                @foreach ($p->Kriteria[0]->KriteriaJarak as $kj)
                                                                                 <tr>
                                                                                     <td><input type="number" class="form-control jarak_min" name="jarak_min[{{$x}}][{{$loop->iteration - 1}}]" id="jarak_min{{$x}}{{$loop->iteration - 1}}" step="0.01" min="0" value="{{$kj->range_min}}"></td>
                                                                                     <td><input type="number" class="form-control jarak_max" name="jarak_max[{{$x}}][{{$loop->iteration - 1}}]" id="jarak_max{{$x}}{{$loop->iteration - 1}}" step="0.01" min="0" value="{{$kj->range_max}}"></td>
@@ -369,7 +371,7 @@ section{
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div id="soalform{{$x}}" class="@if(!isset($p->Kriteria->KriteriaSoal)) hide @endif soalform">
+                                                    <div id="soalform{{$x}}" class="@if(!isset($p->Kriteria[0]->KriteriaSoal)) hide @endif soalform">
                                                         <div class="card">
                                                             <div class="card-body">
                                                                 <div class="form-group row">
@@ -389,8 +391,8 @@ section{
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody>
-                                                                                @if(isset($p->Kriteria->KriteriaSoal))
-                                                                                @foreach ($p->Kriteria->KriteriaSoal as $ks)
+                                                                                @if(isset($p->Kriteria[0]->KriteriaSoal))
+                                                                                @foreach ($p->Kriteria[0]->KriteriaSoal as $ks)
                                                                                 <tr>
                                                                                     <td>
                                                                                         <select class="form-control soal_id" id="soal_id{{$x}}{{$loop->iteration - 1}}" name="soal_id[{{$x}}][{{$loop->iteration - 1}}]">
