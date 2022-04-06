@@ -37,10 +37,10 @@
                     <a href="{{ route('draft_soal.preview',['id' => $s->id]) }}" class="btn btn-sm btn-primary">
                    Lihat Soal
                     </a>
-                    <a data-toggle="modal" class="hapusmodal" data-id="{{$s->id}}" >
+                    <a data-toggle="modal" class="hapusmodal" data-id="{{$s->id}}" data-label="{{$s->kode_soal}} : {{ $s->nama }}">
                         <button class="btn btn-sm btn-danger" type="button" >
                             Hapus
-                            </button>
+                        </button>
                     </a>
                   </div>
                 </div>

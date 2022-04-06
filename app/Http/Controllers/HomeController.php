@@ -440,6 +440,7 @@ class HomeController extends Controller
             $soal->Divisi()->attach($request->divisi);
             $soal->Jabatan()->attach($request->jabatan);
 
+
             for ($i = 0; $i < count($request->soal); $i++) {
                 $sdc = SoalDetail::create([
                     'soal_id' => $c->id,
@@ -476,6 +477,34 @@ class HomeController extends Controller
             return redirect()->back()->with('success', 'Berhasil menambahkan Soal');
         } else if ($bool == false) {
             return redirect()->back()->with('error', 'Gagal menambahkan Soal');
+        }
+    }
+
+    public function draft_soal_delete(Request $request)
+    {
+        $id = $request->id;
+        $soal = Soal::find($id);
+
+        if ($soal->check_soal() > 0) {
+            return redirect()->back()->with('error', 'Hapus gagal');
+        } else {
+            $j = Jawaban::whereHas('SoalDetail', function ($q) use ($id) {
+                $q->where('soal_id', $id);
+            })->get();
+            if (count($j) > 0) {
+                $j = Jawaban::whereHas('SoalDetail', function ($q) use ($id) {
+                    $q->where('soal_id', $id);
+                })->delete();
+            }
+
+            $d = SoalDetail::where('soal_id', $id)->get();
+            if (count($d) > 0) {
+                $j = SoalDetail::where('soal_id', $id)->delete();
+            }
+
+            $soal->delete();
+
+            return redirect()->back()->with('success', 'Hapus berhasil');
         }
     }
 

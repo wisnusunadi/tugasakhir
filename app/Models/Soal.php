@@ -33,6 +33,14 @@ class Soal extends Model
         return $this->belongsToMany(Jabatan::class, 'soal_jabatan');
     }
 
+    public function check_soal()
+    {
+        $id = $this->id;
+        $s = DetailUserJawaban::whereHas('Jawaban.SoalDetail.Soal', function ($q) use ($id) {
+            $q->where('id', $id);
+        })->count();
+        return $s;
+    }
     public function getJumlahSoal()
     {
         $id = $this->id;
