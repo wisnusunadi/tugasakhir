@@ -106,7 +106,6 @@ td{
                     <div class="card-body aligncenter">
                         <button type="button" class="btn btn-lg btn-primary" disabled> <i class="fa-solid fa-stopwatch"></i>
                             <div align="center" id="timer" class="form-inline "></div>
-
                         </button>
                     </div>
                 </div>
@@ -141,7 +140,6 @@ td{
                                 </tr>
                                 <?php $jawaban++; ?>
                                 @endforeach
-
                             </tbody>
                         </table>
                     </div>
@@ -264,7 +262,6 @@ td{
                 </div>
                 @if (session()->has('waktu'))
                 <input value="{{session()->get('waktu')}}" type="text" id="session_time" class="d-none" >
-
                 @else
                 <input value="00:00:00" type="text" id="session_time" class="d-none">
                  @endif
