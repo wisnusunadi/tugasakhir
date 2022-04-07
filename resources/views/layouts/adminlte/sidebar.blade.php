@@ -38,9 +38,18 @@
           </li>
           <li class="nav-item">
             <a href="/divisi/show" class="nav-link {{ (request()->is('divisi*')) ? 'active' : '' }}">
-              <i class="nav-icon fa-solid fa-calendar"></i>
+                <i class="nav-icon fa fa-shield" aria-hidden="true"></i>
               <p>
                 Divisi
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/jabatan/show" class="nav-link {{ (request()->is('jabatan*')) ? 'active' : '' }}">
+             <i class="nav-icon fa fa-briefcase" aria-hidden="true"></i>
+
+              <p>
+                Jabatan
               </p>
             </a>
           </li>

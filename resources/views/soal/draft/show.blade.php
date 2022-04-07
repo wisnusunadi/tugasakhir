@@ -136,7 +136,7 @@ td{
           <div class="card-header">
            <div class="col-12">
                 <span class="float-left filter">
-                    <a href="{{route('draft_soal.create')}}"><button class="btn btn-outline-info">
+                    <a href="{{route('draft_soal.create')}}"><button class="btn btn-info">
                             <i class="fas fa-plus"></i> Tambah
                         </button>
                     </a>

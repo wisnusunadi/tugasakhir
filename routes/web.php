@@ -54,6 +54,14 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/store', [App\Http\Controllers\HomeController::class, 'divisi_store'])->name('divisi.store');
         Route::delete('/delete', [App\Http\Controllers\HomeController::class, 'divisi_delete'])->name('divisi.delete');
     });
+    Route::group(['prefix' => '/jabatan'], function () {
+        Route::view('/show', 'jabatan.show')->name('jabatan.show');
+        Route::view('/create', 'jabatan.create')->name('jabatan.create');
+        Route::get('/edit/{id}', [App\Http\Controllers\HomeController::class, 'jabatan_edit'])->name('jabatan.edit');
+        Route::put('/update/{id}', [App\Http\Controllers\HomeController::class, 'jabatan_update'])->name('jabatan.update');
+        Route::post('/store', [App\Http\Controllers\HomeController::class, 'jabatan_store'])->name('jabatan.store');
+        Route::delete('/delete', [App\Http\Controllers\HomeController::class, 'jabatan_delete'])->name('jabatan.delete');
+    });
     Route::group(['prefix' => '/draft_soal'], function () {
         Route::get('/show', [App\Http\Controllers\HomeController::class, 'draft_soal_show'])->name('draft_soal');
         Route::get('/data', [App\Http\Controllers\HomeController::class, 'draft_soal_data'])->name('draft_soal.data');

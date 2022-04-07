@@ -77,12 +77,12 @@ section{
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1 class="m-0">Divisi</h1>
+              <h1 class="m-0">Jabatan</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
                 <li class="breadcrumb-item"><a href="{{route('home')}}">Beranda</a></li>
-                <li class="breadcrumb-item"><a href="{{route('divisi.show')}}">Divisi</a></li>
+                <li class="breadcrumb-item"><a href="{{route('divisi.show')}}">Jabatan</a></li>
                 <li class="breadcrumb-item active">Tambah</li>
               </ol>
             </div><!-- /.col -->
@@ -94,7 +94,7 @@ section{
             <div class="col-md-2">
             </div>
             <div class="col-md-7">
-                <form method="POST" action="{{route('divisi.store')}}">
+                <form method="POST" action="{{route('jabatan.store')}}">
                 @csrf
                 @if(Session::has('error') || count($errors) > 0 )
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -115,22 +115,29 @@ section{
                 @endif
                 <div class="card">
                     <div class="card-header bg-success">
-                        <h6 class="card-title">Tambah Divisi</h6>
+                        <h6 class="card-title">Tambah Jabatan</h6>
                     </div>
                     <div class="card-body">
                         <div class="form-group row">
                             <label for="nama" class="col-lg-4 col-md-12 col-form-label labelket">Nama</label>
                             <div class="col-lg-8 col-md-12">
-                                <input class="form-control" id="nama" name="nama" placeholder="Masukkan Nama Divisi">
+                                <input class="form-control" id="nama" name="nama" placeholder="Masukkan Nama Jabatan">
                                 <small id="msg_nama" class="form-text text-danger"></small>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="pass_grade" class="col-lg-4 col-md-12 col-form-label labelket">Passing Grade</label>
+                            <div class="col-lg-2 col-md-8">
+                                <input type="number" class="form-control" id="pass_grade" name="pass_grade" placeholder="Nilai">
+                                <small id="pass_grade" class="form-text text-danger"></small>
                             </div>
                         </div>
                     </div>
                     <div class="card-footer">
-                        <span class="float-left"><a href="{{route('divisi.show')}}" type="button" class="btn btn-danger">
+                        <span class="float-left"><a href="{{route('jabatan.show')}}" type="button" class="btn btn-danger">
                             Batal
                         </a></span>
-                        <span class="float-right"><button type="submit" id="btnsubmit" class="btn btn-success" disabled>Tambah</button></span>
+                        <span class="float-right"><button type="submit" id="btnsubmit" class="btn btn-success" disabled >Tambah</button></span>
                     </div>
                 </div>
                 </form>
@@ -148,24 +155,41 @@ section{
                 $.ajax({
                     type: 'GET',
                     dataType: 'json',
-                    url: '/api/divisi/check/' + $(this).val(),
+                    url: '/api/jabatan/check/' + $(this).val(),
                     success: function(data) {
                         console.log(data);
                         if (data.jumlah >= 1) {
-                        $("#msg_nama").html("<i class='fa fa-exclamation-circle' aria-hidden='true'></i> Nama divisi sudah terpakai");
+                        $("#msg_nama").html("<i class='fa fa-exclamation-circle' aria-hidden='true'></i> Nama jabatan sudah terpakai");
                         $('#btnsubmit').attr("disabled", true);
                         $('#nama').addClass("is-invalid");
                          } else {
                             $('#msg_nama').text("");
                             $('#nama').removeClass("is-invalid");
+                            if ($('#pass_grade').val() != "") {
                             $('#btnsubmit').attr("disabled", false);
+                            } else {
+                            $('#btnsubmit').attr("disabled", true);
+                             }
                         }
                     }
                 });
             } else if ($(this).val() == "") {
-                $("#msg_nama").html("<i class='fa fa-exclamation-circle' aria-hidden='true'></i> Nama divisi harus di isi");
+                $("#msg_nama").html("<i class='fa fa-exclamation-circle' aria-hidden='true'></i> Nama jabatan harus di isi");
                 $('#nama').addClass("is-invalid");
                 $("#btnsubmit").attr('disabled', true);
+            }
+        });
+
+
+        $('#pass_grade').on('keyup change', function() {
+            if ($(this).val() != "") {
+                if ($('#nama').val() != "") {
+                    $('#btnsubmit').attr("disabled", false);
+                } else {
+                    $('#btnsubmit').attr("disabled", true);
+                }
+            } else {
+                $('#btnsubmit').attr("disabled", true);
             }
         });
     })

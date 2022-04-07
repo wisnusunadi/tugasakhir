@@ -335,6 +335,25 @@ class HomeController extends Controller
         $divisi = Divisi::find($id);
         return view('divisi.edit', ['divisi' => $divisi]);
     }
+    public function jabatan_edit($id)
+    {
+        $jabatan = Jabatan::find($id);
+        return view('jabatan.edit', ['jabatan' => $jabatan]);
+    }
+    public function jabatan_update(Request $request, $id)
+    {
+        $jabatan = Jabatan::find($id);
+        $jabatan->nama = $request->nama;
+        $jabatan->pass_grade = $request->pass_grade;
+        $jabatan = $jabatan->save();
+
+        if ($jabatan) {
+            return redirect()->back()->with('success', 'Berhasil mengubah Jabatan');
+        } else {
+            return redirect()->back()->with('error', 'Gagal mengubah Jabatan');
+        }
+        return view('jabatan.edit', ['jabatan' => $jabatan]);
+    }
     public function divisi_update(Request $request, $id)
     {
         $divisi = Divisi::find($id);
@@ -443,6 +462,20 @@ class HomeController extends Controller
             return redirect()->back()->with('error', 'Gagal menambahkan Divisi');
         }
     }
+
+    public function jabatan_store(Request $request)
+    {
+        $d = Jabatan::create([
+            'nama' => $request->nama,
+            'pass_grade' => $request->pass_grade,
+        ]);
+
+        if ($d) {
+            return redirect()->back()->with('success', 'Berhasil menambahkan Divisi');
+        } else {
+            return redirect()->back()->with('error', 'Gagal menambahkan Divisi');
+        }
+    }
     public function soal_tes_store(Request $request)
     {
 
@@ -541,6 +574,20 @@ class HomeController extends Controller
             return redirect()->back()->with('error', 'Hapus gagal');
         } else {
             Divisi::find($id)->delete();
+            return redirect()->back()->with('success', 'Hapus berhasil');
+        }
+    }
+
+    public function jabatan_delete(Request $request)
+    {
+        $id = $request->id;
+        $cek_p = Jabatan::Has('Pendaftaran')->where('id', $id)->count();
+        $cek_s = Jabatan::Has('Soal')->where('id', $id)->count();
+
+        if ($cek_p > 0 || $cek_s > 0) {
+            return redirect()->back()->with('error', 'Hapus gagal');
+        } else {
+            Jabatan::find($id)->delete();
             return redirect()->back()->with('success', 'Hapus berhasil');
         }
     }

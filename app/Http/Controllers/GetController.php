@@ -28,6 +28,13 @@ class GetController extends Controller
 
         return response()->json(['jumlah' => $data]);
     }
+    public function jabatan_cek($value)
+    {
+
+        $data = Jabatan::where('nama', $value)->count();
+
+        return response()->json(['jumlah' => $data]);
+    }
     public function peserta_check($param, $value)
     {
         if ($param == 'username') {
@@ -38,17 +45,29 @@ class GetController extends Controller
 
         return response()->json(['jumlah' => $data]);
     }
+    public function get_data_jabatan()
+    {
+        $data = Jabatan::all();
+        return datatables()->of($data)
+            ->addIndexColumn()
+            ->addColumn('button', function ($data) {
+                return  ' <a class="btn btn-sm btn-success" href="' . route('jabatan.edit', ['id' => $data->id]) . '">Edit
+              </a>
+              <a class="btn btn-sm btn-danger hapusmodal" data-id="' . $data->id . '" data-label="' . $data->nama . '">Hapus
+            </a>';
+            })
+            ->rawColumns(['button'])
+            ->make(true);
+    }
     public function get_data_divisi()
     {
         $data = Divisi::all();
         return datatables()->of($data)
             ->addIndexColumn()
             ->addColumn('button', function ($data) {
-                return  ' <a class="btn btn-sm btn-info" href="' . route('divisi.edit', ['id' => $data->id]) . '">
-                <i class="fas fa-edit"></i> Edit
+                return  ' <a class="btn btn-sm btn-success" href="' . route('divisi.edit', ['id' => $data->id]) . '">Edit
               </a>
-              <a class="btn btn-sm btn-danger hapusmodal" data-id="' . $data->id . '" data-label="' . $data->nama . '">
-              <i class="fas fa-trash"></i> Hapus
+              <a class="btn btn-sm btn-danger hapusmodal" data-id="' . $data->id . '" data-label="' . $data->nama . '">Hapus
             </a>';
             })
             ->rawColumns(['button'])

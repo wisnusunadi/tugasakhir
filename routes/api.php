@@ -19,8 +19,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/reload_captcha', [App\Http\Controllers\GetController::class, 'reload_captcha']);
-Route::get('/jabatan', [App\Http\Controllers\HomeController::class, 'jabatan_data']);
-Route::get('/divisi', [App\Http\Controllers\HomeController::class, 'divisi_data']);
 
 // Route::get('/jadwal/table', [App\Http\Controllers\HomeController::class, 'jadwal_table']);
 Route::prefix('/jadwal')->group(function () {
@@ -47,6 +45,8 @@ Route::prefix('/divisi')->group(function () {
 
 Route::prefix('/jabatan')->group(function () {
     Route::get('/select', [App\Http\Controllers\GetController::class, 'jabatan_select']);
+    Route::get('/data', [App\Http\Controllers\GetController::class, 'get_data_jabatan']);
+    Route::get('/check/{value}', [App\Http\Controllers\GetController::class, 'jabatan_cek']);
 });
 
 Route::prefix('/soal')->group(function () {
