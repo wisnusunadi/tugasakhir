@@ -225,7 +225,7 @@ class HomeController extends Controller
 
             $divisi_id = Auth::user()->Pendaftaran->Divisi->id;
             $jabatan_id = Auth::user()->Pendaftaran->Jabatan->id;
-            $soal = Soal::whereHas('Divisi', function ($q) use ($divisi_id) {
+            $soal_belum = Soal::whereHas('Divisi', function ($q) use ($divisi_id) {
                 $q->where('id', $divisi_id);
             })->whereHas('Jabatan', function ($q) use ($jabatan_id) {
                 $q->where('id', $jabatan_id);
@@ -242,7 +242,7 @@ class HomeController extends Controller
 
 
 
-            return view('soal.tes.preview', ['soal' => $soal, 'soal_sudah' => $soal_sudah]);
+            return view('soal.tes.preview', ['soal_belum' => $soal_belum, 'soal_sudah' => $soal_sudah]);
         } else {
             return view('home');
         }
