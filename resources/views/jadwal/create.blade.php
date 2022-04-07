@@ -194,7 +194,7 @@ section{
                                                     <div class="card">
                                                         <div class="card-body">
                                                             <div class="form-group row">
-                                                                <label for="" class="col-lg-5 col-form-label">Usia</label>
+                                                                <label for="" class="col-lg-5 col-form-label">Bobot Penilaian Usia</label>
                                                                 <div class="col-lg-5">
                                                                     <input type="number" class="form-control col-form-label master_usia" name="master_usia[0]" step="0.01" min="0">
                                                                 </div>
@@ -228,7 +228,7 @@ section{
                                                     <div class="card">
                                                         <div class="card-body">
                                                             <div class="form-group row">
-                                                                <label for="" class="col-lg-5 col-form-label">Pendidikan</label>
+                                                                <label for="" class="col-lg-5 col-form-label">Bobot Penilaian Pendidikan</label>
                                                                 <div class="col-lg-5">
                                                                     <input type="number" class="form-control col-form-label master_pendidikan" name="master_pendidikan[0]" step="0.01" min="0">
                                                                 </div>
@@ -272,7 +272,7 @@ section{
                                                     <div class="card">
                                                             <div class="card-body">
                                                             <div class="form-group row">
-                                                                    <label for="" class="col-lg-5 col-form-label">Jarak</label>
+                                                                    <label for="" class="col-lg-5 col-form-label">Bobot Penilaian Jarak</label>
                                                                     <div class="col-lg-5">
                                                                         <input type="number" class="form-control col-form-label master_jarak" name="master_jarak[0]" step="0.01" min="0">
                                                                     </div>
@@ -306,7 +306,7 @@ section{
                                                     <div class="card">
                                                         <div class="card-body">
                                                             <div class="form-group row">
-                                                                <label for="" class="col-lg-5 col-form-label">Soal</label>
+                                                                <label for="" class="col-lg-5 col-form-label">Bobot Penilaian Soal</label>
                                                                 <div class="col-lg-5">
                                                                     <input type="number" class="form-control col-form-label master_soal" name="master_soal[0]"  step="0.01" min="0">
                                                                 </div>
@@ -637,7 +637,7 @@ section{
                                                     <div class="card">
                                                         <div class="card-body">
                                                             <div class="form-group row">
-                                                                <label for="" class="col-lg-5 col-form-label">Usia</label>
+                                                                <label for="" class="col-lg-5 col-form-label">Bobot Penilaian Usia</label>
                                                                 <div class="col-lg-5">
                                                                     <input type="number" class="form-control col-form-label master_usia" name="master_usia[`+countable+`]" step="0.01" min="0">
                                                                 </div>
@@ -671,7 +671,7 @@ section{
                                                     <div class="card">
                                                         <div class="card-body">
                                                             <div class="form-group row">
-                                                                <label for="" class="col-lg-5 col-form-label">Pendidikan</label>
+                                                                <label for="" class="col-lg-5 col-form-label">Bobot Penilaian Pendidikan</label>
                                                                 <div class="col-lg-5">
                                                                     <input type="number" class="form-control col-form-label master_pendidikan" name="master_pendikan[`+countable+`]" step="0.01" min="0">
                                                                 </div>
@@ -715,7 +715,7 @@ section{
                                                     <div class="card">
                                                             <div class="card-body">
                                                             <div class="form-group row">
-                                                                    <label for="" class="col-lg-5 col-form-label">Jarak</label>
+                                                                    <label for="" class="col-lg-5 col-form-label">Bobot Penilaian Jarak</label>
                                                                     <div class="col-lg-5">
                                                                         <input type="number" class="form-control col-form-label master_jarak" name="master_jarak[`+countable+`]" step="0.01" min="0">
                                                                     </div>
@@ -749,7 +749,7 @@ section{
                                                     <div class="card">
                                                         <div class="card-body">
                                                             <div class="form-group row">
-                                                                <label for="" class="col-lg-5 col-form-label">Soal</label>
+                                                                <label for="" class="col-lg-5 col-form-label">Bobot Penilaian Soal</label>
                                                                 <div class="col-lg-5">
                                                                     <input type="number" class="form-control col-form-label master_soal" name="master_soal[`+countable+`]" step="0.01" min="0">
                                                                 </div>

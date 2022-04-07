@@ -192,7 +192,7 @@ class GetController extends Controller
         echo json_encode($data);
     }
 
-    public function bobot_usia_peserta($user_id)
+    public static function bobot_usia_peserta($user_id)
     {
         $bobot = "";
         $u = User::find($user_id);
@@ -213,7 +213,7 @@ class GetController extends Controller
         return $bobot;
     }
 
-    public function bobot_pend_peserta($user_id)
+    public static function bobot_pend_peserta($user_id)
     {
         $bobot = "";
         $u = User::find($user_id);
@@ -242,7 +242,7 @@ class GetController extends Controller
         return $bobot;
     }
 
-    public function bobot_jarak_peserta($user_id)
+    public static function bobot_jarak_peserta($user_id)
     {
         $bobot = "";
         $u = User::find($user_id);
@@ -263,7 +263,7 @@ class GetController extends Controller
         return $bobot;
     }
 
-    public function bobot_soal_peserta($soal, $nilai, $daftar_id)
+    public static function bobot_soal_peserta($soal, $nilai, $daftar_id)
     {
         $bobot = "";
         $k = Kriteria::where([['nama', '=', 'soal'], ['pendaftaran_id', '=', $daftar_id]])->first();
@@ -283,7 +283,24 @@ class GetController extends Controller
         return $bobot;
     }
 
-    public function sum_soal_peserta($user_id)
+    public static function nilai_jawaban($user_id, $soal_id)
+    {
+        $user = User::find($user_id);
+        $user_jwb = DetailUserJawaban::whereHas('UserJawaban', function ($q) use ($user_id) {
+            $q->where('user_id', $user_id);
+        })->whereHas('Jawaban.SoalDetail', function ($q) use ($soal_id) {
+            $q->where('soal_id', $soal_id);
+        })->get();
+        $soal = Soal::find($soal_id);
+        $allbenar = $soal->getAllNilaiBenar();
+        $nilai = 0;
+        foreach ($user_jwb as $i) {
+            $nilai = $nilai + ($i->Jawaban->status * $i->Jawaban->SoalDetail->bobot);
+        }
+        return $nilai;
+    }
+
+    public static function sum_soal_peserta($user_id)
     {
         $user = User::find($user_id);
         $user_jwb = UserJawaban::where('user_id', $user_id)->get();
@@ -300,25 +317,25 @@ class GetController extends Controller
             $nilai = 0;
             $duj = DetailUserJawaban::where('user_jawaban_id', $i->id)->get();
             foreach ($duj as $j) {
-                $nilai = $nilai + $j->Jawaban->status;
+                $nilai = $nilai + ($j->Jawaban->status * $j->Jawaban->SoalDetail->bobot);
             }
-            $bobots = $this->bobot_soal_peserta($soal_id, $nilai, $user->pendaftaran_id);
+            $bobots = static::bobot_soal_peserta($soal_id, $nilai, $user->pendaftaran_id);
 
             $bobotall = $bobotall + $bobots;
         }
         return $bobotall;
     }
 
-    public function count_usia_peserta($id_user)
+    public static function count_usia_peserta($id_user)
     {
         $user = User::find($id_user);
         $daftar_id = $user->pendaftaran_id;
-        $bobot = $this->bobot_usia_peserta($user->id);
+        $bobot = static::bobot_usia_peserta($user->id);
 
         $alluser = user::where('pendaftaran_id', $daftar_id)->get();
         $arrayusia = [];
         foreach ($alluser as $i) {
-            $arrayusia[] = $this->bobot_usia_peserta($i->id);
+            $arrayusia[] = static::bobot_usia_peserta($i->id);
         }
 
         $maxusia = max($arrayusia);
@@ -329,16 +346,16 @@ class GetController extends Controller
         return $res;
     }
 
-    public function count_pend_peserta($id_user)
+    public static function count_pend_peserta($id_user)
     {
         $user = User::find($id_user);
         $daftar_id = $user->pendaftaran_id;
-        $bobot = $this->bobot_pend_peserta($user->id);
+        $bobot = static::bobot_pend_peserta($user->id);
 
         $alluser = User::where('pendaftaran_id', $daftar_id)->get();
         $arraypend = [];
         foreach ($alluser as $i) {
-            $arraypend[] = $this->bobot_pend_peserta($i->id);
+            $arraypend[] = static::bobot_pend_peserta($i->id);
         }
 
         $maxpend = max($arraypend);
@@ -349,16 +366,16 @@ class GetController extends Controller
         return $res;
     }
 
-    public function count_jarak_peserta($id_user)
+    public static function count_jarak_peserta($id_user)
     {
         $user = User::find($id_user);
         $daftar_id = $user->pendaftaran_id;
-        $bobot = $this->bobot_jarak_peserta($user->id);
+        $bobot = static::bobot_jarak_peserta($user->id);
 
         $alluser = user::where('pendaftaran_id', $daftar_id)->get();
         $arrayjarak = [];
         foreach ($alluser as $i) {
-            $arrayjarak[] = $this->bobot_jarak_peserta($i->id);
+            $arrayjarak[] = static::bobot_jarak_peserta($i->id);
         }
 
         $maxjarak = max($arrayjarak);
@@ -369,15 +386,15 @@ class GetController extends Controller
         return $res;
     }
 
-    public function count_soal_peserta($id_user)
+    public static function count_soal_peserta($id_user)
     {
         $user = User::find($id_user);
         $daftar_id = $user->pendaftaran_id;
         $alluser = user::where('pendaftaran_id', $daftar_id)->get();
-        $bobot = $this->sum_soal_peserta($id_user);
+        $bobot = static::sum_soal_peserta($id_user);
         $arraysoal = [];
         foreach ($alluser as $i) {
-            $arraysoal[] = $this->sum_soal_peserta($i->id);
+            $arraysoal[] = static::sum_soal_peserta($i->id);
         }
 
         $maxsoal = max($arraysoal);
@@ -389,7 +406,7 @@ class GetController extends Controller
         return $res;
     }
 
-    public function count_all_bobot($id_user)
+    public static function count_all_bobot($id_user)
     {
         $user = User::find($id_user);
         $k = Kriteria::where('pendaftaran_id', $user->pendaftaran_id)->get();
@@ -397,23 +414,23 @@ class GetController extends Controller
         foreach ($k as $i) {
             if ($i->nama == "usia") {
                 if ($user->tgl_lahir) {
-                    $res = $this->count_usia_peserta($id_user);
+                    $res = static::count_usia_peserta($id_user);
                     $rerata = $rerata + ($res * $i->bobot);
                 }
             } else
             if ($i->nama == "pendidikan") {
                 if ($user->pend) {
-                    $res = $this->count_pend_peserta($id_user);
+                    $res = static::count_pend_peserta($id_user);
                     $rerata = $rerata + ($res * $i->bobot);
                 }
             } else if ($i->nama == "jarak") {
                 if ($user->jarak) {
-                    $res = $this->count_jarak_peserta($id_user);
+                    $res = static::count_jarak_peserta($id_user);
                     $rerata = $rerata + ($res * $i->bobot);
                 }
             } else if ($i->nama == "soal") {
                 if ($user->UserJawaban) {
-                    $res = $this->count_soal_peserta($id_user);
+                    $res = static::count_soal_peserta($id_user);
                     $rerata = $rerata + ($res * $i->bobot);
                 }
             }
@@ -421,17 +438,17 @@ class GetController extends Controller
         return $rerata;
     }
 
-    public function get_keputusan_rekruitmen($user_id)
+    public static function get_keputusan_rekruitmen($user_id)
     {
         $user = User::find($user_id);
         $daftar_id = $user->pendaftaran_id;
         $kuota = $user->Pendaftaran->kuota;
-        $bobot = $this->count_all_bobot($user_id);
+        $bobot = static::count_all_bobot($user_id);
 
         $alluser = User::where('pendaftaran_id', $daftar_id)->get();
         $arraybobot = [];
         foreach ($alluser as $i) {
-            $arraybobot[] = $this->count_all_bobot($i->id);
+            $arraybobot[] = static::count_all_bobot($i->id);
         }
 
         rsort($arraybobot);

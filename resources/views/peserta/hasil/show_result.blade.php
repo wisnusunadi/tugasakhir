@@ -9,6 +9,10 @@ section{
     margin-left: 250px;
 }
 
+.margin{
+    margin-top: 20px;
+}
+
 .group{
     background-color: steelblue;
     color: white;
@@ -56,27 +60,38 @@ section{
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <table class="table table-hover aligncenter" id="showtable">
-                            <thead>
-                                <tr>
-                                    <th rowspan="2">No</th>
-                                    <th rowspan="2">Pendaftaran</th>
-                                    <th rowspan="2">Tanggal Daftar</th>
-                                    <th rowspan="2">Nama Peserta</th>
-                                    <th colspan="5">Penilaian</th>
-                                    <th rowspan="2">Keputusan</th>
-                                </tr>
-                                <tr>
-                                    <th>Usia</th>
-                                    <th>Pendidikan</th>
-                                    <th>Jarak</th>
-                                    <th>Soal</th>
-                                    <th>Rata Rata</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <a href="{{route('peserta.hasil.export')}}"><button class="btn btn-info"><i class="fas fa-file-excel fa-fw"></i> Export Laporan</button></a>
+                            </div>
+                        </div>
+                        <div class="row margin">
+                            <div class="col-lg-12">
+                                <div class="table-responsive">
+                                    <table class="table table-hover aligncenter" id="showtable">
+                                        <thead>
+                                            <tr>
+                                                <th rowspan="2">No</th>
+                                                <th rowspan="2">Pendaftaran</th>
+                                                <th rowspan="2">Tanggal Daftar</th>
+                                                <th rowspan="2">Nama Peserta</th>
+                                                <th colspan="5">Penilaian</th>
+                                                <th rowspan="2">Keputusan</th>
+                                            </tr>
+                                            <tr>
+                                                <th>Usia</th>
+                                                <th>Pendidikan</th>
+                                                <th>Jarak</th>
+                                                <th>Soal</th>
+                                                <th>Rata Rata</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
