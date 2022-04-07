@@ -651,9 +651,6 @@ var geocoder = new MapboxGeocoder({
             }
         });
 
-
-
-
         $('#username').on('keyup change', function() {
             if ($(this).val() != "") {
                 $.ajax({
@@ -677,7 +674,6 @@ var geocoder = new MapboxGeocoder({
                         }
                     }
                 });
-
             } else if ($(this).val() == "") {
                 $("#user_duplicate").html("<i class='fa fa-exclamation-circle' aria-hidden='true'></i> Username harus di isi");
                 $('#user').addClass("is-invalid");

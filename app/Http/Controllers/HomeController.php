@@ -330,6 +330,24 @@ class HomeController extends Controller
         $soal = Soal::find($id);
         return view('soal.draft.edit', ['divisi' => $divisi, 'jabatan' => $jabatan, 'soal' => $soal]);
     }
+    public function divisi_edit($id)
+    {
+        $divisi = Divisi::find($id);
+        return view('divisi.edit', ['divisi' => $divisi]);
+    }
+    public function divisi_update(Request $request, $id)
+    {
+        $divisi = Divisi::find($id);
+        $divisi->nama = $request->nama;
+        $divisi = $divisi->save();
+
+        if ($divisi) {
+            return redirect()->back()->with('success', 'Berhasil mengubah Divisi');
+        } else {
+            return redirect()->back()->with('error', 'Gagal mengubah Divisi');
+        }
+        return view('divisi.edit', ['divisi' => $divisi]);
+    }
 
     public function draft_soal_update(Request $request, $id)
     {
@@ -413,6 +431,18 @@ class HomeController extends Controller
 
 
 
+    public function divisi_store(Request $request)
+    {
+        $d = Divisi::create([
+            'nama' => $request->nama,
+        ]);
+
+        if ($d) {
+            return redirect()->back()->with('success', 'Berhasil menambahkan Divisi');
+        } else {
+            return redirect()->back()->with('error', 'Gagal menambahkan Divisi');
+        }
+    }
     public function soal_tes_store(Request $request)
     {
 
@@ -501,6 +531,19 @@ class HomeController extends Controller
         }
     }
 
+    public function divisi_delete(Request $request)
+    {
+        $id = $request->id;
+        $cek_p = Divisi::Has('Pendaftaran')->where('id', $id)->count();
+        $cek_s = Divisi::Has('Soal')->where('id', $id)->count();
+
+        if ($cek_p > 0 || $cek_s > 0) {
+            return redirect()->back()->with('error', 'Hapus gagal');
+        } else {
+            Divisi::find($id)->delete();
+            return redirect()->back()->with('success', 'Hapus berhasil');
+        }
+    }
     public function draft_soal_delete(Request $request)
     {
         $id = $request->id;

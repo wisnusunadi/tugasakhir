@@ -37,6 +37,14 @@
             </a>
           </li>
           <li class="nav-item">
+            <a href="/divisi/show" class="nav-link {{ (request()->is('divisi*')) ? 'active' : '' }}">
+              <i class="nav-icon fa-solid fa-calendar"></i>
+              <p>
+                Divisi
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
             <a href="/jadwal/show" class="nav-link {{ (request()->is('jadwal*')) ? 'active' : '' }}">
               <i class="nav-icon fa-solid fa-calendar"></i>
               <p>

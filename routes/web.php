@@ -46,6 +46,14 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/show/{id}', [App\Http\Controllers\HomeController::class, 'soal_tes_show'])->name('soal_tes.show');
         Route::get('/result/{soal}/{user}', [App\Http\Controllers\HomeController::class, 'soal_tes_result'])->name('soal_tes.result');
     });
+    Route::group(['prefix' => '/divisi'], function () {
+        Route::view('/show', 'divisi.show')->name('divisi.show');
+        Route::view('/create', 'divisi.create')->name('divisi.create');
+        Route::get('/edit/{id}', [App\Http\Controllers\HomeController::class, 'divisi_edit'])->name('divisi.edit');
+        Route::put('/update/{id}', [App\Http\Controllers\HomeController::class, 'divisi_update'])->name('divisi.update');
+        Route::post('/store', [App\Http\Controllers\HomeController::class, 'divisi_store'])->name('divisi.store');
+        Route::delete('/delete', [App\Http\Controllers\HomeController::class, 'divisi_delete'])->name('divisi.delete');
+    });
     Route::group(['prefix' => '/draft_soal'], function () {
         Route::get('/show', [App\Http\Controllers\HomeController::class, 'draft_soal_show'])->name('draft_soal');
         Route::get('/data', [App\Http\Controllers\HomeController::class, 'draft_soal_data'])->name('draft_soal.data');
