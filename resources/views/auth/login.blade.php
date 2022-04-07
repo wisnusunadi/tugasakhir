@@ -48,7 +48,6 @@
             <strong>{{ $errors->first('email') }}</strong>
           </span>
         @endif
-
         <div class="input-group mb-3">
           <input type="password" aria-label="Masukkan Password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }} has-feedback" placeholder="Password" name="password" id="password" required>
           <span class="input-group-text"><i class="fa-solid fa-key"></i></span>

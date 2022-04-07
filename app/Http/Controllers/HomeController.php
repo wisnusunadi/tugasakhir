@@ -215,14 +215,35 @@ class HomeController extends Controller
     public function soal_tes_preview()
     {
         if (Auth::user()->role != "admin") {
+            $user_id = Auth::user()->id;
+
+            //Cek Soal Sudah Terjawab atau belum
+            $id_soal = array();
+            $cek_soal = UserJawaban::where('user_id', $user_id)->get();
+            foreach ($cek_soal as $c) {
+                $id_soal[] = $c->DetailUserJawaban->first()->Jawaban->SoalDetail->Soal->id;
+            }
+
             $divisi_id = Auth::user()->Pendaftaran->Divisi->id;
             $jabatan_id = Auth::user()->Pendaftaran->Jabatan->id;
-            $soal = Soal::whereHas('Divisi', function ($q) use ($divisi_id) {
+            $soal_belum = Soal::whereHas('Divisi', function ($q) use ($divisi_id) {
                 $q->where('id', $divisi_id);
             })->whereHas('Jabatan', function ($q) use ($jabatan_id) {
                 $q->where('id', $jabatan_id);
-            })->get();
-            return view('soal.tes.preview', ['soal' => $soal]);
+            })->WherenotIN('id', $id_soal)->get();
+
+            $soal_sudah = Soal::whereHas('Divisi', function ($q) use ($divisi_id) {
+                $q->where('id', $divisi_id);
+            })->whereHas('Jabatan', function ($q) use ($jabatan_id) {
+                $q->where('id', $jabatan_id);
+            })->WhereIN('id', $id_soal)->get();
+
+
+
+
+
+
+            return view('soal.tes.preview', ['soal_belum' => $soal_belum, 'soal_sudah' => $soal_sudah]);
         } else {
             return view('home');
         }
@@ -422,8 +443,8 @@ class HomeController extends Controller
 
         $request->session()->forget('waktu');
         $request->session()->forget('mulai');
-        Auth::logout();
-        return redirect('/');
+
+        return redirect()->route('soal_tes.preview')->with('success', 'Berhasil menambahkan Soal');
     }
 
     public function draft_soal_store(Request $request)
@@ -440,6 +461,7 @@ class HomeController extends Controller
             $soal = Soal::find($c->id);
             $soal->Divisi()->attach($request->divisi);
             $soal->Jabatan()->attach($request->jabatan);
+
 
             for ($i = 0; $i < count($request->soal); $i++) {
                 $sdc = SoalDetail::create([
@@ -477,6 +499,34 @@ class HomeController extends Controller
             return redirect()->back()->with('success', 'Berhasil menambahkan Soal');
         } else if ($bool == false) {
             return redirect()->back()->with('error', 'Gagal menambahkan Soal');
+        }
+    }
+
+    public function draft_soal_delete(Request $request)
+    {
+        $id = $request->id;
+        $soal = Soal::find($id);
+
+        if ($soal->check_soal() > 0) {
+            return redirect()->back()->with('error', 'Hapus gagal');
+        } else {
+            $j = Jawaban::whereHas('SoalDetail', function ($q) use ($id) {
+                $q->where('soal_id', $id);
+            })->get();
+            if (count($j) > 0) {
+                $j = Jawaban::whereHas('SoalDetail', function ($q) use ($id) {
+                    $q->where('soal_id', $id);
+                })->delete();
+            }
+
+            $d = SoalDetail::where('soal_id', $id)->get();
+            if (count($d) > 0) {
+                $j = SoalDetail::where('soal_id', $id)->delete();
+            }
+
+            $soal->delete();
+
+            return redirect()->back()->with('success', 'Hapus berhasil');
         }
     }
 

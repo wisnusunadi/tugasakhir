@@ -117,6 +117,22 @@ td{
       <div class="row">
         <div class="col-md-12">
             <div class="card">
+                @if(Session::has('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Hapus berhasil</strong>, Terima kasih
+                    <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                @endif
+                @if(Session::has('error'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Hapus gagal</strong>, Soal sudah terpakai
+                    <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                @endif
           <div class="card-header">
            <div class="col-12">
                 <span class="float-left filter">
@@ -142,37 +158,35 @@ td{
           <input class="d-none" name="hidden_page" id="hidden_page" value="1" />
         </div>
 
-        <div class="modal fade" id="hapusmodal" role="dialog" aria-labelledby="hapusmodal" aria-hidden="true">
+        <div class="modal fade" id="hapusmodal" role="dialog" aria-labelledby="hapusmodal" aria-hidden="true" data-bs-backdrop="static" >
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content" style="margin: 10px">
                     <div class="modal-header bg-danger">
-                        <h4 class="modal-title"><b>Hapus</b></h4>
+                        <h4 class="modal-title">Hapus</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body" id="hapus">
                         <div class="row">
                             <div class="col-12">
-                                <form method="post" action="" id="form-hapus" data-target="">
+                                <form method="post" action="{{route('draft_soal.delete')}}" id="form-hapus" >
                                     @method('delete')
                                     @csrf
+                                    <input id="id" name="id" class="d-none" hidden>
                                     <div class="card">
-                                        <div class="card-body">Apakah Anda yakin ingin menghapus data ini?</div>
-                                        <div class="card-footer">
-                                            <span class="float-left">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                                            </span>
-                                            <span class="float-right">
-                                                <button type="submit" class="btn btn-danger " id="btnhapus">Hapus</button>
-                                            </span>
-                                        </div>
+                                        <div class="card-body" id="des_hapus"></div>
                                     </div>
-                                </form>
+
                             </div>
                         </div>
                     </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-danger">Hapus</button>
+                      </div>
+                    </form>
                 </div>
             </div>
         </div>
-
     </div>
     </div>
   </div>
@@ -240,6 +254,10 @@ $(document).on('keyup', '#search', function(){
      $(document).on('click', '.hapusmodal', function(event) {
             event.preventDefault();
             var id = $(this).data("id");
+            var label = $(this).data("label");
+
+            $('#id').val(id);
+            $('#des_hapus').html("Apakah Anda yakin ingin menghapus soal <b>" +label+"</b> ? ");
             $('#hapusmodal').modal("show");
 
         });

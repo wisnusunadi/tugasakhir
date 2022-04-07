@@ -72,7 +72,7 @@ section{
             <div class="col-lg-12">
                 <form method="POST" action="{{route('draft_soal.store')}}">
                 @csrf
-                @if(Session::has('error') || count($errors) > 0 )
+                @if(Session::has('error'))
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     <strong>{{Session::get('error')}}</strong> Periksa
                     kembali data yang di input
