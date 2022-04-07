@@ -21,6 +21,11 @@ use Yajra\DataTables\DataTables;
 
 class GetController extends Controller
 {
+    public function peserta_detail($id)
+    {
+        $data = User::with('Universitas')->where('id', $id)->get();
+        return response()->json(['data' => $data]);
+    }
     public function divisi_cek($value)
     {
 
@@ -98,7 +103,8 @@ class GetController extends Controller
                 }
             })
             ->addColumn('aksi', function ($data) {
-                return '<i class="fas fa-eye"></i>';
+                return ' <a class="btn btn-sm btn-info detail" data-id="' . $data->id . '" ><i class="fas fa-eye"></i>
+                </a>';
             })
             ->rawColumns(['aksi', 'nama'])
             ->make(true);

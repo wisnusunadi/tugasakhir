@@ -137,6 +137,51 @@ section{
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="detailmodal" role="dialog" aria-labelledby="detailmodal" aria-hidden="true" >
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content" style="margin: 10px">
+                <div class="modal-header bg-info">
+                    <h4 class="modal-title" id="title"></h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="hapus">
+                    <div class="row">
+                        <div class="col-12">
+
+                                <input id="id" name="id" class="d-none" hidden>
+
+                                    <div class="card-body">
+                                        <strong><i class="fas fa-book mr-1"></i> Pendidikan Terakhir</strong>
+
+                                        <p class="text-muted" id="pendidikan">
+                                        </p>
+
+                                        <hr>
+
+                                        <strong><i class="fas fa-map-marker-alt mr-1"></i> Jarak lokasi ke pabrik</strong>
+
+                                        <p class="text-muted" id="jarak"></p>
+
+                                        <hr>
+
+                                        <strong><i class="fas fa-pencil-alt mr-1"></i> Username</strong>
+
+                                        <p class="text-muted" id="username">
+                                        </p>
+
+                                        <hr>
+
+                                       </div>
+                                      <!-- /.card-body -->
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 @endsection
 
@@ -202,6 +247,46 @@ section{
                 className: 'nowrap-text align-center',
             }],
         });
+
+        $(document).on('click', '.detail', function(event) {
+            event.preventDefault();
+            var id = $(this).data("id");
+            $('#detailmodal').modal("show");
+            console.log(id);
+            detail_profile(id);
+        });
+
+        function detail_profile(id){
+            $.ajax({
+                        url: "/api/peserta/detail/" + id,
+                        data : {id:id},
+                        success: function(data) {
+                            $('#title').text(data.data[0].nama);
+                            if(data.data[0].pend != 'smak'){
+                                if(data.data[0].pend != 's1d4'){
+                                    $('#pendidikan').text("Strata (S1) / Diploma (D4) : "+ data.data[0].universitas.nama);
+                                }
+                                else{
+                                    $('#pendidikan').text("Diploma (D3) : "+ data.data[0].universitas.nama);
+                                }
+
+                            }else{
+                                $('#pendidikan').text("SMA / SMK");
+                            }
+
+                            $('#jarak').text( data.data[0].jarak + " Km");
+                            $('#username').text(data.data[0].username);
+                        },
+                        error: function() {
+                            response([]);
+                        }
+                    });
+                }
+
+         $('.modal-dialog').draggable({
+        handle: ".modal-header"
+        });
+
     })
 </script>
 @endsection

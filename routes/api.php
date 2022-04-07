@@ -35,6 +35,7 @@ Route::prefix('/peserta')->group(function () {
     Route::get('/table', [App\Http\Controllers\GetController::class, 'peserta_table']);
     Route::get('/hasil', [App\Http\Controllers\GetController::class, 'peserta_hasil_table']);
     Route::get('/check/{parameter}/{value}', [App\Http\Controllers\GetController::class, 'peserta_check']);
+    Route::get('/detail/{value}', [App\Http\Controllers\GetController::class, 'peserta_detail']);
 });
 
 Route::prefix('/divisi')->group(function () {
