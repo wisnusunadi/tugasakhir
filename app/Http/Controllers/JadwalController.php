@@ -149,7 +149,7 @@ class JadwalController extends Controller
                 $datas = "";
                 $datas .= 'Tanggal ' . Carbon::parse($data->Jadwal->waktu_mulai)->format('d-m-Y') . " - " . Carbon::parse($data->Jadwal->waktu_selesai)->format('d-m-Y');
                 if($u <= 0){
-                    $datas .= ' <span><a href="/jadwal/edit/'.$data->id.'"><button type="button" class="btn btn-warning">Ubah</button></a></span>';
+                    $datas .= ' <span><a href="/jadwal/edit/'.$data->jadwal_id.'"><i class="edit-link fa-fw fas fa-pencil-alt"></i></a></span>';
                 }
                 return $datas;
             })
@@ -180,9 +180,7 @@ class JadwalController extends Controller
 
     public function jadwal_edit($id)
     {
-        $jadwal = Jadwal::whereHas('Pendaftaran', function($q) use($id){
-            $q->where('id', $id);
-        })->first();
+        $jadwal = Jadwal::find($id);
         $divisi = Divisi::all();
         $jabatan = Jabatan::all();
         return view('jadwal.edit', ['id' => $id, 'j' => $jadwal, 'db' => $divisi, 'jb' => $jabatan]);
@@ -301,6 +299,146 @@ class JadwalController extends Controller
             return redirect()->back()->with('success', 'Berhasil menambahkan Jadwal');
         } else if ($bool == false) {
             return redirect()->back()->with('error', 'Gagal menambahkan Jadwal');
+        }
+    }
+
+    public function jadwal_update($id, Request $r)
+    {
+        $bool = true;
+        $j = Jadwal::find($id);
+        $j->waktu_mulai = $r->tanggal_mulai;
+        $j->waktu_selesai = $r->tanggal_akhir;
+        $j->ket = $r->keterangan;
+        $u = $j->save();
+
+        if($u){
+            $ks = KriteriaSoal::whereHas('Kriteria.Pendaftaran.Jadwal', function($q) use($id){
+                $q->where('id', $id);
+            })->delete();
+            $kj = KriteriaJarak::whereHas('Kriteria.Pendaftaran.Jadwal', function($q) use($id){
+                $q->where('id', $id);
+            })->delete();
+            $kp = KriteriaPendidikan::whereHas('Kriteria.Pendaftaran.Jadwal', function($q) use($id){
+                $q->where('id', $id);
+            })->delete();
+            $ku = KriteriaUsia::whereHas('Kriteria.Pendaftaran.Jadwal', function($q) use($id){
+                $q->where('id', $id);
+            })->delete();
+
+            $k = Kriteria::whereHas('Pendaftaran.Jadwal', function($q) use($id){
+                $q->where('id', $id);
+            })->delete();
+
+            $p = Pendaftaran::whereHas('Jadwal', function($q) use($id){
+                $q->where('id', $id);
+            })->delete();
+
+            if ($p) {
+                for ($i = 0; $i < count($r->divisi); $i++) {
+                    $p = Pendaftaran::create([
+                        'divisi_id' => $r->divisi[$i],
+                        'jabatan_id' => $r->jabatan[$i],
+                        'jadwal_id' => $id,
+                        'kuota' => $r->kuota[$i]
+                    ]);
+
+                    if (!$p) {
+                        $bool = false;
+                    }else{
+                        if(in_array('usia', $r->kriteria[$i])){
+                            $k = Kriteria::create([
+                                'pendaftaran_id' => $p->id,
+                                'nama' => 'usia',
+                                'bobot' => $r->master_usia[$i]
+                            ]);
+
+                            if($k){
+                                for($j = 0; $j < count($r->usia_min[$i]); $j++){
+                                    KriteriaUsia::create([
+                                        'kriteria_id' => $k->id,
+                                        'range_min' => $r->usia_min[$i][$j],
+                                        'range_max' => $r->usia_max[$i][$j],
+                                        'nilai' => $r->bobot_usia[$i][$j],
+                                    ]);
+                                }
+                            }
+                        }
+
+                        if(in_array('pendidikan', $r->kriteria[$i])){
+                            $k = Kriteria::create([
+                                'pendaftaran_id' => $p->id,
+                                'nama' => 'pendidikan',
+                                'bobot' => $r->master_pendidikan[$i]
+                            ]);
+
+                            if($k){
+                                for($j = 0; $j < count($r->ketentuan_pendidikan[$i]); $j++){
+                                    $peringkat = "";
+                                    if($r->ketentuan_pendidikan[$i][$j] == "smak"){
+                                        $peringkat = NULL;
+                                    }else{
+                                        if($r->peringkat[$i][$j] == "NULL"){
+                                            $peringkat = NULL;
+                                        }else{
+                                            $peringkat = $r->peringkat[$i][$j];
+                                        }
+                                    }
+                                    KriteriaPendidikan::create([
+                                        'kriteria_id' => $k->id,
+                                        'pendidikan' => $r->ketentuan_pendidikan[$i][$j],
+                                        'peringkat' => $peringkat,
+                                        'nilai' => $r->bobot_pendidikan[$i][$j],
+                                    ]);
+                                }
+                            }
+                        }
+
+                        if(in_array('jarak', $r->kriteria[$i])){
+                            $k = Kriteria::create([
+                                'pendaftaran_id' => $p->id,
+                                'nama' => 'jarak',
+                                'bobot' => $r->master_jarak[$i]
+                            ]);
+
+                            if($k){
+                                for($j = 0; $j < count($r->jarak_min[$i]); $j++){
+                                    KriteriaJarak::create([
+                                        'kriteria_id' => $k->id,
+                                        'range_min' => $r->jarak_min[$i][$j],
+                                        'range_max' => $r->jarak_max[$i][$j],
+                                        'nilai' => $r->bobot_jarak[$i][$j],
+                                    ]);
+                                }
+                            }
+                        }
+
+                        if(in_array('soal', $r->kriteria[$i])){
+                            $k = Kriteria::create([
+                                'pendaftaran_id' => $p->id,
+                                'nama' => 'soal',
+                                'bobot' => $r->master_soal[$i]
+                            ]);
+
+                            if($k){
+                                for($j = 0; $j < count($r->soal_id[$i]); $j++){
+                                    KriteriaSoal::create([
+                                        'kriteria_id' => $k->id,
+                                        'soal_id' => $r->soal_id[$i][$j],
+                                        'nilai' => $r->bobot_soal[$i][$j],
+                                    ]);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
+        if ($bool == true) {
+            return redirect()->back()->with('success', 'Berhasil mengubah Jadwal');
+        } else if ($bool == false) {
+            return redirect()->back()->with('error', 'Gagal mengubah Jadwal');
         }
     }
 }

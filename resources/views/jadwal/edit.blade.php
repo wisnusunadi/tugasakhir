@@ -92,7 +92,8 @@ section{
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-                <form method="POST" action="{{route('jadwal.store')}}">
+                <form method="POST" action="{{route('jadwal.update', ['id' => $id])}}">
+                @method('PUT')
                 @csrf
                 @if(Session::has('error') || count($errors) > 0 )
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -126,7 +127,7 @@ section{
                         <div class="form-group row">
                             <label for="tanggal_akhir" class="col-lg-4 col-md-12 col-form-label labelket">Tanggal Akhir</label>
                             <div class="col-lg-8 col-md-12">
-                                <input type="date" class="form-control" id="tanggal_akhir" name="tanggal_akhir" value="{{ date('Y-m-d', strtotime($j->waktu_selesai)) }}">
+                                <input type="date" class="form-control" id="tanggal_akhir" name="tanggal_akhir" value="{{ date('Y-m-d', strtotime($j->waktu_selesai)) }}" min="{{ date('Y-m-d', strtotime($j->waktu_mulai)) }}">
                                 <small id="msg_tanggal_akhir" class="form-text text-danger"></small>
                             </div>
                         </div>
@@ -165,7 +166,7 @@ section{
                                             <td><select class="form-control divisi" name="divisi[{{$x}}]" id="divisi{{$x}}" style="width: 100%">
                                                 <option value="{{$p->divisi_id}}" selected>{{$p->Divisi->nama}}</option>
                                             </select></td>
-                                            <td><input type="number" class="form-control kuota" name="kuota[{{$x}}]" id="kuota{{$x}}"></td>
+                                            <td><input type="number" class="form-control kuota" name="kuota[{{$x}}]" id="kuota{{$x}}" value="{{$p->kuota}}"></td>
                                             <td rowspan="2"><a id="removerow"><i class="fas fa-minus" style="color:red;"></i></a></td>
                                         </tr>
                                         <tr id="kolom{{$x}}">
@@ -192,7 +193,7 @@ section{
                                                     </div>
                                                 </div>
                                                 <div class="flex-container">
-                                                    <div id="usiaform{{$x}}" class="@if(!isset($p->Kriteria[0]->KriteriaUsia)) hide @endif usiaform">
+                                                    <div id="usiaform{{$x}}" class="@if(count($p->KriteriaStatus('usia')) <= 0) hide @endif usiaform">
                                                         <div class="card">
                                                             <div class="card-body">
                                                                 <div class="form-group row">
@@ -244,13 +245,13 @@ section{
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div id="pendidikanform{{$x}}" class="@if(!isset($p->Kriteria[0]->KriteriaPendidikan)) hide @endif pendidikanform">
+                                                    <div id="pendidikanform{{$x}}" class="@if(count($p->KriteriaStatus('pendidikan')) <= 0) hide @endif pendidikanform">
                                                         <div class="card">
                                                             <div class="card-body">
                                                                 <div class="form-group row">
                                                                     <label for="" class="col-lg-5 col-form-label">Pendidikan</label>
                                                                     <div class="col-lg-5">
-                                                                        <input type="number" class="form-control col-form-label master_pendidikan" name="master_pendidikan[{{$x}}]" step="0.01" min="0" @if(isset($p->Kriteria->KriteriaPendidikan)) value="{{$p->Kriteria->KriteriaPendidikan->Kriteria->bobot}}" @endif>
+                                                                        <input type="number" class="form-control col-form-label master_pendidikan" name="master_pendidikan[{{$x}}]" step="0.01" min="0" @if(count($p->KriteriaStatus('pendidikan')) > 0) value="{{$p->KriteriaStatus('pendidikan')->first()->Kriteria->bobot}}" @endif>
                                                                     </div>
                                                                 </div>
                                                                 <div class="table-responsive">
@@ -264,9 +265,8 @@ section{
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
-                                                                            @if(isset($p->Kriteria[0]->KriteriaPendidikan))
-                                                                            @foreach ($p->Kriteria[0]->KriteriaPendidikan as $kp)
-                                                                            {{$kp}}
+                                                                            @if(count($p->KriteriaStatus('pendidikan')) > 0)
+                                                                            @foreach ($p->KriteriaStatus('pendidikan') as $kp)
                                                                             <tr>
                                                                                 <td><select class="form-control ketentuan_pendidikan" name="ketentuan_pendidikan[{{$x}}][{{$loop->iteration - 1}}]" id="ketentuan_pendidikan{{$x}}{{$loop->iteration - 1}}" style="width: 100%">
                                                                                             <option value=""></option>
@@ -320,13 +320,13 @@ section{
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div id="jarakform{{$x}}" class="@if(!isset($p->Kriteria[0]->KriteriaJarak)) hide @endif jarakform">
+                                                    <div id="jarakform{{$x}}" class="@if(count($p->KriteriaStatus('jarak')) <= 0) hide @endif jarakform">
                                                         <div class="card">
                                                                 <div class="card-body">
                                                                 <div class="form-group row">
                                                                         <label for="" class="col-lg-5 col-form-label">Jarak</label>
                                                                         <div class="col-lg-5">
-                                                                            <input type="number" class="form-control col-form-label master_jarak" name="master_jarak[{{$x}}]" step="0.01" min="0" @if(isset($p->Kriteria->KriteriaJarak)) value="{{$p->Kriteria->KriteriaJarak->Kriteria->bobot}}" @endif>
+                                                                            <input type="number" class="form-control col-form-label master_jarak" name="master_jarak[{{$x}}]" step="0.01" min="0" @if(count($p->KriteriaStatus('jarak')) > 0) value="{{$p->KriteriaStatus('jarak')->first()->Kriteria->bobot}}" @endif>
                                                                         </div>
                                                                     </div>
                                                                 <div class="form-group row">
@@ -341,8 +341,8 @@ section{
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody>
-                                                                                @if(isset($p->Kriteria[0]->KriteriaJarak))
-                                                                                @foreach ($p->Kriteria[0]->KriteriaJarak as $kj)
+                                                                                @if(count($p->KriteriaStatus('jarak')) > 0)
+                                                                                @foreach ($p->KriteriaStatus('jarak') as $kj)
                                                                                 <tr>
                                                                                     <td><input type="number" class="form-control jarak_min" name="jarak_min[{{$x}}][{{$loop->iteration - 1}}]" id="jarak_min{{$x}}{{$loop->iteration - 1}}" step="0.01" min="0" value="{{$kj->range_min}}"></td>
                                                                                     <td><input type="number" class="form-control jarak_max" name="jarak_max[{{$x}}][{{$loop->iteration - 1}}]" id="jarak_max{{$x}}{{$loop->iteration - 1}}" step="0.01" min="0" value="{{$kj->range_max}}"></td>
@@ -371,13 +371,13 @@ section{
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div id="soalform{{$x}}" class="@if(!isset($p->Kriteria[0]->KriteriaSoal)) hide @endif soalform">
+                                                    <div id="soalform{{$x}}" class="@if(count($p->KriteriaStatus('soal')) <= 0) hide @endif soalform">
                                                         <div class="card">
                                                             <div class="card-body">
                                                                 <div class="form-group row">
                                                                     <label for="" class="col-lg-5 col-form-label">Soal</label>
                                                                     <div class="col-lg-5">
-                                                                        <input type="number" class="form-control col-form-label master_soal" name="master_soal[{{$x}}]"  step="0.01" min="0" @if(isset($p->Kriteria->KriteriaSoal)) value="{{$p->Kriteria->KriteriaSoal->Kriteria->bobot}}" @endif>
+                                                                        <input type="number" class="form-control col-form-label master_soal" name="master_soal[{{$x}}]"  step="0.01" min="0" @if(count($p->KriteriaStatus('soal')) > 0) value="{{$p->KriteriaStatus('soal')->first()->Kriteria->bobot}}" @endif>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group row">
@@ -391,12 +391,16 @@ section{
                                                                                 </tr>
                                                                             </thead>
                                                                             <tbody>
-                                                                                @if(isset($p->Kriteria[0]->KriteriaSoal))
-                                                                                @foreach ($p->Kriteria[0]->KriteriaSoal as $ks)
+                                                                                @if(count($p->KriteriaStatus('soal')) > 0)
+                                                                                @foreach ($p->KriteriaStatus('soal') as $ks)
                                                                                 <tr>
                                                                                     <td>
                                                                                         <select class="form-control soal_id" id="soal_id{{$x}}{{$loop->iteration - 1}}" name="soal_id[{{$x}}][{{$loop->iteration - 1}}]">
-                                                                                            <option value="{{$ks->soal_id}}" selected>{{$ks->Soal->nama}}</option>
+                                                                                            @if(count($p->DaftarSoal()) > 0)
+                                                                                            @foreach ($p->DaftarSoal() as $ps)
+                                                                                                <option value="{{$ps->id}}" @if($ks->soal_id == $ps->id) selected @endif>{{$ps->nama}}</option>
+                                                                                            @endforeach
+                                                                                            @endif
                                                                                         </select>
                                                                                     </td>
                                                                                     <td><input type="number" class="form-control bobot_soal" name="bobot_soal[{{$x}}][{{$loop->iteration - 1}}]" id="bobot_soal{{$x}}{{$loop->iteration - 1}}"  step="0.01" min="0" value="{{$ks->nilai}}"></td>
@@ -411,7 +415,13 @@ section{
                                                                                 @endforeach
                                                                                 @else
                                                                                 <tr>
-                                                                                    <td><select class="form-control soal_id" id="soal_id{{$x}}{{$loop->iteration - 1}}" name="soal_id[{{$x}}][{{$loop->iteration - 1}}]"></select></td>
+                                                                                    <td><select class="form-control soal_id" id="soal_id{{$x}}{{$loop->iteration - 1}}" name="soal_id[{{$x}}][{{$loop->iteration - 1}}]">
+                                                                                        @if(count($p->DaftarSoal()) > 0)
+                                                                                        @foreach ($p->DaftarSoal() as $ps)
+                                                                                            <option value="{{$ps->id}}">{{$ps->nama}}</option>
+                                                                                        @endforeach
+                                                                                        @endif
+                                                                                    </select></td>
                                                                                     <td><input type="number" class="form-control bobot_soal" name="bobot_soal[{{$x}}][{{$loop->iteration - 1}}]" id="bobot_soal{{$x}}{{$loop->iteration - 1}}"  step="0.01" min="0"></td>
                                                                                     <td><a id="addsoalrow"><i class="fas fa-plus text-success"></i></a></td>
                                                                                 </tr>
@@ -437,7 +447,7 @@ section{
                         <span class="float-left"><a href="{{route('jadwal.show')}}" type="button" class="btn btn-danger">
                             Batal
                         </a></span>
-                        <span class="float-right"><button type="submit" id="btnsubmit" class="btn btn-success" disabled>Tambah</button></span>
+                        <span class="float-right"><button type="submit" id="btnsubmit" class="btn btn-warning">Simpan</button></span>
                     </div>
                 </div>
                 </form>
@@ -1014,34 +1024,46 @@ section{
 
         $('#showtable').on('change', '.kriteria', function(e){
             var kriteria = [];
+            var valchecked = $(this).val();
+            // var idkriteria = $(this).closest('tr').find('.kriteria').attr('id');
+            var numberOfChecked =  $(this).closest('tr').find('.kriteria:checked').length;
             $(this).closest('tr').find('.kriteria:checked').each(function(){
-                kriteria.push($(this).val());
+                    kriteria.push($(this).val());
             });
-            if(kriteria.indexOf("usia") > -1){
+
+
+            if(numberOfChecked == 0){
+                $(this).closest('tr').find('.kriteria[value='+valchecked+']').prop('checked', true);
+                $(this).closest('tr').find('.kriteria:checked').each(function(){
+                    kriteria.push(valchecked);
+                });
+            }
+
+            if(kriteria.indexOf("usia") != -1){
                 $(this).closest('tr').find('.usiaform').removeClass('hide');
             }
-            else if(kriteria.indexOf("usia") <= -1){
+            else if(kriteria.indexOf("usia") == -1){
                 $(this).closest('tr').find('.usiaform').addClass('hide');
             }
 
-            if(kriteria.indexOf("pendidikan") > -1){
+            if(kriteria.indexOf("pendidikan") != -1){
                 $(this).closest('tr').find('.pendidikanform').removeClass('hide');
             }
-            else if(kriteria.indexOf("pendidikan") <= -1){
+            else if(kriteria.indexOf("pendidikan") == -1){
                 $(this).closest('tr').find('.pendidikanform').addClass('hide');
             }
 
-            if(kriteria.indexOf("jarak") > -1){
+            if(kriteria.indexOf("jarak") != -1){
                 $(this).closest('tr').find('.jarakform').removeClass('hide');
             }
-            else if(kriteria.indexOf("jarak") <= -1){
+            else if(kriteria.indexOf("jarak") == -1){
                 $(this).closest('tr').find('.jarakform').addClass('hide');
             }
 
-            if(kriteria.indexOf("soal") > -1){
+            if(kriteria.indexOf("soal") != -1){
                 $(this).closest('tr').find('.soalform').removeClass('hide');
             }
-            else if(kriteria.indexOf("soal") <= -1){
+            else if(kriteria.indexOf("soal") == -1){
                 $(this).closest('tr').find('.soalform').addClass('hide');
             }
         });

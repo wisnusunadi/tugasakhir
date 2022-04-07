@@ -50,4 +50,16 @@ class Pendaftaran extends Model
         }
         return $res;
     }
+
+    public function DaftarSoal(){
+        $jab_id = $this->jabatan_id;
+        $div_id = $this->divisi_id;
+
+        $res = Soal::whereHas('Divisi', function($q) use($div_id){
+            $q->where('id', $div_id);
+        })->whereHas('Jabatan', function($q) use($jab_id){
+            $q->where('id', $jab_id);
+        })->get();
+        return $res;
+    }
 }

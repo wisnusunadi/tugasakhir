@@ -28,6 +28,8 @@ section{
 .aligncenter{
     text-align: center;
 }
+
+
 </style>
 @stop
 

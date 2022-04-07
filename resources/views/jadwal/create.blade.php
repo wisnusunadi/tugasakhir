@@ -923,34 +923,46 @@ section{
 
         $('#showtable').on('change', '.kriteria', function(e){
             var kriteria = [];
+            var valchecked = $(this).val();
+            // var idkriteria = $(this).closest('tr').find('.kriteria').attr('id');
+            var numberOfChecked =  $(this).closest('tr').find('.kriteria:checked').length;
             $(this).closest('tr').find('.kriteria:checked').each(function(){
-                kriteria.push($(this).val());
+                    kriteria.push($(this).val());
             });
-            if(kriteria.indexOf("usia") > -1){
+
+
+            if(numberOfChecked == 0){
+                $(this).closest('tr').find('.kriteria[value='+valchecked+']').prop('checked', true);
+                $(this).closest('tr').find('.kriteria:checked').each(function(){
+                    kriteria.push(valchecked);
+                });
+            }
+
+            if(kriteria.indexOf("usia") != -1){
                 $(this).closest('tr').find('.usiaform').removeClass('hide');
             }
-            else if(kriteria.indexOf("usia") <= -1){
+            else if(kriteria.indexOf("usia") == -1){
                 $(this).closest('tr').find('.usiaform').addClass('hide');
             }
 
-            if(kriteria.indexOf("pendidikan") > -1){
+            if(kriteria.indexOf("pendidikan") != -1){
                 $(this).closest('tr').find('.pendidikanform').removeClass('hide');
             }
-            else if(kriteria.indexOf("pendidikan") <= -1){
+            else if(kriteria.indexOf("pendidikan") == -1){
                 $(this).closest('tr').find('.pendidikanform').addClass('hide');
             }
 
-            if(kriteria.indexOf("jarak") > -1){
+            if(kriteria.indexOf("jarak") != -1){
                 $(this).closest('tr').find('.jarakform').removeClass('hide');
             }
-            else if(kriteria.indexOf("jarak") <= -1){
+            else if(kriteria.indexOf("jarak") == -1){
                 $(this).closest('tr').find('.jarakform').addClass('hide');
             }
 
-            if(kriteria.indexOf("soal") > -1){
+            if(kriteria.indexOf("soal") != -1){
                 $(this).closest('tr').find('.soalform').removeClass('hide');
             }
-            else if(kriteria.indexOf("soal") <= -1){
+            else if(kriteria.indexOf("soal") == -1){
                 $(this).closest('tr').find('.soalform').addClass('hide');
             }
         });

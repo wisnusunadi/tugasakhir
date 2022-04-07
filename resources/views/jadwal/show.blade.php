@@ -28,6 +28,20 @@ section{
 .aligncenter{
     text-align: center;
 }
+
+.edit-link
+{
+   color: white;
+   text-decoration: none;
+   background-color: none;
+}
+
+.edit-link:hover
+{
+   color: #ffc107;
+   text-decoration: none;
+   background-color: none;
+}
 </style>
 @stop
 
