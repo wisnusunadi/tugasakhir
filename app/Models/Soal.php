@@ -54,7 +54,7 @@ class Soal extends Model
         })->whereNotNull('status')->get();
         $jumlah = 0;
         foreach ($s as $i) {
-            $jumlah = $jumlah + $i->status;
+            $jumlah = $jumlah + ($i->status * $i->SoalDetail->bobot);
         }
         return $jumlah;
     }

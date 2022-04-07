@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\LaporanHasilKeputusan;
 use App\Exports\LaporanHasilTes;
 use App\Models\DetailUserJawaban;
 use Illuminate\Http\Request;
@@ -483,6 +484,11 @@ class HomeController extends Controller
     {
         $waktu = Carbon::now();
         return Excel::download(new LaporanHasilTes(), 'Laporan Hasil Tes ' . $waktu->toDateTimeString() . '.pdf');
+    }
+
+    public function export_hasil_keputusan(){
+        $waktu = Carbon::now();
+        return Excel::download(new LaporanHasilKeputusan(), 'Laporan Keputusan ' . $waktu->toDateTimeString() . '.xlsx');
     }
 
     public function select_jabatan(Request $request)

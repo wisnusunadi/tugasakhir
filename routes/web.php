@@ -34,6 +34,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/peserta', [App\Http\Controllers\HomeController::class, 'peserta_show'])->name('peserta');
     Route::get('/hasil', [App\Http\Controllers\HomeController::class, 'hasil_show'])->name('hasil');
     Route::view('/hasil/peserta', 'peserta.hasil.show_result')->name('peserta.hasil');
+    Route::get('/hasil/peserta/export', [App\Http\Controllers\HomeController::class, 'export_hasil_keputusan'])->name('peserta.hasil.export');
     Route::group(['prefix' => '/select'], function () {
         Route::get('/jabatan/get/{id}', [App\Http\Controllers\HomeController::class, 'select_jabatan_get'])->name('select.jabatan.get');
         Route::get('/divisi/get/{id}', [App\Http\Controllers\HomeController::class, 'select_divisi_get'])->name('select.divisi.get');
