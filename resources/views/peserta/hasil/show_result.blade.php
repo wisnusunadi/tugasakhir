@@ -28,6 +28,8 @@ section{
 .aligncenter{
     text-align: center;
 }
+
+
 </style>
 @stop
 
@@ -92,7 +94,7 @@ section{
                 { "visible": false, "targets": groupColumn }
             ],
             "order": [[ groupColumn, 'asc']],
-            "displayLength": 25,
+            "displayLength": 10,
             "drawCallback": function ( settings ) {
                 var api = this.api();
                 var rows = api.rows( {page:'current'} ).nodes();
@@ -103,7 +105,6 @@ section{
                         $(rows).eq( i ).before(
                             '<tr class="group"><td colspan="9">'+group+'</td></tr>'
                         );
-
                         last = group;
                     }
                 });
