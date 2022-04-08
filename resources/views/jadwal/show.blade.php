@@ -65,9 +65,10 @@ section{
     </div>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-8 col-md-12">
+            <div class="col-lg-8 col-md-12 col-sm-12">
                 <div class="card">
                     <div class="card-body">
+                        <div class="table-responsive">
                         <table class="table table-hover aligncenter" id="showtable">
                             <thead>
                                 @if(Auth::user())
@@ -91,6 +92,7 @@ section{
                             <tbody>
                             </tbody>
                         </table>
+                    </div>
                     </div>
                 </div>
             </div>
