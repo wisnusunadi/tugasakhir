@@ -108,6 +108,7 @@
  <script type="text/javascript" src="{{ asset('themes/plugins/fontawesome-free/js/all.min.js') }}"></script>
 
  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+ <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @yield('script')
 </body>
 </html>

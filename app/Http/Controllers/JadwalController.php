@@ -16,6 +16,7 @@ use App\Models\KriteriaSoal;
 use App\Models\KriteriaUsia;
 use App\Models\User;
 use App\Models\UserJawaban;
+use Illuminate\Support\Facades\Auth;
 
 class JadwalController extends Controller
 {
@@ -147,9 +148,13 @@ class JadwalController extends Controller
                     $q->where('jadwal_id', $j);
                 })->count();
                 $datas = "";
-                $datas .= 'Tanggal ' . Carbon::parse($data->Jadwal->waktu_mulai)->format('d-m-Y') . " - " . Carbon::parse($data->Jadwal->waktu_selesai)->format('d-m-Y');
-                if($u <= 0){
-                    $datas .= ' <span><a href="/jadwal/edit/'.$data->jadwal_id.'"><i class="edit-link fa-fw fas fa-pencil-alt"></i></a></span>';
+                $datas .= 'Tanggal ' . Carbon::parse($data->Jadwal->waktu_mulai)->isoFormat('D MMMM Y') . " - ". Carbon::parse($data->Jadwal->waktu_selesai)->isoFormat('D MMMM Y');
+                if(Auth::user()){
+                    if(Auth::user()->role == "admin"){
+                        if($u <= 0){
+                            $datas .= ' <span><a href="/jadwal/edit/'.$data->jadwal_id.'"><i class="edit-link fa-fw fas fa-pencil-alt"></i></a></span>';
+                        }
+                    }
                 }
                 return $datas;
             })
@@ -164,7 +169,9 @@ class JadwalController extends Controller
             })
             ->addColumn('aksi', function ($data) {
                 if(count($data->User) <= 0){
-                    return '<a href="/jadwal/edit/'.$data->id.'"><button type="button" class="btn btn-warning">Ubah</button></a>';
+                    return '<span><a href="/pendaftaran/edit/'.$data->id.'"><button type="button" class="btn btn-sm btn-warning">Ubah</button></a></span>
+                    <span><a class="btn btn-sm btn-danger hapusmodal" data-id="' . $data->id . '" data-label="' . $data->nama . '">Hapus
+                    </a></span>';
                 }
             })
             ->rawColumns(['aksi', 'jadwal'])
@@ -439,6 +446,158 @@ class JadwalController extends Controller
             return redirect()->back()->with('success', 'Berhasil mengubah Jadwal');
         } else if ($bool == false) {
             return redirect()->back()->with('error', 'Gagal mengubah Jadwal');
+        }
+    }
+
+    public function pendaftaran_edit($id){
+        $p = Pendaftaran::find($id);
+        return view('jadwal.pendaftaran.edit', ['id' => $id, 'p' => $p]);
+    }
+
+    public function pendaftaran_update($id, Request $r){
+        $bool = true;
+        $p = Pendaftaran::find($id);
+        $p->divisi_id = $r->divisi;
+        $p->jabatan_id = $r->jabatan;
+        $p->kuota = $r->kuota;
+        $u = $p->save();
+
+        if (!$u) {
+            $bool = false;
+        }else{
+            $ks = KriteriaSoal::whereHas('Kriteria.Pendaftaran', function($q) use($id){
+                $q->where('id', $id);
+            })->delete();
+            $kj = KriteriaJarak::whereHas('Kriteria.Pendaftaran', function($q) use($id){
+                $q->where('id', $id);
+            })->delete();
+            $kp = KriteriaPendidikan::whereHas('Kriteria.Pendaftaran', function($q) use($id){
+                $q->where('id', $id);
+            })->delete();
+            $ku = KriteriaUsia::whereHas('Kriteria.Pendaftaran', function($q) use($id){
+                $q->where('id', $id);
+            })->delete();
+
+            $k = Kriteria::whereHas('Pendaftaran', function($q) use($id){
+                $q->where('id', $id);
+            })->delete();
+
+            if(in_array('usia', $r->kriteria)){
+                $k = Kriteria::create([
+                    'pendaftaran_id' => $id,
+                    'nama' => 'usia',
+                    'bobot' => $r->master_usia
+                ]);
+
+                if($k){
+                    for($j = 0; $j < count($r->usia_min); $j++){
+                        KriteriaUsia::create([
+                            'kriteria_id' => $k->id,
+                            'range_min' => $r->usia_min[$j],
+                            'range_max' => $r->usia_max[$j],
+                            'nilai' => $r->bobot_usia[$j],
+                        ]);
+                    }
+                }
+            }
+
+            if(in_array('pendidikan', $r->kriteria)){
+                $k = Kriteria::create([
+                    'pendaftaran_id' => $id,
+                    'nama' => 'pendidikan',
+                    'bobot' => $r->master_pendidikan
+                ]);
+
+                if($k){
+                    for($j = 0; $j < count($r->ketentuan_pendidikan); $j++){
+                        $peringkat = "";
+                        if($r->ketentuan_pendidikan[$j] == "smak"){
+                            $peringkat = NULL;
+                        }else{
+                            if($r->peringkat[$j] == "NULL"){
+                                $peringkat = NULL;
+                            }else{
+                                $peringkat = $r->peringkat[$j];
+                            }
+                        }
+                        KriteriaPendidikan::create([
+                            'kriteria_id' => $k->id,
+                            'pendidikan' => $r->ketentuan_pendidikan[$j],
+                            'peringkat' => $peringkat,
+                            'nilai' => $r->bobot_pendidikan[$j],
+                        ]);
+                    }
+                }
+            }
+
+            if(in_array('jarak', $r->kriteria)){
+                $k = Kriteria::create([
+                    'pendaftaran_id' => $id,
+                    'nama' => 'jarak',
+                    'bobot' => $r->master_jarak
+                ]);
+
+                if($k){
+                    for($j = 0; $j < count($r->jarak_min); $j++){
+                        KriteriaJarak::create([
+                            'kriteria_id' => $k->id,
+                            'range_min' => $r->jarak_min[$j],
+                            'range_max' => $r->jarak_max[$j],
+                            'nilai' => $r->bobot_jarak[$j],
+                        ]);
+                    }
+                }
+            }
+
+            if(in_array('soal', $r->kriteria)){
+                $k = Kriteria::create([
+                    'pendaftaran_id' => $id,
+                    'nama' => 'soal',
+                    'bobot' => $r->master_soal
+                ]);
+
+                if($k){
+                    for($j = 0; $j < count($r->soal_id); $j++){
+                        KriteriaSoal::create([
+                            'kriteria_id' => $k->id,
+                            'soal_id' => $r->soal_id[$j],
+                            'nilai' => $r->bobot_soal[$j],
+                        ]);
+                    }
+                }
+            }
+        }
+
+        if ($bool == true) {
+            return redirect()->back()->with('success', 'Berhasil mengubah Pendaftaran');
+        } else if ($bool == false) {
+            return redirect()->back()->with('error', 'Gagal mengubah Pendaftaran');
+        }
+    }
+
+    public function pendaftaran_delete($id){
+        $ks = KriteriaSoal::whereHas('Kriteria.Pendaftaran', function($q) use($id){
+            $q->where('id', $id);
+        })->delete();
+        $kj = KriteriaJarak::whereHas('Kriteria.Pendaftaran', function($q) use($id){
+            $q->where('id', $id);
+        })->delete();
+        $kp = KriteriaPendidikan::whereHas('Kriteria.Pendaftaran', function($q) use($id){
+            $q->where('id', $id);
+        })->delete();
+        $ku = KriteriaUsia::whereHas('Kriteria.Pendaftaran', function($q) use($id){
+            $q->where('id', $id);
+        })->delete();
+
+        $k = Kriteria::whereHas('Pendaftaran', function($q) use($id){
+            $q->where('id', $id);
+        })->delete();
+
+        $p = Pendaftaran::where('id', $id)->delete();
+        if($p){
+            return response()->json(['data' => 'true']);
+        }else{
+            return response()->json(['data' => 'error']);
         }
     }
 }

@@ -84,7 +84,9 @@ class GetController extends Controller
         return datatables()->of($data)
             ->addIndexColumn()
             ->addColumn('pendaftaran', function ($data) {
-                return $data->Pendaftaran->Jabatan->nama . ' ' . $data->Pendaftaran->Divisi->nama;
+                if(isset($data->Pendaftaran->Jabatan)){
+                    return $data->Pendaftaran->Jabatan->nama . ' ' . $data->Pendaftaran->Divisi->nama;
+                }
             })
             ->addColumn('tanggal_daftar', function ($data) {
                 return Carbon::parse($data->created_at)->format('d-m-Y');

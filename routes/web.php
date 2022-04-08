@@ -20,7 +20,7 @@ Route::view('/jadwal', 'jadwal.show')->name('jadwal');
 Route::get('/select/universitas', [App\Http\Controllers\GetController::class, 'universitas_select'])->name('select.universitas');
 Route::get('jadwal/show',  [App\Http\Controllers\JadwalController::class, 'jadwal_show'])->name('jadwal.show');
 Route::get('/user/verify/{token}', [App\Http\Controllers\Auth\RegisterController::class, 'verifyUser'])->name('verify_user');
-
+Route::get('/jadwal/table', [App\Http\Controllers\JadwalController::class, 'jadwal_table']);
 // Route::view('/soal_tes', 'soal.tes.show')->name('soal.tes');
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -74,6 +74,11 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/preview/{id}', [App\Http\Controllers\HomeController::class, 'draft_soal_preview'])->name('draft_soal.preview');
         Route::get('/preview/data/{id}', [App\Http\Controllers\HomeController::class, 'draft_soal_preview_data'])->name('draft_soal.preview.data');
         Route::delete('/delete', [App\Http\Controllers\HomeController::class, 'draft_soal_delete'])->name('draft_soal.delete');
+    });
+
+    Route::prefix('/pendaftaran')->group(function () {
+        Route::get('/edit/{id}', [App\Http\Controllers\JadwalController::class, 'pendaftaran_edit']);
+        Route::put('/update/{id}', [App\Http\Controllers\JadwalController::class, 'pendaftaran_update'])->name('pendaftaran.update');
     });
     Route::group(['prefix' => '/laporan'], function () {
         Route::get('/hasil/show', [App\Http\Controllers\HomeController::class, 'laporan_hasil_show'])->name('laporan.hasil.show');

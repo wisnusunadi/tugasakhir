@@ -22,7 +22,7 @@
         <a class="menu-toggle rounded" href="#"><i class="fas fa-bars"></i></a>
         <nav id="sidebar-wrapper">
             <ul class="sidebar-nav">
-               
+
                 <li class="sidebar-nav-item"><a href="#page-top">Home</a></li>
                 <li class="sidebar-nav-item"><a href="{{ route('login') }}">Mulai Tes</a></li>
                 <li class="sidebar-nav-item"><a href="#page-top">Jadwal Recruitment</a></li>
@@ -59,5 +59,8 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
         <script src="{{ asset('index/js/scripts.js')}}"></script>
+
+
+        
     </body>
 </html>

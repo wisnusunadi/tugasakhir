@@ -29,12 +29,12 @@ section{
     text-align: center;
 }
 
-.edit-link
+/* .edit-link
 {
    color: white;
    text-decoration: none;
    background-color: none;
-}
+} */
 
 .edit-link:hover
 {
@@ -65,7 +65,7 @@ section{
     </div>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-lg-8 col-md-12">
                 <div class="card">
                     <div class="card-body">
                         <table class="table table-hover aligncenter" id="showtable">
@@ -73,7 +73,7 @@ section{
                                 @if(Auth::user())
                                     @if(Auth::user()->role == "admin")
                                     <tr>
-                                        <th colspan="5">
+                                        <th colspan="6">
                                         <a href="{{route('jadwal.create')}}" type="button" class="btn btn-info btn-sm float-right"><i class="fa-solid fa-plus"></i> Tambah</a>
                                         </th>
                                     </tr>
@@ -85,6 +85,7 @@ section{
                                     <th>Jabatan</th>
                                     <th>Divisi</th>
                                     <th>Kuota</th>
+                                    <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -101,7 +102,63 @@ section{
 @section('script')
 <script>
     $(function(){
+        var auth = <?php if(Auth::user()){ echo '"'.Auth::user()->role.'"'; } else { echo "0"; } ?>;
         var groupColumn = 1;
+        $('#showtable').on('click', '.hapusmodal', function(){
+            var id = $(this).attr('data-id');
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-danger',
+                    cancelButton: 'btn btn-secondary'
+                },
+                buttonsStyling: false
+            })
+
+            swalWithBootstrapButtons.fire({
+                title: 'Hapus Pendaftaran',
+                text: "Apakah anda yakin untuk menghapus Data Pendaftaran ini?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Hapus',
+                cancelButtonText: 'Batal',
+                reverseButtons: true
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '/api/pendaftaran/delete/'+id,
+                        type: 'DELETE',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function(response) {
+                            $('#showtable').DataTable().ajax.reload();
+                            swalWithBootstrapButtons.fire(
+                                'Berhasil',
+                                'Data Pendaftaran Berhasil dihapus',
+                                'success'
+                            )
+                        },
+                        error: function(xhr, status, error) {
+                            swalWithBootstrapButtons.fire(
+                                'Error',
+                                'Data telah digunakan',
+                                'warning'
+                            );
+                            // console.log(action);
+                        }
+                    });
+                } else if (
+                    /* Read more about handling dismissals below */
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    swalWithBootstrapButtons.fire(
+                    'Batal',
+                    'Data Pendaftaran Batal dihapus',
+                    'error'
+                    )
+                }
+            })
+        })
         $('#showtable').DataTable({
             "columnDefs": [
                 { "visible": false, "targets": groupColumn }
@@ -116,7 +173,7 @@ section{
                 api.column(groupColumn, {page:'current'} ).data().each( function ( group, i ) {
                     if ( last !== group ) {
                         $(rows).eq( i ).before(
-                            '<tr class="aligncenter group"><td colspan="4">'+group+'</td></tr>'
+                            '<tr class=""><td colspan="5">'+group+'</td></tr>'
                         );
 
                         last = group;
@@ -126,7 +183,7 @@ section{
             processing: true,
             serverSide: true,
             ajax: {
-                'url': '/api/jadwal/table',
+                'url': '/jadwal/table',
                 'method': 'GET',
                 'headers': {
                     'X-CSRF-TOKEN': '{{csrf_token()}}'
@@ -150,6 +207,9 @@ section{
                 data: 'divisi',
             }, {
                 data: 'kuota',
+            },{
+                data: 'aksi',
+                visible: auth == 'admin' ? true : false,
             }, ]
         });
     })

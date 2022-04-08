@@ -23,7 +23,7 @@ Route::get('/reload_captcha', [App\Http\Controllers\GetController::class, 'reloa
 // Route::get('/jadwal/table', [App\Http\Controllers\HomeController::class, 'jadwal_table']);
 Route::prefix('/jadwal')->group(function () {
     Route::get('/data', [App\Http\Controllers\JadwalController::class, 'get_data_jadwal']);
-    Route::get('/table', [App\Http\Controllers\JadwalController::class, 'jadwal_table']);
+    // Route::get('/table', [App\Http\Controllers\JadwalController::class, 'jadwal_table']);
 });
 
 Route::prefix('/laporan')->group(function () {
@@ -50,6 +50,11 @@ Route::prefix('/jabatan')->group(function () {
     Route::get('/check/{value}', [App\Http\Controllers\GetController::class, 'jabatan_cek']);
 });
 
+Route::prefix('/pendaftaran')->group(function () {
+    Route::delete('/delete/{id}', [App\Http\Controllers\JadwalController::class, 'pendaftaran_delete']);
+});
+
 Route::prefix('/soal')->group(function () {
     Route::post('/get_select/{jabatan}/{divisi}', [App\Http\Controllers\GetController::class, 'soal_get_select']);
 });
+
