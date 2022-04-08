@@ -138,7 +138,7 @@ section{
                         <div class="form-group row">
                             <label for="divisi" class="col-lg-4 col-md-12 col-form-label labelket">Kuota</label>
                             <div class="col-lg-4 col-md-6">
-                                <input type="number" class="form-control col-form-label" id="kuota" name="kuota" value="{{$p->kuota}}">
+                                <input type="number" class="form-control col-form-label kuota" id="kuota" name="kuota" value="{{$p->kuota}}">
                                 <small id="msg_kuota" class="form-text text-danger"></small>
                             </div>
                         </div>
@@ -442,7 +442,7 @@ section{
 
         $('#tanggal_mulai').on('keyup change', function() {
             $("#tanggal_akhir").val("");
-            $("#btncetak").removeAttr('disabled');
+            $("#btnsubmit").removeAttr('disabled');
             if ($(this).val() != "") {
                 $('#tanggal_mulai').removeClass('is-invalid');
                 $('#msg_tanggal_mulai').html("");
@@ -452,7 +452,7 @@ section{
                 $('#tanggal_mulai').addClass('is-invalid');
                 $('#msg_tanggal_mulai').html("Tanggal Mulai Pendaftaran harus diisi");
                 $("#tanggal_akhir").val("");
-                $("#btncetak").attr('disabled', true);
+                $("#btnsubmit").attr('disabled', true);
             }
 
             validasi();
@@ -460,38 +460,24 @@ section{
 
         $('#tanggal_akhir').on('keyup change', function() {
 
-            $("#btncetak").removeAttr('disabled');
+            $("#btnsubmit").removeAttr('disabled');
             if ($(this).val() != "") {
                 $('#tanggal_akhir').removeClass('is-invalid');
                 $('#msg_tanggal_mulai').html("");
             } else {
                 $('#tanggal_akhir').addClass('is-invalid');
                 $('#msg_tanggal_akhir').html("Tanggal Akhir Pendaftaran harus diisi");
-                $("#btncetak").attr('disabled', true);
-            }
-
-            validasi();
-        });
-
-        $('#keterangan').on('keyup change', function() {
-            $("#btncetak").removeAttr('disabled');
-            if ($(this).val() != "") {
-                $('#keterangan').removeClass('is-invalid');
-                $('#msg_keterangan').html("");
-            } else {
-                $('#keterangan').addClass('is-invalid');
-                $('#msg_keterangan').html("Keterangan harus diisi");
-                $("#btncetak").attr('disabled', true);
+                $("#btnsubmit").attr('disabled', true);
             }
 
             validasi();
         });
 
         function validasi(){
-            var tgl_mulai = $("#tanggal_mulai").val();
-            var tgl_akhir = $("#tanggal_akhir").val();
-            var ket = $('#keterangan').val();
-            if(tgl_mulai != "" && tgl_akhir != "" && ket != ""){
+            var divisi_id = $(".divisi").val();
+            var jabatan_id = $(".jabatan").val();
+            var kuota = $('.kuota').val();
+            if(divisi_id != "" && jabatan_id != "" && kuota != ""){
                 $('#btnsubmit').removeAttr('disabled');
             }
             else{
@@ -813,21 +799,52 @@ section{
         $(document).on('change', '.jabatan', function(e){
             var val = $('.jabatan').val();
             var val_divisi = $('.divisi').val();
-            if(val){
+            $("#btnsubmit").removeAttr('disabled');
+            if ($(this).val() != "") {
                 if(val_divisi){
                     soal_select(val, val_divisi);
                 }
+                $('#jabatan').removeClass('is-invalid');
+                $('#msg_jabatan').html("");
+            } else {
+                $('#jabatan').addClass('is-invalid');
+                $('#msg_jabatan').html("jabatan harus diisi");
+                $("#btnsubmit").attr('disabled', true);
             }
+
+            validasi();
         });
 
         $(document).on('change', '.divisi', function(e){
             var val = $('.divisi').val();
             var val_jabatan = $('.jabatan').val();
-            if(val){
+
+            if ($(this).val() != "") {
                 if(val_jabatan){
                     soal_select(val_jabatan, val);
                 }
+                $('#divisi').removeClass('is-invalid');
+                $('#msg_divisi').html("");
+            } else {
+                $('#divisi').addClass('is-invalid');
+                $('#msg_divisi').html("divisi harus diisi");
+                $("#btnsubmit").attr('disabled', true);
             }
+            validasi();
+        });
+
+        $(document).on('keyup change', '.kuota', function(e){
+            var val = $(this).val();
+
+            if ($(this).val() != "") {
+                $('#kuota').removeClass('is-invalid');
+                $('#msg_kuota').html("");
+            } else {
+                $('#kuota').addClass('is-invalid');
+                $('#msg_kuota').html("kuota harus diisi");
+                $("#btnsubmit").attr('disabled', true);
+            }
+            validasi();
         });
 
         function addusiarow(){
