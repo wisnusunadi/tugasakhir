@@ -27,6 +27,10 @@
       display:none;
     }
 
+    .toogle-password {
+        cursor: pointer;
+    }
+
 </style>
 @stop
 @section('content')
@@ -70,38 +74,30 @@
                                     <tbody>
                                         <tr>
                                             @if(count($jadwal) > 0)
-                                              @foreach($jadwal as $index => $j)
-                                        <tr>
-
-                                            <td rowspan="{{$j->Pendaftaran->count()}}">{{$j->ket}}
-                                                <div><small  class="invalid-feedback d-block">{{date('d M', strtotime($j->waktu_mulai))}} - {{date('d M Y', strtotime($j->waktu_selesai))}}</small></div>
-                                            </td>
-
-                                            <td >{{$j->Pendaftaran[0]->jabatan->nama}} {{$j->Pendaftaran[0]->divisi->nama}}</td>
-                                            <td >{{$j->Pendaftaran[0]->kuota}}</td>
-                                            <td >
-                                                <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="pendaftaran_id" id="pendaftaran_id1" value="{{$j->Pendaftaran[0]->id}}"  required/>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        @for($i=1;$i<$j->pendaftaran->count();$i++)
-                                        <tr>
-                                            <td >{{$j->Pendaftaran[$i]->jabatan->nama}} {{$j->Pendaftaran[$i]->divisi->nama}}</td>
-                                            <td >{{$j->Pendaftaran[$i]->kuota}}</td>
-                                            <td >
-                                                <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="pendaftaran_id" id="pendaftaran_id{{$i}}" value="{{$j->Pendaftaran[$i]->id}}" required/>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                      @endfor
-                                        @endforeach
+                                                @foreach($jadwal as $index => $j)
+                                                    <?php $crow = 0;?>
+                                                    <tr>
+                                                        <td rowspan="{{$j->Pendaftaran->count()}}">{{$j->ket}}
+                                                            <div><small  class="invalid-feedback d-block">{{date('d M', strtotime($j->waktu_mulai))}} - {{date('d M Y', strtotime($j->waktu_selesai))}}</small></div>
+                                                        </td>
+                                                        @foreach($j->Pendaftaran as $p)
+                                                            @if($crow > 0)
+                                                            <tr>
+                                                            @endif
+                                                            <td >{{$p->jabatan->nama}} {{$p->divisi->nama}}</td>
+                                                            <td >{{$p->kuota}}</td>
+                                                            <td >
+                                                                <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="pendaftaran_id" id="pendaftaran_id1" value="{{$j->Pendaftaran[0]->id}}"  required/>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <?php $crow++;?>
+                                                        @endforeach
+                                                @endforeach
                                             @else
                                             <td colspan="6">Maaf, info lowongan belum tersedia untuk saat ini</td>
                                             @endif
-
-
                                         </tr>
 
                                     </tbody>
@@ -114,7 +110,7 @@
 
                                     <div class="col-md-6">
                                         <input id="name" type="text" class="form-control @error('name') is-invalid @enderror col-form-label" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-
+                                        <small class="text-danger" id="nama_error"></small>
                                         @error('name')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -242,13 +238,24 @@
                                     <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
 
                                     <div class="col-md-6">
-                                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
+                                        <div class="input-group">
+                                            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text"><i toggle="#password-toggle" class="fa fa-fw fa-eye  toggle-password"></i></span>
+                                            </div>
+                                        </div>
+                                        <small class="text-danger" id="password_error"></small>
                                         @error('password')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
+                                        {{-- <small class="text-danger" id="password_error"></small>
+                                        @error('password')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror --}}
                                     </div>
                                 </div>
 
@@ -256,7 +263,18 @@
                                     <label for="password-confirm" class="col-md-4 col-form-label text-md-end">Konfirmasi Password</label>
 
                                     <div class="col-md-6">
-                                        <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                                        <div class="input-group">
+                                            <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text"><i toggle="#password-toggle-confirm" class="fa fa-fw fa-eye  toggle-password-confirm"></i></span>
+                                            </div>
+                                        </div>
+                                        <small class="text-danger" id="password_confirm_error"></small>
+                                        @error('password_confirmation')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="row mb-3">
@@ -311,6 +329,13 @@
 <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css" type="text/css">
 <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
 <script>
+function validasi(){
+            if ($('#name').val() != "" && $('input[name=pend]:checked').length > 0 && $('input[name=jenis_kelamin]:checked').length > 0 && $('#tgl_lahir').val() != "" && ($('#username').val() != "" && !$('#username').hasClass('is-invalid')) && ($('#password').val() != "" && !$('#password').hasClass('is-invalid')) && $('#jarak_user').val() != 0.0  && ($('#password-confirm').val() != "" && !$('#password-confirm').hasClass('is-invalid')) && ($('#email').val() != "" && !$('#email').hasClass('is-invalid')) && $('#captcha').val() != "") {
+                $('#tambah').attr("disabled", false);
+            } else {
+                $('#tambah').attr("disabled", true);
+            }
+        }
 	// TO MAKE THE MAP APPEAR YOU MUST
 	// ADD YOUR ACCESS TOKEN FROM
 	// https://account.mapbox.com
@@ -436,56 +461,56 @@ map.on('load', () => {
 });
 
 map.on('click', (event) => {
-
-  const coords = Object.keys(event.lngLat).map((key) => event.lngLat[key]);
-  const end = {
-    type: 'FeatureCollection',
-    features: [
-      {
-        type: 'Feature',
-        properties: {},
-        geometry: {
-          type: 'Point',
-          coordinates: coords
-        }
-      }
-    ]
-  };
-  if (map.getLayer('end')) {
-    map.getSource('end').setData(end);
-  } else {
-    map.addLayer({
-      id: 'end',
-      type: 'circle',
-      source: {
-        type: 'geojson',
-        data: {
-          type: 'FeatureCollection',
-          features: [
-            {
-              type: 'Feature',
-              properties: {},
-              geometry: {
-                type: 'Point',
-                coordinates: coords
-              }
+    const coords = Object.keys(event.lngLat).map((key) => event.lngLat[key]);
+    const end = {
+        type: 'FeatureCollection',
+        features: [
+        {
+            type: 'Feature',
+            properties: {},
+            geometry: {
+            type: 'Point',
+            coordinates: coords
             }
-          ]
         }
-      },
-      paint: {
-        'circle-radius': 10,
-        'circle-color': '#f30'
-      }
-    });
-  }
-  getRoute(coords);
-
-                if ($('#name').val() != "" && $('input[name=jenis_kelamin]:checked').length > 0 && $('#tgl_lahir').val() != ""  && $('#username').val() != "" && $('#email').val() != "" && $('#password').val() != "" && $('#jarak_user').val() != 0.0 && $('#password-confirm').val() != "") {
-                    $('#tambah').attr("disabled", false);
-                } else {
-                    $('#tambah').attr("disabled", true);
+        ]
+    };
+    if (map.getLayer('end')) {
+        map.getSource('end').setData(end);
+    } else {
+        map.addLayer({
+        id: 'end',
+        type: 'circle',
+        source: {
+            type: 'geojson',
+            data: {
+            type: 'FeatureCollection',
+            features: [
+                {
+                type: 'Feature',
+                properties: {},
+                geometry: {
+                    type: 'Point',
+                    coordinates: coords
                 }
+                }
+            ]
+            }
+        },
+        paint: {
+            'circle-radius': 10,
+            'circle-color': '#f30'
+        }
+        });
+    }
+    getRoute(coords);
+
+                // if ($('#name').val() != "" && $('input[name=jenis_kelamin]:checked').length > 0 && $('#tgl_lahir').val() != ""  && $('#username').val() != "" && $('#email').val() != "" && $('#password').val() != "" && $('#jarak_user').val() != 0.0 && $('#password-confirm').val() != "") {
+                //     $('#tambah').attr("disabled", false);
+                // } else {
+                //     $('#tambah').attr("disabled", true);
+                // }
+    validasi();
 });
 
 
@@ -516,7 +541,28 @@ var geocoder = new MapboxGeocoder({
 
 <script>
     $(function(){
+        $(document).on('click', '.toggle-password',function(){
+            // $(this).toggleClass("fa-eye fa-eye-slash");
+            var input = $("#password");
+            if (input.attr("type") === "password") {
+                input.attr("type", "text");
+            } else {
+                input.attr("type", "password");
+            }
+        });
+
+        $(document).on('click', '.toggle-password-confirm',function(){
+            // $(this).toggleClass("fa-eye fa-eye-slash");
+            var input = $("#password-confirm");
+            if (input.attr("type") === "password") {
+                input.attr("type", "text");
+            } else {
+                input.attr("type", "password");
+            }
+        });
         // $('#pendaftaran_id').select2();
+
+
         $('input[type="radio"][name="pend"]').change(function(){
           if($(this).val() == "s1d4" || $(this).val() == "d3"){
             $('.univ').removeClass('hide');
@@ -525,6 +571,8 @@ var geocoder = new MapboxGeocoder({
             $('.univ').addClass('hide');
             $('.universitas').attr("required", false);
           }
+
+          validasi();
         })
 
         $('.universitas').select2({
@@ -557,158 +605,212 @@ var geocoder = new MapboxGeocoder({
 
 
         $('#name').on('keyup change', function() {
+            // if ($(this).val() != "") {
+            //     if ($('#tgl_lahir').val() != "" &&  $('input[name=jenis_kelamin]:checked').length > 0  && $('#username').val() != ""  && $('#email').val() != "" && $('#password').val() != "" && $('#password-confirm').val() != ""  && $('#jarak_user').val() != 0.0 && !$('#username').hasClass('is-invalid')  && !$('#email').hasClass('is-invalid') && $('#captcha').val() != "" ) {
+            //         $('#tambah').attr("disabled", false);
+            //     } else {
+            //         $('#tambah').attr("disabled", true);
+            //     }
+            // } else {
+            //     $('#tambah').attr("disabled", true);
+            // }
+
             if ($(this).val() != "") {
-                if ($('#tgl_lahir').val() != "" &&  $('input[name=jenis_kelamin]:checked').length > 0  && $('#username').val() != ""  && $('#email').val() != "" && $('#password').val() != "" && $('#password-confirm').val() != ""  && $('#jarak_user').val() != 0.0 && !$('#username').hasClass('is-invalid')  && !$('#email').hasClass('is-invalid') && $('#captcha').val() != "" ) {
-                    $('#tambah').attr("disabled", false);
-                } else {
-                    $('#tambah').attr("disabled", true);
-                }
+                $('#nama').removeClass('is-invalid');
+                $('#nama_error').html('');
             } else {
-                $('#tambah').attr("disabled", true);
+                $('#nama').addClass('is-invalid');
+                $('#nama_error').html("<i class='fa fa-exclamation-circle' aria-hidden='true'></i> Nama Harus diisi");
             }
+
+            validasi();
         });
 
         $('#tgl_lahir').on('keyup change', function() {
-            if ($(this).val() != "") {
-                if ($('#name').val() != "" && $('input[name=jenis_kelamin]:checked').length > 0  && $('#username').val() != "" && $('#email').val() != "" && $('#password').val() != "" && $('#password-confirm').val() != ""  && $('#jarak_user').val() != 0.0 && !$('#username').hasClass('is-invalid')  && !$('#email').hasClass('is-invalid') && $('#captcha').val() != ""  ) {
-                    $('#tambah').attr("disabled", false);
-                } else {
-                    $('#tambah').attr("disabled", true);
-                }
-            } else {
-                $('#tambah').attr("disabled", true);
-            }
+            // if ($(this).val() != "") {
+            //     if ($('#name').val() != "" && $('input[name=jenis_kelamin]:checked').length > 0  && $('#username').val() != "" && $('#email').val() != "" && $('#password').val() != "" && $('#password-confirm').val() != ""  && $('#jarak_user').val() != 0.0 && !$('#username').hasClass('is-invalid')  && !$('#email').hasClass('is-invalid') && $('#captcha').val() != ""  ) {
+            //         $('#tambah').attr("disabled", false);
+            //     } else {
+            //         $('#tambah').attr("disabled", true);
+            //     }
+            // } else {
+            //     $('#tambah').attr("disabled", true);
+            // }
+
+            validasi();
         });
 
         $('input[type="radio"][name="jenis_kelamin"]').on('change', function() {
-            if ($(this).val() != "") {
-                if ($('#name').val() != "" && $('#tgl_lahir').val() != ""   && $('#username').val() != ""  && $('#email').val() != "" && $('#password').val() != "" && $('#password-confirm').val() != ""  && $('#jarak_user').val() != 0.0  && !$('#username').hasClass('is-invalid')  && !$('#email').hasClass('is-invalid') && $('#captcha').val() != "" )  {
-                    $('#tambah').attr("disabled", false);
-                } else {
-                    $('#tambah').attr("disabled", true);
-                }
-            } else {
-                $('#tambah').attr("disabled", true);
-            }
+            // if ($(this).val() != "") {
+            //     if ($('#name').val() != "" && $('#tgl_lahir').val() != ""   && $('#username').val() != ""  && $('#email').val() != "" && $('#password').val() != "" && $('#password-confirm').val() != ""  && $('#jarak_user').val() != 0.0  && !$('#username').hasClass('is-invalid')  && !$('#email').hasClass('is-invalid') && $('#captcha').val() != "" )  {
+            //         $('#tambah').attr("disabled", false);
+            //     } else {
+            //         $('#tambah').attr("disabled", true);
+            //     }
+            // } else {
+            //     $('#tambah').attr("disabled", true);
+            // }
+            validasi();
         });
 
-        $('#username').on('keyup change', function() {
-            if ($(this).val() != "") {
-                if ($('#name').val() != "" && $('input[name=jenis_kelamin]:checked').length > 0 && $('#tgl_lahir').val() != ""  && $('#email').val() != "" && $('#password').val() != "" && $('#password-confirm').val() != "" && $('#jarak_user').val() != 0.0 && !$('#username').hasClass('is-invalid')  && !$('#email').hasClass('is-invalid') && $('#captcha').val() != ""  ) {
-                    $('#tambah').attr("disabled", false);
-                } else {
-                    $('#tambah').attr("disabled", true);
-                }
-            } else {
-                $('#tambah').attr("disabled", true);
-            }
-        });
+        // $('#username').on('keyup change', function() {
+        //     if ($(this).val() != "") {
+        //         if ($('#name').val() != "" && $('input[name=jenis_kelamin]:checked').length > 0 && $('#tgl_lahir').val() != ""  && $('#email').val() != "" && $('#password').val() != "" && $('#password-confirm').val() != "" && $('#jarak_user').val() != 0.0 && !$('#username').hasClass('is-invalid')  && !$('#email').hasClass('is-invalid') && $('#captcha').val() != ""  ) {
+        //             $('#tambah').attr("disabled", false);
+        //         } else {
+        //             $('#tambah').attr("disabled", true);
+        //         }
+        //     } else {
+        //         $('#tambah').attr("disabled", true);
+        //     }
+        // });
 
-        $('#email').on('keyup change', function() {
-            if ($(this).val() != "") {
-                if ($('#name').val() != "" && $('input[name=jenis_kelamin]:checked').length > 0 && $('#tgl_lahir').val() != ""  && $('#username').val() != "" && $('#password').val() != "" && $('#password-confirm').val() != ""  && $('#jarak_user').val() != 0.0 && !$('#username').hasClass('is-invalid')  && !$('#email').hasClass('is-invalid') && $('#captcha').val() != ""  ) {
-                    $('#tambah').attr("disabled", false);
-                } else {
-                    $('#tambah').attr("disabled", true);
-                }
-            } else {
-                $('#tambah').attr("disabled", true);
-            }
-        });
+        // $('#email').on('keyup change', function() {
+
+        //     // if ($(this).val() != "") {
+        //     //     if ($('#name').val() != "" && $('input[name=jenis_kelamin]:checked').length > 0 && $('#tgl_lahir').val() != ""  && $('#username').val() != "" && $('#password').val() != "" && $('#password-confirm').val() != ""  && $('#jarak_user').val() != 0.0 && !$('#username').hasClass('is-invalid')  && !$('#email').hasClass('is-invalid') && $('#captcha').val() != ""  ) {
+        //     //         $('#tambah').attr("disabled", false);
+        //     //     } else {
+        //     //         $('#tambah').attr("disabled", true);
+        //     //     }
+        //     // } else {
+        //     //     $('#tambah').attr("disabled", true);
+        //     // }
+        // });
 
         $('#password').on('keyup change', function() {
-            if ($(this).val() != "") {
-                if ($('#name').val() != "" && $('input[name=jenis_kelamin]:checked').length > 0 && $('#tgl_lahir').val() != ""  && $('#username').val() != "" && $('#email').val() != "" && $('#password-confirm').val() != ""  && $('#jarak_user').val() != 0.0 && !$('#username').hasClass('is-invalid')  && !$('#email').hasClass('is-invalid') && $('#captcha').val() != "" ) {
-                    $('#tambah').attr("disabled", false);
-                } else {
-                    $('#tambah').attr("disabled", true);
+            var passwordreg = new RegExp("^(?=.*[a-z])(?=.*[0-9])(?=.{8,})");
+            var value = $(this).val();
+            console.log(passwordreg.test(value));
+            if ($(this).val() != ""){
+                if(passwordreg.test(value)){
+                    $('#password').removeClass('is-invalid');
+                    $('#password_error').html('');
+                }else{
+                    $('#password').addClass('is-invalid');
+                    $('#password_error').html("<i class='fa fa-exclamation-circle' aria-hidden='true'></i> Password harus mengandung Min 8 Karakter, Huruf & Angka");
                 }
-            } else {
-                $('#tambah').attr("disabled", true);
             }
+            else{
+                $('#password').addClass('is-invalid');
+                $('#password_error').html("<i class='fa fa-exclamation-circle' aria-hidden='true'></i> Password harus diisi");
+            }
+            validasi();
+            // if ($(this).val() != "") {
+            //     if ($('#name').val() != "" && $('input[name=jenis_kelamin]:checked').length > 0 && $('#tgl_lahir').val() != ""  && $('#username').val() != "" && $('#email').val() != "" && $('#password-confirm').val() != ""  && $('#jarak_user').val() != 0.0 && !$('#username').hasClass('is-invalid')  && !$('#email').hasClass('is-invalid') && $('#captcha').val() != "" ) {
+            //         $('#tambah').attr("disabled", false);
+            //     } else {
+            //         $('#tambah').attr("disabled", true);
+            //     }
+            // } else {
+            //     $('#tambah').attr("disabled", true);
+            // }
         });
 
         $('#password-confirm').on('keyup change', function() {
             if ($(this).val() != "") {
-                if ($('#name').val() != "" && $('input[name=jenis_kelamin]:checked').length > 0 && $('#tgl_lahir').val() != ""  && $('#username').val() != "" && $('#email').val() != "" && $('#password').val() != "" && $('#jarak_user').val() != 0.0  && !$('#username').hasClass('is-invalid')  && !$('#email').hasClass('is-invalid')   && $('#captcha').val() != "" ) {
-                    $('#tambah').attr("disabled", false);
-                } else {
-                    $('#tambah').attr("disabled", true);
+                if($(this).val() !== $('#password').val()) {
+                    $('#password-confirm').addClass('is-invalid');
+                    $('#password_confirm_error').html("<i class='fa fa-exclamation-circle' aria-hidden='true'></i> Konfirmasi Password harus sama dengan Password");
+                }
+                else {
+                    $('#password-confirm').removeClass('is-invalid');
+                    $('#password_confirm_error').html('');
                 }
             } else {
-                $('#tambah').attr("disabled", true);
+                $('#password-confirm').addClass('is-invalid');
+                $('#password_confirm_error').html("<i class='fa fa-exclamation-circle' aria-hidden='true'></i> Konfirmasi Password harus diisi");
             }
+
+            validasi();
         });
         $('#captcha').on('keyup change', function() {
-            if ($(this).val() != "") {
-                if ($('#name').val() != "" && $('input[name=jenis_kelamin]:checked').length > 0 && $('#tgl_lahir').val() != ""  && $('#username').val() != "" && $('#email').val() != "" && $('#password').val() != "" && $('#jarak_user').val() != 0.0  && !$('#username').hasClass('is-invalid')  && !$('#email').hasClass('is-invalid')  && $('#password-confirm').val() != ""  ) {
-                    $('#tambah').attr("disabled", false);
-                } else {
-                    $('#tambah').attr("disabled", true);
-                }
-            } else {
-                $('#tambah').attr("disabled", true);
-            }
+            // if ($(this).val() != "") {
+            //     if ($('#name').val() != "" && $('input[name=jenis_kelamin]:checked').length > 0 && $('#tgl_lahir').val() != ""  && $('#username').val() != "" && $('#email').val() != "" && $('#password').val() != "" && $('#jarak_user').val() != 0.0  && !$('#username').hasClass('is-invalid')  && !$('#email').hasClass('is-invalid')  && $('#password-confirm').val() != ""  ) {
+            //         $('#tambah').attr("disabled", false);
+            //     } else {
+            //         $('#tambah').attr("disabled", true);
+            //     }
+            // } else {
+            //     $('#tambah').attr("disabled", true);
+            // }
+
+            validasi();
         });
 
         $('#username').on('keyup change', function() {
+            var userreg = new RegExp('^[a-zA-Z0-9](_(?!(\.|_))|\.(?!(_|\.))|[a-zA-Z0-9]){6,18}[a-zA-Z0-9]$');
             if ($(this).val() != "") {
-                $.ajax({
-                    type: 'GET',
-                    dataType: 'json',
-                    url: '/api/peserta/check/username/' + $(this).val(),
-                    success: function(data) {
-                        console.log(data);
-                        if (data.jumlah >= 1) {
-                        $("#user_duplicate").html("<i class='fa fa-exclamation-circle' aria-hidden='true'></i> Nama sudah terpakai");
-                        $('#tambah').attr("disabled", true);
-                        $('#username').addClass("is-invalid");
-                         } else {
-                            $('#user_duplicate').text("");
-                            $('#username').removeClass("is-invalid");
-                            if ($('#name').val() != "" && $('input[name=jenis_kelamin]:checked').length > 0 && $('#tgl_lahir').val() != ""  && $('#username').val() != "" && $('#email').val() != "" && $('#password').val() != "" && $('#jarak_user').val() != 0.0  && $('#password-confirm').val() != "" && !$('#email').hasClass('is-invalid') && $('#captcha').val() != ""  ) {
-                                $('#tambah').attr("disabled", false);
-                                } else {
-                                 $('#tambah').attr("disabled", true);
-                                }
+                if(userreg.test($(this).val())){
+                    $.ajax({
+                        type: 'GET',
+                        dataType: 'json',
+                        url: '/api/peserta/check/username/' + $(this).val(),
+                        success: function(data) {
+                            console.log(data);
+                            if (data.jumlah >= 1) {
+                            $("#user_duplicate").html("<i class='fa fa-exclamation-circle' aria-hidden='true'></i> Nama sudah terpakai");
+                            // $('#tambah').attr("disabled", true);
+                            $('#username').addClass("is-invalid");
+                            } else {
+                                $('#user_duplicate').html("");
+                                $('#username').removeClass("is-invalid");
+                                // if ($('#name').val() != "" && $('input[name=jenis_kelamin]:checked').length > 0 && $('#tgl_lahir').val() != ""  && $('#username').val() != "" && $('#email').val() != "" && $('#password').val() != "" && $('#jarak_user').val() != 0.0  && $('#password-confirm').val() != "" && !$('#email').hasClass('is-invalid') && $('#captcha').val() != ""  ) {
+                                //     $('#tambah').attr("disabled", false);
+                                // } else {
+                                //     $('#tambah').attr("disabled", true);
+                                // }
+                            }
                         }
-                    }
-                });
+                    });
+                }else{
+                    $("#user_duplicate").html("<i class='fa fa-exclamation-circle' aria-hidden='true'></i> Username tidak boleh ada spasi");
+                    $('#username').addClass("is-invalid");
+                }
             } else if ($(this).val() == "") {
                 $("#user_duplicate").html("<i class='fa fa-exclamation-circle' aria-hidden='true'></i> Username harus di isi");
-                $('#user').addClass("is-invalid");
-                $("#tambah").attr('disabled', true);
+                $('#username').addClass("is-invalid");
+                // $("#tambah").attr('disabled', true);
             }
+
+            validasi();
         });
 
         $('#email').on('keyup change', function() {
+            var emailreg = new RegExp("([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\"\(\[\]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\[[\t -Z^-~]*])");
             if ($(this).val() != "") {
-                $.ajax({
-                    type: 'GET',
-                    dataType: 'json',
-                    url: '/api/peserta/check/email/' + $(this).val(),
-                    success: function(data) {
-                        console.log(data);
-                        if (data.jumlah >= 1) {
-                        $("#email_duplicate").html("<i class='fa fa-exclamation-circle' aria-hidden='true'></i> Email sudah terpakai");
-                        $('#tambah').attr("disabled", true);
-                        $('#email').addClass("is-invalid");
-                         } else {
-                        $('#email_duplicate').text("");
-                        $('#email').removeClass("is-invalid");
-                        if ($('#name').val() != "" && $('input[name=jenis_kelamin]:checked').length > 0 && $('#tgl_lahir').val() != ""  && $('#username').val() != "" && $('#email').val() != "" && $('#password').val() != "" && $('#jarak_user').val() != 0.0  && $('#password-confirm').val() != ""  && !$('#username').hasClass('is-invalid') && $('#captcha').val() != "" ) {
-                                $('#tambah').attr("disabled", false);
-                                } else {
-                                 $('#tambah').attr("disabled", true);
-                                }
-                        }
-                    }
-                });
+                if(emailreg.test($(this).val())){
+                    $.ajax({
+                        type: 'GET',
+                        dataType: 'json',
+                        url: '/api/peserta/check/email/' + $(this).val(),
+                        success: function(data) {
+                            console.log(data);
+                            if (data.jumlah >= 1) {
+                            $("#email_duplicate").html("<i class='fa fa-exclamation-circle' aria-hidden='true'></i> Email sudah terpakai");
+                            // $('#tambah').attr("disabled", true);
+                            $('#email').addClass("is-invalid");
+                            } else {
+                            $('#email_duplicate').html("");
+                            $('#email').removeClass("is-invalid");
 
+                            // if ($('#name').val() != "" && $('input[name=jenis_kelamin]:checked').length > 0 && $('#tgl_lahir').val() != ""  && $('#username').val() != "" && $('#email').val() != "" && $('#password').val() != "" && $('#jarak_user').val() != 0.0  && $('#password-confirm').val() != ""  && !$('#username').hasClass('is-invalid') && $('#captcha').val() != "" ) {
+                            //         $('#tambah').attr("disabled", false);
+                            //         } else {
+                            //          $('#tambah').attr("disabled", true);
+                            //         }
+                            }
+                        }
+                    });
+                }
+                else{
+                    $("#email_duplicate").html("<i class='fa fa-exclamation-circle' aria-hidden='true'></i> Harus mengandung format email (contoh: test@example.com)");
+                    $('#email').addClass("is-invalid");
+                }
             } else if ($(this).val() == "") {
                 $("#email_duplicate").html("<i class='fa fa-exclamation-circle' aria-hidden='true'></i> Email harus di isi");
                 $('#email').addClass("is-invalid");
-                $("#tambah").attr('disabled', true);
+                // $("#tambah").attr('disabled', true);
             }
         });
 
@@ -751,11 +853,7 @@ var geocoder = new MapboxGeocoder({
         //         $('#tambah').attr("disabled", true);
         //     }
         // });
-
-
-
-
-    })
+});
 </script>
 
 @endsection

@@ -45,7 +45,7 @@ class GetController extends Controller
         if ($param == 'username') {
             $data = User::where('username', $value)->count();
         } else if ($param == 'email') {
-            $data = User::where('email', $value)->count();
+            $data = User::where('email', 'like', '%'.$value.'%')->count();
         }
 
         return response()->json(['jumlah' => $data]);

@@ -67,7 +67,7 @@ class RegisterController extends Controller
     public function showRegistrationForm()
     {
         $today = Carbon::now();
-        $jadwal = Jadwal::where([['waktu_selesai', '>=', $today], ['waktu_mulai', '<=', $today]])->get();
+        $jadwal = Jadwal::where([['waktu_selesai', '>=', $today], ['waktu_mulai', '<=', $today]])->has('Pendaftaran')->get();
         // $p = Pendaftaran::whereHas('Jadwal', function ($q) use ($today) {
         //     $q->where([['waktu_selesai', '>=', $today], ['waktu_mulai', '<=', $today]]);
         // })->get();
