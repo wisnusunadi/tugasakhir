@@ -1,5 +1,5 @@
 @extends('layouts.adminlte.main')
- 
+
 @section('title', 'Sistem Penerimaan Karyawan')
 
 @section('custom_css')
@@ -37,7 +37,7 @@ section{
 @stop
 
 @section('content')
-<section class="content">
+<section class="content-wrapper">
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">

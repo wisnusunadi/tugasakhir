@@ -47,7 +47,7 @@ section{
 
 @section('content')
 
-<section class="content">
+<section class="content-wrapper">
     <div class="content-header">
         <div class="container-fluid">
           <div class="row mb-2">
@@ -84,7 +84,7 @@ section{
                 @endif
                 <div class="card">
                     <div class="card-body">
-                        <table class="table table-hover aligncenter" id="showtable">
+                        <table class="table table-hover aligncenter" id="showtable"  style="width:100%">
                             <thead>
                                     <tr>
                                         <th colspan="5">

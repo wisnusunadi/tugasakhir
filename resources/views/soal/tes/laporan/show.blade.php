@@ -69,7 +69,7 @@ section{
 
 @section('content')
 
-<section class="content">
+<section class="content-wrapper">
     <div class="content-header">
         <div class="container-fluid">
           <div class="row mb-2">
@@ -89,12 +89,13 @@ section{
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
-                    <div class="card-body"> <div class="table-responsive">
+                    <div class="card-body">
+                        <div class="table-responsive">
                         <a id="exportbutton" href="{{route('laporan.hasil.export')}}"><button class="btn btn-success">
                             <i class="far fa-file-excel" id="load"></i> Export
                         </button>
                     </a>
-                        <table class="table table-hover" id="showtable" style="width=100%">
+                        <table class="table table-hover aligncenter" id="showtable" style="width=100%">
                             <thead class="aligncenter">
                                 <tr>
                                     <th></th>

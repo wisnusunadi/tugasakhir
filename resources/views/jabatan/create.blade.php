@@ -71,8 +71,7 @@ section{
 @stop
 
 @section('content')
-
-<section class="content">
+<section class="content-wrapper">
     <div class="content-header">
         <div class="container-fluid">
           <div class="row mb-2">

@@ -62,11 +62,11 @@
 
   @yield('content')
 
-  {{-- <footer class="main-footer">
-    <span>Dibuat untuk Tugas Akhir 2022</span>
-    <span class="float-right"><strong>Copyright &copy; 2022.</strong></span>
+  <footer class="main-footer">
+    <span>PT Surindo Teguh Gemilang</span>
+    <span class="float-right"><strong> Sistem Penerimaan Karyawan  &copy; <script>document.write(new Date().getFullYear());</script> .</strong></span>
   </footer>
-  --}}
+
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
     <!-- Control sidebar content goes here -->

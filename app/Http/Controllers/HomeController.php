@@ -626,7 +626,8 @@ class HomeController extends Controller
         return Excel::download(new LaporanHasilTes(), 'Laporan Hasil Tes ' . $waktu->toDateTimeString() . '.pdf');
     }
 
-    public function export_hasil_keputusan(){
+    public function export_hasil_keputusan()
+    {
         $waktu = Carbon::now();
         return Excel::download(new LaporanHasilKeputusan(), 'Laporan Keputusan ' . $waktu->toDateTimeString() . '.xlsx');
     }

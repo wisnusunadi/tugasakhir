@@ -42,7 +42,7 @@ section{
 
 @section('content')
 
-<section class="content">
+<section class="content-wrapper">
     <div class="content-header">
         <div class="container-fluid">
           <div class="row mb-2">
@@ -63,7 +63,7 @@ section{
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <table class="table table-hover" id="showtable">
+                        <table class="table table-hover" id="showtable"  style="width:100%">
                             <thead class="aligncenter">
                                 <tr>
                                     <th>No</th>

@@ -47,7 +47,7 @@ section{
 
 @section('content')
 
-<section class="content">
+<section class="content-wrapper">
     <div class="content-header">
         <div class="container-fluid">
           <div class="row mb-2">
@@ -69,7 +69,7 @@ section{
                 <div class="card">
                     <div class="card-body">
                         <div class="table-responsive">
-                        <table class="table table-hover aligncenter" id="showtable">
+                        <table class="table table-hover aligncenter" id="showtable"  style="width:100%">
                             <thead>
                                 @if(Auth::user())
                                     @if(Auth::user()->role == "admin")
