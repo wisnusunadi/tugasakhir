@@ -190,6 +190,7 @@
                                     <div class="col-md-6">
                                         <select class="universitas" data-placeholder="Pilih universitas"  name="universitas" id="universitas" >
                                         </select>
+                                        <small class="text-danger" id="univ_error"></small>
                                     </div>
                                 </div>
 
@@ -330,12 +331,21 @@
 <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
 <script>
 function validasi(){
-            if ($('#name').val() != "" && $('input[name=pend]:checked').length > 0 && $('input[name=jenis_kelamin]:checked').length > 0 && $('#tgl_lahir').val() != "" && ($('#username').val() != "" && !$('#username').hasClass('is-invalid')) && ($('#password').val() != "" && !$('#password').hasClass('is-invalid')) && $('#jarak_user').val() != 0.0  && ($('#password-confirm').val() != "" && !$('#password-confirm').hasClass('is-invalid')) && ($('#email').val() != "" && !$('#email').hasClass('is-invalid')) && $('#captcha').val() != "") {
+    if ($('#name').val() != "" && $('input[name=pend]:checked').length > 0 && $('input[name=jenis_kelamin]:checked').length > 0 && $('#tgl_lahir').val() != "" && ($('#username').val() != "" && !$('#username').hasClass('is-invalid')) && ($('#password').val() != "" && !$('#password').hasClass('is-invalid')) && $('#jarak_user').val() != 0.0  && ($('#password-confirm').val() != "" && !$('#password-confirm').hasClass('is-invalid')) && ($('#email').val() != "" && !$('#email').hasClass('is-invalid')) && $('#captcha').val() != "") {
+        if($('input[name=pend]:checked').val() == "smak"){
+            $('#tambah').attr("disabled", false);
+        }else if($('input[name=pend]:checked').val() == "d3" || $('input[name=pend]:checked').val() == "s1d4"){
+            if($('.universitas').val() != null){
                 $('#tambah').attr("disabled", false);
-            } else {
+            }
+            else{
                 $('#tambah').attr("disabled", true);
             }
         }
+    } else {
+        $('#tambah').attr("disabled", true);
+    }
+}
 	// TO MAKE THE MAP APPEAR YOU MUST
 	// ADD YOUR ACCESS TOKEN FROM
 	// https://account.mapbox.com
@@ -570,6 +580,8 @@ var geocoder = new MapboxGeocoder({
           }else{
             $('.univ').addClass('hide');
             $('.universitas').attr("required", false);
+            $('.universitas').removeClass('is-invalid');
+            $('#univ_error').html("");
           }
 
           validasi();
@@ -600,6 +612,16 @@ var geocoder = new MapboxGeocoder({
                   }
               },
             }
+        }).change(function(){
+            if($(this).val() != ""){
+                $('.universitas').removeClass('is-invalid');
+                $('#univ_error').html("");
+            }else{
+                $('.universitas').addClass('is-invalid');
+                $('#univ_error').html("Universitas harus diisi");
+            }
+
+            validasi();
         });
 
 
