@@ -81,7 +81,7 @@ td{
 }
 
 #navigation li.answer a {
-    background: rgb(104, 145, 38);
+    background: rgb(40, 167, 69);
   color: #fff;
 }
 
@@ -89,29 +89,78 @@ td{
     background: rgba(23, 23, 24, 0.844);
   color: #fff;
 }
+.thankyou-page ._header {
+    background: rgb(40, 167, 69);
+    padding: 30px 30px;
+    text-align: center;
+    background:rgb(40, 167, 69); url(https://codexcourier.com/images/main_page.jpg) center/cover no-repeat;
+}
+.thankyou-page ._header .logo {
+    max-width: 100px;
+    margin: 0 auto 50px;
+}
+.thankyou-page ._header .logo img {
+    width: 100%;
+}
+.thankyou-page ._header h4 {
+    font-size: 20px;
+    font-weight: 800;
+    color: black;
+    margin: 0;
+}
+.thankyou-page ._body {
+    margin: -70px 0 30px;
+}
+.thankyou-page ._body ._box {
+    margin: auto;
+    max-width: 80%;
+    padding: 50px;
+    background: white;
+    border-radius: 3px;
+    box-shadow: 0 0 35px rgba(10, 10, 10,0.12);
+    -moz-box-shadow: 0 0 35px rgba(10, 10, 10,0.12);
+    -webkit-box-shadow: 0 0 35px rgba(10, 10, 10,0.12);
+}
+.thankyou-page ._body ._box h2 {
+    font-size: 32px;
+    font-weight: 600;
+    color: #4ab74a;
+}
+.thankyou-page ._footer {
+    text-align: center;
+    padding: 10px 30px;
+}
+
 
 </style>
 @stop
 
 @section('content')
 
-<section class="content">
+<section class="content-wrapper">
     <div class="content-header">
         <h1 class="content-title">Soal Tes</h1>
     </div>
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-2">
-                <div class="card">
-                    <div class="card-body aligncenter">
-                        <button type="button" class="btn btn-lg btn-primary" disabled> <i class="fa-solid fa-stopwatch"></i>
-                            <div align="center" id="timer" class="form-inline "></div>
-                        </button>
-                    </div>
-                </div>
+                <button type="button" class="btn btn-lg btn-primary" disabled> <i class="fa-solid fa-stopwatch"></i>
+                    <div align="center" id="timer" class="form-inline "></div>
+                </button>
             </div>
             <div class="col-lg-8 col-md-12">
-                <form action="{{route('soal_tes.store')}}" id="soalform" method="POST">
+                <div class="progress d-none" id="last" >
+                    <div class="progress-bar bg-success" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="80"></div>
+                    <div class="progress-bar bg-info" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="20"></div>
+                </div>
+
+                <div class="progress" id="blips">
+                    <div class="progress-bar bg-success " role="progressbar" >
+                      <span class="sr-only"></span>
+                    </div>
+                  </div>
+                  {{-- action="{{route('soal_tes.store')}}"  --}}
+                <form id="soalform" method="POST" action="{{route('soal_tes.store')}}">
                     {{csrf_field()}}
                 <div class="card">
                     <div class="card-body">
@@ -146,6 +195,29 @@ td{
 
                     <?php $soal++; ?>
                     @endforeach
+                    <div class="tab">
+                        <div class="thankyou-page">
+                            <div class="_header">
+                                <div class="logo">
+                                    <img src="https://codexcourier.com/images/banner-logo.png" alt="">
+                                </div>
+                                <h4><i class="fa fa-check-circle" aria-hidden="true"></i>
+                                    Tes selesai</h4>
+                            </div>
+                            <div class="_body">
+                                <div class="_box">
+                                    <h4>
+                                        <strong>Perhatian ! </strong>
+                                    </h4>
+                                    <p>
+                                      Periksa kembali jawaban anda, jawaban akan sangat mempengaruhi penilaian anda. Pilih  <strong>Kirim </strong> untuk mengirim jawaban dan  <strong>Batal </strong> untuk memeriksa jawaban anda
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
                     <!-- <div class="tab">
                         <table class="table" border="0" cellspacing="0" cellpadding="0">
                             <tbody>
@@ -284,10 +356,41 @@ td{
                 </div>
             </div>
         </div>
-
-
     </div>
 </section>
+    <!-- Modal -->
+    <div class="modal fade" id="rule" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="staticBackdropLabel"></h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <img src="{{url('assets/image/attention.png')}}" class="rounded float-start" style=" width: 150px;">
+              Perhatian :
+              <table>
+                  <tr>
+                  <td class="vera">1. </td>
+                  <td class="vera">Harap cek jawaban anda kembali</td>
+                  </tr>
+                  <tr>
+                  <td class="vera">2. </td>
+                  <td class="vera">Tes tidak bisa di ulangi</td>
+                  </tr>
+              </table>
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Cek kembali</button>
+              <button id="accept" class="btn btn-sm btn-primary" >
+                Baik, kirim jawaban
+              </button>
+
+            </div>
+          </div>
+            </div>
+      </div>
 @endsection
 
 @section('script')
@@ -328,6 +431,7 @@ var x = setInterval(function() {
 
  // Display the result in the element with id="demo"
 
+
  let res = timePart(hours,':') + timePart(minutes,':')  + timePart(seconds,'','red');
 document.getElementById("timer").innerHTML = res
 
@@ -338,17 +442,12 @@ document.getElementById("timer").innerHTML = res
 document.getElementById("timer").innerHTML = "Tes Selesai";
   }
 }, 1000);
-
-
 </script>
-
-
-
-
 
 <script>
     var currentTab = 0; // Current tab is set to be the first tab (0)
     showTab(currentTab); // Display the current tab
+
 
     function showTab(n) {
         // This function will display the specified tab of the form...
@@ -362,17 +461,24 @@ document.getElementById("timer").innerHTML = "Tes Selesai";
             document.getElementById("prevBtn").style.display = "inline";
         }
         if (n == (x.length - 1)) {
+
             document.getElementById("nextBtn").innerHTML = "Kirim";
+            $('#nextBtn').attr("onclick","modal()");
+            $("#last").removeClass("d-none");
+            $("#blips").addClass("d-none");
+
             // document.getElementById("nextBtn").type = "submit";
         } else {
             document.getElementById("nextBtn").innerHTML = "Berikutnya";
+           $('#nextBtn').attr("onclick","nextPrev(1)");
+           $("#last").addClass("d-none");
+            $("#blips").removeClass("d-none");
+
         }
         //... and run a function that will display the correct step indicator:
         // fixStepIndicator(n)
+
     }
-
-
-
 
     function validateForm() {
         // This function deals with validation of the form fields
@@ -434,12 +540,15 @@ document.getElementById("timer").innerHTML = "Tes Selesai";
         $('#page'+currentTab).addClass("active");
         // if you have reached the end of the form...
         if (currentTab >= x.length) {
+            //alert('ok');
             // ... the form gets submitted:
-            document.getElementById("soalform").submit();
+          //  document.getElementById("soalform").submit();
             return false;
         }
         // Otherwise, display the correct tab:
         showTab(currentTab);
+
+
     }
 
     function navigate(n) {
@@ -458,7 +567,8 @@ document.getElementById("timer").innerHTML = "Tes Selesai";
         // if you have reached the end of the form...
         if (currentTab >= x.length) {
             // ... the form gets submitted:
-            document.getElementById("soalform").submit();
+
+           // document.getElementById("soalform").submit();
             return false;
         }
         // Otherwise, display the correct tab:
@@ -466,13 +576,37 @@ document.getElementById("timer").innerHTML = "Tes Selesai";
 
 
 
-        // function submit_data(){
-        //     $.ajax({
-        //         url: action,
-        //         type: 'POST'
-        //     })
-        // }
+
 
     }
+
+</script>
+<script>
+
+function modal(){
+    $('#rule').modal("show");
+
+    $('#accept').click(function(){
+    $('#soalform').submit();
+});
+}
+
+ $(".jawaban_id").change(function(){
+ countjawaban()
+    });
+
+function countjawaban(){
+    var score = 0;
+    var total= {{$parent->getJumlahSoal()}};
+    $(".jawaban_id:checked").each(function(){
+        $('#blips > .progress-bar').attr("style","width:" + (score+=1/total)*80 + "%");
+    });
+  console.log(score)
+}
+
+
+
+
+
 </script>
 @endsection

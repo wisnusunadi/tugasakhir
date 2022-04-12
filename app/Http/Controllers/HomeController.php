@@ -271,9 +271,9 @@ class HomeController extends Controller
             }
 
             $soal = SoalDetail::where('soal_id', $id)->inRandomOrder()->get();
+            $parent = Soal::find($id);
 
-
-            return view('soal.tes.show', ['id' => $id, 'soals' => $soal]);
+            return view('soal.tes.show', ['id' => $id, 'soals' => $soal, 'parent' => $parent]);
         }
     }
 
