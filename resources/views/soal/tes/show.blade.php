@@ -590,9 +590,42 @@ function modal(){
     $('#soalform').submit();
 });
 }
+var unsaved = false;
+        // $("#soalform").addEventListener('input', function(e){
+        //     if(somethingChanged)
+        //         alert("You made some changes and it's not saved?");
+        //     else
+        //         e=null; // i.e; if form state change show warning box, else don't show it.
+        // });
+
+const beforeUnloadListener = (event) => {
+  event.preventDefault();
+  return event.returnValue = "Are you sure you want to exit?";
+};
+document.querySelector(".jawaban_id").addEventListener('input', (event) =>{
+        if (event.target.value !== "") {
+            // if(somethingChanged){
+                addEventListener("beforeunload", beforeUnloadListener, {capture: true});
+                alert("You made some changes and it's not saved?");
+            // }
+        } else {
+                removeEventListener("beforeunload", beforeUnloadListener, {capture: true});
+            } // i.e; if form state change show warning box, else don't show it.
+    });
+// const nameInput = document.querySelector("#soalform");
+
+// nameInput.addEventListener("input", (event) => {
+//   if (event.target.value !== "") {
+//     addEventListener("beforeunload", beforeUnloadListener, {capture: true});
+//   } else {
+//     removeEventListener("beforeunload", beforeUnloadListener, {capture: true});
+//   }
+// });
 
  $(".jawaban_id").change(function(){
- countjawaban()
+     unsaved = true;
+     console.log(unsaved);
+        countjawaban();
     });
 
 function countjawaban(){
