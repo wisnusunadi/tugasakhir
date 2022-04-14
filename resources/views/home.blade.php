@@ -104,6 +104,7 @@
 $(function(){
 get_jabatan();
 get_divisi();
+dataawal();
 
 var lolos = [];
 var n_lolos = [];
@@ -144,6 +145,27 @@ var chart = new Chart(ctx, {
     // Configuration options go here
     options: {}
 });
+
+function dataawal(){
+    $.ajax({
+        dataType: 'json',
+        url: "/api/chart/0/0",
+        type: 'GET',
+        success: function(data) {
+            if(data){
+                lolos = data.lolos;
+                n_lolos = data.n_lolos;
+                chart.data.datasets[0].data = lolos;
+                chart.data.datasets[1].data = n_lolos;
+                chart.update();
+            }
+
+        },
+        error: function() {
+            response([]);
+        }
+    });
+}
 
 $(document).on('change', '.jabatan', function(){
     var id = $(this).val();
