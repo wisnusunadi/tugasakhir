@@ -329,7 +329,7 @@ class GetController extends Controller
             }
             $bobots = static::bobot_soal_peserta($soal_id, $nilai, $user->pendaftaran_id);
 
-            $bobotall = $bobotall + $bobots;
+            $bobotall = round(($bobotall + $bobots),3);
         }
         return $bobotall;
     }
