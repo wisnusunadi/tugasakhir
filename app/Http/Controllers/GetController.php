@@ -28,14 +28,12 @@ class GetController extends Controller
     }
     public function divisi_cek($value)
     {
-
         $data = Divisi::where('nama', $value)->count();
 
         return response()->json(['jumlah' => $data]);
     }
     public function jabatan_cek($value)
     {
-
         $data = Jabatan::where('nama', $value)->count();
 
         return response()->json(['jumlah' => $data]);
@@ -443,7 +441,7 @@ class GetController extends Controller
                 }
             }
         }
-        return $rerata;
+        return round(($rerata),3);
     }
 
     public static function get_keputusan_rekruitmen($user_id)

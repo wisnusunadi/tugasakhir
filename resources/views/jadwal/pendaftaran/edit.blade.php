@@ -92,7 +92,7 @@ section{
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-                <form method="POST" action="{{route('pendaftaran.update', ['id' => $id])}}">
+                <form method="POST" action="{{route('pendaftaran.update', ['id' => $id])}}" id="pendaftaranform">
                 @method('PUT')
                 @csrf
                 @if(Session::has('error') || count($errors) > 0 )
@@ -208,7 +208,7 @@ section{
                                                             <td><input type="number" class="form-control usia_min" name="usia_min[0]" id="usia_min0" min="0"></td>
                                                             <td><input type="number" class="form-control usia_max" name="usia_max[0]" id="usia_max0" min="0"></td>
                                                             <td><input type="number" class="form-control bobot_usia" name="bobot_usia[0]" id="bobot_usia0" step="0.01" min="0"></td>
-                                                            <td><a class="addusiarow"><i class="fas fa-plus text-success"></i></a></td>
+                                                            <td><a id="addusiarow"><i class="fas fa-plus text-success"></i></a></td>
                                                         </tr>
                                                         @endif
                                                     </tbody>
@@ -412,7 +412,7 @@ section{
                         <span class="float-left"><a href="{{route('jadwal.show')}}" type="button" class="btn btn-danger">
                             Batal
                         </a></span>
-                        <span class="float-right"><button type="submit" id="btnsubmit" class="btn btn-warning">Simpan</button></span>
+                        <span class="float-right"><button type="button" id="btnsubmit" class="btn btn-warning">Simpan</button></span>
                     </div>
                 </div>
                 </form>
@@ -648,9 +648,8 @@ section{
             });
         }
 
-        $(document).on('click', '.usiatable #addusiarow', function(){
-            var ids = $(this).closest('.usiatable').attr('id');
-            $('#'+ids+' tr:last').after(addusiarow());
+        $(document).on('click', '#usiatable #addusiarow', function(){
+            $('#usiatable tr:last').after(addusiarow());
             numberRowsUsia();
         });
 
@@ -963,6 +962,25 @@ section{
                 placeholder: 'Pilih Akreditasi'
             });
         }
+
+        var unsaved = false;
+
+        $(document).on('keyup change', ':input', function(){
+            unsaved = true;
+        });
+
+        const unloadPage = () => {
+            if (unsaved == true) {
+                return "You have unsaved changes on this page.";
+            }
+        };
+
+        window.onbeforeunload = unloadPage;
+
+        $("#btnsubmit").on('click', function(){
+            unsaved = false;
+            $('#pendaftaranform').submit();
+        });
     })
 </script>
 @endsection
