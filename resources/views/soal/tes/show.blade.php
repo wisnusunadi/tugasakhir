@@ -159,8 +159,8 @@ td{
                     </div>
                   </div>
                   {{-- action="{{route('soal_tes.store')}}"  --}}
-                <form id="soalform" method="POST" action="{{route('soal_tes.store')}}">
-                    {{csrf_field()}}
+                <form id="soalform" method="POST" action="{{route('soal_tes.store')}}" onbeforeunload="return unsavedChanged()">
+                {{csrf_field()}}
                 <div class="card">
                     <div class="card-body">
                        <input type="hidden" name="user" value="{{Auth::user()->id}}">
@@ -581,15 +581,15 @@ document.getElementById("timer").innerHTML = "Tes Selesai";
 
 </script>
 <script>
-
+var unsaved = false;
 function modal(){
     $('#rule').modal("show");
-
     $('#accept').click(function(){
-    $('#soalform').submit();
-});
+        unsaved = false;
+        $('#soalform').submit();
+    });
 }
-var unsaved = false;
+
         // $("#soalform").addEventListener('input', function(e){
         //     if(somethingChanged)
         //         alert("You made some changes and it's not saved?");
@@ -597,35 +597,62 @@ var unsaved = false;
         //         e=null; // i.e; if form state change show warning box, else don't show it.
         // });
 
-const beforeUnloadListener = (event) => {
-  event.preventDefault();
-  return event.returnValue = "Are you sure you want to exit?";
-};
-document.querySelector(".jawaban_id").addEventListener('input', (event) =>{
-        if (event.target.value !== "") {
-            // if(somethingChanged){
-                addEventListener("beforeunload", beforeUnloadListener, {capture: true});
-                alert("You made some changes and it's not saved?");
-            // }
-        } else {
-                removeEventListener("beforeunload", beforeUnloadListener, {capture: true});
-            } // i.e; if form state change show warning box, else don't show it.
-    });
+// const beforeUnloadListener = (event) => {
+// //   alert("test");
+//   event.preventDefault();
+//   return event.returnValue = "Are you sure?";
+// };
 // const nameInput = document.querySelector("#soalform");
+// nameInput.addEventListener(':input', (event) => {
+//         if (event.target.value !== "" && unsaved == true) {
+//             addEventListener("beforeunload", beforeUnloadListener, {capture: true});
+//         } else {
+//             removeEventListener("beforeunload", beforeUnloadListener, {capture: true});
+//         }
+//     });
+
+// window.addEventListener("beforeunload", function (e) {
+//         // Cancel the event
+//         if(unsaved == true){
+//             alert("test");
+//             e.preventDefault(); // If you prevent default behavior in Mozilla Firefox prompt will always be shown
+//         // Chrome requires returnValue to be set
+//             e.returnValue = "";
+//         }
+//       });
 
 // nameInput.addEventListener("input", (event) => {
-//   if (event.target.value !== "") {
-//     addEventListener("beforeunload", beforeUnloadListener, {capture: true});
-//   } else {
-//     removeEventListener("beforeunload", beforeUnloadListener, {capture: true});
-//   }
+//     if (event.target.value !== "") {
+//         addEventListener("beforeunload", beforeUnloadListener, {capture: true});
+//     } else {
+//         removeEventListener("beforeunload", beforeUnloadListener, {capture: true});
+//     }
+// });
+// $(window).bind('beforeunload', function() {
+//     if(unsaved){
+//         alert("You have unsaved changes on this page. Do you want to leave this page and discard your changes or stay on this page?");
+//     }
+// });
+
+// Monitor dynamic inputs
+// $(document).on('change', ':input', function(){ //triggers change in all input fields including text type
+//     unsaved = true;
+//     countjawaban();
 // });
 
  $(".jawaban_id").change(function(){
      unsaved = true;
      console.log(unsaved);
-        countjawaban();
-    });
+     countjawaban();
+});
+
+const unloadPage = () => {
+  if (unsaved == true) {
+    return "You have unsaved changes on this page.";
+  }
+};
+
+window.onbeforeunload = unloadPage;
 
 function countjawaban(){
     var score = 0;
@@ -635,10 +662,5 @@ function countjawaban(){
     });
   console.log(score)
 }
-
-
-
-
-
 </script>
 @endsection

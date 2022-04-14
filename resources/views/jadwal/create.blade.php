@@ -92,7 +92,7 @@ section{
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-                <form method="POST" action="{{route('jadwal.store')}}">
+                <form method="POST" action="{{route('jadwal.store')}}" id="jadwalform">
                 @csrf
                 @if(Session::has('error') || count($errors) > 0 )
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -147,11 +147,11 @@ section{
                                             </th>
                                         </tr>
                                         <tr>
-                                            <th>No</th>
+                                            <th style="min-width:5%">No</th>
                                             <th>Jabatan</th>
                                             <th>Divisi</th>
-                                            <th>Kuota</th>
-                                            <th>Aksi</th>
+                                            <th style="min-width:10%">Kuota</th>
+                                            <th style="min-width:8%">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -317,8 +317,8 @@ section{
                                                                         <thead>
                                                                             <tr>
                                                                                 <th>Soal</th>
-                                                                                <th>Bobot</th>
-                                                                                <th>Aksi</th>
+                                                                                <th style="min-width:20%">Bobot</th>
+                                                                                <th style="min-width:10%">Aksi</th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
@@ -346,7 +346,7 @@ section{
                         <span class="float-left"><a href="{{route('jadwal.show')}}" type="button" class="btn btn-danger">
                             Batal
                         </a></span>
-                        <span class="float-right"><button type="submit" id="btnsubmit" class="btn btn-success" disabled>Tambah</button></span>
+                        <span class="float-right"><button type="button" id="btnsubmit" class="btn btn-success" disabled>Tambah</button></span>
                     </div>
                 </div>
                 </form>
@@ -760,8 +760,8 @@ section{
                                                                         <thead>
                                                                             <tr>
                                                                                 <th>Soal</th>
-                                                                                <th>Bobot</th>
-                                                                                <th>Aksi</th>
+                                                                                <th style="min-width:20%">Bobot</th>
+                                                                                <th style="min-width:10%">Aksi</th>
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
@@ -1097,6 +1097,8 @@ section{
             });
         }
 
+        var unsaved = false;
+
         function select_pend(){
             $('.ketentuan_pendidikan').select2({
                 placeholder: 'Pilih Pendidikan'
@@ -1105,6 +1107,23 @@ section{
                 placeholder: 'Pilih Akreditasi'
             });
         }
+
+        $(document).on('keyup change', ':input', function(){
+            unsaved = true;
+        });
+
+        const unloadPage = () => {
+            if (unsaved == true) {
+                return "You have unsaved changes on this page.";
+            }
+        };
+
+        window.onbeforeunload = unloadPage;
+
+        $("#btnsubmit").on('click', function(){
+            unsaved = false;
+            $('#jadwalform').submit();
+        })
     })
 </script>
 @endsection

@@ -137,41 +137,56 @@ class JadwalController extends Controller
     public function jadwal_table()
     {
         $today = Carbon::now();
-        $data = Pendaftaran::whereHas('Jadwal', function ($q) use ($today) {
-            $q->where('waktu_selesai', '>=', $today);
-        })->get();
+        $data = Jadwal::where('waktu_selesai', '>=', $today)->get();
         return datatables()->of($data)
             ->addIndexColumn()
             ->addColumn('jadwal', function ($data) {
-                $j = $data->jadwal_id;
+                return $data->ket;
+            })
+            ->addColumn('tanggal_mulai', function ($data) {
+                return Carbon::parse($data->waktu_mulai)->isoFormat('D MMMM Y');
+            })
+            ->addColumn('tanggal_selesai', function ($data) {
+                return Carbon::parse($data->waktu_selesai)->isoFormat('D MMMM Y');
+            })
+            ->addColumn('aksi', function ($data) {
+                $j = $data->id;
                 $u = User::whereHas('Pendaftaran', function($q) use($j){
                     $q->where('jadwal_id', $j);
                 })->count();
-                $datas = "";
-                $datas .= 'Tanggal ' . Carbon::parse($data->Jadwal->waktu_mulai)->isoFormat('D MMMM Y') . " - ". Carbon::parse($data->Jadwal->waktu_selesai)->isoFormat('D MMMM Y');
                 if(Auth::user()){
                     if(Auth::user()->role == "admin"){
                         if($u <= 0){
-                            $datas .= ' <span><a href="/jadwal/edit/'.$data->jadwal_id.'"><i class="edit-link fa-fw fas fa-pencil-alt"></i></a></span>';
+                            return '<span><a href="/jadwal/edit/'.$data->id.'"><i class="edit-link fa-fw fas fa-pencil-alt"></i></a></span>';
                         }
                     }
                 }
-                return $datas;
+            })
+            ->rawColumns(['aksi', 'jadwal'])
+            ->make(true);
+    }
+
+    public function pendaftaran_table($id)
+    {
+        $data = Pendaftaran::where('jadwal_id', $id)->get();
+        return datatables()->of($data)
+            ->addIndexColumn()
+            ->addColumn('jabatan', function ($data) {
+                return $data->Jabatan->nama;
             })
             ->addColumn('divisi', function ($data) {
                 return $data->Divisi->nama;
             })
-            ->addColumn('jabatan', function ($data) {
-                return $data->Jabatan->nama;
-            })
             ->addColumn('kuota', function ($data) {
                 return $data->kuota;
+            })
+            ->addColumn('pendaftar', function ($data) {
+                return $data->User->count();
             })
             ->addColumn('aksi', function ($data) {
                 if(count($data->User) <= 0){
                     return '<span><a href="/pendaftaran/edit/'.$data->id.'"><button type="button" class="btn btn-sm btn-warning">Ubah</button></a></span>
-                    <span><a class="btn btn-sm btn-danger hapusmodal" data-id="' . $data->id . '" data-label="' . $data->nama . '">Hapus
-                    </a></span>';
+                            <span><a class="btn btn-sm btn-danger hapusmodal" data-id="' . $data->id . '" data-label="' . $data->nama . '">Hapus</a></span>';
                 }
             })
             ->rawColumns(['aksi', 'jadwal'])

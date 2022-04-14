@@ -92,7 +92,7 @@ section{
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-                <form method="POST" action="{{route('jadwal.update', ['id' => $id])}}">
+                <form method="POST" action="{{route('jadwal.update', ['id' => $id])}}" id="jadwalform">
                 @method('PUT')
                 @csrf
                 @if(Session::has('error') || count($errors) > 0 )
@@ -447,7 +447,7 @@ section{
                         <span class="float-left"><a href="{{route('jadwal.show')}}" type="button" class="btn btn-danger">
                             Batal
                         </a></span>
-                        <span class="float-right"><button type="submit" id="btnsubmit" class="btn btn-warning">Simpan</button></span>
+                        <span class="float-right"><button type="button" id="btnsubmit" class="btn btn-warning">Simpan</button></span>
                     </div>
                 </div>
                 </form>
@@ -1206,6 +1206,25 @@ section{
                 placeholder: 'Pilih Akreditasi'
             });
         }
+
+        var unsaved = false;
+
+        $(document).on('keyup change', ':input', function(){
+            unsaved = true;
+        });
+
+        const unloadPage = () => {
+            if (unsaved == true) {
+                return "You have unsaved changes on this page.";
+            }
+        };
+
+        window.onbeforeunload = unloadPage;
+
+        $("#btnsubmit").on('click', function(){
+            unsaved = false;
+            $('#jadwalform').submit();
+        });
     })
 </script>
 @endsection
