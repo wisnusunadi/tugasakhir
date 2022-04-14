@@ -25,17 +25,21 @@ use Maatwebsite\Excel\Facades\Excel;
 use PhpParser\Node\Expr\Cast\Array_;
 use Barryvdh\DomPDF\PDF;
 use Illuminate\Support\Facades\Mail;
+use App\Http\Controllers\GetController;
+
 
 class HomeController extends Controller
 {
+    protected $GetController;
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(GetController $GetController)
     {
         $this->middleware('auth');
+        $this->GetController = $GetController;
     }
 
     /**
@@ -667,12 +671,18 @@ class HomeController extends Controller
         })->get();
         return response()->json($data);
     }
+
     public function kirim_hasil()
     {
-        $email = 'emailuser@xxx.com';
+        $u = User::find('19');
+        $email = 'adzhanilah@gmail.com';
         $data = [
             'title' => 'Selamat datang!',
             'url' => 'https://aantamim.id',
+            'hasil' => $this->GetController->get_keputusan_rekruitmen($u->id),
+            'nama' => $u->nama,
+            'pendaftaran' => $u->Pendaftaran->Jabatan->nama.' '.$u->Pendaftaran->Divisi->nama,
+            'jadwal' => Carbon::parse($u->Pendaftaran->Jadwal->waktu_mulai)->isoFormat('D MMMM Y') . " - " . Carbon::parse($u->Pendaftaran->Jadwal->waktu_selesai)->isoFormat('D MMMM Y'),
         ];
         Mail::to($email)->send(new ReportResults($data));
     }

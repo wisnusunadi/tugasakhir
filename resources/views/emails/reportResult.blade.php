@@ -185,7 +185,7 @@ table, td { color: #000000; } a { color: #3598db; text-decoration: underline; } 
 </div>
 
 
-
+@if(isset($data))
 <div class="u-row-container" style="padding: 0px;background-color: transparent">
   <div class="u-row" style="Margin: 0 auto;min-width: 320px;max-width: 550px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: #ffffff;">
     <div style="border-collapse: collapse;display: table;width: 100%;background-color: transparent;">
@@ -193,12 +193,12 @@ table, td { color: #000000; } a { color: #3598db; text-decoration: underline; } 
   <div style="width: 100% !important;">
   <div style="padding: 0px 20px 20px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;">
 
-<table style="font-family:arial,helvetica,sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
+<table style="font-family:arial,helvetica,sans-serif; margin-top:30px;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
   <tbody>
     <tr>
       <td style="overflow-wrap:break-word;word-break:break-word;padding:0px 10px 10px 15px;font-family:arial,helvetica,sans-serif;" align="left">
   <h3 style="margin: 0px; color: #293c4b; line-height: 140%; text-align: left; word-wrap: break-word; font-weight: normal; font-family: 'Montserrat',sans-serif; font-size: 18px;">
-    <strong>Yth. Bapak/Ibu Jacob,</strong>
+    <strong>Yth. Bapak/Ibu {{ucfirst($data['nama'])}},</strong>
   </h3>
       </td>
     </tr>
@@ -223,10 +223,15 @@ table, td { color: #000000; } a { color: #3598db; text-decoration: underline; } 
     <tr>
       <td style="overflow-wrap:break-word;word-break:break-word;padding:10px;font-family:arial,helvetica,sans-serif;text-align:center;" align="center" >
   <div style="color: #293c4b; line-height: 140%; text-align: center; word-wrap: break-word;">
+
+    @if($data['hasil'] == false)
     <p style="font-size: 14px; line-height: 140%; text-align: center;"><span style="font-family: Montserrat, sans-serif; font-size: 16px; line-height: 22.4px; color: #b00e0e;"><strong>TIDAK DITERIMA</strong></span></p>
+    @elseif($data['hasil'] == true)
     <p style="font-size: 14px; line-height: 140%; text-align: center;"><span style="font-family: Montserrat, sans-serif; font-size: 16px; line-height: 22.4px; color: #7db00e;"><strong>DITERIMA</strong></span></p>
-<p style="font-size: 14px; line-height: 140%;text-align: center;"><span style="font-family: Montserrat, sans-serif; font-size: 14px; line-height: 19.6px;"><strong>TES RECRUITMENT KARYAWAN GUDANG</strong></span></p>
-<p style="font-size: 14px; line-height: 140%;text-align: center;"><span style="font-family: Lato, sans-serif; font-size: 16px; line-height: 22.4px;">23 April 2022<br /></span></p>
+    @endif
+<p style="font-size: 14px; line-height: 140%;text-align: center;"><span style="font-family: Montserrat, sans-serif; font-size: 14px; line-height: 19.6px;"><strong>RECRUITMENT {{strtoupper($data['pendaftaran'])}}</strong></span></p>
+<p style="font-size: 14px; line-height: 140%;text-align: center;"><span style="font-family: Lato, sans-serif; font-size: 16px; line-height: 22.4px;">{{$data['jadwal']}}<br /></span></p>
+
   </div>
       </td>
     </tr>
@@ -283,7 +288,7 @@ table, td { color: #000000; } a { color: #3598db; text-decoration: underline; } 
   </div>
 </div>
 
-
+@endif
 
 <div class="u-row-container" style="padding: 0px;background-color: transparent">
   <div class="u-row" style="Margin: 0 auto;min-width: 320px;max-width: 550px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: transparent;">
