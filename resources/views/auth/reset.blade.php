@@ -16,19 +16,11 @@
 @section('content')
 <div class="login-box">
   <div class="login-logo">
-    <a href="/"> Login</a>
+    <a href="/"> Reset Password</a>
   </div>
   @if(Session::has('error')  )
-  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
     {{ Session::get('error') }}
-    <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-</div>
-@endif
-@if(Session::has('status'))
-<div class="alert alert-success alert-dismissible fade show" role="alert">
-    {{ Session::get('status') }}
     <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>
@@ -44,11 +36,13 @@
 @endif
   <div class="card">
     <div class="card-body login-card-body">
-      <p class="login-box-msg">Silahkan isi untuk Masuk</p>
-      <form method="POST" action="{{ route('login') }}">
+        <p class="login-box-msg">Silahkan masukkan dan verifikasi email anda</p>
+      <form method="POST" action="{{ route('forget.password.post') }}">
         @csrf
         <div class="input-group mb-3">
-          <input type="text" aria-label="Masukkan Email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }} has-feedback" placeholder="Username atau Email" name="email" id="email" value="{{ old('email') }}" required>
+            {{-- <input type="text"class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }} has-feedback" placeholder="Username atau Email" name="email" id="email" value="{{ old('email') }}" required autocomplete="off">
+          --}}
+         <input class="form-control" type="email" name="email" id="email" value=""  placeholder="Email"/>
           <span class="input-group-text"><i class="fa-solid fa-envelope"></i></span>
         </div>
         @if ($errors->has('email'))
@@ -56,20 +50,10 @@
             <strong>{{ $errors->first('email') }}</strong>
           </span>
         @endif
-        <div class="input-group mb-3">
-          <input type="password" aria-label="Masukkan Password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }} has-feedback" placeholder="Password" name="password" id="password" required>
-          <span class="input-group-text"><i class="fa-solid fa-key"></i></span>
-        </div>
-        @if ($errors->has('password'))
-          <span class="invalid-feedback" role="alert">
-            <strong>{{ $errors->first('password') }}</strong>
-          </span>
-        @endif
-
         <div class="row d-flex justify-content-center align-items-center">
           <!-- /.col -->
           <div class="col-12">
-            <button type="submit" class="btn btn-primary btn-block">Masuk</button>
+            <button type="submit" class="btn btn-primary btn-block">Verifikasi Email</button>
           </div>
           <!-- /.col -->
         </div>
@@ -80,7 +64,7 @@
         <a href="{{ route('register') }}" class="text-center">Daftar</a>
       </p>
       <p class="mb-0 aligncenter">
-        <a href="{{ route('forget.password.get') }}" class="text-center">Lupa password</a>
+        <a href="{{ route('login') }}" class="text-center">Sudah punya akun</a>
       </p>
     </div>
     <!-- /.login-card-body -->
