@@ -26,6 +26,8 @@ Route::prefix('/jadwal')->group(function () {
     // Route::get('/table', [App\Http\Controllers\JadwalController::class, 'jadwal_table']);
 });
 
+Route::get('/chart/{params}/{id}', [App\Http\Controllers\GetController::class, 'chart_data']);
+
 Route::prefix('/laporan')->group(function () {
     Route::get('/hasil/data', [App\Http\Controllers\JadwalController::class, 'laporan_hasil_data']);
     Route::get('/hasil/data/{id}', [App\Http\Controllers\JadwalController::class, 'laporan_hasil_data_detail']);

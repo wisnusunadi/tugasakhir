@@ -63,7 +63,7 @@
 
                 <div class="d-flex">
                   <p class="d-flex flex-column">
-                    <span class="text-bold text-lg">820</span>
+                    <span class="text-bold text-lg">{{$u}}</span>
                     <span>Total pendaftar</span>
                   </p>
                   {{-- <p class="d-flex flex-column">
@@ -105,8 +105,8 @@ $(function(){
 get_jabatan();
 get_divisi();
 
-
-
+var lolos = [];
+var n_lolos = [];
 
 $('input[type="radio"][name="filter"]').on('change', function() {
             if ($(this).val() == "jabatan") {
@@ -118,26 +118,26 @@ $('input[type="radio"][name="filter"]').on('change', function() {
             }
 });
 
-
 var ctx = document.getElementById('jabatan_chart').getContext('2d');
+
 var chart = new Chart(ctx, {
     // The type of chart we want to create
     type: 'line',
 
     // The data for our dataset
     data: {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
         datasets: [{
             label: 'Lolos',
             backgroundColor: 'rgb(54, 162, 235)',
             borderColor: 'rgb(54, 162, 235)',
-            data: [0, 10, 5, 2, 20, 30, 45]
+            data: lolos
         },
         {
             label: 'Tidak Lolos',
             backgroundColor: 'rgb(255, 99, 132)',
             borderColor: 'rgb(255, 99, 132)',
-            data: [0, 5, 10, 7, 8, 13, 1]
+            data: n_lolos
         }]
     },
 
@@ -145,12 +145,56 @@ var chart = new Chart(ctx, {
     options: {}
 });
 
+$(document).on('change', '.jabatan', function(){
+    var id = $(this).val();
+    $.ajax({
+        dataType: 'json',
+        url: "/api/chart/jabatan/"+id,
+        type: 'GET',
+        success: function(data) {
+            if(data){
+                lolos = data.lolos;
+                n_lolos = data.n_lolos;
+                chart.data.datasets[0].data = lolos;
+                chart.data.datasets[1].data = n_lolos;
+                chart.update();
+            }
+
+        },
+        error: function() {
+            response([]);
+        }
+    });
+});
+
+$(document).on('change', '.divisi', function(){
+    var id = $(this).val();
+    console.log(id);
+    $.ajax({
+        dataType: 'json',
+        url: "/api/chart/divisi/"+id,
+        type: 'GET',
+        success: function(data) {
+            if(data){
+                lolos = data.lolos;
+                n_lolos = data.n_lolos;
+                chart.data.datasets[0].data = lolos;
+                chart.data.datasets[1].data = n_lolos;
+                chart.update();
+            }
+
+        },
+        error: function() {
+            response([]);
+        }
+    });
+});
 
 function get_jabatan(){
 $('.jabatan').select2({
-                    theme: 'bootstrap4',
+                theme: 'bootstrap4',
 
-                 ajax: {
+                ajax: {
                     minimumResultsForSearch: 20,
                     dataType: 'json',
                     delay: 250,

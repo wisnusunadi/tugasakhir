@@ -472,6 +472,63 @@ class GetController extends Controller
         }
     }
 
+    public function chart_data($params, $id)
+    {
+        $d_lolos = [];
+        $d_n_lolos = [];
+
+        if($params == "jabatan"){
+            for($i = 0; $i < 12; $i++){
+                $lolos = 0;
+                $n_lolos = 0;
+                $j = $i + 1;
+                $u = User::whereMonth('created_at', $j)->whereHas('Pendaftaran', function($q) use($id){
+                    $q->where('jabatan_id', $id);
+                })->get();
+                if(count($u) > 0){
+                    foreach($u as $y){
+                        if(static::get_keputusan_rekruitmen($y->id) == true){
+                            $lolos++;
+                        }else{
+                            $n_lolos++;
+                        }
+                    }
+                    $d_lolos[] = $lolos;
+                    $d_n_lolos[] = $n_lolos;
+                } else {
+                    $d_lolos[] = 0;
+                    $d_n_lolos[] = 0;
+                }
+            }
+        }
+        else if($params == "divisi"){
+            for($i = 0; $i < 12; $i++){
+                $lolos = 0;
+                $n_lolos = 0;
+                $j = $i + 1;
+                $u = User::whereMonth('created_at', $j)->whereHas('Pendaftaran', function($q) use($id){
+                    $q->where('divisi_id', $id);
+                })->get();
+                if(count($u) > 0){
+                    foreach($u as $y){
+                        if(static::get_keputusan_rekruitmen($y->id) == true){
+                            $lolos++;
+                        }else{
+                            $n_lolos++;
+                        }
+                    }
+                    $d_lolos[] = $lolos;
+                    $d_n_lolos[] = $n_lolos;
+                } else {
+                    $d_lolos[] = 0;
+                    $d_n_lolos[] = 0;
+                }
+            }
+        }
+
+        return response()->json(['lolos' => $d_lolos, 'n_lolos' => $d_n_lolos]);
+    }
+
     public function reload_captcha()
     {
         return response()->json(['captcha' => captcha_img()]);

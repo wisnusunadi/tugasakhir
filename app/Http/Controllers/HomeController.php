@@ -46,7 +46,8 @@ class HomeController extends Controller
     public function index()
     {
         if (Auth::user()->role == "admin") {
-            return view('home');
+            $u = User::where('role', 'user')->count();
+            return view('home', ['u' => $u]);
         } else {
             return view('beranda');
         }
