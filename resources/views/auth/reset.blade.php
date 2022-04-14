@@ -39,6 +39,7 @@
         <p class="login-box-msg">Silahkan masukkan dan verifikasi email anda</p>
       <form method="POST" action="{{ route('forget.password.post') }}">
         @csrf
+        <small class="text-danger" id="email_error"></small>
         <div class="input-group mb-3">
             {{-- <input type="text"class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }} has-feedback" placeholder="Username atau Email" name="email" id="email" value="{{ old('email') }}" required autocomplete="off">
           --}}
@@ -53,7 +54,7 @@
         <div class="row d-flex justify-content-center align-items-center">
           <!-- /.col -->
           <div class="col-12">
-            <button type="submit" class="btn btn-primary btn-block">Verifikasi Email</button>
+            <button type="submit" class="btn btn-primary btn-block" id="submit" disabled>Verifikasi Email</button>
           </div>
           <!-- /.col -->
         </div>
@@ -61,7 +62,7 @@
 
       <p class="mb-0 aligncenter">
         Belum Punya Akun?
-        <a href="{{ route('register') }}" class="text-center">Daftar</a>
+        <a href="{{ route('register') }}" class="text-center" >Daftar</a>
       </p>
       <p class="mb-0 aligncenter">
         <a href="{{ route('login') }}" class="text-center">Sudah punya akun</a>
@@ -71,3 +72,22 @@
   </div>
 </div>
 <!-- /.login-box -->
+
+@section('script')
+<script>
+    $(function(){
+            $('#email').on('keyup change', function() {
+            if ($(this).val() != "") {
+                $('#email').removeClass('is-invalid');
+                $('#email_error').html('');
+                $('#submit').attr("disabled", false);
+            } else {
+                $('#submit').attr("disabled", true);
+                $('#nama').addClass('is-invalid');
+                $('#email_error').html("<i class='fa fa-exclamation-circle' aria-hidden='true'></i> Email Harus diisi");
+            }
+        });
+    });
+
+    </script>
+@endsection
