@@ -261,7 +261,6 @@ $(document).on('keyup', '#search', function(){
             $('#hapusmodal').modal("show");
 
         });
-
     $('#search').on('autocompletechange change', function () {
         result = this.value;
         var query = $(this).val();

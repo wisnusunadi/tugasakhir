@@ -32,7 +32,6 @@ section{
     text-align: center;
 }
 
-
 @media only screen and (min-width: 992px){
     .labelket{
         text-align: right !important;
