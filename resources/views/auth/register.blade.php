@@ -203,10 +203,8 @@
                                     </div>
                                     <input id="jarak_user" type="text" name="jarak" class="d-none" >
                                 </div>
-
-
-
                         </div>
+
                         <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
                                 <div class="row mb-3">
                                     <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Username') }}</label>
@@ -221,7 +219,6 @@
                                         @enderror
                                     </div>
                                 </div>
-
                                 <div class="row mb-3">
                                     <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email') }}</label>
 
@@ -835,7 +832,6 @@ var geocoder = new MapboxGeocoder({
                 // $("#tambah").attr('disabled', true);
             }
         });
-
 
         $('#reload').click(function () {
         $.ajax({
