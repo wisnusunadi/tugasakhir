@@ -672,10 +672,10 @@ class HomeController extends Controller
         return response()->json($data);
     }
 
-    public function kirim_hasil()
+    public function kirim_hasil($id)
     {
-        $u = User::find('19');
-        $email = 'adzhanilah@gmail.com';
+        $u = User::find($id);
+        $email = $u->email;
         $data = [
             'title' => 'Selamat datang!',
             'url' => 'https://aantamim.id',
@@ -684,6 +684,13 @@ class HomeController extends Controller
             'pendaftaran' => $u->Pendaftaran->Jabatan->nama.' '.$u->Pendaftaran->Divisi->nama,
             'jadwal' => Carbon::parse($u->Pendaftaran->Jadwal->waktu_mulai)->isoFormat('D MMMM Y') . " - " . Carbon::parse($u->Pendaftaran->Jadwal->waktu_selesai)->isoFormat('D MMMM Y'),
         ];
-        Mail::to($email)->send(new ReportResults($data));
+        $k = Mail::to($email)->send(new ReportResults($data));
+        if($k){
+            return redirect()->back()->with('error', 'Gagal mengirim hasil ke '.ucfirst($u->nama));
+        }else{
+            $u->email_hasil = '1';
+            $u->save();
+            return redirect()->back()->with('success', 'Berhasil mengirim hasil ke '.ucfirst($u->nama));
+        }
     }
 }

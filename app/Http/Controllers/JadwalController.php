@@ -42,43 +42,66 @@ class JadwalController extends Controller
     }
     public function laporan_hasil_data()
     {
-        $data = Pendaftaran::all();
+        // $data = Pendaftaran::all();
+        // return DataTables()->of($data)
+        //     ->addIndexColumn()
+        //     ->addColumn('jadwal', function ($data) {
+        //         return 'Tanggal ' . Carbon::parse($data->Jadwal->waktu_mulai)->format('d-m-Y') . " - " . Carbon::parse($data->Jadwal->waktu_selesai)->format('d-m-Y');
+        //     })
+        //     ->addColumn('divisi', function ($data) {
+        //         return $data->Divisi->nama;
+        //     })
+        //     ->addColumn('jabatan', function ($data) {
+        //         return $data->Jabatan->nama;
+        //     })
+        //     ->addColumn('kuota', function ($data) {
+        //         return $data->kuota;
+        //     })
+        //     ->addColumn('detail', function ($data) {
+        //         return '<a data-toggle="modal" class="realmodal" data-id="' . $data->id . '" data-target="#realmodal"><button type="button" class="btn btn-info btn-circle" alt="Detail">
+        //         <i class="far fa-plus-square"></i>
+        //         </button> </a>';
+        //     })
+
+        //     ->rawColumns(['detail'])
+        //     ->make(true);
+
+        $data = Jadwal::Has('Pendaftaran')->get();
         return DataTables()->of($data)
             ->addIndexColumn()
             ->addColumn('jadwal', function ($data) {
-                return 'Tanggal ' . Carbon::parse($data->Jadwal->waktu_mulai)->format('d-m-Y') . " - " . Carbon::parse($data->Jadwal->waktu_selesai)->format('d-m-Y');
+                return $data->ket;
             })
-            ->addColumn('divisi', function ($data) {
-                return $data->Divisi->nama;
+            ->addColumn('tanggal_mulai', function ($data) {
+                return Carbon::parse($data->waktu_mulai)->isoFormat('D MMMM Y');
             })
-            ->addColumn('jabatan', function ($data) {
-                return $data->Jabatan->nama;
+            ->addColumn('tanggal_selesai', function ($data) {
+                return Carbon::parse($data->waktu_selesai)->isoFormat('D MMMM Y');
             })
-            ->addColumn('kuota', function ($data) {
-                return $data->kuota;
-            })
-            ->addColumn('detail', function ($data) {
-                return '<a data-toggle="modal" class="realmodal" data-id="' . $data->id . '" data-target="#realmodal"><button type="button" class="btn btn-info btn-circle" alt="Detail">
-                <i class="far fa-plus-square"></i>
-                </button> </a>';
-            })
-
             ->rawColumns(['detail'])
             ->make(true);
     }
     public function laporan_hasil_data_detail($id)
     {
-        $data = UserJawaban::WhereHas('User', function ($q) use ($id) {
-            $q->where('pendaftaran_id', $id);
+        // $data = UserJawaban::WhereHas('User', function ($q) use ($id) {
+        //     $q->where('pendaftaran_id', $id);
+        // })->get();
+
+        $data = UserJawaban::WhereHas('User.Pendaftaran', function ($q) use ($id) {
+            $q->where('jadwal_id', $id);
         })->get();
+
 
         return DataTables()->of($data)
             ->addIndexColumn()
+            ->addColumn('jabatan', function ($data) {
+                return $data->User->Pendaftaran->Jabatan->nama.' '.$data->User->Pendaftaran->Divisi->nama;
+            })
             ->addColumn('nama', function ($data) {
                 return $data->User->nama;
             })
             ->addColumn('kode_soal', function ($data) {
-                return $data->DetailUserJawaban->first()->Jawaban->SoalDetail->Soal->kode_soal;
+                return 'Kode Soal : '.$data->DetailUserJawaban->first()->Jawaban->SoalDetail->Soal->kode_soal;
             })
             ->addColumn('waktu', function ($data) {
                 return $data->waktu;
@@ -127,8 +150,8 @@ class JadwalController extends Controller
             })
             ->addColumn('button', function ($data) {
                 return  '<a data-toggle="modal" class="detailmodal"  data-soal="' . $data->DetailUserJawaban->first()->Jawaban->SoalDetail->Soal->id . '"  data-id="' . $data->id . '">
-                <i class="fas fa-search"></i>
-          </a>';
+                    <i class="fas fa-search"></i>
+                </a>';
             })
             ->rawColumns(['button'])
             ->make(true);

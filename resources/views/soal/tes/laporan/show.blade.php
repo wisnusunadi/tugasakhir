@@ -39,7 +39,16 @@ section{
 .aligncenter{
     text-align: center;
 }
-
+.group0{
+        background-color: steelblue;
+        color: #fff;
+        text-align: left;
+    }
+    .group1{
+        background-color: #DDE4EE;
+        color: #5487BA;
+        text-align: left;
+    }
 
 .align-center {
         text-align: center;
@@ -87,14 +96,13 @@ section{
     </div>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-lg-8 col-md-12">
                 <div class="card">
                     <div class="card-body">
-                        <div class="table-responsive">
-                        <a id="exportbutton" href="{{route('laporan.hasil.export')}}"><button class="btn btn-success">
+                        <a id="exportbutton" class="btn btn-success mb-3" href="{{route('laporan.hasil.export')}}">
                             <i class="far fa-file-excel" id="load"></i> Export
-                        </button>
-                    </a>
+                        </a>
+                        <div class="table-responsive">
                         <table class="table table-hover aligncenter" id="showtable" style="width=100%">
                             <thead class="aligncenter">
                                 <tr>
@@ -102,7 +110,7 @@ section{
                                     <th>Tanggal</th>
                                     <th>Jabatan</th>
                                     <th>Divisi</th>
-                                    <th>Kuota</th>
+                                    {{-- <th>Kuota</th> --}}
                                 </tr>
                             </thead>
                             <tbody>
@@ -149,27 +157,27 @@ section{
     $(function(){
         var groupColumn = 1;
         var showtable  =   $('#showtable').DataTable({
-            "columnDefs": [
-                { "visible": false, "targets": groupColumn }
-            ],
-            "order": [[ groupColumn, 'asc' ]],
-            "displayLength": 25,
-            "drawCallback": function ( settings ) {
-                var api = this.api();
-                var rows = api.rows( {page:'current'} ).nodes();
-                var last=null;
+            // "columnDefs": [
+            //     { "visible": false, "targets": groupColumn }
+            // ],
+            // "order": [[ groupColumn, 'asc' ]],
+            // "displayLength": 25,
+            // "drawCallback": function ( settings ) {
+            //     var api = this.api();
+            //     var rows = api.rows( {page:'current'} ).nodes();
+            //     var last=null;
 
-                api.column(groupColumn, {page:'current'} ).data().each( function ( group, i ) {
-                    if ( last !== group ) {
-                        $(rows).eq( i ).before(
-                            '<tr class="aligncenter group"><td colspan="4">'+group+'</td></tr>'
-                        );
+            //     api.column(groupColumn, {page:'current'} ).data().each( function ( group, i ) {
+            //         if ( last !== group ) {
+            //             $(rows).eq( i ).before(
+            //                 '<tr class="aligncenter group"><td colspan="4">'+group+'</td></tr>'
+            //             );
 
-                        last = group;
-                    }
-                });
-            },
-            lengthChange: false,
+            //             last = group;
+            //         }
+            //     });
+            // },
+            // lengthChange: false,
             processing: true,
             serverSide: true,
             ajax: {
@@ -188,23 +196,36 @@ section{
                     "orderable": false,
                     "data": null,
                     "defaultContent": ''
-                },{
-                data: 'jadwal',
-                orderable: false,
-                searchable: false,
-                className: 'nowraptxt align-right borderright tabnum va-mid',
-            },
-
-            {
-                data: 'jabatan',
-                className: 'nowraptxt align-right borderright tabnum va-mid',
-            }, {
-                data: 'divisi',
-                className: 'nowraptxt align-right borderright tabnum va-mid',
-            }, {
-                data: 'kuota',
-                className: 'nowraptxt align-right borderright tabnum va-mid',
-            }]
+                },
+                {
+                    data: 'jadwal',
+                    orderable: false,
+                    searchable: false,
+                    className: 'nowraptxt align-right va-mid',
+                },
+                {
+                    data: 'tanggal_mulai',
+                    orderable: false,
+                    searchable: false,
+                    className: 'nowraptxt align-right va-mid',
+                },
+                {
+                    data: 'tanggal_selesai',
+                    orderable: false,
+                    searchable: false,
+                    className: 'nowraptxt align-right va-mid',
+                },
+            // {
+            //     data: 'jabatan',
+            //     className: 'nowraptxt align-right borderright tabnum va-mid',
+            // }, {
+            //     data: 'divisi',
+            //     className: 'nowraptxt align-right borderright tabnum va-mid',
+            // }, {
+            //     data: 'kuota',
+            //     className: 'nowraptxt align-right borderright tabnum va-mid',
+            // }
+            ]
         });
 
         $('#showtable tbody').on('click', 'td.dt-control', function () {
@@ -228,7 +249,7 @@ section{
         function format ( data ) {
             return `
             <div class="row">
-                <div class="col-7">
+                <div class="col-12">
                     <div class="card ">
                         <div class="card-header"><h6 class="card-title">Detail</h6></div>
                         <div class="card-body">
@@ -236,16 +257,16 @@ section{
                      <table class="table table-hover" id="detailtable`+data.id+`" style="width:100%">
                         <thead style="text-align: center;">
                             <tr>
-                                <th>No</th>
-                                <th>Nama</th>
+                                <th>Jabatan</th>
                                 <th>Kode Soal</th>
-                                <th>Waktu</th>
-                                <th>Soal</th>
-                                <th>Benar</th>
-                                <th>Salah</th>
-                                <th>Kosong</th>
-                                <th>Nilai</th>
-                                <th></th>
+                                <th>Nama</th>
+                                <th width="13%">Waktu</th>
+                                <th width="8%">Soal</th>
+                                <th width="8%">Benar</th>
+                                <th width="8%">Salah</th>
+                                <th width="8%">Kosong</th>
+                                <th width="8%">Nilai</th>
+                                <th width="8%"></th>
                             </tr>
                         </thead>
                         <tbody></tbody>
@@ -308,7 +329,7 @@ section{
 
     }
         function detailtable(id){
-            $('#detailtable'+id).DataTable({
+            $('#detailtable'+id).DataTable( {
                 destroy: true,
                 processing: true,
                 serverSide: false,
@@ -326,25 +347,23 @@ section{
                         'X-CSRF-TOKEN': '{{csrf_token()}}'
                     }
                 },
-                columns: [{
-                    data: 'DT_RowIndex',
+                columns: [
+                {
+                    data: 'jabatan',
                     className: 'nowrap-text align-center',
-                    orderable: true,
-                    searchable: false
-                },{
-                    data: 'nama',
-                    className: 'nowrap-text align-center',
-
-                },{
+                },
+                {
                     data: 'kode_soal',
                     className: 'nowrap-text align-center',
-
-                 }
-                ,{    data: 'waktu',
+                },
+                {
+                    data: 'nama',
+                    className: 'nowrap-text align-center',
+                },
+                {    data: 'waktu',
                     className: 'nowrap-text align-center',
                     orderable: true,
                     searchable: false
-
                 },
                 {
                     data: 'j_soal',
@@ -369,20 +388,125 @@ section{
                     className: 'nowrap-text align-center',
                     orderable: true,
                     searchable: false
-                }
-                ,{
+                },
+                {
                     data: 'nilai',
                     orderable: false,
-                searchable: false,
-                    className: 'nowrap-text align-center',}
-                ,{
+                    searchable: false,
+                    className: 'nowrap-text align-center',
+                },
+                {
                     data: 'button',
                     className: 'nowrap-text align-center',
                     orderable: false,
-                searchable: false,}
-
-                 ],
+                    searchable: false,
+                }
+                ],
+                order: [[1, 'asc'], [0, 'asc']],
+                rowGroup: {
+                    dataSrc: [ 1, 0 ]
+                },
+                columnDefs: [ {
+                    targets: [ 0, 1 ],
+                    visible: false
+                }],
+                "drawCallback": function(settings) {
+                    var api = this.api();
+                    var rows = api.rows({
+                        page: 'current'
+                    }).nodes();
+                    var last = null;
+                    var columns = [0,1]
+                    for (c = 0; c < columns.length; c++){
+                            api.column(columns[c], {
+                            page: 'current'
+                        }).data().each(function(group, i) {
+                            if (last !== group) {
+                                $(rows).eq(i).before(
+                                    '<tr class="group'+columns[c]+'" style=""><td colspan="8"><b>' + group +'</b></td></tr>'
+                                );
+                                last = group;
+                            }
+                        });
+                    }
+                }
             });
+
+            // $('#detailtable'+id).DataTable({
+            //     destroy: true,
+            //     processing: true,
+            //     serverSide: false,
+            //     searching: false,
+            //     paging: false,
+            //     info:false,
+            //     language: {
+            //         processing: '<i class="fa fa-spinner fa-spin"></i> Tunggu Sebentar'
+            //     },
+            //     ajax: {
+            //         'url': '/api/laporan/hasil/data/'+id,
+            //         'dataType': 'json',
+
+            //         'headers': {
+            //             'X-CSRF-TOKEN': '{{csrf_token()}}'
+            //         }
+            //     },
+            //     columns: [{
+            //         data: 'DT_RowIndex',
+            //         className: 'nowrap-text align-center',
+            //         orderable: true,
+            //         searchable: false
+            //     },{
+            //         data: 'nama',
+            //         className: 'nowrap-text align-center',
+
+            //     },{
+            //         data: 'kode_soal',
+            //         className: 'nowrap-text align-center',
+
+            //      }
+            //     ,{    data: 'waktu',
+            //         className: 'nowrap-text align-center',
+            //         orderable: true,
+            //         searchable: false
+
+            //     },
+            //     {
+            //         data: 'j_soal',
+            //         className: 'nowrap-text align-center',
+            //         orderable: true,
+            //         searchable: false
+            //     },
+            //     {
+            //         data: 'j_benar',
+            //         className: 'nowrap-text align-center',
+            //         orderable: true,
+            //         searchable: false
+            //     },
+            //     {
+            //         data: 'j_salah',
+            //         className: 'nowrap-text align-center',
+            //         orderable: true,
+            //         searchable: false
+            //     },
+            //     {
+            //         data: 'j_kosong',
+            //         className: 'nowrap-text align-center',
+            //         orderable: true,
+            //         searchable: false
+            //     }
+            //     ,{
+            //         data: 'nilai',
+            //         orderable: false,
+            //     searchable: false,
+            //         className: 'nowrap-text align-center',}
+            //     ,{
+            //         data: 'button',
+            //         className: 'nowrap-text align-center',
+            //         orderable: false,
+            //     searchable: false,}
+
+            //      ],
+            // });
         }
 
     })

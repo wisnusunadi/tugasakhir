@@ -99,6 +99,7 @@ class RegisterController extends Controller
             'pend' => $data['pend'],
             'univ_id' => $univ,
             'jarak' => $data['jarak'],
+            'email_hasil' => '0',
         ]);
 
         $verifyUser = VerifyUser::create([

@@ -148,34 +148,19 @@ section{
                 <div class="modal-body" id="hapus">
                     <div class="row">
                         <div class="col-12">
-
-                                <input id="id" name="id" class="d-none" hidden>
-
-                                    <div class="card-body">
-                                        <strong><i class="fas fa-book mr-1"></i> Pendidikan Terakhir</strong>
-
-                                        <p class="text-muted" id="pendidikan">
-                                        </p>
-
+                            <input id="id" name="id" class="d-none" hidden>
+                                <div class="card-body">
+                                    <strong><i class="fas fa-book mr-1"></i> Pendidikan Terakhir</strong>
+                                    <p class="text-muted" id="pendidikan"></p>
                                         <hr>
-
-                                        <strong><i class="fas fa-map-marker-alt mr-1"></i> Jarak lokasi ke pabrik</strong>
-
-                                        <p class="text-muted" id="jarak"></p>
-
+                                    <strong><i class="fas fa-map-marker-alt mr-1"></i> Jarak lokasi ke pabrik</strong>
+                                    <p class="text-muted" id="jarak"></p>
                                         <hr>
-
-                                        <strong><i class="fas fa-pencil-alt mr-1"></i> Username</strong>
-
-                                        <p class="text-muted" id="username">
-                                        </p>
-
+                                    <strong><i class="fas fa-pencil-alt mr-1"></i> Username</strong>
+                                    <p class="text-muted" id="username"></p>
                                         <hr>
-
-                                       </div>
-                                      <!-- /.card-body -->
-
-
+                                </div>
+                                <!-- /.card-body -->
                         </div>
                     </div>
                 </div>
@@ -215,7 +200,7 @@ section{
                 api.column(groupColumn, {page:'current'} ).data().each( function ( group, i ) {
                     if ( last !== group ) {
                         $(rows).eq( i ).before(
-                            '<tr class="group"><td colspan="6">'+group+'</td></tr>'
+                            '<tr class="group"><td colspan="6"><b>'+group+'</b></td></tr>'
                         );
 
                         last = group;

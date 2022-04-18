@@ -30,8 +30,8 @@ class User extends Authenticatable
         'jarak',
         'role',
         'pendaftaran_id',
-        'univ_id'
-
+        'univ_id',
+        'email_hasil'
     ];
 
     /**

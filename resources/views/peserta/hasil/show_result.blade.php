@@ -62,7 +62,24 @@ section{
                     <div class="card-body">
                         <div class="row">
                             <div class="col-lg-12">
-                                <a href="{{route('peserta.hasil.export')}}"><button class="btn btn-info"><i class="fas fa-file-excel fa-fw"></i> Export Laporan</button></a>
+                                @if(Session::has('error') || count($errors) > 0 )
+                                    <div class="alert alert-danger alert-dismissible fade show mb-3" role="alert">
+                                        <strong>{{Session::get('error')}}</strong> Periksa
+                                        kembali data yang diinput
+                                        <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    @elseif(Session::has('success'))
+                                    <div class="alert alert-success alert-dismissible fade show mb-3" role="alert">
+                                        <strong>{{Session::get('success')}}</strong>,
+                                        Terima kasih
+                                        <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                @endif
+                                <a href="{{route('peserta.hasil.export')}}" class="btn btn-info"><i class="fas fa-file-excel fa-fw"></i> Export Laporan</a>
                             </div>
                         </div>
                         <div class="row margin">
@@ -77,6 +94,7 @@ section{
                                                 <th rowspan="2">Nama Peserta</th>
                                                 <th colspan="5">Penilaian</th>
                                                 <th rowspan="2">Keputusan</th>
+                                                <th rowspan="2">Aksi</th>
                                             </tr>
                                             <tr>
                                                 <th>Usia</th>
@@ -118,7 +136,7 @@ section{
                 api.column(groupColumn, {page:'current'} ).data().each( function ( group, i ) {
                     if ( last !== group ) {
                         $(rows).eq( i ).before(
-                            '<tr class="group"><td colspan="9">'+group+'</td></tr>'
+                            '<tr class="group"><td colspan="10">'+group+'</td></tr>'
                         );
                         last = group;
                     }
@@ -161,6 +179,8 @@ section{
                     data: 'rerata',
                 }, {
                     data: 'keputusan',
+                },{
+                    data: 'aksi',
                 },
             ]
         });
