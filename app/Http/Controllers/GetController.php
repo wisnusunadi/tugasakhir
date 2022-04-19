@@ -163,10 +163,10 @@ class GetController extends Controller
             })
             ->addColumn('aksi', function ($data) {
                 if($data->email_hasil == '0'){
-                return '<a href="/laporan/kirim_hasil/'.$data->id.'" class="btn btn-sm btn-outline-info"><i class="fas fa-paper-plane"></i> Kirim Hasil</a>';
-            }else{
-                return '<i class="fas fa-check-circle text-success"></i>';
-            }
+                    return '<a href="/laporan/kirim_hasil/'.$data->id.'" class="btn btn-sm btn-outline-info"><i class="fas fa-paper-plane"></i> Kirim Hasil</a>';
+                } else {
+                    return '<i class="fas fa-check-circle text-success"></i>';
+                }
             })
             ->rawColumns(['usia', 'pendidikan', 'jarak', 'soal', 'keputusan', 'pendaftaran', 'aksi'])
             ->make(true);

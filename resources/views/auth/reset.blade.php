@@ -39,18 +39,21 @@
         <p class="login-box-msg">Silahkan masukkan dan verifikasi email anda</p>
       <form method="POST" action="{{ route('forget.password.post') }}">
         @csrf
-        <small class="text-danger" id="email_error"></small>
-        <div class="input-group mb-3">
-            {{-- <input type="text"class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }} has-feedback" placeholder="Username atau Email" name="email" id="email" value="{{ old('email') }}" required autocomplete="off">
-          --}}
-         <input class="form-control" type="email" name="email" id="email" value=""  placeholder="Email"/>
-          <span class="input-group-text"><i class="fa-solid fa-envelope"></i></span>
+
+        <div class="form-group mb-3">
+            <div class="input-group">
+                {{-- <input type="text"class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }} has-feedback" placeholder="Username atau Email" name="email" id="email" value="{{ old('email') }}" required autocomplete="off">
+            --}}
+                <input class="form-control" type="email" name="email" id="email" value=""  placeholder="Email"/>
+                <span class="input-group-text"><i class="fa-solid fa-envelope"></i></span>
+            </div>
+            <small class="text-danger" id="email_error"></small>
+            @if ($errors->has('email'))
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $errors->first('email') }}</strong>
+            </span>
+            @endif
         </div>
-        @if ($errors->has('email'))
-          <span class="invalid-feedback" role="alert">
-            <strong>{{ $errors->first('email') }}</strong>
-          </span>
-        @endif
         <div class="row d-flex justify-content-center align-items-center">
           <!-- /.col -->
           <div class="col-12">
@@ -83,7 +86,7 @@
                 $('#submit').attr("disabled", false);
             } else {
                 $('#submit').attr("disabled", true);
-                $('#nama').addClass('is-invalid');
+                $('#email').addClass('is-invalid');
                 $('#email_error').html("<i class='fa fa-exclamation-circle' aria-hidden='true'></i> Email Harus diisi");
             }
         });

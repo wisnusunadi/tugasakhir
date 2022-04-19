@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3307
--- Generation Time: Apr 18, 2022 at 03:15 AM
+-- Generation Time: Apr 19, 2022 at 04:30 AM
 -- Server version: 5.7.33
 -- PHP Version: 7.4.19
 
@@ -444,6 +444,20 @@ INSERT INTO `kriteria_usia` (`id`, `kriteria_id`, `range_min`, `range_max`, `nil
 (53, 54, 25, 30, 25),
 (54, 54, 30, 40, 15),
 (55, 54, 40, 55, 10);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `password_resets`
+--
+
+CREATE TABLE `password_resets` (
+  `id` bigint(20) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `token` varchar(1000) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -3484,7 +3498,7 @@ INSERT INTO `users` (`id`, `pendaftaran_id`, `univ_id`, `username`, `nama`, `pas
 (17, 9, 2369, 'nurdinhnf', 'Nurdin Hanif', '$2y$10$nQsZfCfRua0.HNTMM4ycpOJVzt1vQPJpc39a6B2jrP4tWl9lC/U8W', '1984-12-19', 'l', 'd3', 0.3, 'nurdinhanif@gmail.com', 'user', 0, '0', '2022-03-30 06:33:52', '2022-03-30 06:33:52'),
 (18, 9, NULL, 'ryangarya', 'Ryan Gary Andrew', '$2y$10$2AKLYYg.R3k8d9kjzOhCKevq8UCA76SVMiu8bUlof1GoYAQxOxiKS', '1996-07-29', 'l', 'smak', 5.3, 'ryangarya@gmail.com', 'user', 0, '0', '2022-03-30 06:40:17', '2022-03-30 06:40:17'),
 (19, 11, 2414, 'lailimfz', 'Laili Mafazah', '$2y$10$XXk1UljuppX4IOQMmGEhw.tKX/Xp1woYZEaUq0538.yFm1xaJJyv.', '1997-12-04', 'p', 'd3', 64.3, 'lailimafazah@gmail.com', 'user', 0, '0', '2022-03-31 05:01:13', '2022-03-31 05:01:13'),
-(20, 11, NULL, 'rsubagyo', 'Rahmat Subagyo', '$2y$10$f.VR9OnuhYNG96XA7uoFSOCiEjQepSmA6c9eldHauW5S0Sm9W.1qW', '1985-05-22', 'l', 'smak', 4, 'rsubagyo@gmail.com', 'user', 0, '0', '2022-03-31 05:21:18', '2022-03-31 05:21:18'),
+(20, 11, NULL, 'rsubagyo', 'Rahmat Subagyo', '$2y$10$f.VR9OnuhYNG96XA7uoFSOCiEjQepSmA6c9eldHauW5S0Sm9W.1qW', '1985-05-22', 'l', 'smak', 4, 'rsubagyo@gmail.com', 'user', 0, '1', '2022-03-31 05:21:18', '2022-04-18 03:21:18'),
 (22, NULL, NULL, 'Antonia123', 'Antonia', '$2y$10$wP3p1H6fenTVEaQuJcpyy.MZ0HY1fYFNEWRhe4khX4dJ3WEH2j2gC', '2005-12-07', 'l', 'smak', 9.8, 'anton@gmail.com', 'user', 0, '0', '2022-04-05 03:23:34', '2022-04-05 03:23:34'),
 (23, NULL, NULL, 'jejeku', 'Jeje', '$2y$10$9Ep8Fa9nw6OptAax9Qb3YOX5UeCKBa7J7yDkVFtP1fxeYLHhUApOW', '2005-12-05', 'l', 'smak', 8.8, 'jeje@gmail.com', 'user', 0, '0', '2022-04-05 03:33:27', '2022-04-05 03:33:27'),
 (24, 11, NULL, 'joku', 'Jojo', '$2y$10$4HfdJHT/UKISF9kNSqX/0eXNtnXal39fbMAzCWu5neE3WjleoQxTO', '2005-12-05', 'l', 'smak', 8.5, 'joku@gmail.com', 'user', 0, '0', '2022-04-05 03:36:27', '2022-04-05 03:36:27'),
@@ -3502,7 +3516,7 @@ INSERT INTO `users` (`id`, `pendaftaran_id`, `univ_id`, `username`, `nama`, `pas
 (38, 12, NULL, 'rahmadi198', 'Rahmadi', '$2y$10$UVJ23f.xLKLrgditn1Lw/OYPj8/U4O5N8YYAlDzOk.83ww8dOHFiO', '1987-08-05', 'l', 'smak', 2.6, 'rahmadi@gmail.com', 'user', 1, '0', '2022-04-05 06:59:14', '2022-04-05 06:59:14'),
 (39, 11, NULL, 'laelaq', 'Laelatul Qodriyah', '$2y$10$ytJYuWvCmRlUivpvVFuOB.4POxwxoQLqK3k5n6BcimHTn51/dVw9y', '2000-09-23', 'p', 'smak', 14, 'laelaq@gmail.com', 'user', 0, '0', '2022-04-05 07:07:00', '2022-04-05 07:07:00'),
 (40, 12, NULL, 'ariscahyan', 'Aris Cahyani', '$2y$10$6WhkiMGJaP6MXiSHijEE9OpAWW5Jycu8.7tdIa75immIQvrRe2a8i', '1999-05-01', 'p', 'smak', 22.8, 'ariscahyani@gmail.com', 'user', 1, '0', '2022-04-05 07:34:33', '2022-04-05 07:34:33'),
-(41, 18, 2783, 'nydiaekali', 'Nydia Ekalistha', '$2y$10$iRuKRJWs8H/yLur8adhG8e5zZdSrPg.p28zineuYcAIsNvthAjZuG', '1997-02-21', 'p', 's1d4', 2.7, 'nydiaekalistha@gmail.com', 'user', 1, '0', '2022-04-11 04:02:08', '2022-04-11 04:02:08'),
+(41, 18, 2783, 'nydiaekali', 'Nydia Ekalistha', '$2y$10$rB2F2Hnmm0uYuxLMBZv9uuU1jVbVULWi3mfR7Ak0ioWYIB0q.0ULK', '1997-02-21', 'p', 's1d4', 2.7, 'nydiaekalistha@gmail.com', 'user', 1, '0', '2022-04-11 04:02:08', '2022-04-19 04:00:30'),
 (42, 20, NULL, 'yumna2005', 'Yumna', '$2y$10$bNG4CGVg8mGFGbw.kf4lzevPnwyBpYj2sHcEDHpgdpW36/mfdaDg.', '2005-11-01', 'p', 'smak', 12.5, 'yumna2005@gmail.com', 'user', 0, '0', '2022-04-13 07:56:58', '2022-04-13 07:56:58'),
 (43, 20, 2578, 'rositaj199', 'Rosita', '$2y$10$fp1b5qejkf.KSWjFYtbcyuPXSHeJIXWZq1FTacdv7XKy7bNbHFn8C', '1996-03-03', 'p', 's1d4', 38.2, 'rositaj1996@gmail.com', 'user', 1, '0', '2022-04-13 08:03:47', '2022-04-13 08:03:47');
 
@@ -3650,6 +3664,12 @@ ALTER TABLE `kriteria_usia`
   ADD KEY `fk_kriteria_usia` (`kriteria_id`);
 
 --
+-- Indexes for table `password_resets`
+--
+ALTER TABLE `password_resets`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `pendaftaran`
 --
 ALTER TABLE `pendaftaran`
@@ -3755,6 +3775,12 @@ ALTER TABLE `kriteria_soal`
 --
 ALTER TABLE `kriteria_usia`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+
+--
+-- AUTO_INCREMENT for table `password_resets`
+--
+ALTER TABLE `password_resets`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `pendaftaran`
