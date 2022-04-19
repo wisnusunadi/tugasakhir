@@ -238,9 +238,7 @@
                                     <div class="col-md-6">
                                         <div class="input-group">
                                             <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-                                            <div class="input-group-append">
-                                                <span class="input-group-text"><i toggle="#password-toggle" class="fa fa-fw fa-eye  toggle-password"></i></span>
-                                            </div>
+                                            <span class="input-group-text"><i toggle="#password-toggle" class="fa fa-fw fa-eye  toggle-password"></i></span>
                                         </div>
                                         <small class="text-danger" id="password_error"></small>
                                         @error('password')
@@ -263,9 +261,7 @@
                                     <div class="col-md-6">
                                         <div class="input-group">
                                             <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                                            <div class="input-group-append">
-                                                <span class="input-group-text"><i toggle="#password-toggle-confirm" class="fa fa-fw fa-eye  toggle-password-confirm"></i></span>
-                                            </div>
+                                            <span class="input-group-text"><i toggle="#password-toggle-confirm" class="fa fa-fw fa-eye  toggle-password-confirm"></i></span>
                                         </div>
                                         <small class="text-danger" id="password_confirm_error"></small>
                                         @error('password_confirmation')

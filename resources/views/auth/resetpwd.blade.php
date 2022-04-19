@@ -65,7 +65,7 @@
         <div class="form-group row mb-3">
             <div class="input-group">
                 <input class="form-control" type="password" name="password" id="pass" placeholder="Password baru"/>
-                <span class="input-group-text"><i toggle="#pass-toggle" class="fa fa-fw fa-eye  toggle-pass"></i></span></span>
+                <span class="input-group-text"><i toggle="#pass-toggle" class="fa fa-fw fa-eye  toggle-pass"></i></span>
             </div>
             <small class="text-danger" id="pass_error"></small>
             @if ($errors->has('password'))
@@ -78,7 +78,7 @@
         <div class="form-group row mb-3">
           <div class="input-group">
             <input class="form-control" type="password" name="password_confirmation" id="konfpass" placeholder="Konfirmasi password baru"/>
-            <span class="input-group-text"><i toggle="#konf-pass-toggle" class="fa fa-fw fa-eye toggle-konfpass"></i></span></span>
+            <span class="input-group-text"><i toggle="#konf-pass-toggle" class="fa fa-fw fa-eye toggle-konfpass"></i></span>
           </div>
           <small class="text-danger" id="konf_pass_error"></small>
           @if ($errors->has('password_confirmation'))

@@ -532,12 +532,12 @@ class GetController extends Controller
                 }
             }
         }
-        else if($params == "0"){
+        else if($params == "kosong"){
             for($i = 0; $i < 12; $i++){
                 $lolos = 0;
                 $n_lolos = 0;
                 $j = $i + 1;
-                $u = User::whereMonth(['created_at', $j], ['role', 'user'])->has('Pendaftaran')->get();
+                $u = User::whereMonth('created_at', $j)->where('role', 'user')->has('Pendaftaran')->get();
                 if(count($u) > 0){
                     foreach($u as $y){
                         if(static::get_keputusan_rekruitmen($y->id) == true){

@@ -149,7 +149,7 @@ var chart = new Chart(ctx, {
 function dataawal(){
     $.ajax({
         dataType: 'json',
-        url: "/api/chart/0/0",
+        url: "/api/chart/kosong/0",
         type: 'GET',
         success: function(data) {
             if(data){
