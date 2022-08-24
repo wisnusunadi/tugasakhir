@@ -14,6 +14,10 @@ section{
     color: white;
 }
 
+.tableminwidth{
+    min-width:500px;
+}
+
 .row{
     height: 100%;
 }
@@ -201,7 +205,7 @@ section{
                                                             </div>
                                                             <div class="form-group row">
                                                                 <div class="table-responsive">
-                                                                    <table class="table table-hover usiatable" id="usiatable0">
+                                                                    <table class="table table-hover usiatable tableminwidth" id="usiatable0">
                                                                         <thead>
                                                                             <tr>
                                                                                 <th>Range Min ( <i class="fas fa-greater-than"></i> )</th>
@@ -234,7 +238,7 @@ section{
                                                                 </div>
                                                             </div>
                                                             <div class="table-responsive">
-                                                                <table class="table table-hover pendidikantable" id="pendidikantable0">
+                                                                <table class="table table-hover pendidikantable" style="min-width: 600px;" id="pendidikantable0">
                                                                     <thead>
                                                                         <tr>
                                                                             <th>Pendidikan Terakhir</th>
@@ -279,7 +283,7 @@ section{
                                                                 </div>
                                                             <div class="form-group row">
                                                                 <div class="table-responsive">
-                                                                    <table class="table table-hover jaraktable" id="jaraktable0">
+                                                                    <table class="table table-hover jaraktable tableminwidth" id="jaraktable0">
                                                                         <thead>
                                                                             <tr>
                                                                                 <th>( <i class="fas fa-greater-than"></i> ) Range Min (KM)</th>
@@ -313,7 +317,7 @@ section{
                                                             </div>
                                                             <div class="form-group row">
                                                                 <div class="table-responsive">
-                                                                    <table class="table table-hover soaltable" id="soaltable0">
+                                                                    <table class="table table-hover soaltable" style="min-width: 600px;" id="soaltable0">
                                                                         <thead>
                                                                             <tr>
                                                                                 <th>Soal</th>
