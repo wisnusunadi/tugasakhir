@@ -87,6 +87,15 @@ section{
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+                @elseif(Session::has('used'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>{{Session::get('used')}}</strong>,
+                    Soal sudah terpakai
+                    <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
                 @endif
                 <div class="card">
                     <div class="card-header bg-success">

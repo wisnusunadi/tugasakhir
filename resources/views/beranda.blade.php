@@ -48,7 +48,7 @@ section{
                     <div class="card-body">
                         <div class=""><h4>Selamat Datang</h4></div>
                         <div><h6>Sistem Penerimaan Karyawan</h6></div>
-                        <a href="/soal_tes/preview" type="button" class="btn btn-outline-info">Mulai Tes</a>
+                        <a href="/login" type="button" class="btn btn-outline-info">Login</a>
                     </div>
                 </div>
             </div>

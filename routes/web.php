@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\ForgotPasswordController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,9 +14,10 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::group(['middleware' => 'guest'], function () {
 Route::get('/', function () {
     return view('beranda');
+});
 });
 Route::get('forget-password', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'showForgetPasswordForm'])->name('forget.password.get');
 Route::post('forget-password', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'submitForgetPasswordForm'])->name('forget.password.post');
@@ -30,14 +32,18 @@ Route::get('/jadwal/table', [App\Http\Controllers\JadwalController::class, 'jadw
 Route::get('/pendaftaran/table/{id}', [App\Http\Controllers\JadwalController::class, 'pendaftaran_table']);
 // Route::view('/soal_tes', 'soal.tes.show')->name('soal.tes');
 Auth::routes();
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::group(['middleware' => 'auth'], function () {
-    Route::group(['prefix' => '/jadwal'], function () {
-        Route::get('/create', [App\Http\Controllers\JadwalController::class, 'jadwal_create'])->name('jadwal.create');
-        Route::get('/edit/{id}', [App\Http\Controllers\JadwalController::class, 'jadwal_edit'])->name('jadwal.edit');
-        Route::post('/store', [App\Http\Controllers\JadwalController::class, 'jadwal_store'])->name('jadwal.store');
-        Route::put('/update/{id}', [App\Http\Controllers\JadwalController::class, 'jadwal_update'])->name('jadwal.update');
+
+
+Route::group(['middleware' => 'user'], function () {
+    Route::group(['prefix' => '/soal_tes'], function () {
+        Route::post('/store', [App\Http\Controllers\HomeController::class, 'soal_tes_store'])->name('soal_tes.store');
+        Route::get('/preview', [App\Http\Controllers\HomeController::class, 'soal_tes_preview'])->name('soal_tes.preview');
+        Route::get('/show/{id}', [App\Http\Controllers\HomeController::class, 'soal_tes_show'])->name('soal_tes.show');
+        Route::get('/result/{soal}/{user}', [App\Http\Controllers\HomeController::class, 'soal_tes_result'])->name('soal_tes.result');
     });
+});
+Route::group(['middleware' => 'admin'], function () {
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('/peserta', [App\Http\Controllers\HomeController::class, 'peserta_show'])->name('peserta');
     Route::get('/hasil', [App\Http\Controllers\HomeController::class, 'hasil_show'])->name('hasil');
     Route::view('/hasil/peserta', 'peserta.hasil.show_result')->name('peserta.hasil');
@@ -48,12 +54,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/jabatan', [App\Http\Controllers\HomeController::class, 'select_jabatan'])->name('select.jabatan');
         Route::get('/divisi', [App\Http\Controllers\HomeController::class, 'select_divisi'])->name('select.divisi');
     });
-    Route::group(['prefix' => '/soal_tes'], function () {
-        Route::post('/store', [App\Http\Controllers\HomeController::class, 'soal_tes_store'])->name('soal_tes.store');
-        Route::get('/preview', [App\Http\Controllers\HomeController::class, 'soal_tes_preview'])->name('soal_tes.preview');
-        Route::get('/show/{id}', [App\Http\Controllers\HomeController::class, 'soal_tes_show'])->name('soal_tes.show');
-        Route::get('/result/{soal}/{user}', [App\Http\Controllers\HomeController::class, 'soal_tes_result'])->name('soal_tes.result');
-    });
+
     Route::group(['prefix' => '/divisi'], function () {
         Route::view('/show', 'divisi.show')->name('divisi.show');
         Route::view('/create', 'divisi.create')->name('divisi.create');
@@ -88,6 +89,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/edit/{id}', [App\Http\Controllers\JadwalController::class, 'pendaftaran_edit']);
         Route::put('/update/{id}', [App\Http\Controllers\JadwalController::class, 'pendaftaran_update'])->name('pendaftaran.update');
     });
+
     Route::group(['prefix' => '/laporan'], function () {
         Route::get('/hasil/show', [App\Http\Controllers\HomeController::class, 'laporan_hasil_show'])->name('laporan.hasil.show');
         Route::get('/hasil/export', [App\Http\Controllers\HomeController::class, 'laporan_hasil_export'])->name('laporan.hasil.export');
