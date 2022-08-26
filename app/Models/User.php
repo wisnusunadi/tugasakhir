@@ -73,6 +73,13 @@ class User extends Authenticatable
         return $this->hasOne(VerifyUser::class);
     }
 
+    public function hasRole($role){
+        if($role == $this->role){
+            return true;
+        }
+        return false;
+    }
+
     // public function bobot_usia_peserta($user_id){
     //     $bobot = "";
     //     $u = User::find($user_id);
