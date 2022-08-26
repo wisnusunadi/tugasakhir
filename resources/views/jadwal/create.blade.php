@@ -143,7 +143,8 @@ section{
                         </div>
                         <div class="form-group row">
                             <div class="col-12">
-                                <table class="table table-hover aligncenter showtables" id="showtable">
+                                <div class="table-responsive">
+                                <table class="table table-hover aligncenter showtables" id="showtable" style="min-width:800px;">
                                     <thead>
                                         <tr>
                                             <th colspan="5">
@@ -152,10 +153,10 @@ section{
                                         </tr>
                                         <tr>
                                             <th style="min-width:5%">No</th>
-                                            <th>Jabatan</th>
-                                            <th>Divisi</th>
-                                            <th style="min-width:10%">Kuota</th>
-                                            <th style="min-width:8%">Aksi</th>
+                                            <th style="min-width:37.5%">Jabatan</th>
+                                            <th style="min-width:37.5%">Divisi</th>
+                                            <th style="min-width:15%">Kuota</th>
+                                            <th style="min-width:5%">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -343,6 +344,7 @@ section{
                                         </tr>
                                     </tbody>
                                 </table>
+                                </div>
                             </div>
                         </div>
                     </div>
