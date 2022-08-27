@@ -55,6 +55,13 @@ Route::group(['middleware' => 'admin'], function () {
         Route::get('/divisi', [App\Http\Controllers\HomeController::class, 'select_divisi'])->name('select.divisi');
     });
 
+    Route::group(['prefix' => '/jadwal'], function () {
+        Route::get('/create', [App\Http\Controllers\HomeController::class, 'jadwal_create'])->name('jadwal.create');
+        Route::post('/store', [App\Http\Controllers\HomeController::class, 'jadwal_store'])->name('jadwal.store');
+        Route::get('/edit/{id}', [App\Http\Controllers\HomeController::class, 'jadwal_edit'])->name('jadwal.edit');
+        Route::put('/update/{id}', [App\Http\Controllers\HomeController::class, 'jadwal_update'])->name('jadwal.update');
+    });
+
     Route::group(['prefix' => '/divisi'], function () {
         Route::view('/show', 'divisi.show')->name('divisi.show');
         Route::view('/create', 'divisi.create')->name('divisi.create');
