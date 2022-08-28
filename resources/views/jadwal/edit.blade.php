@@ -140,7 +140,7 @@ section{
                         </div>
                         <div class="form-group row">
                             <div class="col-12">
-                                <table class="table table-hover aligncenter showtables" id="showtable">
+                                <table class="table table-hover aligncenter showtables" style="min-width:800px;" id="showtable">
                                     <thead>
                                         <tr>
                                             <th colspan="5">
@@ -205,7 +205,7 @@ section{
                                                                 </div>
                                                                 <div class="form-group row">
                                                                     <div class="table-responsive">
-                                                                        <table class="table table-hover usiatable" id="usiatable{{$x}}">
+                                                                        <table class="table table-hover usiatable" id="usiatable{{$x}}" style="min-width:600px;">
                                                                             <thead>
                                                                                 <tr>
                                                                                     <th>Range Min ( <i class="fas fa-greater-than"></i> )</th>
@@ -255,7 +255,7 @@ section{
                                                                     </div>
                                                                 </div>
                                                                 <div class="table-responsive">
-                                                                    <table class="table table-hover pendidikantable" id="pendidikantable{{$x}}">
+                                                                    <table class="table table-hover pendidikantable" id="pendidikantable{{$x}}" style="min-width:600px;">
                                                                         <thead>
                                                                             <tr>
                                                                                 <th>Pendidikan Terakhir</th>
@@ -331,7 +331,7 @@ section{
                                                                     </div>
                                                                 <div class="form-group row">
                                                                     <div class="table-responsive">
-                                                                        <table class="table table-hover jaraktable" id="jaraktable{{$x}}">
+                                                                        <table class="table table-hover jaraktable" id="jaraktable{{$x}}" style="min-width:600px;">
                                                                             <thead>
                                                                                 <tr>
                                                                                     <th>( <i class="fas fa-greater-than"></i> ) Range Min (KM)</th>
@@ -382,7 +382,7 @@ section{
                                                                 </div>
                                                                 <div class="form-group row">
                                                                     <div class="table-responsive">
-                                                                        <table class="table table-hover soaltable" id="soaltable{{$x}}">
+                                                                        <table class="table table-hover soaltable" id="soaltable{{$x}}" style="min-width:600px;">
                                                                             <thead>
                                                                                 <tr>
                                                                                     <th>Soal</th>
@@ -474,6 +474,160 @@ section{
         // $("#tanggal_mulai").attr("min", today);
         // $("#tanggal_akhir").attr("min", today);
 
+        function validasi(){
+            var counttable = 0;
+            var countjabatan = 0;
+            var countdivisi = 0;
+            var countkuota = 0;
+            $('#showtable > tbody > tr').find('.jabatan').each(function() {
+                if ($(this).val() != null) {
+                    countjabatan++;
+                }
+                counttable++;
+            });
+
+            $('#showtable > tbody > tr').find('.divisi').each(function() {
+                if ($(this).val() != null) {
+                    countdivisi++;
+                }
+            });
+
+            $('#showtable > tbody > tr').find('.kuota').each(function() {
+                if ($(this).val() != "") {
+                    countkuota++;
+                }
+            });
+
+            //USIA
+            var fmasterusia = $('.usiaform:not(.hide)').find('.master_usia');
+            var countmasterusianotnull = 0;
+            fmasterusia.each(function() {
+                if ($(this).val() != "") {
+                    countmasterusianotnull++;
+                }
+            });
+            var countmasterusia = fmasterusia.length;
+            
+            var countusiatable = 0;
+            var countusiamin = 0;
+            var countusiamax = 0;
+            var countbobotusia = 0;
+            var fusia = $('.usiaform:not(.hide)').find('.usiatable > tbody > tr');
+            countusiatable = fusia.length;
+            fusia.find('.usia_min').each(function() {
+                if ($(this).val() != "") {
+                    countusiamin++;
+                }
+            });
+            fusia.find('.usia_max').each(function() {
+                if ($(this).val() != "") {
+                    countusiamax++;
+                }
+            });
+            fusia.find('.bobot_usia').each(function() {
+                if ($(this).val() != "") {
+                    countbobotusia++;
+                }
+            });
+
+            //PENDIDIKAN
+            var fmasterpendidikan = $('.pendidikanform:not(.hide)').find('.master_pendidikan');
+            var countmasterpendidikannotnull = 0;
+            fmasterpendidikan.each(function() {
+                if ($(this).val() != "") {
+                    countmasterpendidikannotnull++;
+                }
+            });
+            var countmasterpendidikan = fmasterpendidikan.length;
+            var fpendidikan = $('.pendidikanform:not(.hide)').find('.pendidikantable > tbody > tr');
+            var countpendidikantable = 0
+            var countketentuanpendidikan = 0;
+            var countbobotpendidikan = 0;
+            countpendidikantable = fpendidikan.length;
+            fpendidikan.find('.ketentuan_pendidikan').each(function() {
+                if ($(this).val() != null) {
+                    countketentuanpendidikan++;
+                }
+            });
+
+            fpendidikan.find('.bobot_pendidikan').each(function() {
+                if ($(this).val() != "") {
+                    countbobotpendidikan++;
+                }
+            });
+
+
+            //JARAK
+            var fmasterjarak = $('.jarakform:not(.hide)').find('.master_jarak');
+            var countmasterjaraknotnull = 0;
+            fmasterjarak.each(function() {
+                if ($(this).val() != "") {
+                    countmasterjaraknotnull++;
+                }
+            });
+            var countmasterjarak = fmasterjarak.length;
+            var fjarak = $('.jarakform:not(.hide)').find('.jaraktable > tbody > tr');
+            var countjaraktable = 0;
+            var countjarakmin = 0;
+            var countjarakmax = 0;
+            var countbobotjarak = 0;
+            countjaraktable = fjarak.length;
+            fjarak.find('.jarak_min').each(function() {
+                if ($(this).val() != "") {
+                    countjarakmin++;
+                }
+            });
+            fjarak.find('.jarak_max').each(function() {
+                if ($(this).val() != "") {
+                    countjarakmax++;
+                }
+            });
+            fjarak.find('.bobot_jarak').each(function() {
+                if ($(this).val() != "") {
+                    countbobotjarak++;
+                }
+            });
+
+            //SOAL
+            var fmastersoal = $('.soalform:not(.hide)').find('.master_soal');
+            var countmastersoalnotnull = 0;
+            fmastersoal.each(function() {
+                if ($(this).val() != "") {
+                    countmastersoalnotnull++;
+                }
+            });
+            var countmastersoal = fmastersoal.length;
+            var fsoal = $('.soalform:not(.hide)').find('.soaltable > tbody > tr');
+            var countsoaltable = 0;
+            var countsoalid = 0;
+            var countbobotsoal = 0;
+            countsoaltable = fsoal.length;
+            fsoal.find('.soal_id').each(function() {
+                if ($(this).val() != null) {
+                    countsoalid++;
+                }
+            });
+            fsoal.find('.bobot_soal').each(function() {
+                if ($(this).val() != "") {
+                    countbobotsoal++;
+                }
+            });
+
+            var tgl_mulai = $("#tanggal_mulai").val();
+            var tgl_akhir = $("#tanggal_akhir").val();
+            var ket = $('#keterangan').val();
+            if(tgl_mulai != "" && tgl_akhir != "" && ket != "" && 
+            (counttable == countjabatan && counttable == countdivisi && counttable == countkuota) &&
+            (countmasterusianotnull == countmasterusia && countusiatable == countusiamin && countusiatable == countusiamax && countusiatable == countbobotusia) &&
+            (countmasterpendidikannotnull == countmasterpendidikan && countpendidikantable == countketentuanpendidikan && countpendidikantable == countbobotpendidikan) &&
+            (countmasterjaraknotnull == countmasterjarak && countjaraktable == countjarakmin && countjaraktable == countjarakmax && countjaraktable == countbobotjarak) &&
+            (countmastersoalnotnull == countmastersoal && countsoaltable == countsoalid && countsoaltable == countbobotsoal)){
+                $('#btnsubmit').removeAttr('disabled');
+            }
+            else{
+                $('#btnsubmit').attr('disabled', true);
+            }
+
 
         $('#tanggal_mulai').on('keyup change', function() {
             $("#tanggal_akhir").val("");
@@ -498,7 +652,7 @@ section{
             $("#btncetak").removeAttr('disabled');
             if ($(this).val() != "") {
                 $('#tanggal_akhir').removeClass('is-invalid');
-                $('#msg_tanggal_mulai').html("");
+                $('#msg_tanggal_akhir').html("");
             } else {
                 $('#tanggal_akhir').addClass('is-invalid');
                 $('#msg_tanggal_akhir').html("Tanggal Akhir Pendaftaran harus diisi");
@@ -522,17 +676,6 @@ section{
             validasi();
         });
 
-        function validasi(){
-            var tgl_mulai = $("#tanggal_mulai").val();
-            var tgl_akhir = $("#tanggal_akhir").val();
-            var ket = $('#keterangan').val();
-            if(tgl_mulai != "" && tgl_akhir != "" && ket != ""){
-                $('#btnsubmit').removeAttr('disabled');
-            }
-            else{
-                $('#btnsubmit').attr('disabled', true);
-            }
-        }
 
         function soal_select(ids, jab_id, div_id){
             if(jab_id && div_id){
@@ -745,7 +888,7 @@ section{
                                                             </div>
                                                             <div class="form-group row">
                                                                 <div class="table-responsive">
-                                                                    <table class="table table-hover usiatable" id="usiatable`+countable+`">
+                                                                    <table class="table table-hover usiatable" id="usiatable`+countable+`" style="min-width:600px;">
                                                                         <thead>
                                                                             <tr>
                                                                                 <th>( <i class="fas fa-greater-than"></i> ) Range Min (KM)</th>
@@ -778,7 +921,7 @@ section{
                                                                 </div>
                                                             </div>
                                                             <div class="table-responsive">
-                                                                <table class="table table-hover pendidikantable" id="pendidikantable`+countable+`">
+                                                                <table class="table table-hover pendidikantable" style="min-width:600px;" id="pendidikantable`+countable+`">
                                                                     <thead>
                                                                         <tr>
                                                                             <th>Pendidikan Terakhir</th>
@@ -823,7 +966,7 @@ section{
                                                                 </div>
                                                             <div class="form-group row">
                                                                 <div class="table-responsive">
-                                                                    <table class="table table-hover jaraktable" id="jaraktable`+countable+`">
+                                                                    <table class="table table-hover jaraktable" style="min-width:600px;" id="jaraktable`+countable+`">
                                                                         <thead>
                                                                             <tr>
                                                                                 <th>Range Min ( <i class="fas fa-greater-than"></i> ) Km</th>
@@ -857,7 +1000,7 @@ section{
                                                             </div>
                                                             <div class="form-group row">
                                                                 <div class="table-responsive">
-                                                                    <table class="table table-hover soaltable" id="soaltable`+countable+`">
+                                                                    <table class="table table-hover soaltable" style="min-width:600px;" id="soaltable`+countable+`">
                                                                         <thead>
                                                                             <tr>
                                                                                 <th>Soal</th>
@@ -882,6 +1025,7 @@ section{
                                             </td>
                                         </tr>`);
             countable++;
+            vaidasi();
             numberRows($("#showtable"));
         });
 
@@ -889,6 +1033,7 @@ section{
             var idtable = $(this).closest('tr.kolom').attr('id');
             $('tr[id="'+idtable+'"]').remove();
             countable--;
+            validasi();
             numberRows($("#showtable"));
 
         });
@@ -911,15 +1056,31 @@ section{
             var ids = $(this).closest('.usiatable').attr('id');
             var idt = ids.substring(9);
             $('#'+ids+' tr:last').after(addusiarow());
-            console.log(ids);
+            validasi();
             numberRowsUsia(idt);
+        });
+
+        $(document).on('change keyup', '.master_usia', function(){
+            validasi();
+        });
+
+        $(document).on('change keyup', '.usiatable .usia_min', function(){
+            validasi();
+        });
+
+        $(document).on('change keyup', '.usiatable .usia_max', function(){
+            validasi();
+        });
+
+        $(document).on('change keyup', '.usiatable .bobot_usia', function(){
+            validasi();
         });
 
         $(document).on('click', '.usiatable #removeusiarow', function(e) {
             var ids = $(this).closest('.usiatable').attr('id');
             var idt = ids.substring(9);
             $(this).closest('tr').remove();
-            console.log(ids);
+            validasi();
             numberRowsUsia(idt);
         });
 
@@ -942,7 +1103,12 @@ section{
             var ids = $(this).closest('.pendidikantable').attr('id');
             var idt = ids.substring(15);
             $('#'+ids+' tr:last').after(addpendidikanrow());
+            validasi();
             numberRowsPendidikan(idt);
+        });
+
+        $(document).on('keyup change', '.master_pendidikan', function(){
+            validasi();
         });
 
         $(document).on('change', '.pendidikantable .ketentuan_pendidikan', function(){
@@ -954,12 +1120,21 @@ section{
             else{
                 peringkat.prop('disabled', false);
             }
+            validasi();
         });
 
+        $(document).on('change', '.pendidikantable .peringkat', function(){
+            validasi();
+        });
+
+        $(document).on('change keyup', '.pendidikantable .bobot_pendidikan', function(){
+            validasi();
+        });
         $(document).on('click', '.pendidikantable #removependidikanrow', function(e) {
             var ids = $(this).closest('.pendidikantable').attr('id');
             var idt = ids.substring(9);
             $(this).closest('tr').remove();
+            validasi();
             numberRowsPendidikan(idt);
         });
 
@@ -982,13 +1157,31 @@ section{
             var idt = ids.substring(10);
             console.log(idt);
             $('#'+ids+' tr:last').after(addjarakrow());
+            validasi();
             numberRowsJarak(idt);
+        });
+
+        $(document).on('keyup change', '.master_jarak', function(){
+            validasi();
+        });
+
+        $(document).on('keyup change', '.jaraktable .jarak_min', function(){
+            validasi();
+        });
+
+        $(document).on('keyup change', '.jaraktable .jarak_max', function(){
+            validasi();
+        });
+
+        $(document).on('keyup change', '.jaraktable .bobot_jarak', function(){
+            validasi();
         });
 
         $(document).on('click', '.jaraktable #removejarakrow', function(e) {
             var ids = $(this).closest('.jaraktable').attr('id');
             var idt = ids.substring(10);
             $(this).closest('tr').remove();
+            validasi();
             numberRowsJarak(idt);
         });
 
@@ -1010,15 +1203,28 @@ section{
             var idt = ids.substring(9);
             var jab_id = $('tr[id="kolom'+idt+'"]').find('.jabatan').val();
             var div_id = $('tr[id="kolom'+idt+'"]').find('.divisi').val();
-            console.log(jab_id+" "+div_id);
             $('#'+ids+' tr:last').after(addsoalrow());
+            validasi();
             numberRowsSoal(idt, jab_id, div_id);
+        });
+
+        $(document).on('change keyup', '.master_soal', function(){
+            validasi();
+        });
+
+        $(document).on('change keyup', '.soaltable .soal_id', function(){
+            validasi();
+        });
+
+        $(document).on('change keyup', '.bobot_soal', function(){
+            validasi();
         });
 
         $(document).on('click', '.soaltable #removesoalrow', function(e) {
             var ids = $(this).closest('.soaltable').attr('id');
             var idt = ids.substring(9);
             $(this).closest('tr').remove();
+            validasi();
             numberRowsSoal(idt);
         });
 
@@ -1066,6 +1272,8 @@ section{
             else if(kriteria.indexOf("soal") == -1){
                 $(this).closest('tr').find('.soalform').addClass('hide');
             }
+
+            validasi();
         });
 
         $('#showtable').on('change', '.jabatan', function(e){
@@ -1077,6 +1285,7 @@ section{
                     soal_select($('tr[id="'+id+'"] .soaltable .soal_id'), val, val_divisi);
                 }
             }
+            validasi();
         });
 
         $('#showtable').on('change', '.divisi', function(e){
@@ -1088,6 +1297,11 @@ section{
                     soal_select($('tr[id="'+id+'"] .soaltable .soal_id'), val_jabatan, val);
                 }
             }
+            validasi();
+        });
+
+        $('#showtable').on('change keyup', '.kuota', function(e){
+            validasi();
         });
 
         function addusiarow(){
