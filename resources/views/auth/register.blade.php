@@ -771,7 +771,7 @@ var geocoder = new MapboxGeocoder({
                         success: function(data) {
                             console.log(data);
                             if (data.jumlah >= 1) {
-                            $("#user_duplicate").html("<i class='fa fa-exclamation-circle' aria-hidden='true'></i> Nama sudah terpakai");
+                            $("#user_duplicate").html("<i class='fa fa-exclamation-circle' aria-hidden='true'></i> Username sudah terpakai");
                             // $('#tambah').attr("disabled", true);
                             $('#username').addClass("is-invalid");
                             } else {
@@ -786,7 +786,7 @@ var geocoder = new MapboxGeocoder({
                         }
                     });
                 }else{
-                    $("#user_duplicate").html("<i class='fa fa-exclamation-circle' aria-hidden='true'></i> Username tidak boleh ada spasi");
+                    $("#user_duplicate").html("<i class='fa fa-exclamation-circle' aria-hidden='true'></i> Username tidak boleh ada spasi & harus lebih dari 8 karakter");
                     $('#username').addClass("is-invalid");
                 }
             } else if ($(this).val() == "") {

@@ -289,7 +289,7 @@ section{
         $('#detailjawaban').DataTable({
             destroy: true,
             processing: true,
-            serverSide: true,
+            serverSide: false,
             searching: false,
             order: [[1,"asc"]],
             columnDefs: [

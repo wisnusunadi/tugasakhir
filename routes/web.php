@@ -39,6 +39,10 @@ Route::group(['middleware' => 'user'], function () {
         Route::post('/store', [App\Http\Controllers\HomeController::class, 'soal_tes_store'])->name('soal_tes.store');
         Route::get('/preview', [App\Http\Controllers\HomeController::class, 'soal_tes_preview'])->name('soal_tes.preview');
         Route::get('/show/{id}', [App\Http\Controllers\HomeController::class, 'soal_tes_show'])->name('soal_tes.show');
+    });
+});
+Route::group(['middleware' => 'auth'], function () {
+    Route::group(['prefix' => '/soal_tes'], function () {
         Route::get('/result/{soal}/{user}', [App\Http\Controllers\HomeController::class, 'soal_tes_result'])->name('soal_tes.result');
     });
 });
