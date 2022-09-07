@@ -772,16 +772,10 @@ var geocoder = new MapboxGeocoder({
                             console.log(data);
                             if (data.jumlah >= 1) {
                             $("#user_duplicate").html("<i class='fa fa-exclamation-circle' aria-hidden='true'></i> Username sudah terpakai");
-                            // $('#tambah').attr("disabled", true);
                             $('#username').addClass("is-invalid");
                             } else {
                                 $('#user_duplicate').html("");
                                 $('#username').removeClass("is-invalid");
-                                // if ($('#name').val() != "" && $('input[name=jenis_kelamin]:checked').length > 0 && $('#tgl_lahir').val() != ""  && $('#username').val() != "" && $('#email').val() != "" && $('#password').val() != "" && $('#jarak_user').val() != 0.0  && $('#password-confirm').val() != "" && !$('#email').hasClass('is-invalid') && $('#captcha').val() != ""  ) {
-                                //     $('#tambah').attr("disabled", false);
-                                // } else {
-                                //     $('#tambah').attr("disabled", true);
-                                // }
                             }
                         }
                     });
@@ -792,7 +786,6 @@ var geocoder = new MapboxGeocoder({
             } else if ($(this).val() == "") {
                 $("#user_duplicate").html("<i class='fa fa-exclamation-circle' aria-hidden='true'></i> Username harus di isi");
                 $('#username').addClass("is-invalid");
-                // $("#tambah").attr('disabled', true);
             }
 
             validasi();
