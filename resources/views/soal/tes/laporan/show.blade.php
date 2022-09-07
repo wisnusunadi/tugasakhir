@@ -96,7 +96,7 @@ section{
     </div>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-8 col-md-12">
+            <div class="col-xl-8 col-lg-10 col-md-12">
                 <div class="card">
                     <div class="card-body">
                         <a id="exportbutton" class="btn btn-success mb-3" href="{{route('laporan.hasil.export')}}">
@@ -143,7 +143,7 @@ section{
                             <tbody>
                             </tbody>
                         </table>
-                          </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -289,7 +289,7 @@ section{
         $('#detailjawaban').DataTable({
             destroy: true,
             processing: true,
-            serverSide: true,
+            serverSide: false,
             searching: false,
             order: [[1,"asc"]],
             columnDefs: [

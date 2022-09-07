@@ -2,6 +2,10 @@
 
 @section('custom_css')
 <style>
+    .max-content-height{
+        max-height: 60vh;
+        overflow-y: auto;
+    }
     .container{
         display:flex;
         justify-content:center;
@@ -64,7 +68,7 @@
                     <div class="tab-content" id="pills-tabContent">
                         <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
                             <div class="table-responsive">
-                                <table class="table" style="text-align:center;" id="showtable">
+                                <table class="table max-content-height" style="text-align:center;" id="showtable">
                                     <thead>
                                         <th>Nama</th>
                                         <th>Keterangan</th>
@@ -105,6 +109,7 @@
                             </div>
                         </div>
                         <div class="tab-pane fade" id="pills-bio" role="tabpanel" aria-labelledby="pills-bio-tab">
+                            <div class="max-content-height">
                                 <div class="row mb-3">
                                     <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Nama') }}</label>
 
@@ -203,9 +208,11 @@
                                     </div>
                                     <input id="jarak_user" type="text" name="jarak" class="d-none" >
                                 </div>
+                            </div>
                         </div>
 
                         <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                            <div class="max-content-height">
                                 <div class="row mb-3">
                                     <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Username') }}</label>
 
@@ -296,7 +303,7 @@
                                 <div class="row mb-12">
 
                                 </div>
-
+                            </div>
                         </div>
                     </div>
 
@@ -324,7 +331,7 @@
 <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
 <script>
 function validasi(){
-    if ($('#name').val() != "" && $('input[name=pend]:checked').length > 0 && $('input[name=jenis_kelamin]:checked').length > 0 && $('#tgl_lahir').val() != "" && ($('#username').val() != "" && !$('#username').hasClass('is-invalid')) && ($('#password').val() != "" && !$('#password').hasClass('is-invalid')) && $('#jarak_user').val() != 0.0  && ($('#password-confirm').val() != "" && !$('#password-confirm').hasClass('is-invalid')) && ($('#email').val() != "" && !$('#email').hasClass('is-invalid')) && $('#captcha').val() != "") {
+    if ($('input[name="pendaftaran_id"]:checked').length > 0 && $('#name').val() != "" && $('input[name=pend]:checked').length > 0 && $('input[name=jenis_kelamin]:checked').length > 0 && $('#tgl_lahir').val() != "" && ($('#username').val() != "" && !$('#username').hasClass('is-invalid')) && ($('#password').val() != "" && !$('#password').hasClass('is-invalid')) && $('#jarak_user').val() != 0.0  && ($('#password-confirm').val() != "" && !$('#password-confirm').hasClass('is-invalid')) && ($('#email').val() != "" && !$('#email').hasClass('is-invalid')) && $('#captcha').val() != "") {
         if($('input[name=pend]:checked').val() == "smak"){
             $('#tambah').attr("disabled", false);
         }else if($('input[name=pend]:checked').val() == "d3" || $('input[name=pend]:checked').val() == "s1d4"){
@@ -764,28 +771,21 @@ var geocoder = new MapboxGeocoder({
                         success: function(data) {
                             console.log(data);
                             if (data.jumlah >= 1) {
-                            $("#user_duplicate").html("<i class='fa fa-exclamation-circle' aria-hidden='true'></i> Nama sudah terpakai");
-                            // $('#tambah').attr("disabled", true);
+                            $("#user_duplicate").html("<i class='fa fa-exclamation-circle' aria-hidden='true'></i> Username sudah terpakai");
                             $('#username').addClass("is-invalid");
                             } else {
                                 $('#user_duplicate').html("");
                                 $('#username').removeClass("is-invalid");
-                                // if ($('#name').val() != "" && $('input[name=jenis_kelamin]:checked').length > 0 && $('#tgl_lahir').val() != ""  && $('#username').val() != "" && $('#email').val() != "" && $('#password').val() != "" && $('#jarak_user').val() != 0.0  && $('#password-confirm').val() != "" && !$('#email').hasClass('is-invalid') && $('#captcha').val() != ""  ) {
-                                //     $('#tambah').attr("disabled", false);
-                                // } else {
-                                //     $('#tambah').attr("disabled", true);
-                                // }
                             }
                         }
                     });
                 }else{
-                    $("#user_duplicate").html("<i class='fa fa-exclamation-circle' aria-hidden='true'></i> Username tidak boleh ada spasi");
+                    $("#user_duplicate").html("<i class='fa fa-exclamation-circle' aria-hidden='true'></i> Username tidak boleh ada spasi & harus lebih dari 8 karakter");
                     $('#username').addClass("is-invalid");
                 }
             } else if ($(this).val() == "") {
                 $("#user_duplicate").html("<i class='fa fa-exclamation-circle' aria-hidden='true'></i> Username harus di isi");
                 $('#username').addClass("is-invalid");
-                // $("#tambah").attr('disabled', true);
             }
 
             validasi();

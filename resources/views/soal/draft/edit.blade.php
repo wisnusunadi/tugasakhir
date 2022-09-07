@@ -209,7 +209,7 @@ section{
                         <span class="float-left"><a href="{{route('draft_soal')}}" type="button" class="btn btn-danger">
                             Batal
                         </a></span>
-                        <span class="float-right"><button type="submit" class="btn btn-success">Ubah</button></span>
+                        <span class="float-right"><button type="submit" class="btn btn-success" id="ubah">Ubah</button></span>
                     </div>
                 </div>
                 </form>
@@ -236,6 +236,41 @@ section{
     var rowCount = {{$soal->SoalDetail->count()}};
     console.log(rowCount);
     $(function(){
+
+        function validasi(){
+            var counttr = $('#showtable > tbody > tr').find('#removerow').length;
+            // var fieldsoal = $('.soal').parent().children('.soal');
+            var countsoal = 0;
+            var countpoin = 0;
+            var countjawaban = 0;
+            var countfieldjawaban = $('#showtable > tbody > tr').find('.jawaban').length;
+            var countkuncijawaban = $('.kunci_jawaban:checked').length;
+
+            $('.soal').each(function() {
+                if ($(this).val() != "") {
+                    countsoal++;
+                }
+            });
+
+            $('.poin').each(function() {
+                if ($(this).val() != "") {
+                    countpoin++;
+                }
+            });
+
+            $('.jawaban').each(function() {
+                if ($(this).val() != "") {
+                    countjawaban++;
+                }
+            });
+
+
+            if ($('#nama').val() != "" && $('#kode_soal').val() != "" && $('#waktu').val() != "" &&  $('#jabatan').val() != ""  &&  $('#divisi').val() != "" && countsoal >= counttr && countkuncijawaban >= counttr && countpoin >= counttr && countjawaban >= countfieldjawaban) {
+                $('#ubah').attr("disabled", false);
+            } else {
+                $('#ubah').attr("disabled", true);
+            }
+        }
     $('.divisi').select2({
                     theme: 'bootstrap4',
                     multiple: true,
@@ -355,6 +390,7 @@ section{
                 $("#tanggal_akhir").val("");
                 $("#btncetak").attr('disabled', true);
             }
+            validasi();
         });
 
         function numberJawaban(id){
@@ -434,6 +470,7 @@ section{
                                             <td  rowspan="1" class="hapus_baris"><a id="removerow"><i class="fas fa-minus" style="color:red;"></i></a></td>
                                            </tr>`);
             rowCount++;
+            validasi();
             numberRows($("#showtable"));
             // console.log(rowCount);
         });
@@ -442,6 +479,7 @@ section{
             var id = $(this).closest('tr').attr('id');
             $('tr[id="'+id+'"]').remove();
             rowCount--;
+            validasi();
             numberRows($("#showtable"));
         });
 
@@ -479,6 +517,7 @@ section{
                 <a type="button" id="hapusopsi"><i class="fas fa-times" style="color:red;"></i></button>
             </td>
             </tr>`);
+            validasi();
             numberJawaban(id.substring(5));
         });
 
@@ -496,6 +535,7 @@ section{
             $(this).closest('tr').remove();
             // console.log(x);
             // console.log(parseInt(x)-1)
+            validasi();
             numberJawaban(id.substring(5));
         });
 
@@ -503,6 +543,39 @@ section{
             var dataattr = $(this).closest('tr').find('.kunci_jawaban').attr('data-name');
             $('input[type="radio"][data-name="'+dataattr+'"]').prop('checked', false);
             $(this).prop('checked', true);
+            validasi();
+        });
+
+        $('#nama').on('keyup change', function() {
+            validasi();
+        });
+        $('#kode_soal').on('keyup change', function() {
+            validasi();
+        });
+        $('#waktu').on('keyup change', function() {
+            validasi();
+        });
+        $('#jabatan').on('keyup change', function() {
+            validasi();
+        });
+        $('#divisi').on('keyup change', function() {
+            validasi();
+        });
+
+        $(document).on('keyup change', '.soal', function(){
+            validasi();
+        });
+
+        $(document).on('change', '.kunci_jawaban', function(){
+            validasi();
+        });
+
+        $(document).on('keyup change', '.jawaban', function(){
+            validasi();
+        });
+
+        $(document).on('keyup change', '.poin', function(){
+            validasi();
         });
     })
 </script>
