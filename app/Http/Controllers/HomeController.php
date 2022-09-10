@@ -252,7 +252,9 @@ class HomeController extends Controller
 
             return view('soal.tes.preview', ['soal_belum' => $soal_belum, 'soal_sudah' => $soal_sudah]);
         } else {
-            return view('home');
+            $u = User::where('role', 'user')->count();
+            return view('home', ['u' => $u]);
+            
         }
     }
 

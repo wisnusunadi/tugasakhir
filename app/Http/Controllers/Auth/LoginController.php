@@ -41,7 +41,7 @@ class LoginController extends Controller
 
     use AuthenticatesUsers;
 
-    protected $redirectTo = '/home';
+    protected $redirectTo = 'home';
 
     protected $username;
 
