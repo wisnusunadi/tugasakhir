@@ -210,6 +210,41 @@ section{
         var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
         var yyyy = today.getFullYear();
 
+        function validasi(){
+            var counttr = $('#showtable > tbody > tr').find('#removerow').length;
+            // var fieldsoal = $('.soal').parent().children('.soal');
+            var countsoal = 0;
+            var countpoin = 0;
+            var countjawaban = 0;
+            var countfieldjawaban = $('#showtable > tbody > tr').find('.jawaban').length;
+            var countkuncijawaban = $('.kunci_jawaban:checked').length;
+
+            $('.soal').each(function() {
+                if ($(this).val() != "") {
+                    countsoal++;
+                }
+            });
+
+            $('.poin').each(function() {
+                if ($(this).val() != "") {
+                    countpoin++;
+                }
+            });
+
+            $('.jawaban').each(function() {
+                if ($(this).val() != "") {
+                    countjawaban++;
+                }
+            });
+
+
+            if ($('#nama').val() != "" && $('#kode_soal').val() != "" && $('#waktu').val() != "" &&  $('#jabatan').val() != ""  &&  $('#divisi').val() != "" && countsoal >= counttr && countkuncijawaban >= counttr && countpoin >= counttr && countjawaban >= countfieldjawaban) {
+                $('#tambah').attr("disabled", false);
+            } else {
+                $('#tambah').attr("disabled", true);
+            }
+        }
+
         today = yyyy + '-' + mm + '-' + dd;
         console.log(today);
         $("#tanggal_mulai").attr("min", today);
@@ -226,6 +261,7 @@ section{
                 $("#tanggal_akhir").val("");
                 $("#btncetak").attr('disabled', true);
             }
+            validasi();
         });
 
         function numberJawaban(id){
@@ -241,7 +277,6 @@ section{
                 $(el1).attr('name', 'kunci_jawaban[' + id + ']['+count_kunci+']');
                 count_kunci++;
             });
-            console.log(id);
         }
 
         function numberRows($t) {
@@ -305,13 +340,15 @@ section{
                                             <td  rowspan="1" class="hapus_baris"><a id="removerow"><i class="fas fa-minus" style="color:red;"></i></a></td>
                                            </tr>`);
             numberRows($("#showtable"));
-            console.log(rowCount);
+            validasi();
         });
 
         $('#showtable').on('click', '#removerow', function(e) {
             var id = $(this).closest('tr').attr('id');
             $('tr[id="'+id+'"]').remove();
+            validasi();
             numberRows($("#showtable"));
+
         });
 
         $('#showtable').on('click', '.kolom #tambahopsi', function() {
@@ -349,6 +386,7 @@ section{
                 <a type="button" id="hapusopsi"><i class="fas fa-times" style="color:red;"></i></button>
             </td>
             </tr>`);
+            validasi();
             numberJawaban(id.substring(5));
         });
 
@@ -364,8 +402,7 @@ section{
             // $(this).closest('tr[id="' + id + '"]').find('.poin').attr('rowspan', (parseInt(x) - 1));
             // $(this).closest('tr[id="' + id + '"]').find('.hapus_baris').attr('rowspan', (parseInt(x) - 1));
             $(this).closest('tr').remove();
-            console.log(x);
-            console.log(parseInt(x)-1)
+            validasi();
             numberJawaban(id.substring(5));
         });
 
@@ -373,6 +410,7 @@ section{
             var dataattr = $(this).closest('tr').find('.kunci_jawaban').attr('data-name');
             $('input[type="radio"][data-name="'+dataattr+'"]').prop('checked', false);
             $(this).prop('checked', true);
+            validasi();
         });
 
         function get_jabatan(){
@@ -462,60 +500,36 @@ $('.divisi').select2({
                 }
 
             $('#nama').on('keyup change', function() {
-            if ($(this).val() != "") {
-                if ($('#kode_soal').val() != "" &&  $('#waktu').val() != "" &&  $('#jabatan').val() != ""  &&  $('#divisi').val() != "") {
-                    $('#tambah').attr("disabled", false);
-                } else {
-                    $('#tambah').attr("disabled", true);
-                }
-            } else if ($(this).val() == "") {
-                $('#tambah').attr("disabled", true);
-            }
+            validasi();
         });
             $('#kode_soal').on('keyup change', function() {
-            if ($(this).val() != "") {
-                if ($('#nama').val() != "" &&  $('#waktu').val() != "" &&  $('#jabatan').val() != ""  &&  $('#divisi').val() != "") {
-                    $('#tambah').attr("disabled", false);
-                } else {
-                    $('#tambah').attr("disabled", true);
-                }
-            } else if ($(this).val() == "") {
-                $('#tambah').attr("disabled", true);
-            }
+                validasi();
         });
             $('#waktu').on('keyup change', function() {
-            if ($(this).val() != "") {
-                if ($('#nama').val() != "" &&  $('#kode_soal').val() != "" &&  $('#jabatan').val() != ""  &&  $('#divisi').val() != "") {
-                    $('#tambah').attr("disabled", false);
-                } else {
-                    $('#tambah').attr("disabled", true);
-                }
-            } else if ($(this).val() == "") {
-                $('#tambah').attr("disabled", true);
-            }
+                validasi();
         });
             $('#jabatan').on('keyup change', function() {
-            if ($(this).val() != "") {
-                if ($('#nama').val() != "" &&  $('#kode_soal').val() != "" &&  $('#waktu').val() != ""  &&  $('#divisi').val() != "" ) {
-                    $('#tambah').attr("disabled", false);
-                } else {
-                    $('#tambah').attr("disabled", true);
-                }
-            } else if ($(this).val() == "") {
-                $('#tambah').attr("disabled", true);
-            }
+            validasi();
         });
             $('#divisi').on('keyup change', function() {
-            if ($(this).val() != "") {
-                if ($('#nama').val() != "" &&  $('#kode_soal').val() != "" &&  $('#waktu').val() != ""   &&  $('#jabatan').val() != "") {
-                    $('#tambah').attr("disabled", false);
-                } else {
-                    $('#tambah').attr("disabled", true);
-                }
-            } else if ($(this).val() == "") {
-                $('#tambah').attr("disabled", true);
-            }
+            validasi();
         });
+
+        $(document).on('keyup change', '.soal', function(){
+            validasi();
+        });
+
+        $(document).on('change', '.kunci_jawaban', function(){
+            validasi();
+        });
+
+        $(document).on('keyup change', '.jawaban', function(){
+            validasi();
+        });
+
+        $(document).on('keyup change', '.poin', function(){
+            validasi();
+        })
 
 })
 </script>

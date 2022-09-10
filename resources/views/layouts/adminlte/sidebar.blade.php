@@ -172,10 +172,10 @@
 
           @else
           <li class="nav-item">
-            <a href="/soal_tes/preview" class="nav-link">
+            <a href="/soal_tes/preview" class="nav-link  {{ (request()->is('/')) ? 'active' : '' }}">
               <i class="nav-icon fas fa-edit"></i>
               <p>
-                Mulai Tes
+                Login
               </p>
             </a>
           </li>

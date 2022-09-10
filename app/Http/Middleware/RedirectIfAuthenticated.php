@@ -23,10 +23,14 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
+               // return redirect(RouteServiceProvider::HOME);
+               if($request->user()->hasRole("admin")){
+                return redirect()->route('home');
+                }elseif($request->user()->hasRole("user")){
+                    return redirect()->route('soal_tes.preview');
+                }
             }
         }
-
         return $next($request);
     }
 }

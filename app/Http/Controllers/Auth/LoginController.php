@@ -47,10 +47,11 @@ class LoginController extends Controller
 
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
-
+        $this->middleware('guest', ['except' => 'logout']);
         $this->username = $this->findUsername();
     }
+
+
 
     public function findUsername()
     {
@@ -70,10 +71,19 @@ class LoginController extends Controller
 
     public function authenticated(Request $request, $user)
     {
+        if($user->role=='admin'){
+            return redirect()->route('home');
+        }elseif($user->role=='user'){
+            return redirect()->route('soal_tes.preview');
+        }
+
+
         if (!$user->verified) {
             auth()->logout();
             return redirect()->back()->with('error', 'E-mail belum terverifikasi, cek terlebih dahulu');
         }
         return redirect()->intended($this->redirectPath());
+
+
     }
 }

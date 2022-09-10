@@ -112,7 +112,7 @@ class GetController extends Controller
 
     public function peserta_hasil_table()
     {
-        $data = User::where([['role', '=', 'user']])->orderBy('pendaftaran_id', 'ASC')->has('Pendaftaran.Kriteria')->get();
+        $data = User::where([['role', '=', 'user']])->orderBy('pendaftaran_id', 'ASC')->has('Pendaftaran.Kriteria')->with('Pendaftaran.Jabatan', 'Pendaftaran.Divisi')->get();
         return datatables()->of($data)
             ->addIndexColumn()
             ->addColumn('pendaftaran', function ($data) {
